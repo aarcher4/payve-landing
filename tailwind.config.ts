@@ -25,6 +25,7 @@ const config: Config = {
         "fade-up": "fadeUp 0.8s ease-out forwards",
         "scroll-hint": "scrollHint 2s ease-in-out infinite",
         "slow-zoom": "slowZoom 20s linear infinite alternate",
+        "scan": "scan 4s linear infinite",
       },
       keyframes: {
         fadeIn: {
@@ -42,6 +43,10 @@ const config: Config = {
         slowZoom: {
           "0%": { transform: "scale(1.05)" },
           "100%": { transform: "scale(1.15)" },
+        },
+        scan: {
+          "0%": { transform: "translateY(-100%)" },
+          "100%": { transform: "translateY(200%)" },
         },
       },
     },

@@ -1,14 +1,26 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Placeholder } from "@/app/components/Placeholder";
+import { StreamingText } from "@/app/components/StreamingText";
+import { AgentWorkflow } from "@/app/components/AgentWorkflow";
+import { MinutesCounter } from "@/app/components/MinutesCounter";
 
 export default function Home() {
   const revealRefs = useRef<HTMLElement[]>([]);
   const [scrolled, setScrolled] = useState(false);
+  const [isLightMode, setIsLightMode] = useState(false);
+  const triggerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 100);
+      
+      if (triggerRef.current) {
+        const rect = triggerRef.current.getBoundingClientRect();
+        // Switch to light mode when the section is entered (top crosses 50% viewport)
+        setIsLightMode(rect.top < window.innerHeight / 2);
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -41,18 +53,22 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-custom-grey">
+    <main className={`min-h-screen transition-colors duration-700 ${isLightMode ? "bg-white" : "bg-custom-grey"}`}>
       {/* Navigation */}
       <nav className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-6 transition-all duration-300 ${
-        scrolled ? "bg-custom-grey/90 backdrop-blur-md border-b border-platinum/10" : ""
+        scrolled 
+          ? isLightMode 
+            ? "bg-white/90 backdrop-blur-md border-b border-gray-200" 
+            : "bg-custom-grey/90 backdrop-blur-md border-b border-platinum/10"
+          : ""
       }`}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="font-display text-2xl tracking-wide text-ivory">
+          <div className={`font-display text-2xl tracking-wide transition-colors duration-700 ${isLightMode ? "text-[#505050]" : "text-ivory"}`}>
             PAYVE
           </div>
           <div className="hidden md:flex items-center gap-8">
-            <a href="#platform" className="text-sm text-platinum hover:text-ivory transition-colors font-light">Platform</a>
-            <a href="#about" className="text-sm text-platinum hover:text-ivory transition-colors font-light">About</a>
+            <a href="#platform" className={`text-sm transition-colors duration-700 font-light ${isLightMode ? "text-gray-500 hover:text-[#505050]" : "text-platinum hover:text-ivory"}`}>Platform</a>
+            <a href="#about" className={`text-sm transition-colors duration-700 font-light ${isLightMode ? "text-gray-500 hover:text-[#505050]" : "text-platinum hover:text-ivory"}`}>About</a>
           </div>
         </div>
       </nav>
@@ -62,7 +78,7 @@ export default function Home() {
         {/* Full-screen Hero Background Image */}
         <div 
           className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/hero.png.png')" }}
+          style={{ backgroundImage: "url('/hero.png')" }}
         />
         
         {/* Gradient overlay for text readability */}
@@ -96,248 +112,241 @@ export default function Home() {
                 Talk to us
               </button>
             </div>
+
           </div>
+        </div>
+
+        {/* Logo Section Overlay */}
+        <div 
+          className="absolute bottom-8 left-0 right-0 z-30 px-6 animate-fade-up"
+          style={{ animationDelay: "0.8s" }}
+        >
+           <div className="max-w-4xl mx-auto text-center">
+              <p className="text-ivory/60 text-xs uppercase tracking-[0.2em] mb-4 font-medium">Trusted by supply chain operators:</p>
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                 <div className="h-12 w-32 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors">
+                    <span className="font-display text-ivory text-sm">Fortune Growers</span>
+                 </div>
+                 <div className="h-12 w-32 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors">
+                    <span className="text-platinum/40 text-[10px]">Partner Logo</span>
+                 </div>
+                 <div className="h-12 w-32 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors">
+                    <span className="text-platinum/40 text-[10px]">Partner Logo</span>
+                 </div>
+                 <div className="h-12 w-32 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors">
+                    <span className="text-platinum/40 text-[10px]">Partner Logo</span>
+                 </div>
+              </div>
+           </div>
         </div>
       </section>
 
-      {/* Scene 2: The Trust */}
-      <section className="py-16 md:py-20 px-6 md:px-12 bg-graphite/30 border-t border-platinum/10">
-        <div className="max-w-5xl mx-auto">
-          <div ref={addToRefs} className="reveal text-center mb-10">
-            <h2 className="font-display text-2xl md:text-3xl text-ivory mb-4">
-              Trusted by those who demand precision
-            </h2>
-          </div>
-
-          {/* Logo Grid */}
-          <div 
-            ref={addToRefs}
-            className="reveal stagger-1 grid grid-cols-2 md:grid-cols-4 gap-3 grayscale opacity-70 hover:opacity-100 transition-opacity duration-500"
-          >
-            <div className="h-24 bg-custom-grey border border-platinum/10 rounded-sm flex items-center justify-center hover:border-sage/30 transition-colors">
-              <span className="font-display text-ivory text-base">Fortune Growers</span>
-            </div>
-            <div className="h-24 bg-custom-grey border border-platinum/10 rounded-sm flex items-center justify-center hover:border-sage/30 transition-colors">
-              <span className="text-platinum/40 text-xs">Partner Logo</span>
-            </div>
-            <div className="h-24 bg-custom-grey border border-platinum/10 rounded-sm flex items-center justify-center hover:border-sage/30 transition-colors">
-              <span className="text-platinum/40 text-xs">Partner Logo</span>
-            </div>
-            <div className="h-24 bg-custom-grey border border-platinum/10 rounded-sm flex items-center justify-center hover:border-sage/30 transition-colors">
-              <span className="text-platinum/40 text-xs">Partner Logo</span>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Status Bar */}
+      <StreamingText />
 
       {/* Scene 3: The Vision */}
-      <section id="platform" className="py-16 md:py-24 px-6 md:px-12 relative overflow-hidden border-t border-platinum/10">
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          <h2 
-            ref={addToRefs}
-            className="reveal font-display text-3xl md:text-4xl lg:text-5xl text-ivory leading-tight mb-6"
-          >
-            Your supply chain is not a sequence.<br />
-            <span className="text-sage">It is a living system.</span>
-          </h2>
+      <section id="platform" className="relative overflow-hidden py-24 md:py-32">
+        
+        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
           
-          <div 
-            ref={addToRefs}
-            className="reveal stagger-2 space-y-6 text-platinum text-base md:text-lg leading-relaxed font-light max-w-3xl mx-auto"
-          >
-            <p>
-              Every shipment. Every inspection. Every invoice.<br />
-              Every decision ripples through the whole.
-            </p>
-            <p>
-              For too long, operators have managed this complexity
-              with disconnected tools and reactive processes.<br />
-              Finding problems after they&apos;ve already cost you.
-            </p>
-            <p className="text-ivory/90">
-              We believe there is a better way.
-            </p>
-            <p>
-              An agentic workforce—structured for your business,
-              tailored to your operations—working in unison
-              to orchestrate every element of your supply chain.
-            </p>
-            <p>
-              Not automation. <span className="text-ivory">Orchestration.</span><br />
-              Not alerts. <span className="text-ivory">Anticipation.</span><br />
-              Not software. <span className="text-ivory">An extension of your team.</span>
-            </p>
-            <p className="text-ivory/90">
-              This business never sleeps—but your operators work hard enough. 
-              <span className="text-sage"> Let our agents handle the tireless operations</span>, 
-              so you can focus on what matters most.
-            </p>
-          </div>
-          
-          <div 
-            ref={addToRefs}
-            className="reveal stagger-3 mt-12 grid md:grid-cols-3 gap-6 text-left border-t border-platinum/10 pt-8"
-          >
-            <div className="space-y-2 p-5 hover:bg-white/5 transition-colors rounded-lg group">
-               <p className="font-display text-xl text-ivory">Orchestration</p>
-               <p className="text-sm text-platinum/70">Automated synchronization of all supply chain nodes.</p>
+          {/* Header - Left Aligned */}
+          <div className="grid md:grid-cols-2 gap-12 items-center mb-24">
+            <div ref={addToRefs} className="reveal">
+               <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-ivory leading-[1.1] mb-6">
+                Your supply chain is not a sequence.<br />
+                <span className="text-sage">It is a living system.</span>
+              </h2>
+              <div className="space-y-6 text-platinum text-lg leading-relaxed font-light max-w-xl">
+                <p>
+                  Every shipment. Every inspection. Every invoice.
+                  Every decision ripples through the whole.
+                </p>
+                <p>
+                  For too long, operators have managed this complexity
+                  with disconnected tools and reactive processes.
+                  Finding problems after they&apos;ve already cost you.
+                </p>
+                <p className="text-ivory font-medium">
+                  We believe there is a better way.
+                </p>
+              </div>
             </div>
-            <div className="space-y-2 p-5 hover:bg-white/5 transition-colors rounded-lg group">
-               <p className="font-display text-xl text-ivory">Anticipation</p>
-               <p className="text-sm text-platinum/70">Predictive modeling that solves problems before they occur.</p>
-            </div>
-            <div className="space-y-2 p-5 hover:bg-white/5 transition-colors rounded-lg group">
-               <p className="font-display text-xl text-ivory">Financial Layer</p>
-               <p className="text-sm text-platinum/70">A unified financial backbone powering every transaction across your operations.</p>
+            
+            {/* Visual Placeholder */}
+            <div ref={addToRefs} className="reveal stagger-1">
+               <Placeholder 
+                 label="Live Network Graph" 
+                 minHeight="min-h-[500px]" 
+                 videoSrc="/videos/network-graph.mp4"
+               />
             </div>
           </div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+             {/* Text Content */}
+             <div ref={addToRefs} className="reveal stagger-2 order-2 md:order-2">
+                <div className="space-y-6 text-platinum text-lg leading-relaxed font-light max-w-xl">
+                   <p>
+                    An agentic workforce—structured for your business,
+                    tailored to your operations—working in unison
+                    to orchestrate every element of your supply chain.
+                  </p>
+                  <p>
+                    Not automation. <span className="text-ivory font-medium">Orchestration.</span><br />
+                    Not alerts. <span className="text-ivory font-medium">Anticipation.</span><br />
+                    Not software. <span className="text-ivory font-medium">An extension of your team.</span>
+                  </p>
+                  <p className="text-ivory/90 pt-4">
+                    This business never sleeps—but your operators work hard enough. 
+                    <span className="text-sage"> Let our agents handle the tireless operations</span>, 
+                    so you can focus on what matters most.
+                  </p>
+                </div>
+
+                <div className="mt-12 grid grid-cols-1 gap-6 text-left border-t border-platinum/10 pt-8">
+                  <div className="space-y-1">
+                     <p className="font-display text-xl text-ivory">Orchestration</p>
+                     <p className="text-sm text-platinum/70">Automated synchronization of all supply chain nodes.</p>
+                  </div>
+                  <div className="space-y-1">
+                     <p className="font-display text-xl text-ivory">Anticipation</p>
+                     <p className="text-sm text-platinum/70">Predictive modeling that solves problems before they occur.</p>
+                  </div>
+                  <div className="space-y-1">
+                     <p className="font-display text-xl text-ivory">Financial Layer</p>
+                     <p className="text-sm text-platinum/70">A unified financial backbone powering every transaction.</p>
+                  </div>
+                </div>
+             </div>
+
+             {/* Second Placeholder */}
+             <div ref={addToRefs} className="reveal stagger-3 order-1 md:order-1">
+                <AgentWorkflow />
+             </div>
+          </div>
+          
         </div>
       </section>
 
-      {/* Scene 3: The Operators */}
-      <section id="about" className="py-16 md:py-24 px-6 md:px-12 bg-graphite/30 relative border-t border-platinum/10">
+      {/* Scene 3: Deep Integration */}
+      <section id="about" className="py-24 md:py-32 px-6 md:px-12 bg-graphite/30 relative border-t border-platinum/10">
         <div className="max-w-7xl mx-auto">
-          <div ref={addToRefs} className="reveal text-center mb-12">
-            <h2 className="font-display text-3xl md:text-4xl text-ivory mb-4">
-              Your Tireless Partners
-            </h2>
-            <p className="text-platinum text-base md:text-lg font-light max-w-2xl mx-auto">
-              The supply chain never stops—and neither should your support. 
-              <span className="text-ivory"> Our agents exist to lighten your load.</span>
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-5">
-            {/* Data Alchemists */}
-            <div 
-              ref={addToRefs}
-              className="reveal stagger-1 group bg-custom-grey border border-platinum/10 hover:border-sage/40 rounded-sm p-6 transition-all duration-300 relative overflow-hidden"
-            >
-              <div className="h-9 w-9 bg-sage/10 rounded-sm flex items-center justify-center mb-5 group-hover:bg-sage/20 transition-colors">
-                 <svg className="w-4 h-4 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
-              </div>
-              <h3 className="font-display text-lg text-ivory mb-3 group-hover:text-sage transition-colors">
-                Data Alchemists
-              </h3>
-              <p className="text-platinum/70 text-sm leading-relaxed">
-                Invoices, inspections, purchase orders—our agents transform chaos 
-                into structured intelligence. Clarity from complexity.
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div ref={addToRefs} className="reveal">
+              <h2 className="font-display text-4xl md:text-5xl text-ivory mb-6 leading-tight">
+                We meet you where you are.
+              </h2>
+              <p className="text-xl text-sage font-light mb-8">
+                Deeply integrated into your business.
               </p>
+              
+              <div className="space-y-8 text-platinum text-lg font-light leading-relaxed">
+                <p>
+                  We integrate into your financial ecosystem, delivering a full suite of tools 
+                  to boost productivity and capital efficiency.
+                </p>
+                <p>
+                  Seamlessly connecting with your CRM, inspection reports, and transportation data, 
+                  we live where you work—in your email and WhatsApp.
+                </p>
+                <p>
+                  We are the agentic layer that unifies these data points into beautiful systems, 
+                  helping you accomplish more, faster, and with greater accuracy. 
+                  The agentic zero in your financial ecosystem.
+                </p>
+              </div>
             </div>
 
-            {/* Workflow Architects */}
-            <div 
-              ref={addToRefs}
-              className="reveal stagger-2 group bg-custom-grey border border-platinum/10 hover:border-sage/40 rounded-sm p-6 transition-all duration-300 relative overflow-hidden"
-            >
-              <div className="h-9 w-9 bg-sage/10 rounded-sm flex items-center justify-center mb-5 group-hover:bg-sage/20 transition-colors">
-                 <svg className="w-4 h-4 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" /></svg>
-              </div>
-              <h3 className="font-display text-lg text-ivory mb-3 group-hover:text-sage transition-colors">
-                Workflow Architects
-              </h3>
-              <p className="text-platinum/70 text-sm leading-relaxed">
-                Our agents adapt to your business—not the other way around. 
-                Workflows tailored to how you actually operate.
-              </p>
-            </div>
-
-            {/* Tireless Operators */}
-            <div 
-              ref={addToRefs}
-              className="reveal stagger-3 group bg-custom-grey border border-platinum/10 hover:border-sage/40 rounded-sm p-6 transition-all duration-300 relative overflow-hidden"
-            >
-              <div className="h-9 w-9 bg-sage/10 rounded-sm flex items-center justify-center mb-5 group-hover:bg-sage/20 transition-colors">
-                 <svg className="w-4 h-4 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              </div>
-              <h3 className="font-display text-lg text-ivory mb-3 group-hover:text-sage transition-colors">
-                Tireless Operators
-              </h3>
-              <p className="text-platinum/70 text-sm leading-relaxed">
-                24/7 execution and monitoring. Nothing falls through the cracks. 
-                Rest knowing someone&apos;s always watching.
-              </p>
+            {/* Visual */}
+            <div ref={addToRefs} className="reveal stagger-1">
+               <Placeholder 
+                 label="Ecosystem Integration" 
+                 minHeight="min-h-[500px]"
+               />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Scene 4: The Invitation */}
-      <section className="py-16 md:py-24 px-6 md:px-12 relative overflow-hidden border-t border-platinum/10">
-        {/* Background Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-sage/5 rounded-full blur-[80px] pointer-events-none" />
+      {/* Scene 4: Massive Action */}
+      <section ref={triggerRef} className={`py-24 md:py-32 px-6 md:px-12 relative overflow-hidden transition-colors duration-700 border-t ${isLightMode ? "border-gray-200" : "border-platinum/10"}`}>
+        {/* Background Glow - hide in light mode */}
+        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sage/5 rounded-full blur-[100px] pointer-events-none transition-opacity duration-700 ${isLightMode ? "opacity-0" : "opacity-100"}`} />
 
-        <div className="max-w-3xl mx-auto text-center relative z-10">
-          <div ref={addToRefs} className="reveal space-y-6 mb-12">
-            <p className="font-display text-2xl md:text-3xl lg:text-4xl text-ivory leading-tight">
-              The supply chains that will define the next decade
-              are being built today.
-            </p>
-            <div className="space-y-3 text-base md:text-lg text-platinum font-light">
-              <p>They will be <span className="text-ivory font-normal">orchestrated</span>, not managed.</p>
-              <p><span className="text-ivory font-normal">Anticipatory</span>, not reactive.</p>
-              <p><span className="text-ivory font-normal">Precise</span>, not approximate.</p>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            
+            {/* Left: Text */}
+            <div ref={addToRefs} className="reveal space-y-8">
+              <h2 className={`font-display text-4xl md:text-5xl lg:text-6xl leading-tight transition-colors duration-700 ${isLightMode ? "text-[#505050]" : "text-ivory"}`}>
+                Deploying a workforce of massive action.
+              </h2>
+              <div className={`space-y-6 text-lg md:text-xl font-light transition-colors duration-700 ${isLightMode ? "text-gray-500" : "text-platinum"}`}>
+                 <p>
+                   We add minutes to your organization and manage the tedious work 
+                   so you can focus on higher-level thinking.
+                 </p>
+              </div>
             </div>
-            <p className="text-base md:text-lg text-ivory mt-8">
-              If you&apos;re building one of them, we should talk.
-            </p>
-          </div>
 
-          <div ref={addToRefs} className="reveal stagger-1">
-            <button className="btn-primary px-8 py-3 text-sm">
-              Talk to us
-            </button>
+            {/* Right: Counter */}
+            <div ref={addToRefs} className={`reveal stagger-1 flex flex-col items-center justify-center text-center p-12 backdrop-blur-sm border rounded-2xl transition-all duration-700 ${isLightMode ? "bg-gray-50 border-gray-200" : "bg-white/5 border-white/10"}`}>
+               <p className={`text-sm uppercase tracking-widest mb-4 transition-colors duration-700 ${isLightMode ? "text-gray-400" : "text-platinum/60"}`}>Minutes Deployed</p>
+               <MinutesCounter isLightMode={isLightMode} />
+               <div className="mt-4 h-1 w-24 bg-gradient-to-r from-transparent via-sage/50 to-transparent" />
+            </div>
+
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-platinum/10 py-12 px-6 md:px-12">
+      <footer className={`transition-colors duration-700 border-t py-12 px-6 md:px-12 ${isLightMode ? "border-gray-200" : "border-platinum/10"}`}>
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             {/* Brand */}
             <div className="md:col-span-2">
-              <div className="font-display text-lg text-ivory mb-3">PAYVE</div>
-              <p className="text-platinum text-sm leading-relaxed max-w-xs">
+              <div className={`font-display text-lg mb-3 transition-colors duration-700 ${isLightMode ? "text-[#505050]" : "text-ivory"}`}>PAYVE</div>
+              <p className={`text-sm leading-relaxed max-w-xs transition-colors duration-700 ${isLightMode ? "text-gray-500" : "text-platinum"}`}>
                 Orchestrated precision for supply chains that <span className="font-serif italic">feed the world</span>.
               </p>
             </div>
 
             {/* Platform Links */}
             <div>
-              <h4 className="font-display text-sm text-ivory mb-3">Platform</h4>
+              <h4 className={`font-display text-sm mb-3 transition-colors duration-700 ${isLightMode ? "text-[#505050]" : "text-ivory"}`}>Platform</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="text-platinum hover:text-ivory transition-colors text-sm">Overview</a></li>
-                <li><a href="#" className="text-platinum hover:text-ivory transition-colors text-sm">Documentation</a></li>
+                <li><a href="#" className={`text-sm transition-colors duration-700 ${isLightMode ? "text-gray-500 hover:text-[#505050]" : "text-platinum hover:text-ivory"}`}>Overview</a></li>
+                <li><a href="#" className={`text-sm transition-colors duration-700 ${isLightMode ? "text-gray-500 hover:text-[#505050]" : "text-platinum hover:text-ivory"}`}>Documentation</a></li>
               </ul>
             </div>
 
             {/* Company Links */}
             <div>
-              <h4 className="font-display text-sm text-ivory mb-3">Company</h4>
+              <h4 className={`font-display text-sm mb-3 transition-colors duration-700 ${isLightMode ? "text-[#505050]" : "text-ivory"}`}>Company</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="text-platinum hover:text-ivory transition-colors text-sm">About</a></li>
-                <li><a href="#" className="text-platinum hover:text-ivory transition-colors text-sm">Perspectives</a></li>
-                <li><a href="#" className="text-platinum hover:text-ivory transition-colors text-sm">Connect</a></li>
+                <li><a href="#" className={`text-sm transition-colors duration-700 ${isLightMode ? "text-gray-500 hover:text-[#505050]" : "text-platinum hover:text-ivory"}`}>About</a></li>
+                <li><a href="#" className={`text-sm transition-colors duration-700 ${isLightMode ? "text-gray-500 hover:text-[#505050]" : "text-platinum hover:text-ivory"}`}>Perspectives</a></li>
+                <li><a href="#" className={`text-sm transition-colors duration-700 ${isLightMode ? "text-gray-500 hover:text-[#505050]" : "text-platinum hover:text-ivory"}`}>Connect</a></li>
               </ul>
             </div>
           </div>
 
           {/* Bottom Footer */}
-          <div className="flex flex-col md:flex-row items-center justify-between pt-6 border-t border-platinum/10">
-            <p className="text-platinum/60 text-xs mb-4 md:mb-0">
+          <div className={`flex flex-col md:flex-row items-center justify-between pt-6 border-t transition-colors duration-700 ${isLightMode ? "border-gray-200" : "border-platinum/10"}`}>
+            <p className={`text-xs mb-4 md:mb-0 transition-colors duration-700 ${isLightMode ? "text-gray-400" : "text-platinum/60"}`}>
               © 2025 Payve
             </p>
             <div className="flex items-center gap-5">
-              <a href="#" className="text-platinum/60 hover:text-ivory transition-colors text-xs">Privacy</a>
-              <a href="#" className="text-platinum/60 hover:text-ivory transition-colors text-xs">Terms</a>
+              <a href="#" className={`text-xs transition-colors duration-700 ${isLightMode ? "text-gray-400 hover:text-[#505050]" : "text-platinum/60 hover:text-ivory"}`}>Privacy</a>
+              <a href="#" className={`text-xs transition-colors duration-700 ${isLightMode ? "text-gray-400 hover:text-[#505050]" : "text-platinum/60 hover:text-ivory"}`}>Terms</a>
               <div className="flex items-center gap-3 ml-3">
-                <a href="#" className="text-platinum/60 hover:text-ivory transition-colors">
+                <a href="#" className={`transition-colors duration-700 ${isLightMode ? "text-gray-400 hover:text-[#505050]" : "text-platinum/60 hover:text-ivory"}`}>
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                   </svg>
                 </a>
-                <a href="#" className="text-platinum/60 hover:text-ivory transition-colors">
+                <a href="#" className={`transition-colors duration-700 ${isLightMode ? "text-gray-400 hover:text-[#505050]" : "text-platinum/60 hover:text-ivory"}`}>
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                   </svg>
