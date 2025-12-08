@@ -5,6 +5,7 @@ import { Placeholder } from "@/app/components/Placeholder";
 import { StreamingText } from "@/app/components/StreamingText";
 import { AgentWorkflow } from "@/app/components/AgentWorkflow";
 import { MinutesCounter } from "@/app/components/MinutesCounter";
+import { BankConnectTerminal } from "@/app/components/BankConnectTerminal";
 
 export default function Home() {
   const revealRefs = useRef<HTMLElement[]>([]);
@@ -260,10 +261,7 @@ export default function Home() {
 
             {/* Visual */}
             <div ref={addToRefs} className="reveal stagger-1">
-               <Placeholder 
-                 label="Ecosystem Integration" 
-                 minHeight="min-h-[500px]"
-               />
+               <BankConnectTerminal />
             </div>
           </div>
         </div>
@@ -290,7 +288,6 @@ export default function Home() {
 
             {/* Right: Counter */}
             <div ref={addToRefs} className="reveal stagger-1 flex flex-col items-center justify-center text-center p-12 backdrop-blur-sm border rounded-2xl bg-gray-50 border-gray-200">
-               <p className="text-sm uppercase tracking-widest mb-4 text-gray-400">Minutes Deployed</p>
                <MinutesCounter isLightMode={true} />
                <div className="mt-4 h-1 w-24 bg-gradient-to-r from-transparent via-sage/50 to-transparent" />
             </div>

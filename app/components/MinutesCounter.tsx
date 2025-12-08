@@ -11,8 +11,12 @@ export const MinutesCounter = ({ isLightMode }: { isLightMode?: boolean }) => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !hasStarted) {
+        if (entries[0].isIntersecting) {
             setHasStarted(true);
+        } else {
+            setHasStarted(false);
+            setCount(0);
+            startTimeRef.current = null;
         }
       },
       { threshold: 0.1 }
@@ -22,7 +26,7 @@ export const MinutesCounter = ({ isLightMode }: { isLightMode?: boolean }) => {
         observer.observe(containerRef.current);
     }
     return () => observer.disconnect();
-  }, [hasStarted]);
+  }, []); // Remove hasStarted dependency to prevent recreation of observer on state change
 
   useEffect(() => {
     if (!hasStarted) return;
@@ -93,8 +97,13 @@ export const MinutesCounter = ({ isLightMode }: { isLightMode?: boolean }) => {
       </svg>
       
       {/* Counter Text */}
-      <div className="font-display text-5xl md:text-6xl text-sage tabular-nums tracking-tighter relative z-10">
-        {count.toLocaleString()}{count >= 1000000 ? "+" : ""}
+      <div className="relative z-10 flex flex-col items-center">
+        <div className="font-display text-5xl md:text-6xl text-sage tabular-nums tracking-tighter">
+          {count.toLocaleString()}{count >= 1000000 ? "+" : ""}
+        </div>
+        <div className="text-sm uppercase tracking-widest mt-2 text-gray-400">
+          Minutes Deployed
+        </div>
       </div>
     </div>
   );

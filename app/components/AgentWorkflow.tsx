@@ -39,9 +39,12 @@ const MATCH_DATA = {
 export const AgentWorkflow = () => {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [isTyping, setIsTyping] = useState(false);
   const [status, setStatus] = useState<"idle" | "running" | "completed">("idle");
   const [mounted, setMounted] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const hasRunOnce = useRef(false);
 
   // Auto-scroll to bottom
   useEffect(() => {
@@ -50,8 +53,31 @@ export const AgentWorkflow = () => {
     }
   }, [logs]);
 
+  // Intersection Observer to detect when component is visible
   useEffect(() => {
     setMounted(true);
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasRunOnce.current) {
+          setIsInView(true);
+          hasRunOnce.current = true;
+        }
+      },
+      { threshold: 0.3 } // Trigger when 30% visible
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Run the sequence when component becomes visible
+  useEffect(() => {
+    if (!isInView) return;
+    
     let isMounted = true;
     
     const addLog = (text: string, type: LogEntry["type"] = "info") => {
@@ -156,11 +182,10 @@ export const AgentWorkflow = () => {
     return () => {
       isMounted = false;
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Run once on mount
+  }, [isInView]);
 
   return (
-    <div className="w-full h-[600px] bg-[#1a1a1a] rounded-lg border border-white/10 overflow-hidden flex flex-col font-mono text-xs md:text-sm shadow-2xl relative group">
+    <div ref={containerRef} className="w-full h-[600px] bg-[#1a1a1a] rounded-lg border border-white/10 overflow-hidden flex flex-col font-mono text-xs md:text-sm shadow-2xl relative group">
       {/* Header */}
       <div className="h-8 bg-[#2a2a2a] border-b border-white/5 flex items-center px-4 gap-2">
         <div className="flex gap-1.5">
