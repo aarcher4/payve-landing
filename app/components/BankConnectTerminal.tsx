@@ -1,10 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Loader2, Check } from "lucide-react";
 
 export const BankConnectTerminal = () => {
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { amount: 0.5 }); // Trigger when 50% visible
+
   const [status, setStatus] = useState<"streaming" | "completed">("streaming");
   const [stepIndex, setStepIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
@@ -18,8 +21,18 @@ export const BankConnectTerminal = () => {
   // A slightly softer, yet vibrant green (Mint/Emerald blend)
   const successColor = "#34D399"; 
 
+  // Reset state when out of view
   useEffect(() => {
-    if (status === "completed") return;
+    if (!isInView) {
+      setStatus("streaming");
+      setStepIndex(0);
+      setDisplayText("");
+    }
+  }, [isInView]);
+
+  useEffect(() => {
+    // Only run animation if in view and not completed
+    if (!isInView || status === "completed") return;
 
     let currentText = "";
     const targetText = steps[stepIndex];
@@ -36,23 +49,28 @@ export const BankConnectTerminal = () => {
         
         // Wait before moving to next step
         setTimeout(() => {
+          // Check if we're still in view before proceeding
           if (stepIndex < steps.length - 1) {
-            setStepIndex(prev => prev + 1);
-            setDisplayText(""); // Clear for next phrase
+             // Only increment if we haven't been reset (which sets index to 0)
+             setStepIndex(prev => {
+                if (prev === stepIndex) return prev + 1; 
+                return prev;
+             });
+             setDisplayText(""); // Clear for next phrase
           } else {
             setStatus("completed");
           }
         }, 1500); // Pause to read
       }
-    }, 40); // Slightly faster typing for multiple steps
+    }, 40);
 
     return () => {
       clearInterval(typingInterval);
     };
-  }, [stepIndex, status]);
+  }, [stepIndex, status, isInView]); // Depend on isInView to restart/pause
 
   return (
-    <div className="w-full max-w-2xl h-[140px] bg-[#1a1a1a] rounded-lg border border-white/10 overflow-hidden flex flex-col font-mono text-xs md:text-sm shadow-2xl relative group mx-auto">
+    <div ref={containerRef} className="w-full max-w-2xl h-[140px] bg-[#1a1a1a] rounded-lg border border-white/10 overflow-hidden flex flex-col font-mono text-xs md:text-sm shadow-2xl relative group mx-auto">
       {/* Header */}
       <div className="h-8 bg-[#2a2a2a] border-b border-white/5 flex items-center px-4 gap-2 shrink-0">
         <div className="flex gap-1.5">
