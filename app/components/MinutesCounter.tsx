@@ -78,7 +78,7 @@ export const MinutesCounter = ({ isLightMode }: { isLightMode?: boolean }) => {
         />
         {/* Progress Indicator */}
         <circle
-          stroke={isLightMode ? "#505050" : "#C0C0C0"}
+          stroke="#8FB3A1"
           strokeWidth={stroke}
           fill="transparent"
           r={normalizedRadius}
@@ -87,7 +87,7 @@ export const MinutesCounter = ({ isLightMode }: { isLightMode?: boolean }) => {
           style={{
             strokeDasharray: `${circumference} ${circumference}`,
             strokeDashoffset,
-            transition: 'stroke-dashoffset 0.1s linear, stroke 0.7s ease-in-out'
+            transition: 'stroke 0.7s ease-in-out'
           }}
         />
       </svg>
