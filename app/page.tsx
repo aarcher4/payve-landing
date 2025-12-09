@@ -6,23 +6,39 @@ import { StreamingText } from "@/app/components/StreamingText";
 import { AgentWorkflow } from "@/app/components/AgentWorkflow";
 import { MinutesCounter } from "@/app/components/MinutesCounter";
 import { BankConnectTerminal } from "@/app/components/BankConnectTerminal";
+import { SystemIntegrationMesh } from "@/app/components/SystemIntegrationMesh";
 
 export default function Home() {
   const revealRefs = useRef<HTMLElement[]>([]);
   const [scrolled, setScrolled] = useState(false);
   const [headerOverWhite, setHeaderOverWhite] = useState(false);
   const triggerRef = useRef<HTMLElement>(null);
+  const integrationRef = useRef<HTMLElement>(null);
   const navHeight = 100; // Approximate header height
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 100);
       
-      if (triggerRef.current) {
-        const rect = triggerRef.current.getBoundingClientRect();
-        // Switch nav colors when the header overlaps with the white section
-        setHeaderOverWhite(rect.top <= navHeight && rect.bottom >= navHeight);
+      let isOverWhite = false;
+
+      // Check integration section
+      if (integrationRef.current) {
+        const rect = integrationRef.current.getBoundingClientRect();
+        if (rect.top <= navHeight && rect.bottom >= navHeight) {
+          isOverWhite = true;
+        }
       }
+
+      // Check massive action section (if not already over white)
+      if (!isOverWhite && triggerRef.current) {
+        const rect = triggerRef.current.getBoundingClientRect();
+        if (rect.top <= navHeight && rect.bottom >= navHeight) {
+          isOverWhite = true;
+        }
+      }
+
+      setHeaderOverWhite(isOverWhite);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -262,6 +278,34 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Scene 3.5: System Integration (New) */}
+      <section ref={integrationRef} className="py-24 px-6 md:px-12 bg-white relative">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-stretch">
+             {/* Left: Mesh Visualization */}
+             <div ref={addToRefs} className="reveal h-full">
+                <SystemIntegrationMesh />
+             </div>
+
+             {/* Right: Text Content */}
+             <div ref={addToRefs} className="reveal stagger-1 flex flex-col justify-center">
+                <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-[#505050] leading-tight mb-6">
+                  We live in your systems.
+                </h2>
+                <div className="space-y-6 text-gray-500 text-lg leading-relaxed font-light">
+                  <p>
+                    We integrate into your CRM, internal messaging applications, email, 
+                    and banking systems to create a seamless agentic experience.
+                  </p>
+                  <p>
+                    We meet you where you are at—a <span className="text-sage font-medium">seamless layer</span> in between your systems.
+                  </p>
+                </div>
+             </div>
+          </div>
+        </div>
+      </section>
+
       {/* Scene 4: Massive Action */}
       <section ref={triggerRef} className="py-24 md:py-32 px-6 md:px-12 relative overflow-hidden bg-white border-t border-gray-200">
         
@@ -350,4 +394,3 @@ export default function Home() {
     </main>
   );
 }
-
