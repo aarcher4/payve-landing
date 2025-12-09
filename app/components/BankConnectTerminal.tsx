@@ -14,9 +14,10 @@ export const BankConnectTerminal = () => {
   
   const steps = [
     "Surveying purchase orders...",
-    "Analyzing for discount opportunities...",
-    "Forecasting cash flow...",
-    "Connecting bank account..."
+    "Analyzing discount opportunities...",
+    "Referencing profitability expectations...",
+    "Connecting bank account...",
+    "Forecasting cash flow..."
   ];
 
   // A slightly softer, yet vibrant green (Mint/Emerald blend)
@@ -140,7 +141,7 @@ export const BankConnectTerminal = () => {
               
               <div className="flex flex-col">
                 <span className="text-white/70 font-medium tracking-wide uppercase text-sm">
-                  New level of capital efficiency
+                  PAYMENT REVIEW COMPLETE
                 </span>
               </div>
             </motion.div>

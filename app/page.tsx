@@ -161,7 +161,7 @@ export default function Home() {
               <div className="space-y-6 text-platinum text-lg leading-relaxed font-light max-w-xl">
                 <p>
                   Every shipment. Every inspection. Every invoice.
-                  Every decision ripples through the whole.
+                  Every decision ripples through the chain.
                 </p>
                 <p>
                   For too long, operators have managed this complexity
@@ -199,7 +199,7 @@ export default function Home() {
                     Not software. <span className="text-ivory font-medium">An extension of your team.</span>
                   </p>
                   <p className="text-ivory/90 pt-4">
-                    This business never sleeps—but your operators work hard enough. 
+                    This business never sleeps. 
                     <span className="text-sage"> Let our agents handle the tireless operations</span>, 
                     so you can focus on what matters most.
                   </p>
