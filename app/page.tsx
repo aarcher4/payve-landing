@@ -124,7 +124,7 @@ export default function Home() {
           style={{ animationDelay: "0.8s" }}
         >
            <div className="max-w-4xl mx-auto text-center">
-              <p className="text-ivory/60 text-xs uppercase tracking-[0.2em] mb-4 font-medium">Trusted by supply chain operators:</p>
+              <p className="text-ivory/60 text-xs uppercase tracking-[0.2em] mb-4 font-medium">Trusted by supply chain operators and innovators:</p>
               <div className="flex flex-wrap items-center justify-center gap-3">
                  <div className="h-12 w-32 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors">
                     <span className="font-display text-ivory text-sm">Fortune Growers</span>
