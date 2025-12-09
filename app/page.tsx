@@ -236,25 +236,20 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div ref={addToRefs} className="reveal">
               <h2 className="font-display text-4xl md:text-5xl text-ivory mb-6 leading-tight">
-                We meet you where you are.
+                Every dollar. Every day. Every detail.
               </h2>
-              <p className="text-xl text-sage font-light mb-8">
-                Deeply integrated into your business.
-              </p>
               
               <div className="space-y-8 text-platinum text-lg font-light leading-relaxed">
                 <p>
-                  We integrate into your financial ecosystem, delivering a full suite of tools 
-                  to boost productivity and capital efficiency.
+                  Short-term wins compound into long-term gains. We're here to check every number, 
+                  enforce every policy, and capture every opportunity to optimize your cash position and profitability.
                 </p>
                 <p>
-                  Seamlessly connecting with your CRM, inspection reports, and transportation data, 
-                  we live where you work—in your email and WhatsApp.
+                  An extra set of eyes validating each transaction. Catching discrepancies before 
+                  they become losses. Ensuring compliance isn't just a checkbox—it's continuous.
                 </p>
                 <p>
-                  We are the agentic layer that unifies these data points into beautiful systems, 
-                  helping you accomplish more, faster, and with greater accuracy. 
-                  The agentic zero in your financial ecosystem.
+                  Capital efficiency isn't a goal. It's the discipline that lets you grow.
                 </p>
               </div>
             </div>

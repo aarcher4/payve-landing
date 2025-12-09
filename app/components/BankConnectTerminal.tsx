@@ -13,6 +13,7 @@ export const BankConnectTerminal = () => {
   const [displayText, setDisplayText] = useState("");
   
   const steps = [
+    "Surveying purchase orders...",
     "Analyzing for discount opportunities...",
     "Forecasting cash flow...",
     "Connecting bank account..."
