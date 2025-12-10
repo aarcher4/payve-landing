@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 
-export const MinutesCounter = ({ isLightMode }: { isLightMode?: boolean }) => {
+export const MinutesCounter = ({ isLightMode, className = "" }: { isLightMode?: boolean, className?: string }) => {
   const [count, setCount] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -54,54 +54,14 @@ export const MinutesCounter = ({ isLightMode }: { isLightMode?: boolean }) => {
     return () => cancelAnimationFrame(animationId);
   }, [hasStarted]);
 
-  // Calculate progress percentage (0 to 1)
-  const progressPercentage = Math.min(count / 1000000, 1);
-  const radius = 180; // Radius of the circle
-  const stroke = 4; // Thickness of the stroke
-  const normalizedRadius = radius - stroke * 2;
-  const circumference = normalizedRadius * 2 * Math.PI;
-  const strokeDashoffset = circumference - progressPercentage * circumference;
-
   return (
-    <div ref={containerRef} className="relative flex items-center justify-center w-[400px] h-[400px]">
-      {/* Progress Circle */}
-      <svg
-        height={radius * 2}
-        width={radius * 2}
-        className="absolute inset-0 m-auto rotate-[-90deg] transform"
-      >
-        {/* Background Track */}
-        <circle
-          stroke={isLightMode ? "rgba(0, 0, 0, 0.1)" : "rgba(255, 255, 255, 0.1)"}
-          strokeWidth={stroke}
-          fill="transparent"
-          r={normalizedRadius}
-          cx={radius}
-          cy={radius}
-          style={{ transition: 'stroke 0.7s ease-in-out' }}
-        />
-        {/* Progress Indicator */}
-        <circle
-          stroke="#8FB3A1"
-          strokeWidth={stroke}
-          fill="transparent"
-          r={normalizedRadius}
-          cx={radius}
-          cy={radius}
-          style={{
-            strokeDasharray: `${circumference} ${circumference}`,
-            strokeDashoffset,
-            transition: 'stroke 0.7s ease-in-out'
-          }}
-        />
-      </svg>
-      
+    <div ref={containerRef} className={`relative flex items-center justify-center ${className}`}>
       {/* Counter Text */}
       <div className="relative z-10 flex flex-col items-center">
-        <div className="font-display text-5xl md:text-6xl text-sage tabular-nums tracking-tighter">
+        <div className="font-display text-4xl md:text-5xl lg:text-6xl text-sage tabular-nums tracking-tighter">
           {count.toLocaleString()}{count >= 1000000 ? "+" : ""}
         </div>
-        <div className="text-sm uppercase tracking-widest mt-2 text-gray-400">
+        <div className="text-xs md:text-sm uppercase tracking-widest mt-2 text-gray-400">
           Minutes Deployed
         </div>
       </div>

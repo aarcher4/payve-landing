@@ -7,13 +7,18 @@ import { AgentWorkflow } from "@/app/components/AgentWorkflow";
 import { MinutesCounter } from "@/app/components/MinutesCounter";
 import { BankConnectTerminal } from "@/app/components/BankConnectTerminal";
 import { SystemIntegrationMesh } from "@/app/components/SystemIntegrationMesh";
+import { CustomerSpotlight } from "@/app/components/CustomerSpotlight";
+import { CallToAction } from "@/app/components/CallToAction";
+import { ContactModal } from "@/app/components/ContactModal";
 
 export default function Home() {
   const revealRefs = useRef<HTMLElement[]>([]);
   const [scrolled, setScrolled] = useState(false);
   const [headerOverWhite, setHeaderOverWhite] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const triggerRef = useRef<HTMLElement>(null);
   const integrationRef = useRef<HTMLElement>(null);
+  const spotlightRef = useRef<HTMLElement>(null);
   const navHeight = 100; // Approximate header height
 
   useEffect(() => {
@@ -33,6 +38,14 @@ export default function Home() {
       // Check massive action section (if not already over white)
       if (!isOverWhite && triggerRef.current) {
         const rect = triggerRef.current.getBoundingClientRect();
+        if (rect.top <= navHeight && rect.bottom >= navHeight) {
+          isOverWhite = true;
+        }
+      }
+
+      // Check spotlight section
+      if (!isOverWhite && spotlightRef.current) {
+        const rect = spotlightRef.current.getBoundingClientRect();
         if (rect.top <= navHeight && rect.bottom >= navHeight) {
           isOverWhite = true;
         }
@@ -69,6 +82,9 @@ export default function Home() {
       revealRefs.current.push(el);
     }
   };
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
   return (
     <main className="min-h-screen bg-custom-grey">
@@ -126,7 +142,10 @@ export default function Home() {
               className="animate-fade-up"
               style={{ animationDelay: "0.6s" }}
             >
-              <button className="bg-white text-[#505050] text-base px-10 py-4 rounded-full font-medium hover:bg-white/90 hover:scale-105 transition-all duration-300 shadow-2xl">
+              <button 
+                onClick={handleOpenModal}
+                className="bg-white text-[#505050] text-base px-10 py-4 rounded-full font-medium hover:bg-white/90 hover:scale-105 transition-all duration-300 shadow-2xl"
+              >
                 Talk to us
               </button>
             </div>
@@ -140,19 +159,63 @@ export default function Home() {
           style={{ animationDelay: "0.8s" }}
         >
            <div className="max-w-4xl mx-auto text-center">
-              <p className="text-ivory/60 text-xs uppercase tracking-[0.2em] mb-4 font-medium">Trusted by supply chain operators and innovators:</p>
-              <div className="flex flex-wrap items-center justify-center gap-3">
-                 <div className="h-12 w-32 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors">
-                    <span className="font-display text-ivory text-sm">Fortune Growers</span>
+              <p className="text-white/70 text-xs uppercase tracking-[0.2em] mb-6 font-medium">Trusted by supply chain operators and innovators:</p>
+              <div className="flex flex-wrap items-center justify-center gap-6">
+                 <div className="h-16 w-40 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors p-4 relative group">
+                    <img 
+                      src="/partners/partner-1.png" 
+                      alt="Partner Logo 1" 
+                      className="max-w-full max-h-full object-contain filter grayscale brightness-0 invert opacity-70 group-hover:opacity-100 transition-opacity duration-300 translate-y-1"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                        const container = (e.target as HTMLImageElement).parentElement;
+                        const placeholder = container?.querySelector('span');
+                        if (placeholder) placeholder.style.display = 'flex';
+                      }}
+                    />
+                    <span className="text-platinum/40 text-[10px] absolute" style={{ display: 'none' }}>Partner Logo 1</span>
                  </div>
-                 <div className="h-12 w-32 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors">
-                    <span className="text-platinum/40 text-[10px]">Partner Logo</span>
+                 <div className="h-16 w-40 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors p-0 relative group">
+                    <img 
+                      src="/partners/partner-2.png" 
+                      alt="Partner Logo 2" 
+                      className="max-w-full max-h-full scale-[1.8] object-contain filter grayscale brightness-0 invert opacity-70 group-hover:opacity-100 transition-opacity duration-300"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                        const container = (e.target as HTMLImageElement).parentElement;
+                        const placeholder = container?.querySelector('span');
+                        if (placeholder) placeholder.style.display = 'flex';
+                      }}
+                    />
+                    <span className="text-platinum/40 text-[10px] absolute" style={{ display: 'none' }}>Partner Logo 2</span>
                  </div>
-                 <div className="h-12 w-32 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors">
-                    <span className="text-platinum/40 text-[10px]">Partner Logo</span>
+                 <div className="h-16 w-40 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors p-4 relative group">
+                    <img 
+                      src="/partners/partner-3.png" 
+                      alt="Partner Logo 3" 
+                      className="max-w-full max-h-full object-contain filter grayscale brightness-0 invert opacity-70 group-hover:opacity-100 transition-opacity duration-300 translate-y-1"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                        const container = (e.target as HTMLImageElement).parentElement;
+                        const placeholder = container?.querySelector('span');
+                        if (placeholder) placeholder.style.display = 'flex';
+                      }}
+                    />
+                    <span className="text-platinum/40 text-[10px] absolute" style={{ display: 'none' }}>Partner Logo 3</span>
                  </div>
-                 <div className="h-12 w-32 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors">
-                    <span className="text-platinum/40 text-[10px]">Partner Logo</span>
+                 <div className="h-16 w-40 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors p-2 relative group">
+                    <img 
+                      src="/partners/partner-4.png" 
+                      alt="Partner Logo 4" 
+                      className="max-w-full max-h-full scale-[1.2] object-contain filter grayscale brightness-0 invert opacity-70 group-hover:opacity-100 transition-opacity duration-300"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                        const container = (e.target as HTMLImageElement).parentElement;
+                        const placeholder = container?.querySelector('span');
+                        if (placeholder) placeholder.style.display = 'flex';
+                      }}
+                    />
+                    <span className="text-platinum/40 text-[10px] absolute" style={{ display: 'none' }}>Partner Logo 4</span>
                  </div>
               </div>
            </div>
@@ -249,8 +312,8 @@ export default function Home() {
       {/* Scene 3: Deep Integration */}
       <section id="about" className="py-24 md:py-32 px-6 md:px-12 bg-graphite/30 relative border-t border-platinum/10">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div ref={addToRefs} className="reveal">
+          <div className="grid md:grid-cols-2 gap-16 items-stretch">
+            <div ref={addToRefs} className="reveal flex flex-col justify-center">
               <h2 className="font-display text-4xl md:text-5xl text-ivory mb-6 leading-tight">
                 Every dollar. Every day. Every detail.
               </h2>
@@ -271,8 +334,15 @@ export default function Home() {
             </div>
 
             {/* Visual */}
-            <div ref={addToRefs} className="reveal stagger-1">
-               <BankConnectTerminal />
+            <div ref={addToRefs} className="reveal stagger-1 relative flex items-center justify-center">
+               {/* Background Image Placeholder */}
+               <div 
+                 className="absolute -top-24 -bottom-24 left-0 right-0 z-0 bg-white/5 rounded-2xl border border-white/10 bg-cover bg-center bg-no-repeat"
+                 style={{ backgroundImage: "url('/images/placeholders/terminal-bg.png')" }}
+               />
+               <div className="relative z-10 w-full">
+                  <BankConnectTerminal />
+               </div>
             </div>
           </div>
         </div>
@@ -310,11 +380,11 @@ export default function Home() {
       <section ref={triggerRef} className="py-24 md:py-32 px-6 md:px-12 relative overflow-hidden bg-white border-t border-gray-200">
         
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-16 items-stretch">
             
             {/* Left: Text */}
-            <div ref={addToRefs} className="reveal space-y-8">
-              <h2 className="font-display text-4xl md:text-5xl lg:text-6xl leading-tight text-[#505050]">
+            <div ref={addToRefs} className="reveal space-y-8 flex flex-col justify-center">
+              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl leading-tight text-[#505050]">
                 Deploying a workforce of massive action.
               </h2>
               <div className="space-y-6 text-lg md:text-xl font-light text-gray-500">
@@ -326,71 +396,39 @@ export default function Home() {
             </div>
 
             {/* Right: Counter */}
-            <div ref={addToRefs} className="reveal stagger-1 flex flex-col items-center justify-center text-center p-12 backdrop-blur-sm border rounded-2xl bg-gray-50 border-gray-200">
-               <MinutesCounter isLightMode={true} />
-               <div className="mt-4 h-1 w-24 bg-gradient-to-r from-transparent via-sage/50 to-transparent" />
+            <div ref={addToRefs} className="reveal stagger-1 flex flex-col text-center backdrop-blur-sm border rounded-2xl bg-gray-50 border-gray-200 w-full relative md:h-auto">
+               <div className="p-6 flex flex-col items-center justify-center w-full h-full md:absolute md:inset-0">
+                 <MinutesCounter isLightMode={true} className="w-auto h-auto max-h-full max-w-full" />
+                 <div className="mt-4 h-1 w-24 bg-gradient-to-r from-transparent via-sage/50 to-transparent shrink-0" />
+               </div>
             </div>
 
           </div>
         </div>
       </section>
 
+      {/* Customer Spotlight */}
+      <section ref={spotlightRef} className="py-24 md:py-32 px-6 md:px-12 relative overflow-hidden bg-white border-t border-gray-100">
+        <div className="max-w-7xl mx-auto relative z-10">
+           <div ref={addToRefs} className="reveal">
+              <CustomerSpotlight />
+           </div>
+        </div>
+      </section>
+
+      {/* Call To Action */}
+      <CallToAction onOpenModal={handleOpenModal} />
+
       {/* Footer */}
-      <footer className="transition-colors duration-700 border-t py-12 px-6 md:px-12 bg-white border-gray-200">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8 mb-12">
-            {/* Brand */}
-            <div className="md:col-span-2">
-              <div className="font-display text-lg mb-3 text-[#505050]">PAYVE</div>
-              <p className="text-sm leading-relaxed max-w-xs text-gray-500">
-                Orchestrated precision for supply chains that <span className="font-serif italic">feed the world</span>.
-              </p>
-            </div>
-
-            {/* Platform Links */}
-            <div>
-              <h4 className="font-display text-sm mb-3 text-[#505050]">Platform</h4>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-sm transition-colors duration-700 text-gray-500 hover:text-[#505050]">Overview</a></li>
-                <li><a href="#" className="text-sm transition-colors duration-700 text-gray-500 hover:text-[#505050]">Documentation</a></li>
-              </ul>
-            </div>
-
-            {/* Company Links */}
-            <div>
-              <h4 className="font-display text-sm mb-3 text-[#505050]">Company</h4>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-sm transition-colors duration-700 text-gray-500 hover:text-[#505050]">About</a></li>
-                <li><a href="#" className="text-sm transition-colors duration-700 text-gray-500 hover:text-[#505050]">Perspectives</a></li>
-                <li><a href="#" className="text-sm transition-colors duration-700 text-gray-500 hover:text-[#505050]">Connect</a></li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Bottom Footer */}
-          <div className="flex flex-col md:flex-row items-center justify-between pt-6 border-t transition-colors duration-700 border-gray-200">
-            <p className="text-xs mb-4 md:mb-0 transition-colors duration-700 text-gray-400">
-              © 2025 Payve
-            </p>
-            <div className="flex items-center gap-5">
-              <a href="#" className="text-xs transition-colors duration-700 text-gray-400 hover:text-[#505050]">Privacy</a>
-              <a href="#" className="text-xs transition-colors duration-700 text-gray-400 hover:text-[#505050]">Terms</a>
-              <div className="flex items-center gap-3 ml-3">
-                <a href="#" className="transition-colors duration-700 text-gray-400 hover:text-[#505050]">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                  </svg>
-                </a>
-                <a href="#" className="transition-colors duration-700 text-gray-400 hover:text-[#505050]">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
+      <footer className="transition-colors duration-700 border-t py-6 px-6 md:px-12 bg-white border-gray-200">
+        <div className="max-w-5xl mx-auto flex items-center justify-between">
+          <p className="text-xs transition-colors duration-700 text-gray-400">
+            © 2025 Payve
+          </p>
         </div>
       </footer>
+      
+      <ContactModal isOpen={isModalOpen} onClose={handleCloseModal} />
     </main>
   );
 }

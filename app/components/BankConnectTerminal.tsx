@@ -72,7 +72,7 @@ export const BankConnectTerminal = () => {
   }, [stepIndex, status, isInView]); // Depend on isInView to restart/pause
 
   return (
-    <div ref={containerRef} className="w-full max-w-2xl h-[140px] bg-[#1a1a1a] rounded-lg border border-white/10 overflow-hidden flex flex-col font-mono text-xs md:text-sm shadow-2xl relative group mx-auto">
+    <div ref={containerRef} className="w-full max-w-lg h-[140px] bg-[#1a1a1a] rounded-lg border border-white/10 overflow-hidden flex flex-col font-mono text-xs md:text-sm shadow-2xl relative group mx-auto">
       {/* Header */}
       <div className="h-8 bg-[#2a2a2a] border-b border-white/5 flex items-center px-4 gap-2 shrink-0">
         <div className="flex gap-1.5">
