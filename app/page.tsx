@@ -108,7 +108,7 @@ export default function Home() {
       </nav>
 
       {/* Scene 1: Arrival (Hero) */}
-      <section className="relative h-screen flex flex-col overflow-hidden">
+      <section className="relative min-h-screen flex flex-col overflow-hidden">
         {/* Full-screen Hero Background Image */}
         <div 
           className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
@@ -119,7 +119,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40 z-10" />
         
         {/* Hero Content - Centered */}
-        <div className="relative z-30 w-full h-full flex items-center justify-center px-6 md:px-12">
+        <div className="relative z-30 w-full flex-1 flex flex-col items-center justify-center px-6 md:px-12 py-20 md:py-0">
           <div className="text-center max-w-5xl mx-auto">
             {/* Main Headline */}
             <h1 
@@ -155,13 +155,13 @@ export default function Home() {
 
         {/* Logo Section Overlay */}
         <div 
-          className="absolute bottom-8 left-0 right-0 z-30 px-6 animate-fade-up"
+          className="relative w-full z-30 px-6 animate-fade-up pb-8 md:absolute md:bottom-8 md:pb-0"
           style={{ animationDelay: "0.8s" }}
         >
            <div className="max-w-4xl mx-auto text-center">
               <p className="text-white/70 text-xs uppercase tracking-[0.2em] mb-6 font-medium">Trusted by supply chain operators and innovators:</p>
-              <div className="flex flex-wrap items-center justify-center gap-6">
-                 <div className="h-16 w-40 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors p-4 relative group">
+              <div className="grid grid-cols-2 gap-4 place-items-center md:flex md:flex-wrap md:justify-center md:gap-6">
+                 <div className="h-12 w-32 md:h-16 md:w-40 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors p-4 relative group">
                     <img 
                       src="/partners/partner-1.png" 
                       alt="Partner Logo 1" 
@@ -175,7 +175,7 @@ export default function Home() {
                     />
                     <span className="text-platinum/40 text-[10px] absolute" style={{ display: 'none' }}>Partner Logo 1</span>
                  </div>
-                 <div className="h-16 w-40 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors p-0 relative group">
+                 <div className="h-12 w-32 md:h-16 md:w-40 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors p-0 relative group">
                     <img 
                       src="/partners/partner-2.png" 
                       alt="Partner Logo 2" 
@@ -189,7 +189,7 @@ export default function Home() {
                     />
                     <span className="text-platinum/40 text-[10px] absolute" style={{ display: 'none' }}>Partner Logo 2</span>
                  </div>
-                 <div className="h-16 w-40 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors p-4 relative group">
+                 <div className="h-12 w-32 md:h-16 md:w-40 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors p-4 relative group">
                     <img 
                       src="/partners/partner-3.png" 
                       alt="Partner Logo 3" 
@@ -203,7 +203,7 @@ export default function Home() {
                     />
                     <span className="text-platinum/40 text-[10px] absolute" style={{ display: 'none' }}>Partner Logo 3</span>
                  </div>
-                 <div className="h-16 w-40 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors p-2 relative group">
+                 <div className="h-12 w-32 md:h-16 md:w-40 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors p-2 relative group">
                     <img 
                       src="/partners/partner-4.png" 
                       alt="Partner Logo 4" 
@@ -232,7 +232,7 @@ export default function Home() {
           
           {/* Header - Left Aligned */}
           <div className="grid md:grid-cols-2 gap-12 items-center mb-24">
-            <div ref={addToRefs} className="reveal">
+            <div ref={addToRefs} className="reveal order-2 md:order-1">
                <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-ivory leading-[1.1] mb-6">
                 Your supply chain is not a sequence.<br />
                 <span className="text-sage">It is a living system.</span>
@@ -254,7 +254,7 @@ export default function Home() {
             </div>
             
             {/* Visual Placeholder */}
-            <div ref={addToRefs} className="reveal stagger-1">
+            <div ref={addToRefs} className="reveal stagger-1 order-1 md:order-2">
                <Placeholder 
                  label="Live Network Graph" 
                  minHeight="min-h-[500px]" 
@@ -313,7 +313,7 @@ export default function Home() {
       <section id="about" className="py-24 md:py-32 px-6 md:px-12 bg-graphite/30 relative border-t border-platinum/10">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 items-stretch">
-            <div ref={addToRefs} className="reveal flex flex-col justify-center">
+            <div ref={addToRefs} className="reveal flex flex-col justify-center order-2 md:order-1">
               <h2 className="font-display text-4xl md:text-5xl text-ivory mb-6 leading-tight">
                 Every dollar. Every day. Every detail.
               </h2>
@@ -334,10 +334,10 @@ export default function Home() {
             </div>
 
             {/* Visual */}
-            <div ref={addToRefs} className="reveal stagger-1 relative flex items-center justify-center">
+            <div ref={addToRefs} className="reveal stagger-1 relative flex items-center justify-center order-1 md:order-2">
                {/* Background Image Placeholder */}
                <div 
-                 className="absolute -top-24 -bottom-24 left-0 right-0 z-0 bg-white/5 rounded-2xl border border-white/10 bg-cover bg-center bg-no-repeat"
+                 className="absolute -top-8 -bottom-8 md:-top-24 md:-bottom-24 left-0 right-0 z-0 bg-white/5 rounded-2xl border border-white/10 bg-cover bg-center bg-no-repeat"
                  style={{ backgroundImage: "url('/images/placeholders/terminal-bg.png')" }}
                />
                <div className="relative z-10 w-full">
@@ -380,7 +380,7 @@ export default function Home() {
       <section ref={triggerRef} className="py-24 md:py-32 px-6 md:px-12 relative overflow-hidden bg-white border-t border-gray-200">
         
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="grid md:grid-cols-2 gap-16 items-stretch">
+          <div className="flex flex-col-reverse md:grid md:grid-cols-2 gap-16 items-stretch">
             
             {/* Left: Text */}
             <div ref={addToRefs} className="reveal space-y-8 flex flex-col justify-center">
