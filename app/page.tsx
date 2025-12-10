@@ -207,7 +207,7 @@ export default function Home() {
                     <img 
                       src="/partners/partner-4.png" 
                       alt="Partner Logo 4" 
-                      className="max-w-full max-h-full scale-[0.7] md:scale-[1.2] object-contain filter grayscale brightness-0 invert opacity-70 group-hover:opacity-100 transition-opacity duration-300"
+                      className="max-w-full max-h-full scale-[0.6] md:scale-[1.2] object-contain filter grayscale brightness-0 invert opacity-70 group-hover:opacity-100 transition-opacity duration-300"
                       onError={(e) => {
                         (e.target as HTMLImageElement).style.display = 'none';
                         const container = (e.target as HTMLImageElement).parentElement;
