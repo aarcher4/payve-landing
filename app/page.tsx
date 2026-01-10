@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { Placeholder } from "@/app/components/Placeholder";
 import { StreamingText } from "@/app/components/StreamingText";
 import { AgentWorkflow } from "@/app/components/AgentWorkflow";
@@ -420,11 +421,19 @@ export default function Home() {
       <CallToAction onOpenModal={handleOpenModal} />
 
       {/* Footer */}
-      <footer className="transition-colors duration-700 border-t py-6 px-6 md:px-12 bg-white border-gray-200">
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
+      <footer className="transition-colors duration-700 border-t py-8 px-6 md:px-12 bg-white border-gray-200">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs transition-colors duration-700 text-gray-400">
-            © 2025 Payve
+            &copy; 2025 Payve, Inc. All rights reserved.
           </p>
+          <div className="flex items-center gap-6">
+            <Link href="/privacy" className="text-xs text-gray-500 hover:text-[#505050] transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="text-xs text-gray-500 hover:text-[#505050] transition-colors">
+              Terms of Service
+            </Link>
+          </div>
         </div>
       </footer>
       
