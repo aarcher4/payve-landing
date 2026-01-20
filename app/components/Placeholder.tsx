@@ -15,9 +15,9 @@ export const Placeholder: React.FC<PlaceholderProps> = ({
 }) => {
   return (
     <div className={`relative w-full ${minHeight} bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg overflow-hidden group ${className}`}>
-      {/* Video Background */}
+      {/* Video Background (decorative) */}
       {videoSrc && (
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0" aria-hidden="true">
           <video
             autoPlay
             loop

@@ -88,7 +88,7 @@ export default function Home() {
   const handleCloseModal = () => setIsModalOpen(false);
 
   return (
-    <main className="min-h-screen bg-custom-grey">
+    <main className="min-h-dvh bg-custom-grey">
       {/* Navigation */}
       <nav className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-6 transition-all duration-300 ${
         scrolled 
@@ -102,14 +102,14 @@ export default function Home() {
             PAYVE
           </div>
           <div className="hidden md:flex items-center gap-8">
-            <a href="#platform" className={`text-sm transition-colors duration-700 font-light ${headerOverWhite ? "text-gray-500 hover:text-[#505050]" : "text-platinum hover:text-ivory"}`}>Platform</a>
-            <a href="#about" className={`text-sm transition-colors duration-700 font-light ${headerOverWhite ? "text-gray-500 hover:text-[#505050]" : "text-platinum hover:text-ivory"}`}>About</a>
+            <a href="#platform" className={`text-sm transition-colors duration-700 font-light rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${headerOverWhite ? "text-gray-500 hover:text-[#505050] focus-visible:ring-[#505050] focus-visible:ring-offset-white" : "text-platinum hover:text-ivory focus-visible:ring-sage focus-visible:ring-offset-custom-grey"}`}>Platform</a>
+            <a href="#about" className={`text-sm transition-colors duration-700 font-light rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${headerOverWhite ? "text-gray-500 hover:text-[#505050] focus-visible:ring-[#505050] focus-visible:ring-offset-white" : "text-platinum hover:text-ivory focus-visible:ring-sage focus-visible:ring-offset-custom-grey"}`}>About</a>
           </div>
         </div>
       </nav>
 
       {/* Scene 1: Arrival (Hero) */}
-      <section className="relative min-h-screen flex flex-col overflow-hidden">
+      <section className="relative min-h-dvh flex flex-col overflow-hidden">
         {/* Full-screen Hero Background Image */}
         <div 
           className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
@@ -143,9 +143,9 @@ export default function Home() {
               className="animate-fade-up"
               style={{ animationDelay: "0.6s" }}
             >
-              <button 
+              <button
                 onClick={handleOpenModal}
-                className="bg-white text-[#505050] text-base px-10 py-4 rounded-full font-medium hover:bg-white/90 hover:scale-105 transition-all duration-300 shadow-2xl"
+                className="bg-white text-[#505050] text-base px-10 py-4 rounded-full font-medium hover:bg-white/90 hover:scale-105 transition-all duration-300 shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-custom-grey"
               >
                 Talk to us
               </button>
@@ -163,9 +163,9 @@ export default function Home() {
               <p className="text-white/70 text-xs uppercase tracking-[0.2em] mb-6 font-medium">Trusted by supply chain operators and innovators:</p>
               <div className="grid grid-cols-2 gap-4 place-items-center md:flex md:flex-wrap md:justify-center md:gap-6">
                  <div className="h-12 w-32 md:h-16 md:w-40 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors p-4 relative group">
-                    <img 
-                      src="/partners/partner-1.png" 
-                      alt="Partner Logo 1" 
+                    <img
+                      src="/partners/partner-1.png"
+                      alt=""
                       className="max-w-full max-h-full object-contain filter grayscale brightness-0 invert opacity-70 group-hover:opacity-100 transition-opacity duration-300 translate-y-1"
                       onError={(e) => {
                         (e.target as HTMLImageElement).style.display = 'none';
@@ -174,12 +174,12 @@ export default function Home() {
                         if (placeholder) placeholder.style.display = 'flex';
                       }}
                     />
-                    <span className="text-platinum/40 text-[10px] absolute" style={{ display: 'none' }}>Partner Logo 1</span>
+                    <span className="text-platinum/40 text-[10px] absolute" style={{ display: 'none' }} aria-hidden="true">Partner</span>
                  </div>
                  <div className="h-12 w-32 md:h-16 md:w-40 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors p-0 relative group">
-                    <img 
-                      src="/partners/partner-2.png" 
-                      alt="Partner Logo 2" 
+                    <img
+                      src="/partners/partner-2.png"
+                      alt=""
                       className="max-w-full max-h-full scale-[0.7] md:scale-[1.8] object-contain filter grayscale brightness-0 invert opacity-70 group-hover:opacity-100 transition-opacity duration-300"
                       onError={(e) => {
                         (e.target as HTMLImageElement).style.display = 'none';
@@ -188,12 +188,12 @@ export default function Home() {
                         if (placeholder) placeholder.style.display = 'flex';
                       }}
                     />
-                    <span className="text-platinum/40 text-[10px] absolute" style={{ display: 'none' }}>Partner Logo 2</span>
+                    <span className="text-platinum/40 text-[10px] absolute" style={{ display: 'none' }} aria-hidden="true">Partner</span>
                  </div>
                  <div className="h-12 w-32 md:h-16 md:w-40 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors p-4 relative group">
-                    <img 
-                      src="/partners/partner-3.png" 
-                      alt="Partner Logo 3" 
+                    <img
+                      src="/partners/partner-3.png"
+                      alt=""
                       className="max-w-full max-h-full object-contain filter grayscale brightness-0 invert opacity-70 group-hover:opacity-100 transition-opacity duration-300 translate-y-1"
                       onError={(e) => {
                         (e.target as HTMLImageElement).style.display = 'none';
@@ -202,12 +202,12 @@ export default function Home() {
                         if (placeholder) placeholder.style.display = 'flex';
                       }}
                     />
-                    <span className="text-platinum/40 text-[10px] absolute" style={{ display: 'none' }}>Partner Logo 3</span>
+                    <span className="text-platinum/40 text-[10px] absolute" style={{ display: 'none' }} aria-hidden="true">Partner</span>
                  </div>
                  <div className="h-12 w-32 md:h-16 md:w-40 bg-white/5 backdrop-blur-sm border border-white/10 rounded flex items-center justify-center hover:bg-white/10 transition-colors p-2 relative group">
-                    <img 
-                      src="/partners/partner-4.png" 
-                      alt="Partner Logo 4" 
+                    <img
+                      src="/partners/partner-4.png"
+                      alt=""
                       className="max-w-full max-h-full scale-[0.55] md:scale-[1.2] object-contain filter grayscale brightness-0 invert opacity-70 group-hover:opacity-100 transition-opacity duration-300"
                       onError={(e) => {
                         (e.target as HTMLImageElement).style.display = 'none';
@@ -216,7 +216,7 @@ export default function Home() {
                         if (placeholder) placeholder.style.display = 'flex';
                       }}
                     />
-                    <span className="text-platinum/40 text-[10px] absolute" style={{ display: 'none' }}>Partner Logo 4</span>
+                    <span className="text-platinum/40 text-[10px] absolute" style={{ display: 'none' }} aria-hidden="true">Partner</span>
                  </div>
               </div>
            </div>
@@ -424,13 +424,13 @@ export default function Home() {
       <footer className="transition-colors duration-700 border-t py-8 px-6 md:px-12 bg-white border-gray-200">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs transition-colors duration-700 text-gray-400">
-            &copy; 2025 Payve, Inc. All rights reserved.
+            &copy; {new Date().getFullYear()} Payve, Inc. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <Link href="/privacy" className="text-xs text-gray-500 hover:text-[#505050] transition-colors">
+            <Link href="/privacy" className="text-xs text-gray-500 hover:text-[#505050] transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#505050] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="text-xs text-gray-500 hover:text-[#505050] transition-colors">
+            <Link href="/terms" className="text-xs text-gray-500 hover:text-[#505050] transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#505050] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
               Terms of Service
             </Link>
           </div>

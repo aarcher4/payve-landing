@@ -63,9 +63,10 @@ export const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
               {/* Close Button */}
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors rounded-full hover:bg-gray-100"
+                aria-label="Close dialog"
+                className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors rounded-full hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#505050] focus-visible:ring-offset-2"
               >
-                <X size={20} />
+                <X size={20} aria-hidden="true" />
               </button>
 
               <div className="p-8 md:p-10">
@@ -75,7 +76,7 @@ export const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                     animate={{ opacity: 1, scale: 1 }}
                     className="flex flex-col items-center justify-center text-center py-12 space-y-4"
                   >
-                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-2">
+                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-2" aria-hidden="true">
                       <Check size={32} />
                     </div>
                     <h3 className="text-2xl font-display text-gray-900">Request Sent</h3>
@@ -170,19 +171,19 @@ export const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                         type="submit"
                         disabled={isSubmitting}
                         className={clsx(
-                          "w-full mt-6 py-4 rounded-full font-medium text-white shadow-lg transition-all duration-300 transform",
-                          isSubmitting 
-                            ? "bg-gray-400 cursor-not-allowed" 
+                          "w-full mt-6 py-4 rounded-full font-medium text-white shadow-lg transition-all duration-300 transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#505050] focus-visible:ring-offset-2",
+                          isSubmitting
+                            ? "bg-gray-400 cursor-not-allowed"
                             : "bg-[#505050] hover:bg-gray-800 hover:scale-[1.02]"
                         )}
                       >
                         {isSubmitting ? (
                           <span className="flex items-center justify-center gap-2">
-                            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            Processing...
+                            Processing…
                           </span>
                         ) : (
                           "Book a demo"

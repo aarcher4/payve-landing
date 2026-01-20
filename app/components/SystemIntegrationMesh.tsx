@@ -16,6 +16,7 @@ export const SystemIntegrationMesh = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
   const isMouseInRef = useRef(false);
+  const isVisibleRef = useRef(true);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -57,6 +58,12 @@ export const SystemIntegrationMesh = () => {
     };
 
     const drawParticles = () => {
+      // Pause animation when tab is not visible
+      if (!isVisibleRef.current) {
+        animationFrameId = requestAnimationFrame(drawParticles);
+        return;
+      }
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       particles.forEach((p, i) => {
@@ -133,9 +140,14 @@ export const SystemIntegrationMesh = () => {
       isMouseInRef.current = false;
     };
 
+    const handleVisibilityChange = () => {
+      isVisibleRef.current = !document.hidden;
+    };
+
     window.addEventListener("resize", resize);
     canvas.addEventListener("mousemove", handleMouseMove);
     canvas.addEventListener("mouseleave", handleMouseLeave);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     resize();
     drawParticles();
@@ -144,6 +156,7 @@ export const SystemIntegrationMesh = () => {
       window.removeEventListener("resize", resize);
       canvas.removeEventListener("mousemove", handleMouseMove);
       canvas.removeEventListener("mouseleave", handleMouseLeave);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);

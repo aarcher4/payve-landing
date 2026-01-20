@@ -17,11 +17,8 @@ export const CustomerSpotlight: React.FC<CustomerSpotlightProps> = ({ className 
         
         {/* Overlay Stat */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-ivory text-center w-full px-4">
-           {/* Icon or Label */}
+           {/* Label */}
            <div className="flex items-center gap-2 mb-2 opacity-90">
-             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-             </svg>
              <span className="text-xs md:text-sm font-medium tracking-widest uppercase">Time Saved Weekly</span>
            </div>
            
@@ -53,13 +50,13 @@ export const CustomerSpotlight: React.FC<CustomerSpotlightProps> = ({ className 
           </footer>
         </blockquote>
 
-        {/* Link / CTA */}
-        <a href="#" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#505050] text-white text-sm font-medium transition-all hover:bg-[#505050]/90 hover:gap-3 group">
-          <span>Read the story</span>
-          <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-        </a>
+        {/* CTA Button - using button since there's no real destination yet */}
+        <button
+          type="button"
+          className="inline-flex items-center px-6 py-3 rounded-full bg-[#505050] text-white text-sm font-medium transition-all hover:bg-[#404040] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#505050] focus-visible:ring-offset-2"
+        >
+          Read the full story
+        </button>
       </div>
     </div>
   );

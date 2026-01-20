@@ -120,13 +120,13 @@ export function StreamingText() {
           
           {/* Left Side: Streaming Text */}
           <div className="flex-1 w-full md:w-auto flex items-center justify-start gap-4">
-             <div className="relative">
+             <div className="relative" aria-hidden="true">
                 <div className="w-3 h-3 rounded-full bg-sage animate-pulse shadow-[0_0_10px_rgba(143,179,161,0.5)]" />
                 <div className="absolute inset-0 w-3 h-3 rounded-full bg-sage animate-ping opacity-20" />
              </div>
-             <div className="font-display text-lg md:text-2xl text-ivory/90 tracking-wide min-h-[1.5em] flex items-center">
+             <div className="font-display text-lg md:text-2xl text-ivory/90 tracking-wide min-h-[1.5em] flex items-center" aria-live="polite" aria-atomic="true">
                 {text}
-                <span className="ml-1 w-[2px] h-[1.2em] bg-sage animate-pulse inline-block align-middle" />
+                <span className="ml-1 w-[2px] h-[1.2em] bg-sage animate-pulse inline-block align-middle" aria-hidden="true" />
              </div>
           </div>
 

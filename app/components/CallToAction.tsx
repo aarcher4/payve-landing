@@ -37,9 +37,9 @@ export function CallToAction({ onOpenModal }: CallToActionProps) {
             </h2>
 
             <div className="pt-2">
-              <button 
+              <button
                 onClick={onOpenModal}
-                className="bg-[#505050] text-white text-base px-10 py-4 rounded-full font-medium hover:bg-[#404040] hover:scale-105 transition-all duration-300 shadow-xl"
+                className="bg-[#505050] text-white text-base px-10 py-4 rounded-full font-medium hover:bg-[#404040] hover:scale-105 transition-all duration-300 shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#505050] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               >
                 Talk to us
               </button>

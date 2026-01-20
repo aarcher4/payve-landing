@@ -99,6 +99,7 @@ export const BankConnectTerminal = () => {
                 animate={{ rotate: 360 }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
                 className="w-5 h-5 flex items-center justify-center"
+                aria-hidden="true"
               >
                 <Loader2 className="w-5 h-5 text-white/50" />
               </motion.div>
@@ -121,7 +122,7 @@ export const BankConnectTerminal = () => {
               transition={{ duration: 0.5, ease: "easeOut" }}
               className="flex items-center gap-4 absolute"
             >
-              <div className="relative flex items-center justify-center w-5 h-5">
+              <div className="relative flex items-center justify-center w-5 h-5" aria-hidden="true">
                  {/* Soft Green Pulse - adjusted to center behind the check */}
                 <motion.div
                   className="absolute inset-0 -m-2 rounded-full"
@@ -130,9 +131,9 @@ export const BankConnectTerminal = () => {
                   animate={{ scale: 2, opacity: 0 }}
                   transition={{ duration: 1.5, repeat: Infinity, ease: "easeOut", delay: 0.2 }}
                 />
-                
+
                 {/* Check Circle - Now same size/style as spinner */}
-                <div 
+                <div
                   className="w-5 h-5 rounded-full flex items-center justify-center relative z-10 border border-white/50 bg-white/10"
                 >
                   <Check className="w-3 h-3 text-white/70" />
