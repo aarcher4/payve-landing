@@ -53,24 +53,6 @@ export default function Home() {
             </p>
           </div>
         </div>
-
-        {/* Primary links */}
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-lg">
-          <a
-            href="https://app.getpayve.com"
-            className="font-medium text-slate-600 hover:text-slate-800 motion-safe:transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
-          >
-            Sign in
-          </a>
-          <a
-            href="/fortune-case-study.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-slate-500 hover:text-slate-700 motion-safe:transition-colors underline underline-offset-4 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
-          >
-            Read case study
-          </a>
-        </div>
       </div>
 
       {/* Legal links - bottom left */}
