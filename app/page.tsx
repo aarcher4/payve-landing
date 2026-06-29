@@ -22,37 +22,6 @@ export default function Home() {
           back office workflows like orders, invoices, quality holds, and
           reconciliation.
         </p>
-
-        {/* Three pillars */}
-        <div className="mt-12 grid w-full max-w-4xl grid-cols-1 gap-8 text-center md:grid-cols-3 md:text-left">
-          <div>
-            <h2 className="font-display text-base tracking-wide text-slate-600">
-              Pay suppliers
-            </h2>
-            <p className="mt-2 font-light text-sm leading-relaxed text-slate-500">
-              Domestic, instant, and cross border payouts from one place, across
-              the US, Mexico, and Colombia.
-            </p>
-          </div>
-          <div>
-            <h2 className="font-display text-base tracking-wide text-slate-600">
-              Get paid early
-            </h2>
-            <p className="mt-2 font-light text-sm leading-relaxed text-slate-500">
-              Suppliers choose early payment on approved invoices. The buyer pays
-              once at term either way.
-            </p>
-          </div>
-          <div>
-            <h2 className="font-display text-base tracking-wide text-slate-600">
-              Agents for the back office
-            </h2>
-            <p className="mt-2 font-light text-sm leading-relaxed text-slate-500">
-              Organizational intelligence that automates orders, invoices,
-              quality holds, and reconciliation.
-            </p>
-          </div>
-        </div>
       </div>
 
       {/* Legal links - bottom left */}
