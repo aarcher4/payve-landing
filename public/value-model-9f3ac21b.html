@@ -213,16 +213,7 @@ table.ps tfoot td{font-weight:700;border-top:2px solid #999;border-bottom:none}
 .lever.collapsed{opacity:.72}
 .lever.collapsed .skip-note{display:block}
 .skip-note{display:none;margin-top:12px;font-size:12px;color:var(--ink-3);line-height:1.5}
-
-/* ============ Hurdle-rate verdict ============ */
-.hurdle{margin-top:14px;padding:11px 13px;border-radius:var(--radius-sm);font-size:12.5px;line-height:1.5;
-  display:flex;gap:9px;align-items:flex-start}
-.hurdle .ico{flex:0 0 auto;width:16px;height:16px;border-radius:50%;margin-top:1px;display:grid;place-items:center;color:#fff;font-size:11px;font-weight:800;line-height:1}
-.hurdle.clears{background:var(--positive-bg);color:var(--positive)}
-.hurdle.clears .ico{background:var(--positive)}
-.hurdle.below{background:var(--warning-bg);color:var(--warning)}
-.hurdle.below .ico{background:var(--warning)}
-.hurdle b{font-weight:700}
+
 
 /* ============ Direct vs Indirect in the results panel ============ */
 .floor.indirect-floor{background:var(--warning-bg);margin-top:8px}
@@ -288,7 +279,7 @@ table.ps tfoot td{font-weight:700;border-top:2px solid #999;border-bottom:none}
             <input type="range" data-key="costOfCapital" data-type="pct" min="5" max="18" step="0.5" value="12" aria-label="Cost of capital percent">
             <input type="number" class="num" id="in-costOfCapital" data-key="costOfCapital" data-type="pct" min="5" max="18" step="0.5" value="12">
           </div>
-          <span class="help">Your blended cost of capital / hurdle rate — the annual rate on your line of credit or capital. <span class="dim">Typical Payve customer: ~12%.</span></span>
+          <span class="help">Your blended cost of capital — the annual rate on your line of credit or capital. <span class="dim">Typical Payve customer: ~12%.</span></span>
         </div>
         <div class="field">
           <label for="in-grossMargin">Gross margin <span class="echo" data-echo="grossMargin"></span></label>
@@ -330,8 +321,6 @@ table.ps tfoot td{font-weight:700;border-top:2px solid #999;border-bottom:none}
           <p class="lead">Suppliers opt in to get paid early; Payve provides the liquidity. You bring no money of your own and earn a revenue share each time a supplier takes early payment.</p>
         </div>
       </div>
-      <div class="qualify"><span class="q">Would your suppliers take early payment in exchange for a small share to you?</span><label class="switch" title="Applies to us"><span class="yn"><span class="no">No</span></span><input type="checkbox" data-inc="L1" checked aria-label="Applies to us — earn on early pay"><span class="track"></span><span class="yn"><span class="yes">Yes</span></span></label></div>
-      <p class="skip-note">Not offering supplier early pay — this lever doesn't apply to you.</p>
       <div class="fields">
         <div class="field">
           <label for="in-tier">Pricing tier</label>
@@ -370,8 +359,6 @@ table.ps tfoot td{font-weight:700;border-top:2px solid #999;border-bottom:none}
           <p class="lead">Fund early payments with your own cash. You set the early-pay rate, cover your cost of capital, pay a small platform fee, and keep the spread as new profit on money you already hold.</p>
         </div>
       </div>
-      <div class="qualify"><span class="q">Do you have idle cash that could be used to optimize returns?</span><label class="switch" title="Applies to us"><span class="yn"><span class="no">No</span></span><input type="checkbox" data-inc="L2" checked aria-label="Applies to us — deploy your own capital"><span class="track"></span><span class="yn"><span class="yes">Yes</span></span></label></div>
-      <p class="skip-note">No idle cash to deploy — skip this. The “Earn on supplier early pay” lever needs no capital of your own.</p>
       <div class="fields">
         <div class="field">
           <label for="in-capitalDeployed">Capital you deploy <span class="echo" data-echo="capitalDeployed"></span></label>
@@ -401,7 +388,6 @@ table.ps tfoot td{font-weight:700;border-top:2px solid #999;border-bottom:none}
         </div>
       </div>
       <div class="formula" id="f-L2"></div>
-      <div class="hurdle" id="hurdle-L2"></div>
       <div class="warn-line" id="warn-L2">At these settings your early-pay rate barely clears your cost of capital plus fees — self-funding adds little. Raise the rate or lower your cost of capital.</div>
       <div class="subtotal"><span class="lbl">Lever 2 — annual profit on your capital</span><span class="val" data-sub="L2"></span></div>
     </section>
@@ -415,8 +401,6 @@ table.ps tfoot td{font-weight:700;border-top:2px solid #999;border-bottom:none}
           <p class="lead">Speed turns into margin on every unit. Paying cash up front shaves the price you pay per unit — and turning product faster lets you fulfil orders at a better one. A few cents of edge per unit compounds across your whole volume.</p>
         </div>
       </div>
-      <div class="qualify"><span class="q">Do faster payments let you buy better or turn product faster?</span><label class="switch" title="Applies to us"><span class="yn"><span class="no">No</span></span><input type="checkbox" data-inc="L3a" checked aria-label="Applies to us — operating leverage"><span class="track"></span><span class="yn"><span class="yes">Yes</span></span></label></div>
-      <p class="skip-note">No unit-price edge from paying faster — skip this indirect lever.</p>
       <div class="fields">
         <div class="field">
           <label for="in-goodsDiscountPct">Incremental margin per unit <span class="echo" data-echo="goodsDiscountPct"></span></label>
@@ -449,8 +433,6 @@ table.ps tfoot td{font-weight:700;border-top:2px solid #999;border-bottom:none}
           <p class="lead">Payve's agents enter vouchers, match invoices to purchase orders, and flag exceptions — saving your finance team hours every week.</p>
         </div>
       </div>
-      <div class="qualify"><span class="q">Does your team spend time each week on manual AP work?</span><label class="switch" title="Applies to us"><span class="yn"><span class="no">No</span></span><input type="checkbox" data-inc="L4a" checked aria-label="Applies to us — agentic AP labor savings"><span class="track"></span><span class="yn"><span class="yes">Yes</span></span></label></div>
-      <p class="skip-note">No manual AP time to reclaim — this lever doesn't apply to you.</p>
       <div class="fields">
         <div class="field">
           <label for="in-hoursPerWeek">Hours saved per week <span class="echo" data-echo="hoursPerWeek"></span></label>
@@ -482,8 +464,6 @@ table.ps tfoot td{font-weight:700;border-top:2px solid #999;border-bottom:none}
           <p class="lead">Payve's agents surface duplicate charges, off-contract pricing, and consolidation opportunities on the spend you're not already paying early. Savings depend on what's there to find — treated as indirect upside.</p>
         </div>
       </div>
-      <div class="qualify"><span class="q">Is there room to consolidate spend or renegotiate vendor terms?</span><label class="switch" title="Applies to us"><span class="yn"><span class="no">No</span></span><input type="checkbox" data-inc="L4b" checked aria-label="Applies to us — vendor-cost optimization"><span class="track"></span><span class="yn"><span class="yes">Yes</span></span></label></div>
-      <p class="skip-note">No vendor-cost upside to model — skip this indirect lever.</p>
       <div class="fields one">
         <div class="field">
           <label for="in-vendorOptPct">Vendor-cost optimization <span class="echo" data-echo="vendorOptPct"></span></label>
@@ -507,8 +487,6 @@ table.ps tfoot td{font-weight:700;border-top:2px solid #999;border-bottom:none}
           <p class="lead">Pay cross-border suppliers on instant rails instead of wires — no wire fees and same-hour settlement that frees up your cash, at a matched exchange rate.</p>
         </div>
       </div>
-      <div class="qualify"><span class="q">Do you pay any suppliers outside the US?</span><label class="switch" title="Applies to us"><span class="yn"><span class="no">No</span></span><input type="checkbox" data-inc="L5" checked aria-label="Applies to us — international payments"><span class="track"></span><span class="yn"><span class="yes">Yes</span></span></label></div>
-      <p class="skip-note">No cross-border suppliers — this lever doesn't apply to you.</p>
       <div class="fields">
         <div class="field">
           <label for="in-intlPaymentsPerWeek">International payments / week <span class="echo" data-echo="intlPaymentsPerWeek"></span></label>
@@ -549,8 +527,6 @@ table.ps tfoot td{font-weight:700;border-top:2px solid #999;border-bottom:none}
           <p class="lead">This is where the program pays off biggest. Paying your growers early and reliably makes you their preferred buyer — so when product is tight, you get it. Capturing even a few percent more volume from the suppliers in your program, sold at your margin, dwarfs the per-invoice economics above — and it compounds year over year as the relationship deepens. The real game isn't shaving margins; it's accumulating product.</p>
         </div>
       </div>
-      <div class="qualify"><span class="q">Want to model long-term volume growth from preferred-buyer status?</span><label class="switch" title="Applies to us"><span class="yn"><span class="no">No</span></span><input type="checkbox" data-inc="L6" checked aria-label="Applies to us — relationship dividend"><span class="track"></span><span class="yn"><span class="yes">Yes</span></span></label></div>
-      <p class="skip-note">Not modeling the relationship dividend — hard-dollar case only.</p>
       <div class="fields one">
         <div class="field">
           <label for="in-volumeUpliftPct">Extra volume from program suppliers <span class="echo" data-echo="volumeUpliftPct"></span></label>
@@ -829,20 +805,6 @@ function computeModel(inp){
     // L2 warning
     $('#warn-L2').classList.toggle('show', r.levers.L2 <= 0 && inp.include.L2 !== false);
 
-    // hurdle-rate verdict: does deploying your own cash clear your cost of capital?
-    (function(){
-      const hb = $('#hurdle-L2'); if (!hb) return;
-      if (inp.include.L2 === false){ hb.className = 'hurdle'; hb.innerHTML = ''; return; }
-      const feeAnnualRate = (inp.payFeeBps/10000) * r.turns;      // per-payment fee annualized over term turns
-      const netSpread = inp.supplierApr - inp.costOfCapital - feeAnnualRate;
-      if (netSpread > 0){
-        hb.className = 'hurdle clears';
-        hb.innerHTML = '<span class="ico">✓</span><span><b>Clears your hurdle by '+fmtPctDisp(netSpread)+'.</b> Your '+fmtPctDisp(inp.supplierApr)+' early-pay rate beats your '+fmtPctDisp(inp.costOfCapital)+' cost of capital plus fees — your own cash earns more here than it costs, so deploying it beats leaving it on your line of credit. Past '+fmt$(r.allocation.selfFundedThroughput)+' of financed volume the early-pay pool is full and extra cash sits idle — fund the rest with platform capital (no cash of your own).</span>';
-      } else {
-        hb.className = 'hurdle below';
-        hb.innerHTML = '<span class="ico">!</span><span><b>Below your hurdle by '+fmtPctDisp(-netSpread)+'.</b> Your '+fmtPctDisp(inp.supplierApr)+' early-pay rate doesn\'t clear your '+fmtPctDisp(inp.costOfCapital)+' cost of capital plus fees. Don\'t tie up your own cash here — use external/platform capital instead (the “Earn on supplier early pay” lever needs none of your own).</span>';
-      }
-    })();
 
     // waterfall + legend
     const wf = $('#waterfall'); wf.innerHTML = '';
