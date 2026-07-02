@@ -3,7 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   async rewrites() {
     return [
-      { source: "/value-calculator", destination: "/value-calculator.html" },
+      // Hidden, qualified-prospect-only value calculator. Unguessable slug; not linked anywhere.
+      { source: "/value-model-9f3ac21b", destination: "/value-model-9f3ac21b.html" },
       // Hidden, password-protected (StatiCrypt) EverAg × Payve deck. Unguessable slug; not linked anywhere.
       { source: "/roger-value-prop-bbc01d16", destination: "/roger-value-prop-bbc01d16.html" },
     ];
@@ -17,6 +18,14 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/roger-value-prop-bbc01d16.html",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+      {
+        source: "/value-model-9f3ac21b",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+      {
+        source: "/value-model-9f3ac21b.html",
         headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
       },
     ];
