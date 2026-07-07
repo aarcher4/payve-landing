@@ -2,16 +2,20 @@
 
 One style system for every image on getpayve.com. Generate in Midjourney, then the build swaps images in per page.
 
-## The style system
+## The style system (v2, locked by Alex 2026-07-07)
+
+v1 (cool/hazy/gray documentary) was generated and REJECTED: "too hazy and weird and gray." The locked direction is v2: **golden-sunrise cinematic optimism in beautiful working landscapes, with distribution elements kept in frame.**
 
 Every prompt shares the same base so the whole site reads as one photographer's body of work:
 
-- Editorial documentary photography, real working world of supply chains
-- Cool morning light, overcast or dawn, never golden-hour warmth
-- Color grade toward the site palette: cool near-white (#F7F8F9), muted sage greens (#8DA89A, #3B5448), deep ink shadows (#0B0D12). Desaturated, restrained, no neon, no purple
+- Cinematic editorial photography, film still quality, epic scale, subtle lens flare where it fits
+- Golden sunrise / morning golden-hour light, crisp clear air, sun-drenched and optimistic. NOT overcast, NOT hazy-gray
+- Beautiful working environments of the supply chain: Michoacán orchard mountains, Andean terraces, Nebraska sandhills grain, sunlit harbors, valley farmland
+- Distribution elements stay in frame: refrigerated trailers at docks, harvest crates, grain elevators and rail cars, harbor totes, trucks on bridges and mountain roads
+- Vibrant natural color; the site's sage palette comes from the landscapes themselves, not a desaturated grade
 - People only as small distant figures, never faces or close-ups, never posed
 - No text, no logos, no signage that reads as a brand
-- Shot on medium format digital, 50mm or wider, deep focus, slight atmospheric haze
+- Medium format digital, deep focus
 
 **Aspect ratios:** `--ar 16:9` for page heroes, `--ar 4:5` for cards and split layouts. Generate both for any image you like.
 
