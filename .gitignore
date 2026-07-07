@@ -35,3 +35,9 @@ yarn-error.log*
 next-env.d.ts
 
 design-context/imagery-originals/
+design-context/logos-raw/*.png
+design-context/claude-design-export-*/images/
+design-context/claude-design-export-*/uploads/
+design-context/claude-design-export-*/assets/
+design-context/claude-design-export-*/screenshots/
+reports/

@@ -2,6 +2,7 @@ import CtaBand from "./components/home/CtaBand";
 import Hero from "./components/home/Hero";
 import HowItWorks from "./components/home/HowItWorks";
 import LogoWall from "./components/home/LogoWall";
+import MidCta from "./components/home/MidCta";
 import ProductTour from "./components/home/ProductTour";
 import Proof from "./components/home/Proof";
 import TrustSection from "./components/home/TrustSection";
@@ -13,6 +14,7 @@ export default function Home() {
       <LogoWall />
       <ProductTour />
       <HowItWorks />
+      <MidCta />
       <Proof />
       <TrustSection />
       <CtaBand />

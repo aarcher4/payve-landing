@@ -84,6 +84,10 @@ export function PaymentsDemo() {
           </li>
         ))}
       </ul>
+      <div className="flex items-center justify-between border-t border-hairline px-4 py-2.5">
+        <span className="text-[11px] font-semibold uppercase tracking-wide text-ink-3">Total</span>
+        <span className="t-num text-sm font-bold text-ink-1">$167,715.45</span>
+      </div>
       <div className="border-t border-hairline bg-paper px-4 py-2.5 text-xs text-ink-3">
         One approval. Every supplier paid. No wire fees.
       </div>

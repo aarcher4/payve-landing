@@ -1,11 +1,10 @@
 /**
  * Site-wide navigation and CTA configuration.
- * bookDemoUrl: Zcal scheduling link goes here when Alex shares it.
- * Until then the CTA falls back to email.
+ * bookDemoUrl: the Zcal scheduler (instant scheduling beats a contact form
+ * per the conversion research; see docs/conversion-review.md).
  */
 
-export const bookDemoUrl =
-  "mailto:alex@getpayve.com?subject=Payve%20demo";
+export const bookDemoUrl = "https://zcal.co/payve";
 
 export const signInUrl = "https://app.getpayve.com";
 

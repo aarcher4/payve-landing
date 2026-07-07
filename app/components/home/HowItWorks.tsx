@@ -1,4 +1,7 @@
+import { ArrowLeftRight, Eye, Link2, PackageCheck } from "lucide-react";
 import Reveal from "./Reveal";
+
+const icons = [Link2, Eye, PackageCheck, ArrowLeftRight];
 
 const steps = [
   {
@@ -36,7 +39,10 @@ export default function HowItWorks() {
         {steps.map((s, i) => (
           <Reveal key={s.n} delayIndex={i} className="bg-paper-elev">
             <div className="h-full p-6">
-              <span className="t-num font-mono text-xs text-sage-600">{s.n}</span>
+              <div className="flex items-center justify-between">
+                <span className="t-num font-mono text-xs text-sage-600">{s.n}</span>
+                {(() => { const I = icons[i]; return I ? <I className="h-4 w-4 text-ink-4" aria-hidden /> : null; })()}
+              </div>
               <h3 className="mt-3 font-display text-lg font-bold tracking-h2 text-ink-1">
                 {s.title}
               </h3>

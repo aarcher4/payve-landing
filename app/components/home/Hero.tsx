@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { CheckCircle2, FileText, Landmark, Sparkles, Clock } from "lucide-react";
-import { bookDemoUrl, signInUrl } from "../site/config";
+import { bookDemoUrl } from "../site/config";
 
 const chips = [
   {
@@ -92,6 +92,7 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden">
+      <link rel="preload" as="image" href="/images/hero-home.jpg" />
       {/* Atmosphere backdrop: Michoacán orchard mountains at sunrise */}
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-center"
@@ -126,18 +127,12 @@ export default function Hero() {
             paid early, and put agents on the back office work your team does
             by hand.
           </p>
-          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="mt-10 flex justify-center">
             <a
               href={bookDemoUrl}
               className="rounded-md bg-sage-700 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-sage-800"
             >
               Book a demo
-            </a>
-            <a
-              href={signInUrl}
-              className="rounded-md border border-hairline-2 bg-paper-elev px-6 py-3 text-sm font-medium text-ink-1 transition-colors hover:bg-paper-2"
-            >
-              Sign in
             </a>
           </div>
         </motion.div>
