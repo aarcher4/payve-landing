@@ -2,7 +2,7 @@
 
 > Payve is a payments and operations platform for supply chain trade. Buyers pay every supplier from one place. Suppliers can get paid early on approved invoices and receive international payments at a competitive exchange rate. Payve agents bring organizational intelligence and automate back office workflows like orders, invoices, quality holds, and reconciliation.
 
-Payve is a financial technology company, not a bank. Payve accounts hold a U.S. dollar balance; they are not bank deposits and are not FDIC insured.
+Payve is a financial technology company, not a bank.
 
 ## Products
 

@@ -116,8 +116,8 @@ export const footerColumns: { heading: string; links: NavLink[] }[] = [
 ];
 
 /**
- * Not-a-bank disclosure. Base template per the Payve design system;
- * exact production wording is owned by legal.
+ * Company disclosure line (Alex 2026-07-06: keep the not-a-bank sentence,
+ * drop the bank-deposit / FDIC clause on the marketing site).
  */
 export const notABankDisclosure =
-  "Payve is a financial technology company, not a bank. Payve accounts hold a U.S. dollar balance; they are not bank deposits and are not FDIC insured.";
+  "Payve is a financial technology company, not a bank.";

@@ -17,7 +17,7 @@ export default function EarlyPayPage() {
         the buyer pays.
       </p>
       <p>
-        Buyers earn income each time a supplier elects early pay, and the
+        Buyers earn income each time a supplier chooses early pay, and the
         supplier relationship gets stronger with every payment.
       </p>
     </PageIntro>

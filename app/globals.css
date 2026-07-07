@@ -62,6 +62,14 @@
   --radius-md:    6px;
   --radius-lg:    10px;
   --radius-pill:  999px;
+
+  /* ---------- Motion (see docs/motion-system.md) ---------- */
+  --m-fast:       150ms;
+  --m-base:       300ms;
+  --m-reveal:     600ms;
+  --m-scene:      800ms;
+  --m-ease:       cubic-bezier(0.2, 0.8, 0.2, 1);
+  --m-ease-scene: cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 * {
