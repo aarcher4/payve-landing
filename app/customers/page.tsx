@@ -37,6 +37,13 @@ export default function CustomersPage() {
               pay, and put agents on their back office.
             </p>
           </Reveal>
+          <Reveal delayIndex={1}>
+            <img
+              src="/images/hero-customers.jpg"
+              alt="Semi trucks with refrigerated trailers crossing a river bridge at sunrise"
+              className="mt-10 aspect-[21/9] w-full rounded-lg border border-hairline object-cover shadow-elev-3"
+            />
+          </Reveal>
           <div className="mt-12 grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4">
             {wall.map((name, i) => (
               <Reveal key={name} delayIndex={i % 4}>

@@ -19,6 +19,8 @@ export default function PaymentsPage() {
       <PageHero
         eyebrow="Products"
         title="Pay every supplier from one place."
+        image="/images/hero-payments.jpg"
+        imageAlt="Pallets of boxed produce loading into a refrigerated trailer at a busy dock"
         sub="Domestic and international suppliers, one payment run. Domestic suppliers receive bank transfers. Suppliers in Mexico and Colombia receive local currency at a competitive exchange rate, without wire fees."
       />
 

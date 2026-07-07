@@ -40,6 +40,7 @@ export const metadata: Metadata = {
       "Payments, early pay, and agents for supply chain trade. Pay every supplier from one place, let suppliers get paid early, and automate back office workflows.",
     type: "website",
     url: "https://www.getpayve.com",
+    images: [{ url: "/images/og-default.jpg", width: 1200, height: 673 }],
   },
 };
 

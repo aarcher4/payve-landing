@@ -19,6 +19,8 @@ export default function SecurityPage() {
       <PageHero
         eyebrow="Company"
         title="Built to be checked."
+        image="/images/hero-security.jpg"
+        imageAlt="A modern cold storage facility at the base of a granite mountain ridge"
         sub="Payve moves money and writes to systems of record, so it is designed for scrutiny: every automation runs behind a human approval gate, every action is logged, and every customer's data is isolated."
       />
 

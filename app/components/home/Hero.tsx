@@ -92,17 +92,17 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden">
-      {/* Atmosphere backdrop: graded image swap lands with the imagery PR */}
+      {/* Atmosphere backdrop: Michoacán orchard mountains at sunrise */}
       <div
-        className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-[0.14]"
-        style={{ backgroundImage: "url('/hero.png')" }}
+        className="pointer-events-none absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: "url('/images/hero-home.jpg')" }}
         aria-hidden
       />
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "linear-gradient(180deg, rgba(247,248,249,0.2) 0%, rgba(247,248,249,0.75) 70%, var(--paper) 100%)",
+            "linear-gradient(180deg, rgba(247,248,249,0.84) 0%, rgba(247,248,249,0.72) 45%, rgba(247,248,249,0.88) 78%, var(--paper) 100%)",
         }}
         aria-hidden
       />
