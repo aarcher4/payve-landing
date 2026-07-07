@@ -1,0 +1,27 @@
+# Payve
+
+> Payve is a payments and operations platform for supply chain trade. Buyers pay every supplier from one place. Suppliers can get paid early on approved invoices and receive international payments at a competitive exchange rate. Payve agents bring organizational intelligence and automate back office workflows like orders, invoices, quality holds, and reconciliation.
+
+Payve is a financial technology company, not a bank. Payve accounts hold a U.S. dollar balance; they are not bank deposits and are not FDIC insured.
+
+## Products
+
+- [Payments](https://www.getpayve.com/products/payments): Pay domestic and international suppliers from one place. Domestic bank transfers; local currency to Mexico and Colombia without wire fees. Pay now or schedule payments.
+- [Early pay](https://www.getpayve.com/products/early-pay): Suppliers choose to be paid early on approved invoices. They see the exact dollars received today and the fee. Buyers earn income on every election.
+- [Agents](https://www.getpayve.com/products/agents): Agents connect to existing systems, answer business questions in plain English, deliver scheduled briefings, and automate order entry, document matching, complaint root-cause analysis, and notifications. A person approves every write.
+
+## Solutions
+
+- [Fresh produce](https://www.getpayve.com/solutions/fresh-produce): Growers, shippers, and distributors moving perishables.
+- [Seafood](https://www.getpayve.com/solutions/seafood): Importers and processors with cold chain operations.
+- [Packaging](https://www.getpayve.com/solutions/packaging): Packhouses and packaging suppliers to the food industry.
+
+## Customers
+
+- [Customer stories](https://www.getpayve.com/customers): Supply chain businesses across the US, Mexico, and Colombia run on Payve.
+
+## Company
+
+- [About](https://www.getpayve.com/company)
+- [Security](https://www.getpayve.com/security): Human approval gates on every automation, full audit trails, per-customer data isolation, vaulted credentials.
+- Contact: alex@getpayve.com

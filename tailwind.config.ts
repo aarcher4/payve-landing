@@ -1,5 +1,11 @@
 import type { Config } from "tailwindcss";
 
+/**
+ * Token values mirror the canonical Payve design system
+ * (payve-fintech/design-context/colors_and_type.css, direction β).
+ * The CSS variables are declared in app/globals.css; Tailwind color
+ * names resolve to those variables so there is one source of truth.
+ */
 const config: Config = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,24 +14,77 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        "custom-grey": "#505050",
-        ivory: "#FAFAF8",
-        sage: "#8FB3A1",
-        graphite: "#666666",
-        platinum: "#D1D1D1",
+        paper: {
+          DEFAULT: "var(--paper)",
+          2: "var(--paper-2)",
+          3: "var(--paper-3)",
+          elev: "var(--paper-elev)",
+        },
+        ink: {
+          1: "var(--ink-1)",
+          2: "var(--ink-2)",
+          3: "var(--ink-3)",
+          4: "var(--ink-4)",
+        },
+        hairline: {
+          DEFAULT: "var(--hairline)",
+          2: "var(--hairline-2)",
+        },
+        sage: {
+          50: "var(--sage-50)",
+          100: "var(--sage-100)",
+          200: "var(--sage-200)",
+          300: "var(--sage-300)",
+          400: "var(--sage-400)",
+          500: "var(--sage-500)",
+          600: "var(--sage-600)",
+          700: "var(--sage-700)",
+          800: "var(--sage-800)",
+          900: "var(--sage-900)",
+        },
+        positive: {
+          DEFAULT: "var(--positive)",
+          bg: "var(--positive-bg)",
+        },
+        warning: {
+          DEFAULT: "var(--warning)",
+          bg: "var(--warning-bg)",
+        },
+        critical: {
+          DEFAULT: "var(--critical)",
+          bg: "var(--critical-bg)",
+        },
+        info: {
+          DEFAULT: "var(--info)",
+          bg: "var(--info-bg)",
+        },
       },
       fontFamily: {
-        display: ["Outfit", "sans-serif"],
-        body: ["Inter", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
-        serif: ["Cormorant Garamond", "serif"],
+        sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
+      },
+      boxShadow: {
+        "elev-1": "var(--shadow-1)",
+        "elev-2": "var(--shadow-2)",
+        "elev-3": "var(--shadow-3)",
+        modal: "var(--shadow-modal)",
+      },
+      borderRadius: {
+        xs: "var(--radius-xs)",
+        sm: "var(--radius-sm)",
+        md: "var(--radius-md)",
+        lg: "var(--radius-lg)",
+      },
+      letterSpacing: {
+        display: "-0.03em",
+        "display-xl": "-0.035em",
+        h1: "-0.022em",
+        h2: "-0.018em",
       },
       animation: {
         "fade-in": "fadeIn 0.8s ease-out forwards",
         "fade-up": "fadeUp 0.8s ease-out forwards",
-        "scroll-hint": "scrollHint 2s ease-in-out infinite",
-        "slow-zoom": "slowZoom 20s linear infinite alternate",
-        "scan": "scan 4s linear infinite",
       },
       keyframes: {
         fadeIn: {
@@ -33,20 +92,8 @@ const config: Config = {
           "100%": { opacity: "1" },
         },
         fadeUp: {
-          "0%": { opacity: "0", transform: "translateY(30px)" },
+          "0%": { opacity: "0", transform: "translateY(24px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        scrollHint: {
-          "0%, 100%": { opacity: "1", transform: "translateY(0)" },
-          "50%": { opacity: "0.5", transform: "translateY(10px)" },
-        },
-        slowZoom: {
-          "0%": { transform: "scale(1.05)" },
-          "100%": { transform: "scale(1.15)" },
-        },
-        scan: {
-          "0%": { transform: "translateY(-100%)" },
-          "100%": { transform: "translateY(200%)" },
         },
       },
     },
@@ -55,4 +102,3 @@ const config: Config = {
 };
 
 export default config;
-
