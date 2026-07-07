@@ -2,7 +2,7 @@ import Reveal from "./Reveal";
 
 /**
  * Customer logo wall: real normalized logos (public/logos/, 120px-height
- * sources), logos only per Alex 2026-07-07 — no company names as text.
+ * sources), logos only per Alex 2026-07-07, no company names as text.
  * Grayscale at rest, full color on hover.
  */
 const customers = [
