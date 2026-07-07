@@ -1,21 +1,74 @@
 import type { Metadata } from "next";
-import PageIntro from "../../components/site/PageIntro";
+import {
+  FeatureGrid,
+  PageHero,
+  ProductCtaBand,
+} from "../../components/site/ProductPage";
+import StatStrip from "../../components/site/StatStrip";
 
 export const metadata: Metadata = {
   title: "Seafood",
   description:
-    "Payve for seafood importers and processors with cold chain operations and international suppliers.",
+    "Payve for seafood importers and processors: supplier payments, early pay on approved invoices, and agents on cold chain paperwork.",
 };
 
 export default function SeafoodPage() {
   return (
-    <PageIntro eyebrow="Solutions" title="Cold chain money and operations, handled.">
-      <p>
-        Seafood importers manage international suppliers, cold storage, and
-        purchase orders with many moving parts. Payve handles supplier
-        payments and early pay, and its agents draft purchase orders and
-        keep cold storage paperwork moving with your team's approval.
-      </p>
-    </PageIntro>
+    <main>
+      <PageHero
+        eyebrow="Solutions"
+        title="Cold chain operations, without the paper chase."
+        sub="Seafood importers finance inventory across an ocean crossing before a receivable turns to cash, while the cold chain runs on strict timing and documentation. Payve handles the supplier payments and puts agents on the paperwork."
+      />
+
+      <StatStrip
+        stats={[
+          {
+            value: "$6.6B",
+            label: "US shrimp imports in 2024",
+            source: "US import data",
+          },
+          {
+            value: "Weeks at sea",
+            label: "inventory financed across ocean freight before cash comes back",
+          },
+          {
+            value: "Every load",
+            label: "temperature, certification, and traceability documents to keep straight",
+          },
+        ]}
+      />
+
+      <FeatureGrid
+        items={[
+          {
+            title: "Suppliers paid their way",
+            body: "Domestic suppliers get bank transfers; international suppliers receive local currency at a competitive exchange rate.",
+          },
+          {
+            title: "Liquidity on open invoices",
+            body: "Suppliers can choose early payment on approved invoices and see the exact dollars and the fee before they decide.",
+          },
+          {
+            title: "Purchase orders drafted by agents",
+            body: "Agents pre-fill species, grade, origin, temperature zone, and terms from your own history, ask only what they cannot infer, and hand you a draft to confirm.",
+          },
+          {
+            title: "Cold storage paperwork, entered",
+            body: "Stacks of cold storage invoices are itemized, reconciled, and entered into your ERP in approved batches.",
+          },
+          {
+            title: "Certifications tracked",
+            body: "Sustainability and origin certifications stay attached to the lots and orders they belong to.",
+          },
+          {
+            title: "Briefings before the workday",
+            body: "Inventory positions, receivables at risk, and open orders delivered to your team every morning.",
+          },
+        ]}
+      />
+
+      <ProductCtaBand />
+    </main>
   );
 }
