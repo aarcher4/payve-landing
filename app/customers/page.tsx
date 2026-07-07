@@ -3,23 +3,13 @@ import Link from "next/link";
 import Reveal from "../components/home/Reveal";
 import CtaBand from "../components/home/CtaBand";
 import { stories } from "./customers-data";
+import { LogoRow } from "../components/home/LogoWall";
 
 export const metadata: Metadata = {
   title: "Customers",
   description:
     "Supply chain businesses run on Payve: growers, shippers, distributors, and packhouses across the US, Mexico, and Colombia.",
 };
-
-const wall = [
-  "Fortune Growers",
-  "SL Produce",
-  "Dal Campo",
-  "PH Distribution",
-  "Tierra Suelta",
-  "Vitos Trading",
-  "ASL Produce",
-  "Market Value Packhouse",
-];
 
 export default function CustomersPage() {
   return (
@@ -44,14 +34,8 @@ export default function CustomersPage() {
               className="mt-10 aspect-[21/9] w-full rounded-lg border border-hairline object-cover shadow-elev-3"
             />
           </Reveal>
-          <div className="mt-12 grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4">
-            {wall.map((name, i) => (
-              <Reveal key={name} delayIndex={i % 4}>
-                <span className="block text-center font-display text-sm font-bold tracking-wide text-ink-3">
-                  {name}
-                </span>
-              </Reveal>
-            ))}
+          <div className="mt-12">
+            <LogoRow />
           </div>
         </div>
       </section>

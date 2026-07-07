@@ -1,5 +1,5 @@
 import Reveal from "./Reveal";
-import { bookDemoUrl, signInUrl } from "../site/config";
+import { bookDemoUrl } from "../site/config";
 
 export default function CtaBand() {
   return (
@@ -23,18 +23,12 @@ export default function CtaBand() {
             A 30-minute walkthrough with your systems in mind. No rip and
             replace, nothing to install.
           </p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="mt-8 flex justify-center">
             <a
               href={bookDemoUrl}
               className="rounded-md bg-white px-6 py-3 text-sm font-semibold text-sage-900 transition-colors hover:bg-sage-50"
             >
               Book a demo
-            </a>
-            <a
-              href={signInUrl}
-              className="rounded-md border border-sage-700 px-6 py-3 text-sm font-medium text-sage-100 transition-colors hover:bg-sage-800"
-            >
-              Sign in
             </a>
           </div>
         </Reveal>
