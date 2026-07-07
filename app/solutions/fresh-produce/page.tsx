@@ -20,6 +20,8 @@ export default function FreshProducePage() {
       <PageHero
         eyebrow="Solutions"
         title="Built for the pace of perishables."
+        image="/images/hero-produce.jpg"
+        imageAlt="A tractor hauling harvest crates through rows of leafy crops"
         sub="Produce runs on 30-day terms, cross-border supply, and systems that were never built to share. Payve pays your growers and suppliers from one place, gives them liquidity on open invoices, and puts agents on the back office work that eats your team's week."
       />
 

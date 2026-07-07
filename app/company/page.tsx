@@ -14,6 +14,8 @@ export default function CompanyPage() {
       <PageHero
         eyebrow="Company"
         title="The money and the busywork belong in one system."
+        image="/images/hero-company.jpg"
+        imageAlt="A wide valley of farms with irrigation running and mountains on the horizon"
         sub="Supply chain businesses run on ERPs that do not talk, payments spread across banks and wire desks, and back offices that carry it all by hand. Payve was built on a simple idea: the platform that moves your money should also do the work around it."
       />
 

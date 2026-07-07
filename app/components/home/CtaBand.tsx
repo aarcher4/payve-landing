@@ -3,8 +3,18 @@ import { bookDemoUrl, signInUrl } from "../site/config";
 
 export default function CtaBand() {
   return (
-    <section className="bg-sage-900">
-      <div className="mx-auto max-w-6xl px-4 py-20 text-center sm:px-6">
+    <section className="relative overflow-hidden bg-sage-900">
+      <div
+        className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-30"
+        style={{ backgroundImage: "url('/images/cta-hills.jpg')" }}
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{ background: "linear-gradient(180deg, rgba(28,44,38,0.86) 0%, rgba(28,44,38,0.68) 100%)" }}
+        aria-hidden
+      />
+      <div className="relative mx-auto max-w-6xl px-4 py-20 text-center sm:px-6">
         <Reveal>
           <h2 className="mx-auto max-w-2xl text-balance font-display text-3xl font-extrabold tracking-display text-white sm:text-4xl">
             See Payve on your own data.

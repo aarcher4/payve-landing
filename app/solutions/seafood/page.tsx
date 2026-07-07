@@ -18,6 +18,8 @@ export default function SeafoodPage() {
       <PageHero
         eyebrow="Solutions"
         title="Cold chain operations, without the paper chase."
+        image="/images/hero-seafood.jpg"
+        imageAlt="A boat crane lifting insulated seafood totes onto a sunny quay"
         sub="Seafood importers finance inventory across an ocean crossing before a receivable turns to cash, while the cold chain runs on strict timing and documentation. Payve handles the supplier payments and puts agents on the paperwork."
       />
 

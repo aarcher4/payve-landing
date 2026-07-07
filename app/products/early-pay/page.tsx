@@ -19,6 +19,8 @@ export default function EarlyPayPage() {
       <PageHero
         eyebrow="Products"
         title="Suppliers get paid early. Buyers earn on it."
+        image="/images/hero-early-pay.jpg"
+        imageAlt="Fresh green produce moving along a packing line in bright daylight"
         sub="When a purchase order is approved, the supplier can choose to be paid early. They see the exact dollars they receive today, the fee, and when the money arrives. Nothing changes about how the buyer pays."
       />
 

@@ -19,6 +19,8 @@ export default function AgentsPage() {
       <PageHero
         eyebrow="Products"
         title="Agents that know your business and do the busywork."
+        image="/images/hero-agents.jpg"
+        imageAlt="Terraced green fields on Andean mountainsides with a farm truck on the road"
         sub="Payve agents connect to the systems you already run, answer questions about your business in plain English, and automate the back office work your team does by hand. A person on your team approves every write."
       />
 
