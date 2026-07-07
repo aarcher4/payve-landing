@@ -35,3 +35,4 @@ yarn-error.log*
 next-env.d.ts
 
 design-context/imagery-originals/
+design-context/logos-raw/*.png
