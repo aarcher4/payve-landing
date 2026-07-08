@@ -1,6 +1,37 @@
 # Payve Marketing Site — canvas design context
 
-Standing law for the "Payve Marketing Site" Claude design project. This project polishes the VISUAL DESIGN of getpayve.com. The information architecture, section structure, and copy are LOCKED — regenerate the look, never the words or the order of sections.
+Standing law for the "Payve Marketing Site" Claude design project. This project polishes the VISUAL DESIGN of getpayve.com. The information architecture, section structure, and copy were locked at r1. The 2026-07-07 team critique (r2) unlocks ONLY the sections enumerated under "r2 unlocked sections" below; everything else remains locked. Regenerate the look, never the words or the order of sections, except where r2 explicitly changes words (the r2 copy lives verbatim in marketing-copy-inventory.md).
+
+## r2 unlocked sections (2026-07-07 team critique)
+
+Homepage:
+- Hero: the 4 floating agent-state chips are REMOVED (they confused viewers). Background image gets more presence (regraded for visibility/saturation, lighter paper-fade). Static background stays for launch; motion hero is r3 backlog.
+- Product tour accordion: stronger clickable affordance. Active item gets a clear selected treatment (sage rail/fill, color change) and a visual connection from the selected text block into the demo panel on the right. Accordion and demo panel vertically centered against each other.
+- How it works: the four boxes get hover states (slight grow + color treatment, calm not flashy) and a NEW proof layer beneath the grid. Hovering or selecting a box surfaces its proof entry (customer quote / micro case / compact real example). Default state shows box 01's proof so content is never hover-gated. "No rip and replace" is visually emphasized (brand green or bold). Step 02 copy becomes "Ask questions in plain English (or Spanish), ...".
+- Section rhythm: alternate backgrounds (paper / paper-elev / sage-tinted recess) to break the long gray/white stretches; subtle, never noisy.
+
+Product pages (all three):
+- New scaffold: headline, brief subhead, product animation near the top, CTA above the fold, then a hover-expand value list, then CTA band. Minimal scrolling.
+- The FeatureGrid(6) is REPLACED by the value list: left-aligned list of value props with the Payve checkmark; the hovered/selected item expands to the right with its description and proof. Solutions pages keep FeatureGrid.
+- Product demos on product pages may run longer/more explanatory than the homepage versions (homepage = quick proof the product exists; product page = enough to understand how it works).
+- Payments: explicitly cross-border. Visuals reinforce the international use case (MXN/COP local-currency cues, cross-border payment run).
+- Early pay: supplier-liquidity-first framing (suppliers get paid faster, relationships strengthen, approved invoices become capital), not financing mechanics.
+- Agents: renamed "Payve Agents" everywhere (nav, tour label, page title, H1).
+
+Customers:
+- Hub: the bridge/truck banner image is REMOVED (read as fabricated). Straight into story cards after the hero copy. Card = customer logo + one-line company description + primary result/use case + click-through.
+- StoryHero: no bridge image; dark sage band or a per-story image.
+- Stories rebuilt per docs/case-study-template.md with the team-call content (see copy inventory): Fortune Growers voucher automation, SL Produce (Selman, organizational intelligence), Dal Campo (complexity/reconciliation), Manny (fintech/payments, naming gated on consent).
+
+Trust/company:
+- Security: hero image replaced (cold-storage/warehouse felt wrong); contact becomes infosec@getpayve.com.
+- Footer/company: placeholder alex@getpayve.com removed.
+
+CTA (site-wide): label = "Schedule time with us" (Alex 2026-07-07, supersedes "Book a demo"; personal/high-touch, not big-corporate). Destination stays locked: https://zcal.co/payve (the 30-minute scheduling flow, never a generic calendar or contact form).
+
+## r3 backlog (explicitly NOT in r2)
+
+Motion-heavy hero revisit (slow pan, calm, industry-reflective). Company/About buildout (why the company exists, founder credibility, Silo/supply-chain background, investor logos, offices; personal, credible, not overproduced). Payments product own-name exploration (discussed, NO decision, do not act). Designer (Archer) project-based handoff. AI-interview case-study workflow (Claude interviews team, Granola finds quotes, Claude tightens).
 
 ## What this site is
 
@@ -26,6 +57,13 @@ Industrial Confidence (β), same system as the Payve product app. Never invent h
 
 Golden-sunrise cinematic + bright-day action in beautiful working landscapes; distribution elements in frame (trailers, crates, cranes, combines). Images live in `public/images/` (hero-home, hero-payments, hero-early-pay, hero-agents, hero-produce, hero-seafood, hero-packaging, hero-customers, hero-security, hero-company, cta-hills, og-default). Text over images always gets a graded overlay; the paper-fade gradient on the homepage hero is the pattern.
 
+v2.1 delta (r2, 2026-07-07 critique):
+- hero-home regraded for more visibility/saturation so the image reads clearly through the paper fade.
+- De-faking rule: AI imagery must never read as a fake "photo". Stylize with graded overlays, opacity, and background blends; avoid too-perfect polished scenes. Imagery is atmosphere/texture, not literal documentary proof.
+- Packaging page: cardboard pallets / packaging operations imagery, not grain fields.
+- Seafood page: broader seafood-industry framing, not narrow references.
+- hero-customers (bridge/truck) and hero-security (cold storage) are RETIRED from their pages.
+
 ## Locked copy rules (violations are drift, not preference)
 
 - NO rail vendor names ever: never Astra / OatFi / Bridge / USDB / stablecoin / wallet address. Say "Bank transfer" / "Early payment financing" / "International payment".
@@ -35,6 +73,8 @@ Golden-sunrise cinematic + bright-day action in beautiful working landscapes; di
 - Agents = "organizational intelligence" + "automate back office workflows"; never name a chat channel.
 - No em dashes in copy. No persuasion: no sell lines, loss framing, urgency, or outcome promises. Calm, factual, specific.
 - Real customers only (Fortune Growers, SL Produce, Dal Campo, PH Distribution, Tierra Suelta, Vitos Trading, ASL Produce, Market Value Packhouse); real quote (Geoff Pence). Never invent testimonials, metrics, or company names.
+- Number provenance (r2): "800 voucher entries a month, about 3 minutes each, about 40 hours of manual entry" (Fortune Growers) is customer-sourced from the 2026-07-07 team call. The SL organizational-intelligence story (owner using the agent at night, later rolled out to the CFO and AR) and the Dal Campo complexity/reconciliation angle come from the same call. Every number stays traceable to the customer's own words, signed material, or measured platform data.
+- Agents product name = "Payve Agents" (r2). Still framed as organizational intelligence + approval-gated workflows; never a chat channel.
 
 ## Anti-slop
 
@@ -42,10 +82,10 @@ No purple/neon gradients, no emoji status icons, no lorem ipsum, no generic "Sig
 
 ## The 13 pages and their locked section structures
 
-1. `/` — Hero (headline "The money and the busywork, handled." + sub + Book a demo/Sign in + 4 floating agent-state chips over Michoacán image) → customer wordmark wall → product tour (accordion left: Payments/Early pay/Agents; animated demo right) → How it works 01-04 → Proof (Geoff Pence quote + 3 count-up stats) → Trust (4 tiles + disclosure) → CTA band (sage-900 over hills image).
-2. `/products/payments`, `/products/early-pay`, `/products/agents` — PageHero (eyebrow/title/sub/CTA + hero image right) → SplitSection with the product's animated demo → FeatureGrid (6) → CTA band.
-3. `/solutions/fresh-produce` — PageHero + image → StatStrip (3 sourced stats) → 2 SplitSections (early-pay demo, agents demo) → FeatureGrid (6) → CTA band. `/solutions/seafood`, `/solutions/packaging` — PageHero + image → StatStrip → FeatureGrid (6) → CTA band.
-4. `/customers` — hero + bridge banner + wordmark wall → 3 metric-headline story cards → CTA band. `/customers/{slug}` — dark StoryHero over bridge image → 3-stat band → editorial body with pull quote → "What they run on Payve" chips → related stories → CTA band.
-5. `/security` — PageHero + image → FeatureGrid (6 trust items) → "About your funds" prose → CTA band. `/company` — PageHero + image → prose → CTA band.
+1. `/` — Hero (headline "The money and the busywork, handled." + sub + Schedule time with us over the regraded Michoacán image; NO floating chips) → customer wordmark wall → product tour (accordion left: Payments/Early pay/Payve Agents with strong selected affordance + connector into the animated demo right; vertically centered) → How it works 01-04 (hover states, "No rip and replace" emphasized) + proof layer beneath (4 proof entries keyed to the boxes; default 01) → Proof (Geoff Pence quote + 3 count-up stats) → Trust (4 tiles + disclosure) → CTA band (sage-900 over hills image).
+2. `/products/payments`, `/products/early-pay`, `/products/agents` — PageHero (eyebrow/title/sub/CTA + hero image right, CTA above fold) → SplitSection with the product's animated demo near the top (extended variant) → hover-expand value list (left checkmark list, active item expands right with description/proof) → CTA band. Payments = cross-border-explicit; Early pay = supplier-liquidity-first; Agents page = "Payve Agents".
+3. `/solutions/fresh-produce` — PageHero + image → StatStrip (3 sourced stats) → 2 SplitSections (early-pay demo, agents demo) → FeatureGrid (6) → CTA band. `/solutions/seafood`, `/solutions/packaging` — PageHero + image → StatStrip → FeatureGrid (6) → CTA band. (Imagery per v2.1 delta.)
+4. `/customers` — hero copy (no banner image) → wordmark wall → story cards immediately (customer logo + one-line company description + primary result + click-through) → CTA band. `/customers/{slug}` — StoryHero (dark sage band or per-story image, never the bridge) → 3-stat band → editorial body with pull quote → "What they run on Payve" chips → related stories → CTA band.
+5. `/security` — PageHero + replacement image → FeatureGrid (6 trust items) → "About your funds" prose (contact infosec@getpayve.com) → CTA band. `/company` — PageHero + image → prose (no placeholder email) → CTA band.
 
 The exact copy for every section lives in `marketing-copy-inventory.md` (this bundle). Render it verbatim.
