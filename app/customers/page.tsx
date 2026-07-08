@@ -49,7 +49,7 @@ export default function CustomersPage() {
                 <h2 className="mt-6 font-display text-lg font-bold leading-snug tracking-h2 text-ink-1">
                   {s.headline}
                 </h2>
-                <span className="mt-auto flex items-center gap-2 pt-6 text-xs text-ink-3">
+                <span className="mt-auto flex items-center gap-2 pt-6 text-[11px] font-semibold uppercase tracking-wide text-ink-3">
                   {s.industryTag}
                   {s.draft && (
                     <span className="rounded-sm bg-paper-2 px-1.5 py-0.5 text-[11px] font-medium text-ink-3">

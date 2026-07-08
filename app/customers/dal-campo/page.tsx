@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { StatBand, StoryBody, StoryHero } from "../StoryLayout";
+import { Kicker, StatBand, StoryBody, StoryHero } from "../StoryLayout";
 
 export const metadata: Metadata = {
   title: "Dal Campo customer story",
@@ -40,6 +40,7 @@ export default function DalCampoStory() {
           orders at once, each with its own paperwork, growers on both sides
           of the border, and money moving in both directions.
         </p>
+        <Kicker>The problem</Kicker>
         <h2>The complexity lives in the orders, not the org chart.</h2>
         <p>
           A high count of small orders means a high count of invoices, count
@@ -49,6 +50,7 @@ export default function DalCampoStory() {
           when a question comes back weeks later. Loops recheck open orders
           on a schedule, so nothing waits for someone to remember to look.
         </p>
+        <Kicker>The solution</Kicker>
         <h2>One payment run, every grower.</h2>
         <p>
           With Payve, domestic growers receive bank transfers and

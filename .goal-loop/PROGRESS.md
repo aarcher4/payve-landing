@@ -35,3 +35,9 @@ NO CANVAS this run (Alex). r2 journal preserved in git history of .goal-loop/PRO
 - verification: build PASS; walk CLEAN 16x2; screenshots confirm rail/quote/cross-sell/ring-close stack on payments.
 - GATE: PASS
 - next: Round 3 customers (story kickers, sticky fact sidebar absorbing runs-on chips, hub tag pair styling)
+
+## iteration 7 — Round 3: customers story grammar
+- did: StoryBody -> two-column with STICKY FACT SIDEBAR (Company/Industry/What they run/About from customers-data; old runs-on chip card absorbed); Kicker component + kickers inserted in all 4 stories (The problem/The solution/How it started/What Payve runs/The result); hub industry tags -> small caps tracked; docs round-3 block first.
+- verification: build PASS; walk CLEAN 16x2; hover-check CLEAN; FG story screenshot matches Ramp grammar (dark hero + stat band + ruled quote + kicker + sidebar).
+- GATE: PASS
+- next: re-grade touched pages in design-review-r3.md, final copy-rule grep, memory update, deploy ask (per-branch confirm), final report

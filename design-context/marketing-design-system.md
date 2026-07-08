@@ -60,6 +60,11 @@ r3 locked decisions (2026-07-08, evidence in docs/design-review-r3.md):
   applied to home tour/how-it-works/proof/trust H2s where a natural clause break exists.
 - CLOSING CTA (Alex pick): CtaBand H2 = "The money and the busywork, handled." (ring composition
   with the hero). MidCta keeps "See it on your own data." Subs and buttons unchanged.
+- ROUND 3 (customers, evidence lens 6 / Ramp story grammar): story detail becomes two-column at
+  lg with a STICKY FACT SIDEBAR (Company / Industry / What they run on Payve / About, sourced
+  from customers-data), absorbing the old runs-on chip card; body sections gain small caps
+  KICKERS above their H2s ("The problem" / "The solution" / "What Payve runs" register); hub
+  card industry tags render as small caps tracked pairs.
 - ROUND 2 (product/solutions, evidence lenses 1+7): ValueList adopts the hairline text-rail
   grammar (rows separated by hairlines, active = sage dot + bold sage-800 title, NO checkmarks,
   right expansion panel unchanged). Product pages gain a QUOTE BAND (Ramp pattern: sage-50 tinted
