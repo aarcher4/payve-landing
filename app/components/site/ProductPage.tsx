@@ -14,12 +14,20 @@ export function PageHero({
   sub,
   image,
   imageAlt = "",
+  atmosphere = false,
 }: {
   eyebrow: string;
   title: string;
   sub: string;
   image?: string;
   imageAlt?: string;
+  /**
+   * r2 de-faking treatment: the image reads as a background texture panel
+   * (paper wash from the layout side, sage multiply tint, reduced opacity,
+   * inset hairline) instead of a framed photo. Used on security/company/
+   * solutions; product pages keep the framed style.
+   */
+  atmosphere?: boolean;
 }) {
   return (
     <section className="border-b border-hairline bg-paper-elev">
@@ -42,12 +50,44 @@ export function PageHero({
           </Reveal>
           {image && (
             <Reveal delayIndex={1}>
-              <img
-                src={image}
-                alt={imageAlt}
-                loading="eager"
-                className="aspect-[16/10] w-full rounded-lg border border-hairline object-cover shadow-elev-3"
-              />
+              {atmosphere ? (
+                <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg">
+                  <img
+                    src={image}
+                    alt={imageAlt}
+                    loading="eager"
+                    className="block h-full w-full object-cover opacity-80"
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(100deg, var(--paper) 0%, rgba(247,248,249,0.52) 34%, rgba(247,248,249,0) 68%)",
+                    }}
+                    aria-hidden
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0 mix-blend-multiply"
+                    style={{
+                      background:
+                        "radial-gradient(125% 100% at 28% 18%, rgba(141,168,154,0.22) 0%, rgba(141,168,154,0) 62%)",
+                    }}
+                    aria-hidden
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0"
+                    style={{ boxShadow: "inset 0 0 0 1px rgba(225,228,232,0.5)" }}
+                    aria-hidden
+                  />
+                </div>
+              ) : (
+                <img
+                  src={image}
+                  alt={imageAlt}
+                  loading="eager"
+                  className="aspect-[16/10] w-full rounded-lg border border-hairline object-cover shadow-elev-3"
+                />
+              )}
             </Reveal>
           )}
         </div>

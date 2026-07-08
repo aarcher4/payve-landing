@@ -77,3 +77,9 @@ Repo: C:\Users\Alex Archer\Desktop\payve-landing (stack on site/pr9-canvas-polis
 - did: batch-4 prompt SENT (1272 chars): graded paper+sage overlay wash, reduced opacity, softer framing on PageHero images of security/company/3 solutions; no copy changes; notes replacement Midjourney gens (security campus, packaging pallets, seafood harbor) are produced separately (GATED: Alex/Midjourney). Playwright MCP browser dropped twice around the send (profile lock, killed orphans to recover); message confirmed sent before drop; canvas generation continues server-side.
 - GATE: n/a mid-generation
 - next: reconnect browser, verify batch 4, download 5 pages, W5 port (PageHero image treatment) on site/pr14-trust-imagery, then final sweep + memory update
+
+## iteration 17 — W5 port: de-faking imagery treatment
+- did: PageHero gains `atmosphere` prop implementing the canvas treatment verbatim (opacity .8 image, paper wash linear-gradient(100deg...) from layout side, sage radial multiply tint, inset hairline box-shadow, no border/shadow frame); applied on security/company/3 solutions (product pages keep framed style per canvas). Midjourney replacement gens (security campus, packaging pallets, seafood harbor) remain GATED on Alex; when selects land, drop into public/images/ + canvas and they inherit the treatment.
+- verification: build PASS; walk CLEAN (16 routes x2); visual-diff 5 screens 20-34% (unchanged band, spacing cascade dominates); security screenshot confirms atmosphere render.
+- GATE: PASS
+- next: push + W5 PR, final copy-rule grep sweep + memory update + final report (checkpoints 1-4 posted for Alex review)
