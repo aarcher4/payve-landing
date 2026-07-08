@@ -83,3 +83,8 @@ Repo: C:\Users\Alex Archer\Desktop\payve-landing (stack on site/pr9-canvas-polis
 - verification: build PASS; walk CLEAN (16 routes x2); visual-diff 5 screens 20-34% (unchanged band, spacing cascade dominates); security screenshot confirms atmosphere render.
 - GATE: PASS
 - next: push + W5 PR, final copy-rule grep sweep + memory update + final report (checkpoints 1-4 posted for Alex review)
+
+## iteration 18 — final sweep + memory + run close
+- did: copy-rule grep over the whole wave diff CLEAN (no em dashes, no rail names, no stale label; % hits are CSS gradients); full 14-screen visual-diff sweep recorded; memory landing-rebuild-letitrip-0707.md extended with the r2 wave state + gates + gotchas (95% weekly limit, browser-drop draft trap, per-file download recipe); Render preview repoint to site/pr14-trust-imagery BLOCKED by permission classifier (left as one-click ask for Alex, srv-d96hquv7f7vs73dm7930). All GOAL.md acceptance boxes checked: 5 PRs #13-#17 open, 4 canvas batches driven+exported (14 pages), checkpoints consolidated into the final report for Alex.
+- GATE: PASS (npm run build exit 0)
+- run complete
