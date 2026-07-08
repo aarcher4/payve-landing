@@ -42,7 +42,7 @@ export default function Proof() {
         <Reveal>
           <span className="t-eyebrow text-sage-600">Customer proof</span>
           <h2 className="mt-3 max-w-2xl font-display text-3xl font-extrabold tracking-display text-ink-1 sm:text-4xl">
-            Dozens of hours back, every week.
+            Dozens of hours back, <span className="text-ink-3">every week.</span>
           </h2>
         </Reveal>
 

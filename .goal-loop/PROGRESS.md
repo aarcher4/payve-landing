@@ -23,3 +23,9 @@ NO CANVAS this run (Alex). r2 journal preserved in git history of .goal-loop/PRO
 - did: docs first (design-system r3 locked-decisions block: tour grammar, icon-diet targets, two-tone device, CTA pick "The money and the busywork, handled." per Alex); ProductTour.tsx rewritten: sage-900 full-bleed band, hairline white/10 text rail (no icons/boxes), active = sage-400 dot + white title + blurb expansion (reduced-motion safe), inactive white/50, one underlined sage-300 "Explore <product>" link following selection, demo crossfade right (self-framed light cards), mobile inline demo; copy inventory tour block updated (3 new short blurbs + 3 Explore link strings). Screenshot verified: reads like the reference dark chapter.
 - GATE: PASS (build exit 0)
 - next: Round 1b icon diet (HowItWorks + TrustSection), two-tone H2s, proof panel width, H2 orphan fixes, CtaBand headline swap
+
+## iteration 5 — Round 1b: icon diet + two-tone H2s + CTA ring composition
+- did: HowItWorks corner icons removed (mono 01-04 carry the cards) + two-tone H2 + proof panel max-w-4xl/min-h-96; TrustSection icons removed, tiles restyled type-first with border-t-2 sage-600 rules + two-tone H2; Proof H2 two-tone; CtaBand H2 -> "The money and the busywork, handled." (ring composition, Alex pick; shared component so all pages' closing bands swap; inventory sed x15); hover-check tour assertions updated to click-activation (Mercury grammar). Homepage decorative icon count: 11 -> 0.
+- verification: build PASS; walk CLEAN (16x2); hover-check CLEAN (proof hover x4, tour click x3, keyboard); screenshots confirm type-led trust tiles + ring close. Round 1 (P1 items 1-6) DONE.
+- GATE: PASS
+- next: Round 2 products/solutions (ValueList -> hairline text rail w/o checkmarks; quote band on product pages; cross-sell row; FeatureGrid hairline restyle)
