@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { CheckCircle2, FileText, Landmark, Sparkles, Clock } from "lucide-react";
-import { bookDemoUrl } from "../site/config";
+import { bookDemoLabel, bookDemoUrl } from "../site/config";
 
 const chips = [
   {
@@ -103,7 +103,7 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "linear-gradient(180deg, rgba(247,248,249,0.84) 0%, rgba(247,248,249,0.72) 45%, rgba(247,248,249,0.88) 78%, var(--paper) 100%)",
+            "linear-gradient(180deg, rgba(247,248,249,0.76) 0%, rgba(247,248,249,0.56) 45%, rgba(247,248,249,0.8) 78%, var(--paper) 100%)",
         }}
         aria-hidden
       />
@@ -132,7 +132,7 @@ export default function Hero() {
               href={bookDemoUrl}
               className="rounded-md bg-sage-700 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-sage-800"
             >
-              Book a demo
+              {bookDemoLabel}
             </a>
           </div>
         </motion.div>

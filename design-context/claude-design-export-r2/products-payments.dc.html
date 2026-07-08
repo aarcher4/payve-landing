@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/payve-design-system-copy-160e3a1e-e05c-45ee-af9c-80e8b9d0ac49/colors_and_type.css">
+  <script src="_ds/payve-design-system-copy-160e3a1e-e05c-45ee-af9c-80e8b9d0ac49/_ds_bundle.js"></script>
+  <style>
+    *{ box-sizing:border-box; }
+    html,body{ margin:0; padding:0; }
+    body{ background:var(--paper); color:var(--ink-1); font-family:var(--font-sans); -webkit-font-smoothing:antialiased; }
+    a{ color:var(--sage-700); text-decoration:none; }
+    a:hover{ color:var(--sage-800); }
+    ::selection{ background:var(--sage-200); }
+    .pv-drop-menu{ position:absolute; top:100%; left:0; padding-top:8px; opacity:0; visibility:hidden; transform:translateY(-4px); transition:opacity 120ms ease-out, transform 120ms ease-out, visibility 0s linear 120ms; z-index:70; }
+    .pv-drop:hover .pv-drop-menu{ opacity:1; visibility:visible; transform:translateY(0); transition:opacity 120ms ease-out, transform 120ms ease-out; }
+    @keyframes pvPulse { 0%{ opacity:1; transform:scale(1); } 50%{ opacity:.3; transform:scale(.7); } 100%{ opacity:1; transform:scale(1); } }
+    @media (max-width:900px){
+      .pv-nav-links{ display:none !important; }
+      .pv-sec{ padding-left:20px !important; padding-right:20px !important; }
+    }
+  </style>
+</helmet>
+
+<div style="width:100%; overflow-x:hidden;">
+
+  <!-- ============ NAV ============ -->
+  <nav style="position:sticky; top:0; z-index:60; background:var(--paper); border-bottom:1px solid var(--hairline);">
+    <div style="max-width:1160px; margin:0 auto; height:64px; padding:0 32px; display:flex; align-items:center; gap:30px;">
+      <a href="home.dc.html" style="display:flex; align-items:center;"><img src="assets/payve-logo-transparent.png" alt="Payve" style="height:21px; width:auto; display:block;"></a>
+      <div class="pv-nav-links" style="display:flex; align-items:center; gap:26px; margin-left:6px;">
+        <div class="pv-drop" style="position:relative; display:flex; align-items:center; height:64px;">
+          <a href="products-payments.dc.html" style="display:inline-flex; align-items:center; gap:5px; font-size:14px; font-weight:500; color:var(--ink-2);" style-hover="color:var(--ink-1);">Products<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></a>
+          <div class="pv-drop-menu">
+            <div style="min-width:210px; background:var(--paper-elev); border:1px solid var(--hairline); border-radius:10px; box-shadow:var(--shadow-3); padding:8px;">
+            <a href="products-payments.dc.html" style="display:block; padding:9px 12px; border-radius:6px; font-size:13.5px; font-weight:500; color:var(--ink-2);" style-hover="background:var(--paper-2); color:var(--ink-1);">Payments</a>
+            <a href="products-early-pay.dc.html" style="display:block; padding:9px 12px; border-radius:6px; font-size:13.5px; font-weight:500; color:var(--ink-2);" style-hover="background:var(--paper-2); color:var(--ink-1);">Early pay</a>
+            <a href="products-agents.dc.html" style="display:block; padding:9px 12px; border-radius:6px; font-size:13.5px; font-weight:500; color:var(--ink-2);" style-hover="background:var(--paper-2); color:var(--ink-1);">Payve Agents</a>
+            </div>
+          </div>
+        </div>
+        <div class="pv-drop" style="position:relative; display:flex; align-items:center; height:64px;">
+          <a href="solutions-fresh-produce.dc.html" style="display:inline-flex; align-items:center; gap:5px; font-size:14px; font-weight:500; color:var(--ink-2);" style-hover="color:var(--ink-1);">Solutions<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></a>
+          <div class="pv-drop-menu">
+            <div style="min-width:210px; background:var(--paper-elev); border:1px solid var(--hairline); border-radius:10px; box-shadow:var(--shadow-3); padding:8px;">
+            <a href="solutions-fresh-produce.dc.html" style="display:block; padding:9px 12px; border-radius:6px; font-size:13.5px; font-weight:500; color:var(--ink-2);" style-hover="background:var(--paper-2); color:var(--ink-1);">Fresh produce</a>
+            <a href="solutions-seafood.dc.html" style="display:block; padding:9px 12px; border-radius:6px; font-size:13.5px; font-weight:500; color:var(--ink-2);" style-hover="background:var(--paper-2); color:var(--ink-1);">Seafood</a>
+            <a href="solutions-packaging.dc.html" style="display:block; padding:9px 12px; border-radius:6px; font-size:13.5px; font-weight:500; color:var(--ink-2);" style-hover="background:var(--paper-2); color:var(--ink-1);">Packaging</a>
+            </div>
+          </div>
+        </div>
+        <a href="customers.dc.html" style="display:inline-flex; align-items:center; height:64px; font-size:14px; font-weight:500; color:var(--ink-2);" style-hover="color:var(--ink-1);">Customers</a>
+        <div class="pv-drop" style="position:relative; display:flex; align-items:center; height:64px;">
+          <a href="company.dc.html" style="display:inline-flex; align-items:center; gap:5px; font-size:14px; font-weight:500; color:var(--ink-2);" style-hover="color:var(--ink-1);">Company<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></a>
+          <div class="pv-drop-menu">
+            <div style="min-width:210px; background:var(--paper-elev); border:1px solid var(--hairline); border-radius:10px; box-shadow:var(--shadow-3); padding:8px;">
+            <a href="company.dc.html" style="display:block; padding:9px 12px; border-radius:6px; font-size:13.5px; font-weight:500; color:var(--ink-2);" style-hover="background:var(--paper-2); color:var(--ink-1);">About</a>
+            <a href="security.dc.html" style="display:block; padding:9px 12px; border-radius:6px; font-size:13.5px; font-weight:500; color:var(--ink-2);" style-hover="background:var(--paper-2); color:var(--ink-1);">Security</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-left:auto; display:flex; align-items:center; gap:16px;">
+        <a href="#" style="font-size:14px; font-weight:500; color:var(--ink-2);" style-hover="color:var(--ink-1);">Sign in</a>
+        <a href="#" style="display:inline-flex; align-items:center; height:38px; padding:0 16px; background:var(--sage-700); color:#fff; border-radius:6px; font-size:14px; font-weight:600; box-shadow:var(--shadow-1);" style-hover="background:var(--sage-800); color:#fff;">Schedule time with us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ PAGE HERO ============ -->
+  <section class="pv-sec" style="background:var(--paper-elev); border-bottom:1px solid var(--hairline);">
+    <div style="max-width:1160px; margin:0 auto; padding:80px 32px; display:flex; flex-wrap:wrap; align-items:center; gap:48px;">
+      <div style="flex:1 1 440px; max-width:560px;">
+        <div class="t-eyebrow" style="color:var(--sage-600);">Products</div>
+        <h1 style="font-family:var(--font-display); font-weight:800; margin:14px 0 0; font-size:clamp(32px, 4.4vw, 52px); line-height:1.05; letter-spacing:-.035em; color:var(--ink-1);">Pay every supplier from one place.</h1>
+        <p style="margin:22px 0 0; max-width:500px; font-size:clamp(15px, 1.3vw, 17px); line-height:1.55; color:var(--ink-2);">Domestic and international suppliers, one payment run. Domestic suppliers receive bank transfers. Suppliers in Mexico and Colombia receive local currency at a competitive exchange rate, without wire fees.</p>
+        <div style="margin-top:32px;">
+          <a href="#" style="display:inline-flex; align-items:center; height:46px; padding:0 22px; background:var(--sage-700); color:#fff; border-radius:6px; font-size:15px; font-weight:600; box-shadow:var(--shadow-2);" style-hover="background:var(--sage-800); color:#fff;">Schedule time with us</a>
+        </div>
+      </div>
+      <div style="flex:1 1 380px;">
+        <div style="border:1px solid var(--hairline); border-radius:14px; overflow:hidden; box-shadow:var(--shadow-2); aspect-ratio:4/3;">
+          <img src="images/hero-payments.jpg" alt="" style="display:block; width:100%; height:100%; object-fit:cover;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SPLIT ============ -->
+  <section class="pv-sec" style="padding:88px 32px;">
+    <div style="max-width:1160px; margin:0 auto; display:flex; flex-wrap:wrap; gap:48px; align-items:center;">
+      <div style="flex:1 1 380px; max-width:480px;">
+        <div class="t-eyebrow" style="color:var(--sage-600);">One payment run</div>
+        <h2 style="font-family:var(--font-display); font-weight:700; margin:12px 0 0; font-size:clamp(25px, 3.1vw, 36px); line-height:1.14; letter-spacing:-.024em;">Every supplier, one approval.</h2>
+        <p style="margin:22px 0 0; font-size:15.5px; line-height:1.6; color:var(--ink-2);">Build a payment run across all of your suppliers and approve it once. Payve routes each payment the right way: a bank transfer for domestic suppliers, an international payment for suppliers in Mexico and Colombia.</p>
+        <p style="margin:18px 0 0; font-size:15.5px; line-height:1.6; color:var(--ink-2);">Invoices show what is due. You choose to pay now or schedule a payment on a date you pick, and a scheduled payment stays cancellable until it runs.</p>
+      </div>
+      <div style="flex:1 1 500px;">
+        <!-- PAYMENTS demo panel -->
+        <div style="background:var(--paper-elev); border:1px solid var(--hairline); border-radius:12px; box-shadow:var(--shadow-3); padding:24px; display:flex; flex-direction:column;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+            <span class="t-mono" style="font-size:12.5px; color:var(--ink-2);">Payment run · Jul 10, 2026</span>
+            <span style="display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:500; color:var(--positive);"><span style="width:7px; height:7px; border-radius:999px; background:var(--positive);"></span>Ready</span>
+          </div>
+          <div style="display:grid; grid-template-columns:1.5fr 1.1fr auto; gap:12px; padding:0 2px 9px; border-bottom:1px solid var(--hairline);">
+            <span style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-3);">Supplier</span>
+            <span style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-3);">Type</span>
+            <span style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-3); text-align:right;">Amount</span>
+          </div>
+          <div style="display:grid; grid-template-columns:1.5fr 1.1fr auto; gap:12px; align-items:center; padding:11px 2px; border-bottom:1px solid var(--hairline);">
+            <span style="font-size:13.5px; font-weight:500; color:var(--ink-1);">Casa de Tortillas SA de CV</span>
+            <span style="display:inline-flex; align-items:center; gap:7px; font-size:12.5px; color:var(--ink-2);"><span style="width:6px; height:6px; border-radius:999px; background:var(--info); flex:none;"></span>International payment</span>
+            <span class="t-money t-num" style="text-align:right; font-size:13.5px;">$84,210.00</span>
+          </div>
+          <div style="display:grid; grid-template-columns:1.5fr 1.1fr auto; gap:12px; align-items:center; padding:11px 2px; border-bottom:1px solid var(--hairline);">
+            <span style="font-size:13.5px; font-weight:500; color:var(--ink-1);">Pacific Northwest Maple Co.</span>
+            <span style="display:inline-flex; align-items:center; gap:7px; font-size:12.5px; color:var(--ink-2);"><span style="width:6px; height:6px; border-radius:999px; background:var(--sage-500); flex:none;"></span>Bank transfer</span>
+            <span class="t-money t-num" style="text-align:right; font-size:13.5px;">$23,847.50</span>
+          </div>
+          <div style="display:grid; grid-template-columns:1.5fr 1.1fr auto; gap:12px; align-items:center; padding:11px 2px; border-bottom:1px solid var(--hairline);">
+            <span style="font-size:13.5px; font-weight:500; color:var(--ink-1);">Café del Quindío SAS</span>
+            <span style="display:inline-flex; align-items:center; gap:7px; font-size:12.5px; color:var(--ink-2);"><span style="width:6px; height:6px; border-radius:999px; background:var(--info); flex:none;"></span>International payment</span>
+            <span class="t-money t-num" style="text-align:right; font-size:13.5px;">$41,062.75</span>
+          </div>
+          <div style="display:grid; grid-template-columns:1.5fr 1.1fr auto; gap:12px; align-items:center; padding:11px 2px; border-bottom:1px solid var(--hairline);">
+            <span style="font-size:13.5px; font-weight:500; color:var(--ink-1);">Sycamore Mill &amp; Lumber</span>
+            <span style="display:inline-flex; align-items:center; gap:7px; font-size:12.5px; color:var(--ink-2);"><span style="width:6px; height:6px; border-radius:999px; background:var(--sage-500); flex:none;"></span>Bank transfer</span>
+            <span class="t-money t-num" style="text-align:right; font-size:13.5px;">$18,395.20</span>
+          </div>
+          <div style="display:grid; grid-template-columns:1.5fr 1.1fr auto; gap:12px; align-items:center; padding:13px 2px 0;">
+            <span style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-3);">Total</span>
+            <span></span>
+            <span class="t-money t-num" style="text-align:right; font-size:15px; font-weight:700;">$167,715.45</span>
+          </div>
+          <div style="margin-top:18px;">
+            <div style="background:var(--sage-50); border:1px solid var(--sage-100); border-radius:8px; padding:12px 14px; font-size:13px; font-weight:500; color:var(--sage-800);">One approval. Every supplier paid. No wire fees.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURE GRID ============ -->
+  <section class="pv-sec" style="padding:0 32px 88px;">
+    <div style="max-width:1160px; margin:0 auto; background:var(--hairline); border:1px solid var(--hairline); border-radius:12px; overflow:hidden; display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1px;">
+      <div style="background:var(--paper); padding:32px;">
+        <span style="color:var(--sage-700);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="2" x2="22" y1="12" y2="12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></span>
+        <h3 style="font-family:var(--font-sans); font-weight:600; font-size:16.5px; letter-spacing:-.01em; margin:18px 0 0; color:var(--ink-1);">No wire fees</h3>
+        <p style="margin:9px 0 0; font-size:13.5px; line-height:1.55; color:var(--ink-2);">International suppliers receive local currency at a competitive exchange rate. The wire fee line disappears from your cost of doing business.</p>
+      </div>
+      <div style="background:var(--paper); padding:32px;">
+        <span style="color:var(--sage-700);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/><path d="m9 16 2 2 4-4"/></svg></span>
+        <h3 style="font-family:var(--font-sans); font-weight:600; font-size:16.5px; letter-spacing:-.01em; margin:18px 0 0; color:var(--ink-1);">Pay now or schedule</h3>
+        <p style="margin:9px 0 0; font-size:13.5px; line-height:1.55; color:var(--ink-2);">A due invoice is just an amount due. You decide when it moves: pay now, or schedule a real, cancellable payment on a date you pick.</p>
+      </div>
+      <div style="background:var(--paper); padding:32px;">
+        <span style="color:var(--sage-700);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-3 7h6l-3 7"/><circle cx="12" cy="12" r="10" opacity=".35"/></svg></span>
+        <h3 style="font-family:var(--font-sans); font-weight:600; font-size:16.5px; letter-spacing:-.01em; margin:18px 0 0; color:var(--ink-1);">Fast supplier receipt</h3>
+        <p style="margin:9px 0 0; font-size:13.5px; line-height:1.55; color:var(--ink-2);">Domestic bank transfers arrive within one business day. Suppliers in Mexico and Colombia can withdraw to their local bank within an hour, around the clock.</p>
+      </div>
+      <div style="background:var(--paper); padding:32px;">
+        <span style="color:var(--sage-700);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg></span>
+        <h3 style="font-family:var(--font-sans); font-weight:600; font-size:16.5px; letter-spacing:-.01em; margin:18px 0 0; color:var(--ink-1);">Operating Account</h3>
+        <p style="margin:9px 0 0; font-size:13.5px; line-height:1.55; color:var(--ink-2);">Fund once and pay from your Payve balance. Available funds, pending deposits, and scheduled payments each stay visible and separate.</p>
+      </div>
+      <div style="background:var(--paper); padding:32px;">
+        <span style="color:var(--sage-700);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M9 13h6M9 17h6"/></svg></span>
+        <h3 style="font-family:var(--font-sans); font-weight:600; font-size:16.5px; letter-spacing:-.01em; margin:18px 0 0; color:var(--ink-1);">Every payment logged</h3>
+        <p style="margin:9px 0 0; font-size:13.5px; line-height:1.55; color:var(--ink-2);">Each payment carries its full history: who approved it, when it moved, and what it settled.</p>
+      </div>
+      <div style="background:var(--paper); padding:32px;">
+        <span style="color:var(--sage-700);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <h3 style="font-family:var(--font-sans); font-weight:600; font-size:16.5px; letter-spacing:-.01em; margin:18px 0 0; color:var(--ink-1);">Suppliers onboard themselves</h3>
+        <p style="margin:9px 0 0; font-size:13.5px; line-height:1.55; color:var(--ink-2);">Suppliers finish a short form from a link on their phone. No accounts payable back-and-forth over bank details.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA BAND ============ -->
+  <section style="position:relative; overflow:hidden; background:var(--sage-900);">
+    <img src="images/cta-hills.jpg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+    <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(28,44,38,.72) 0%, rgba(28,44,38,.86) 100%);"></div>
+    <div class="pv-sec" style="position:relative; z-index:2; max-width:1160px; margin:0 auto; padding:96px 32px; text-align:center;">
+      <h2 style="font-family:var(--font-display); font-weight:800; margin:0; font-size:clamp(28px, 3.8vw, 44px); line-height:1.08; letter-spacing:-.03em; color:#fff;">See Payve on your own data.</h2>
+      <p style="margin:18px auto 0; max-width:560px; font-size:clamp(15px, 1.4vw, 17px); line-height:1.55; color:rgba(255,255,255,.82);">A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.</p>
+      <div style="display:flex; gap:12px; margin-top:32px; justify-content:center; flex-wrap:wrap;">
+        <a href="#" style="display:inline-flex; align-items:center; height:46px; padding:0 24px; background:#fff; color:var(--sage-900); border-radius:6px; font-size:15px; font-weight:600;" style-hover="background:var(--paper-2); color:var(--sage-900);">Schedule time with us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background:var(--paper); border-top:1px solid var(--hairline);">
+    <div class="pv-sec" style="max-width:1160px; margin:0 auto; padding:56px 32px 40px;">
+      <div style="display:flex; flex-wrap:wrap; gap:40px 48px;">
+        <div style="flex:1 1 220px; min-width:200px;">
+          <img src="assets/payve-logo-transparent.png" alt="Payve" style="height:20px; width:auto; display:block;">
+          <p style="margin:16px 0 0; max-width:240px; font-size:13px; line-height:1.5; color:var(--ink-3);">The financial operating layer for supply chain trade.</p>
+        </div>
+                <div style="flex:1 1 150px;">
+          <div class="t-eyebrow" style="margin-bottom:16px;">Products</div>
+          <div style="display:flex; flex-direction:column; gap:11px;">
+            <a href="products-payments.dc.html" style="font-size:13.5px; color:var(--ink-2);" style-hover="color:var(--ink-1);">Payments</a>
+            <a href="products-early-pay.dc.html" style="font-size:13.5px; color:var(--ink-2);" style-hover="color:var(--ink-1);">Early pay</a>
+            <a href="products-agents.dc.html" style="font-size:13.5px; color:var(--ink-2);" style-hover="color:var(--ink-1);">Payve Agents</a>
+          </div>
+        </div>
+        <div style="flex:1 1 150px;">
+          <div class="t-eyebrow" style="margin-bottom:16px;">Solutions</div>
+          <div style="display:flex; flex-direction:column; gap:11px;">
+            <a href="solutions-fresh-produce.dc.html" style="font-size:13.5px; color:var(--ink-2);" style-hover="color:var(--ink-1);">Fresh produce</a>
+            <a href="solutions-seafood.dc.html" style="font-size:13.5px; color:var(--ink-2);" style-hover="color:var(--ink-1);">Seafood</a>
+            <a href="solutions-packaging.dc.html" style="font-size:13.5px; color:var(--ink-2);" style-hover="color:var(--ink-1);">Packaging</a>
+          </div>
+        </div>
+        <div style="flex:1 1 150px;">
+          <div class="t-eyebrow" style="margin-bottom:16px;">Customers</div>
+          <div style="display:flex; flex-direction:column; gap:11px;">
+            <a href="customers.dc.html" style="font-size:13.5px; color:var(--ink-2);" style-hover="color:var(--ink-1);">Customer stories</a>
+          </div>
+        </div>
+        <div style="flex:1 1 150px;">
+          <div class="t-eyebrow" style="margin-bottom:16px;">Company</div>
+          <div style="display:flex; flex-direction:column; gap:11px;">
+            <a href="company.dc.html" style="font-size:13.5px; color:var(--ink-2);" style-hover="color:var(--ink-1);">About</a>
+            <a href="security.dc.html" style="font-size:13.5px; color:var(--ink-2);" style-hover="color:var(--ink-1);">Security</a>
+            <a href="#" style="font-size:13.5px; color:var(--ink-2);" style-hover="color:var(--ink-1);">Privacy</a>
+            <a href="#" style="font-size:13.5px; color:var(--ink-2);" style-hover="color:var(--ink-1);">Terms</a>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:44px; padding-top:24px; border-top:1px solid var(--hairline); display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+        <span style="font-size:12.5px; color:var(--ink-3);">Payve is a financial technology company, not a bank.</span>
+        <span style="font-size:12.5px; color:var(--ink-3);">© 2026 Payve, Inc.</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+</body>
+</html>

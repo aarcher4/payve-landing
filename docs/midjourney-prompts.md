@@ -91,6 +91,25 @@ minimal still life of three fresh green vegetables on a cool gray concrete surfa
 extreme close up of morning condensation on the corrugated steel wall of a refrigerated warehouse, abstract vertical ribs, cool gray-green gradient, almost monochrome, quiet texture --ar 16:9
 ```
 
+## r2 additions (2026-07-07 team critique)
+
+Write these in the locked v2 style (golden-sunrise cinematic base above, NOT the v1 base suffix kept below for history). The critique retires the security cold-room and rebalances two solutions pages.
+
+### 13. Security page replacement (16:9)
+```
+golden sunrise over a modern distribution campus, long warehouse rooflines and orderly trailer yard seen from a calm elevated angle, crisp clear morning air, sense of order and stewardship, distant small figures only --ar 16:9 --style raw --v 7
+```
+
+### 14. Packaging solutions replacement (16:9)
+```
+sunlit interior of a corrugated packaging operation, tall stacks of flat cardboard cartons on wooden pallets, a forklift lane receding toward open dock doors glowing with morning light, warm golden shafts through skylights, ordered geometry --ar 16:9 --style raw --v 7
+```
+
+### 15. Seafood solutions replacement (16:9)
+```
+working seafood harbor at golden sunrise, boats unloading insulated totes onto a busy quay beside a processing house, cranes and stacked crates in frame, warm light on cold water, broad industry scene not a single catch --ar 16:9 --style raw --v 7
+```
+
 ## After generating
 
 Drop selects into `public/images/` named by page (`hero-home.jpg`, `hero-seafood.jpg`, ...). The imagery integration PR wires them in with graded overlays so type stays readable. Aim for 2400px wide exports for heroes.

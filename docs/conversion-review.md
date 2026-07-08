@@ -5,7 +5,7 @@ Researched 2026-07-07: live fetches of mercury.com, ramp.com, happyrobot.ai, gig
 ## Locked verdicts
 
 - **Sign in: nav-only, top-right, quiet.** Zero of seven reference sites put sign-in in the hero CTA row. The hero carries ONE acquisition action.
-- **Demo CTA copy: "Book a demo"** (Alex 2026-07-07, site-wide; HappyRobot's pattern). Not to be relitigated.
+- **Demo CTA copy: "Schedule time with us"** (Alex 2026-07-07 team critique, site-wide; supersedes the earlier same-day "Book a demo" lock). The team wanted personal/high-touch over generic big-corporate; "Schedule time with us" stays action-specific (rubric item 8). Candidates considered: Schedule time with us / Connect with us / Schedule a demo.
 - Demo booking: CTA links to the Zcal scheduler (instant scheduling beats "we'll be in touch"; 5-minute response makes qualification 21x more likely per Chili Piper/RevenueHero).
 
 ## The 20-item checklist (ordered by conversion impact)

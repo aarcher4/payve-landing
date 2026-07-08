@@ -1,5 +1,5 @@
 import Reveal from "./Reveal";
-import { bookDemoUrl } from "../site/config";
+import { bookDemoLabel, bookDemoUrl } from "../site/config";
 
 export default function CtaBand() {
   return (
@@ -28,7 +28,7 @@ export default function CtaBand() {
               href={bookDemoUrl}
               className="rounded-md bg-white px-6 py-3 text-sm font-semibold text-sage-900 transition-colors hover:bg-sage-50"
             >
-              Book a demo
+              {bookDemoLabel}
             </a>
           </div>
         </Reveal>

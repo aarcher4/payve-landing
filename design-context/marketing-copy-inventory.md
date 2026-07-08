@@ -1,6 +1,15 @@
-# Marketing copy inventory (verbatim, extracted from the built site 2026-07-07)
+# Marketing copy inventory (r2, 2026-07-07 team critique)
 
 Render this copy exactly. Do not rewrite, reorder, or expand it.
+
+r2 changelog (over the r1 extraction of the built site):
+- CTA label site-wide: the former demo-booking label replaced by "Schedule time with us" (destination unchanged).
+- Homepage: 4 floating hero chip strings removed; step 02 gains "(or Spanish)"; NEW proof-layer block under How it works (4 entries keyed to the boxes).
+- Product name: standalone "Agents" becomes "Payve Agents" in nav, footer, tour, chips, and the agents page.
+- Payments page repositioned cross-border-explicit; Early pay page repositioned supplier-liquidity-first.
+- Customers: cards gain a one-line company description; FG story gains the voucher automation content; SL story reworked around organizational intelligence (the Selman family operation); Dal Campo gains the complexity/reconciliation angle; NEW Producer Pro (Manny) payments story, draft, naming gated on consent.
+- Emails: footer placeholder removed; security contact = infosec@getpayve.com; company page email removed.
+- Number provenance: FG voucher numbers (800/month, about 3 minutes each, about 40 hours a month) are customer-sourced from the 2026-07-07 team call.
 
 ## / (homepage)
 
@@ -10,17 +19,10 @@ Solutions
 Customers
 Company
 Sign in
-Book a demo
-Matching invoice to PO-44829
-Morning briefing drafted
-Awaiting your approval
-Early payment sent
-$127,264.46
-Payment scheduled
-Jul 18, 2026
+Schedule time with us
 The money and the busywork, handled.
 Payve is the financial operating layer for supply chain trade. Pay every supplier from one place, give suppliers the option to be paid early, and put agents on the back office work your team does by hand.
-Book a demo
+Schedule time with us
 Sign in
 Supply chain businesses across the US, Mexico, and Colombia
 Fortune Growers
@@ -57,7 +59,7 @@ $18,395.20
 Queued
 One approval. Every supplier paid. No wire fees.
 Early pay
-Agents
+Payve Agents
 Payment run
 Jul 10, 2026
 Casa de Tortillas SA de CV
@@ -84,13 +86,18 @@ Connect
 We securely link your ERP and bank data. No rip and replace, nothing to install.
 02
 See everything
-Your data unified daily. Ask questions in plain English, get answers with the numbers behind them.
+Your data unified daily. Ask questions in plain English (or Spanish), get answers with the numbers behind them.
 03
 Automate with approval
 Agents do the entry, matching, and drafting. A person on your team approves every write.
 04
 Move the money
 Pay every supplier from one place and offer early pay on approved invoices.
+What that looked like
+Fortune Growers connected the ERP it has run for two decades. Nothing was replaced, and nothing was installed on their side.
+The owner of SL Produce asks the business questions at any hour and gets answers with the numbers behind them. What started with the owner now briefs the CFO and the receivables team every morning.
+At Fortune Growers, agents enter 800 vouchers a month, work that took about 3 minutes each by hand. The team approves every batch and gets about 40 hours a month back.
+Suppliers in Mexico and Colombia receive local currency at a competitive exchange rate, and any supplier can choose early payment on an approved invoice. Suppliers with liquidity on open invoices stay closer to the buyers who offer it.
 Customer proof
 Dozens of hours back, every week.
 “Payve has been an absolute game changer for Fortune Growers. Partnering with Payve instantly felt like we added an entire crew of dedicated specialists to our workforce. Payve helped us harness an unbelievable amount of unused data to make decisions faster and earlier, saving dozens of hours and eliminating thousands of dollars in waste and inefficiency every week.”
@@ -114,13 +121,13 @@ Payve is a financial technology company, not a bank.
 More on security
 See Payve on your own data.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
-Book a demo
+Schedule time with us
 Sign in
 Payments, early pay, and agents for supply chain trade.
 Products
 Payments
 Early pay
-Agents
+Payve Agents
 Solutions
 Fresh produce
 Seafood
@@ -135,7 +142,6 @@ Terms
 Payve is a financial technology company, not a bank.
 2026
 Payve, Inc. All rights reserved.
-alex@getpayve.com
 
 ## /products/payments
 
@@ -145,11 +151,11 @@ Solutions
 Customers
 Company
 Sign in
-Book a demo
+Schedule time with us
 Products
-Pay every supplier from one place.
-Domestic and international suppliers, one payment run. Domestic suppliers receive bank transfers. Suppliers in Mexico and Colombia receive local currency at a competitive exchange rate, without wire fees.
-Book a demo
+Cross-border payments, without the wire desk.
+Pay suppliers in Mexico and Colombia in their own pesos at a competitive exchange rate, with no wire fees, from the same payment run that pays your domestic suppliers by bank transfer. One run, one approval.
+Schedule time with us
 One payment run
 Every supplier, one approval.
 Build a payment run across all of your suppliers and approve it once. Payve routes each payment the right way: a bank transfer for domestic suppliers, an international payment for suppliers in Mexico and Colombia.
@@ -187,13 +193,13 @@ Suppliers onboard themselves
 Suppliers finish a short form from a link on their phone. No accounts payable back-and-forth over bank details.
 See Payve on your own data.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
-Book a demo
+Schedule time with us
 Sign in
 Payments, early pay, and agents for supply chain trade.
 Products
 Payments
 Early pay
-Agents
+Payve Agents
 Solutions
 Fresh produce
 Seafood
@@ -208,7 +214,6 @@ Terms
 Payve is a financial technology company, not a bank.
 2026
 Payve, Inc. All rights reserved.
-alex@getpayve.com
 
 ## /products/early-pay
 
@@ -218,11 +223,11 @@ Solutions
 Customers
 Company
 Sign in
-Book a demo
+Schedule time with us
 Products
-Suppliers get paid early. Buyers earn on it.
-When a purchase order is approved, the supplier can choose to be paid early. They see the exact dollars they receive today, the fee, and when the money arrives. Nothing changes about how the buyer pays.
-Book a demo
+Approved invoices become working capital.
+Suppliers wait out payment terms while the money sits on approved invoices. With early pay, a supplier can choose to be paid faster and see the exact dollars received today, the fee, and when the money arrives. Nothing changes about how the buyer pays, and the buyer earns each time a supplier accepts.
+Schedule time with us
 The supplier's choice
 An offer in dollars, not fine print.
 Every offer reads the same way: the amount available today, the invoice amount at term, and the fee. No rates, no tables, no conditions to decode. If the supplier accepts, funds arrive within one business day.
@@ -251,13 +256,13 @@ Optional fee coverage
 Buyers can choose to cover part of a supplier's early pay fee for strategic relationships.
 See Payve on your own data.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
-Book a demo
+Schedule time with us
 Sign in
 Payments, early pay, and agents for supply chain trade.
 Products
 Payments
 Early pay
-Agents
+Payve Agents
 Solutions
 Fresh produce
 Seafood
@@ -272,25 +277,24 @@ Terms
 Payve is a financial technology company, not a bank.
 2026
 Payve, Inc. All rights reserved.
-alex@getpayve.com
 
 ## /products/agents
 
-Agents · Payve
+Payve Agents · Payve
 Products
 Solutions
 Customers
 Company
 Sign in
-Book a demo
+Schedule time with us
 Products
-Agents that know your business and do the busywork.
-Payve agents connect to the systems you already run, answer questions about your business in plain English, and automate the back office work your team does by hand. A person on your team approves every write.
-Book a demo
+Payve Agents know your business and do the busywork.
+Payve Agents connect to the systems you already run, answer questions about your business in plain English or Spanish, and automate the back office work your team does by hand. A person on your team approves every write.
+Schedule time with us
 Organizational intelligence
 The day starts with answers.
 Agents sync your sales, receivables, inventory, quality, and market data daily, then deliver scheduled briefings to the people who need them: a morning market snapshot, a receivables risk report, a collections summary, in English or Spanish.
-Ask a question in plain English and get the answer with the numbers behind it, drawn from your own systems.
+Ask a question in plain English or Spanish and get the answer with the numbers behind it, drawn from your own systems.
 Payve agent
 Working
 Reading overnight orders and documents
@@ -313,13 +317,13 @@ Approval-gated writes
 Agents prepare the work; nothing is written to your systems until a person on your team approves it. Every action is logged and traceable.
 See Payve on your own data.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
-Book a demo
+Schedule time with us
 Sign in
 Payments, early pay, and agents for supply chain trade.
 Products
 Payments
 Early pay
-Agents
+Payve Agents
 Solutions
 Fresh produce
 Seafood
@@ -334,7 +338,6 @@ Terms
 Payve is a financial technology company, not a bank.
 2026
 Payve, Inc. All rights reserved.
-alex@getpayve.com
 
 ## /solutions/fresh-produce
 
@@ -344,11 +347,11 @@ Solutions
 Customers
 Company
 Sign in
-Book a demo
+Schedule time with us
 Solutions
 Built for the pace of perishables.
 Produce runs on 30-day terms, cross-border supply, and systems that were never built to share. Payve pays your growers and suppliers from one place, gives them liquidity on open invoices, and puts agents on the back office work that eats your team's week.
-Book a demo
+Schedule time with us
 $35.6B
 US fresh fruit and vegetable imports forecast for 2025
 USDA Economic Research Service
@@ -398,13 +401,13 @@ USDA market data in the loop
 Daily shipping-point and terminal-market prices land in your briefings next to your own sales numbers.
 See Payve on your own data.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
-Book a demo
+Schedule time with us
 Sign in
 Payments, early pay, and agents for supply chain trade.
 Products
 Payments
 Early pay
-Agents
+Payve Agents
 Solutions
 Fresh produce
 Seafood
@@ -419,7 +422,6 @@ Terms
 Payve is a financial technology company, not a bank.
 2026
 Payve, Inc. All rights reserved.
-alex@getpayve.com
 
 ## /solutions/seafood
 
@@ -429,11 +431,11 @@ Solutions
 Customers
 Company
 Sign in
-Book a demo
+Schedule time with us
 Solutions
 Cold chain operations, without the paper chase.
 Seafood importers finance inventory across an ocean crossing before a receivable turns to cash, while the cold chain runs on strict timing and documentation. Payve handles the supplier payments and puts agents on the paperwork.
-Book a demo
+Schedule time with us
 $6.6B
 US shrimp imports in 2024
 US import data
@@ -455,13 +457,13 @@ Briefings before the workday
 Inventory positions, receivables at risk, and open orders delivered to your team every morning.
 See Payve on your own data.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
-Book a demo
+Schedule time with us
 Sign in
 Payments, early pay, and agents for supply chain trade.
 Products
 Payments
 Early pay
-Agents
+Payve Agents
 Solutions
 Fresh produce
 Seafood
@@ -476,7 +478,6 @@ Terms
 Payve is a financial technology company, not a bank.
 2026
 Payve, Inc. All rights reserved.
-alex@getpayve.com
 
 ## /solutions/packaging
 
@@ -486,11 +487,11 @@ Solutions
 Customers
 Company
 Sign in
-Book a demo
+Schedule time with us
 Solutions
 A packhouse back office that runs itself.
 A repack operation sits between growers and retail with invoices moving in both directions, cold chain receiving standards rising, and a back office that is often one person deep. Payve consolidates the money movement and puts agents on the bookkeeping.
-Book a demo
+Schedule time with us
 2,000 lbs/day
 the handling volume where federal produce licensing rules kick in
 USDA PACA
@@ -512,13 +513,13 @@ Compliance-ready records
 Terms, invoice trails, and payment history stay organized the way produce regulation expects.
 See Payve on your own data.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
-Book a demo
+Schedule time with us
 Sign in
 Payments, early pay, and agents for supply chain trade.
 Products
 Payments
 Early pay
-Agents
+Payve Agents
 Solutions
 Fresh produce
 Seafood
@@ -533,7 +534,6 @@ Terms
 Payve is a financial technology company, not a bank.
 2026
 Payve, Inc. All rights reserved.
-alex@getpayve.com
 
 ## /customers
 
@@ -543,7 +543,7 @@ Solutions
 Customers
 Company
 Sign in
-Book a demo
+Schedule time with us
 Customers
 Supply chains run on Payve.
 Growers, shippers, distributors, and packhouses across the US, Mexico, and Colombia use Payve to pay suppliers, offer early pay, and put agents on their back office.
@@ -555,27 +555,35 @@ Tierra Suelta
 Vitos Trading
 ASL Produce
 Market Value Packhouse
+Fortune Growers is a grower-shipper with two decades in fresh produce and operations in the Midwest, California, and South Texas.
 Dozens of hours
 back every week, in the customer's own words
 How Fortune Growers turned unused data into faster decisions.
 Grower-shipper · US & Mexico
-6 days a week
-collections briefed in Spanish, before the workday
-How a Sinaloa grower family runs collections across the border.
+SL Produce is the US arm of the Selman family growing operation in Guasave, Sinaloa.
+Any hour
+the owner asks the business a question and gets an answer
+How the Selman family put a pulse on the whole business.
 Grower family · Sinaloa & US
-One place
-to pay growers on both sides of the border
-How Dal Campo pays growers without the wire desk.
+Dal Campo is a Miami wholesale produce business buying from growers across the Americas.
+Every order
+reconciled, documented, and traceable
+How Dal Campo keeps high order complexity auditable.
 Wholesale produce · Miami
+Producer Pro connected the systems it already ran. Nothing was ripped out.
+One integration
+payments running without replacing a single system
+How a produce business added payments without a migration.
+Payments · Draft, publishes after customer review
 See Payve on your own data.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
-Book a demo
+Schedule time with us
 Sign in
 Payments, early pay, and agents for supply chain trade.
 Products
 Payments
 Early pay
-Agents
+Payve Agents
 Solutions
 Fresh produce
 Seafood
@@ -590,7 +598,6 @@ Terms
 Payve is a financial technology company, not a bank.
 2026
 Payve, Inc. All rights reserved.
-alex@getpayve.com
 
 ## /customers/fortune-growers
 
@@ -600,16 +607,16 @@ Solutions
 Customers
 Company
 Sign in
-Book a demo
+Schedule time with us
 Grower-shipper · US & Mexico
 Fortune Growers turned unused data into faster decisions.
 Fortune Growers
 Dozens of hours
 saved every week, in the customer's own words
-Thousands of dollars
-in waste and inefficiency eliminated weekly
-Every morning
-the team starts with briefings instead of report-pulling
+800 vouchers a month
+entered by agents, approved by the team
+About 40 hours a month
+of manual entry work returned to the back office
 Fortune Growers is a grower-shipper with two decades in fresh produce, operations in the Midwest, California, and South Texas, and supply relationships that reach across the border. Like most of the industry, the business ran on an ERP full of answers nobody had time to dig out.
 “Payve has been an absolute game changer for Fortune Growers. Partnering with Payve instantly felt like we added an entire crew of dedicated specialists to our workforce. Payve helped us harness an unbelievable amount of unused data to make decisions faster and earlier, saving dozens of hours and eliminating thousands of dollars in waste and inefficiency every week.”
 Geoff Pence
@@ -619,27 +626,28 @@ Sales history, purchase orders, inventory, price lists, quality inspections, and
 Payve agents connected to the systems Fortune Growers already ran and unified that data daily. Now the team asks questions in plain English and gets answers with the numbers behind them, and the questions they used to ask every morning arrive answered, as scheduled briefings: sales and receivables reports, market snapshots against USDA prices, and receivables-risk digests before the workday starts.
 The busywork moved to agents.
 The same agents handle the entry work around the money: invoices itemized and reconciled, documents matched to the right orders, and customer complaints traced to the affected lots with a drafted root-cause analysis. A person at Fortune Growers approves every write before anything posts.
+The clearest example is voucher entry. Cold storage service invoices used to be keyed into the ERP by hand, about 800 entries a month at roughly 3 minutes each. Agents now read, itemize, and enter those vouchers in batches the team approves, returning about 40 hours of entry work to the back office every month. When something in a load does not match, the agent flags it with the records attached, so problems get reported with evidence instead of found at reconciliation.
 Payments run through the same platform, so paying growers and suppliers on both sides of the border happens from one place, and suppliers can choose early payment on approved invoices.
 What they run on Payve
 Payments
 Early pay
-Agents
+Payve Agents
 More stories
-6 days a week
-How a Sinaloa grower family runs collections across the border.
+Any hour
+How the Selman family put a pulse on the whole business.
 Grower family · Sinaloa & US
-One place
-How Dal Campo pays growers without the wire desk.
+Every order
+How Dal Campo keeps high order complexity auditable.
 Wholesale produce · Miami
 See Payve on your own data.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
-Book a demo
+Schedule time with us
 Sign in
 Payments, early pay, and agents for supply chain trade.
 Products
 Payments
 Early pay
-Agents
+Payve Agents
 Solutions
 Fresh produce
 Seafood
@@ -654,7 +662,6 @@ Terms
 Payve is a financial technology company, not a bank.
 2026
 Payve, Inc. All rights reserved.
-alex@getpayve.com
 
 ## /customers/sl-produce
 
@@ -664,41 +671,44 @@ Solutions
 Customers
 Company
 Sign in
-Book a demo
+Schedule time with us
 Grower family · Sinaloa & US
-A Sinaloa grower family runs collections across the border.
+The Selman family put a pulse on the whole business.
 SL Produce
 Draft. Publishes after customer review.
+Any hour
+the owner asks the business a question and gets an answer
+3 roles
+what started with the owner now briefs the CFO and receivables
 6 days a week
 collections briefed in Spanish before the workday
-Two countries
-one view of sales, receivables, and crop movement
-Twice daily
-crop accumulation reports during the season
-SL Produce is the US arm of a family growing operation based in Guasave, Sinaloa, moving green beans, cucumbers, and peppers into the US market. The business runs in two countries, two languages, and two time zones at once.
+SL Produce is the US arm of the Selman family growing operation based in Guasave, Sinaloa, moving green beans, cucumbers, and peppers into the US market. The business runs in two countries, two languages, and two time zones at once.
+It started with one person asking questions at night.
+The owner began using a Payve agent the way owners actually think about their business: at odd hours, one question at a time. What sold this week. Which receivables moved. What changed since yesterday. Each answer came back with the numbers behind it, drawn from the family's own systems, without waiting for someone to build a report.
+What worked for the owner rolled out to the rest of the operation. The CFO gets the financial picture, the receivables team gets collections, and the questions the family used to carry in their heads now arrive as scheduled briefings.
 Collections that follow the sun.
 Payve agents deliver a collections report in Spanish six mornings a week, on Sinaloa time, so the team starts each day knowing who owes what and what changed overnight. During the season, crop accumulation reports land twice a day, and a weekly sales recap closes the loop.
 The same platform gives the family one view of receivables and sales on both sides of the border, without anyone rebuilding spreadsheets between offices.
 This story is a draft. Specific results publish after review with SL Produce.
 What they run on Payve
 Payments
-Agents
+Payve Agents
 More stories
 Dozens of hours
 How Fortune Growers turned unused data into faster decisions.
 Grower-shipper · US & Mexico
-One place
-How Dal Campo pays growers without the wire desk.
+Every order
+How Dal Campo keeps high order complexity auditable.
 Wholesale produce · Miami
 See Payve on your own data.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
-Book a demo
+Schedule time with us
 Sign in
 Payments, early pay, and agents for supply chain trade.
 Products
 Payments
 Early pay
-Agents
+Payve Agents
 Solutions
 Fresh produce
 Seafood
@@ -713,7 +723,6 @@ Terms
 Payve is a financial technology company, not a bank.
 2026
 Payve, Inc. All rights reserved.
-alex@getpayve.com
 
 ## /customers/dal-campo
 
@@ -723,18 +732,20 @@ Solutions
 Customers
 Company
 Sign in
-Book a demo
+Schedule time with us
 Wholesale produce · Miami
-Dal Campo pays growers without the wire desk.
+Dal Campo keeps high order complexity auditable.
 Dal Campo
 Draft. Publishes after customer review.
-One place
-to pay domestic and international growers
+Every order
+reconciled, documented, and traceable
+Every document
+verified and matched to the order it belongs to
 No wire fees
 international suppliers receive local currency at a competitive rate
-Every payment
-logged, traceable, and tied to its invoice
-Dal Campo is a Miami wholesale produce business buying from growers across the Americas. Paying that supplier base used to mean wire forms, wire fees, and a paper trail spread across banks.
+Dal Campo is a Miami wholesale produce business buying from growers across the Americas. For its size it moves an unusual number of orders at once, each with its own paperwork, growers on both sides of the border, and money moving in both directions.
+The complexity lives in the orders, not the org chart.
+A high count of small orders means a high count of invoices, count sheets, and adjustments to keep straight. Payve agents read and verify the documents, match them to the right orders, and reconcile what was billed against what moved, so every order stays traceable when a question comes back weeks later.
 One payment run, every grower.
 With Payve, domestic growers receive bank transfers and international growers receive their own currency at a competitive exchange rate, from a single payment run with a single approval. Suppliers can choose early payment on approved invoices and see exactly what they receive and what it costs, in dollars.
 This story is a draft. Specific results publish after review with Dal Campo.
@@ -745,18 +756,18 @@ More stories
 Dozens of hours
 How Fortune Growers turned unused data into faster decisions.
 Grower-shipper · US & Mexico
-6 days a week
-How a Sinaloa grower family runs collections across the border.
+Any hour
+How the Selman family put a pulse on the whole business.
 Grower family · Sinaloa & US
 See Payve on your own data.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
-Book a demo
+Schedule time with us
 Sign in
 Payments, early pay, and agents for supply chain trade.
 Products
 Payments
 Early pay
-Agents
+Payve Agents
 Solutions
 Fresh produce
 Seafood
@@ -771,7 +782,66 @@ Terms
 Payve is a financial technology company, not a bank.
 2026
 Payve, Inc. All rights reserved.
-alex@getpayve.com
+
+## /customers/producer-pro
+
+(GATED: customer naming pending Manny's consent. Page ships draft + noindex + not in sitemap. If consent is declined, retitle around an unnamed "produce distributor" or pull the page.)
+
+Producer Pro customer story · Payve
+Products
+Solutions
+Customers
+Company
+Sign in
+Schedule time with us
+Payments · US & Mexico
+Producer Pro added payments without a migration.
+Producer Pro
+Draft. Publishes after customer review.
+One integration
+payments running alongside the systems already in place
+Nothing replaced
+the ERP, the bank, and the workflows stayed
+One approval
+per payment run, domestic and international together
+Producer Pro is a produce business that had working systems and no appetite for a rip-and-replace project. The question was never whether to modernize payments; it was whether it could happen without touching everything else.
+The integration was the product.
+Payve connected to the systems Producer Pro already ran. Supplier payments now go out from one place: domestic suppliers by bank transfer, cross-border suppliers in their own currency at a competitive exchange rate, one approval per run. The invoices, the terms, and the records stay where the team already looks for them.
+Money movement came with its paper trail.
+Every payment carries who approved it, when it moved, and what it settled, tied back to the invoice behind it. The back office reconciles from records, not memory.
+This story is a draft. Specific results publish after review with the customer.
+What they run on Payve
+Payments
+More stories
+Dozens of hours
+How Fortune Growers turned unused data into faster decisions.
+Grower-shipper · US & Mexico
+Any hour
+How the Selman family put a pulse on the whole business.
+Grower family · Sinaloa & US
+See Payve on your own data.
+A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
+Schedule time with us
+Sign in
+Payments, early pay, and agents for supply chain trade.
+Products
+Payments
+Early pay
+Payve Agents
+Solutions
+Fresh produce
+Seafood
+Packaging
+Customers
+Customer stories
+Company
+About
+Security
+Privacy
+Terms
+Payve is a financial technology company, not a bank.
+2026
+Payve, Inc. All rights reserved.
 
 ## /security
 
@@ -781,11 +851,11 @@ Solutions
 Customers
 Company
 Sign in
-Book a demo
+Schedule time with us
 Company
 Built to be checked.
 Payve moves money and writes to systems of record, so it is designed for scrutiny: every automation runs behind a human approval gate, every action is logged, and every customer's data is isolated.
-Book a demo
+Schedule time with us
 Human approval gates
 Agents prepare work; people approve it. Nothing posts to your books, your ERP, or your bank without a person on your team clicking approve.
 Complete audit trail
@@ -802,16 +872,16 @@ About your funds
 Payve is a financial technology company, not a bank.
 Funds held with Payve are safeguarded and always visible: your balance, pending deposits, and scheduled payments each show separately, and every movement is traceable to the invoice or payment behind it.
 Security questions? Write to
-alex@getpayve.com
+infosec@getpayve.com
 See Payve on your own data.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
-Book a demo
+Schedule time with us
 Sign in
 Payments, early pay, and agents for supply chain trade.
 Products
 Payments
 Early pay
-Agents
+Payve Agents
 Solutions
 Fresh produce
 Seafood
@@ -826,7 +896,6 @@ Terms
 Payve is a financial technology company, not a bank.
 2026
 Payve, Inc. All rights reserved.
-alex@getpayve.com
 
 ## /company
 
@@ -836,24 +905,22 @@ Solutions
 Customers
 Company
 Sign in
-Book a demo
+Schedule time with us
 Company
 The money and the busywork belong in one system.
 Supply chain businesses run on ERPs that do not talk, payments spread across banks and wire desks, and back offices that carry it all by hand. Payve was built on a simple idea: the platform that moves your money should also do the work around it.
-Book a demo
+Schedule time with us
 Payve gives buyers one place to pay every supplier, domestic and international. It gives suppliers the option to be paid early on approved invoices, with the cost stated in dollars before they decide. And it puts agents inside the operation: answering questions from the business's own data, delivering briefings before the workday, and doing the entry, matching, and reconciliation work that used to consume the week, with a person approving every write.
 We work with growers, shippers, distributors, importers, and packhouses across the US, Mexico, and Colombia.
-Reach us at
-alex@getpayve.com
 See Payve on your own data.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
-Book a demo
+Schedule time with us
 Sign in
 Payments, early pay, and agents for supply chain trade.
 Products
 Payments
 Early pay
-Agents
+Payve Agents
 Solutions
 Fresh produce
 Seafood
@@ -868,4 +935,3 @@ Terms
 Payve is a financial technology company, not a bank.
 2026
 Payve, Inc. All rights reserved.
-alex@getpayve.com
