@@ -55,3 +55,9 @@ Repo: C:\Users\Alex Archer\Desktop\payve-landing (stack on site/pr9-canvas-polis
 - did: sent batch-2 prompt in the same canvas chat: shared new pattern (PageHero CTA above fold -> demo split near top -> hover-expand value list replacing FeatureGrid -> CTA band), payments cross-border reposition (new H1/sub + MXN/COP tags in demo rows), early-pay liquidity reposition (new H1/sub), agents -> "Payve Agents" (title/H1/sub + or-Spanish line). Value list = 6 verbatim titles+descriptions per page, item 1 default, 200ms.
 - GATE: n/a mid-generation (build last PASS)
 - next: poll canvas, verify batch 2, download 3 pages into export r2, port as W3 (ValueList.tsx etc.)
+
+## iterations 11-12 — canvas batch 2 exported + W3 port
+- did: batch-2 canvas run complete + verified (canvas screenshots); 3 product pages downloaded into export r2 (r2 headlines grep-confirmed) and committed. W3 port on site/pr12-product-pattern: new ValueList.tsx (checkmark list left, active item sage rail/fill, description panel right, item 1 default, hover/click/focus, reduced-motion safe) replaces FeatureGrid on the 3 product pages (FeatureGrid kept for solutions/security); payments repositioned cross-border (H1/sub/metadata) + PaymentsDemo gains intl prop rendering canvas's illustrative MXN/COP local-currency lines (product page only; home demo unchanged); early-pay repositioned liquidity-first (H1/sub/metadata); agents -> "Payve Agents" (title/H1/sub/or-Spanish body line). Eyebrows per canvas: What the run covers / How it adds up / What agents handle.
+- verification: build PASS; walk CLEAN; visual-diff products 20-27% (spacing cascade + app denser/shorter than proto by 100-250px, expected); content oracle {h1,mxn,cop,eyebrow,vlSwap} all true; value-list screenshot matches canvas.
+- GATE: PASS
+- next: push + W3 PR, then canvas batch 3 (customers hub + 4 stories, incl NEW producer-pro page) after a Ramp reference walk

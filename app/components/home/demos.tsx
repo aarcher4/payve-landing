@@ -32,13 +32,13 @@ const frameHeader =
 /* ------------------------------------------------------------------ */
 
 const paymentRows = [
-  { name: "Casa de Tortillas SA de CV", method: "International payment", amount: "$84,210.00" },
+  { name: "Casa de Tortillas SA de CV", method: "International payment", amount: "$84,210.00", local: "≈ MX$1,557,885 · MXN" },
   { name: "Pacific Northwest Maple Co.", method: "Bank transfer", amount: "$23,847.50" },
-  { name: "Café del Quindío SAS", method: "International payment", amount: "$41,062.75" },
+  { name: "Café del Quindío SAS", method: "International payment", amount: "$41,062.75", local: "≈ CO$168,357,275 · COP" },
   { name: "Sycamore Mill & Lumber", method: "Bank transfer", amount: "$18,395.20" },
 ];
 
-export function PaymentsDemo() {
+export function PaymentsDemo({ intl = false }: { intl?: boolean } = {}) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.4 });
   const step = useLoopStep(paymentRows.length + 1, 1400, inView);
@@ -57,7 +57,12 @@ export function PaymentsDemo() {
               <span className="block text-xs text-ink-3">{row.method}</span>
             </span>
             <span className="flex shrink-0 items-center gap-3">
-              <span className="t-num text-sm font-semibold text-ink-1">{row.amount}</span>
+              <span className="flex flex-col items-end gap-0.5">
+                <span className="t-num text-sm font-semibold text-ink-1">{row.amount}</span>
+                {intl && "local" in row && row.local && (
+                  <span className="t-num font-mono text-[11px] text-ink-3">{row.local}</span>
+                )}
+              </span>
               <AnimatePresence mode="wait" initial={false}>
                 {i < step ? (
                   <motion.span
