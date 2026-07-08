@@ -139,6 +139,41 @@
     </div>
   </section>
 
+  <!-- ============ LOOPS SPLIT ============ -->
+  <section class="pv-sec" style="padding:0 32px 88px;">
+    <div style="max-width:1160px; margin:0 auto; display:flex; flex-wrap:wrap; gap:48px; align-items:center;">
+      <div style="flex:1 1 500px; order:1;">
+        <!-- LOOPS panel -->
+        <div style="background:var(--paper-elev); border:1px solid var(--hairline); border-radius:12px; box-shadow:var(--shadow-2); padding:22px;">
+          <div style="display:flex; align-items:center; gap:9px; padding-bottom:16px; border-bottom:1px solid var(--hairline);">
+            <span style="width:8px; height:8px; border-radius:999px; background:var(--sage-500); animation:pvPulse 1.5s ease-in-out infinite;"></span>
+            <span class="t-mono" style="font-size:12px; font-weight:600; color:var(--ink-2); letter-spacing:.02em;">Loops · running</span>
+          </div>
+          <div style="display:flex; flex-direction:column;">
+            <div style="display:flex; align-items:center; gap:14px; padding:15px 2px; border-bottom:1px solid var(--hairline);">
+              <span class="t-mono" style="flex:none; min-width:64px; display:inline-flex; align-items:center; justify-content:center; height:24px; padding:0 10px; background:var(--sage-50); border:1px solid var(--sage-100); border-radius:999px; font-size:11.5px; font-weight:600; color:var(--sage-800);">hourly</span>
+              <span style="font-size:14px; color:var(--ink-1);">Sales pace, roma tomatoes</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:14px; padding:15px 2px; border-bottom:1px solid var(--hairline);">
+              <span class="t-mono" style="flex:none; min-width:64px; display:inline-flex; align-items:center; justify-content:center; height:24px; padding:0 10px; background:var(--sage-50); border:1px solid var(--sage-100); border-radius:999px; font-size:11.5px; font-weight:600; color:var(--sage-800);">15 min</span>
+              <span style="font-size:14px; color:var(--ink-1);">Price floor watch, bell peppers</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:14px; padding:15px 2px;">
+              <span class="t-mono" style="flex:none; min-width:64px; display:inline-flex; align-items:center; justify-content:center; height:24px; padding:0 10px; background:var(--sage-50); border:1px solid var(--sage-100); border-radius:999px; font-size:11.5px; font-weight:600; color:var(--sage-800);">6:00 am</span>
+              <span style="font-size:14px; color:var(--ink-1);">Receivables at risk</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1 1 380px; max-width:480px; order:2;">
+        <div class="t-eyebrow" style="color:var(--sage-600);">Loops</div>
+        <h2 style="font-family:var(--font-display); font-weight:700; margin:12px 0 0; font-size:clamp(25px, 3.1vw, 36px); line-height:1.14; letter-spacing:-.024em;">A live pulse on the business.</h2>
+        <p style="margin:22px 0 0; font-size:15.5px; line-height:1.6; color:var(--ink-2);">Loops are checks that agents run on a schedule you set: every fifteen minutes, every hour, every morning. Watch sales of a single product, a price threshold, receivables that matter, or an inventory position, and get told the moment something needs a person.</p>
+        <p style="margin:18px 0 0; font-size:15.5px; line-height:1.6; color:var(--ink-2);">Some loops are deterministic, the same check every time. Some are agentic, where the agent investigates what changed and why. Every Payve customer runs loops today.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ VALUE LIST ============ -->
   <section class="pv-sec" style="padding:0 32px 96px;">
     <div style="max-width:1160px; margin:0 auto;">
@@ -148,7 +183,7 @@
           <button style="{{ row1 }}" onMouseEnter="{{ pick1 }}" onClick="{{ pick1 }}"><span style="color:var(--sage-500); flex:none; display:flex;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span style="{{ ttl1 }}">Order entry</span></button>
           <button style="{{ row2 }}" onMouseEnter="{{ pick2 }}" onClick="{{ pick2 }}"><span style="color:var(--sage-500); flex:none; display:flex;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span style="{{ ttl2 }}">Document matching</span></button>
           <button style="{{ row3 }}" onMouseEnter="{{ pick3 }}" onClick="{{ pick3 }}"><span style="color:var(--sage-500); flex:none; display:flex;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span style="{{ ttl3 }}">Complaint root cause</span></button>
-          <button style="{{ row4 }}" onMouseEnter="{{ pick4 }}" onClick="{{ pick4 }}"><span style="color:var(--sage-500); flex:none; display:flex;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span style="{{ ttl4 }}">Notify me when it happens</span></button>
+          <button style="{{ row4 }}" onMouseEnter="{{ pick4 }}" onClick="{{ pick4 }}"><span style="color:var(--sage-500); flex:none; display:flex;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span style="{{ ttl4 }}">Loops on a schedule</span></button>
           <button style="{{ row5 }}" onMouseEnter="{{ pick5 }}" onClick="{{ pick5 }}"><span style="color:var(--sage-500); flex:none; display:flex;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span style="{{ ttl5 }}">Scheduled briefings</span></button>
           <button style="{{ row6 }}" onMouseEnter="{{ pick6 }}" onClick="{{ pick6 }}"><span style="color:var(--sage-500); flex:none; display:flex;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span style="{{ ttl6 }}">Approval-gated writes</span></button>
         </div>
@@ -156,7 +191,7 @@
           <sc-if value="{{ sel1 }}" hint-placeholder-val="{{ true }}"><div><h3 style="font-family:var(--font-sans); font-weight:700; font-size:clamp(19px, 1.9vw, 23px); letter-spacing:-.015em; margin:0; color:var(--ink-1);">Order entry</h3><p style="margin:14px 0 0; font-size:15.5px; line-height:1.62; color:var(--ink-2); max-width:520px;">Agents take a stack of invoices, itemize and reconcile them, and enter them into your ERP in batches. Your team reviews and approves each batch.</p></div></sc-if>
           <sc-if value="{{ sel2 }}" hint-placeholder-val="{{ false }}"><div><h3 style="font-family:var(--font-sans); font-weight:700; font-size:clamp(19px, 1.9vw, 23px); letter-spacing:-.015em; margin:0; color:var(--ink-1);">Document matching</h3><p style="margin:14px 0 0; font-size:15.5px; line-height:1.62; color:var(--ink-2); max-width:520px;">Invoices, bills of lading, and count sheets are read, validated, de-duplicated, and matched to the right order before anything posts.</p></div></sc-if>
           <sc-if value="{{ sel3 }}" hint-placeholder-val="{{ false }}"><div><h3 style="font-family:var(--font-sans); font-weight:700; font-size:clamp(19px, 1.9vw, 23px); letter-spacing:-.015em; margin:0; color:var(--ink-1);">Complaint root cause</h3><p style="margin:14px 0 0; font-size:15.5px; line-height:1.62; color:var(--ink-2); max-width:520px;">When a customer complaint comes in, an agent pulls the related orders and inspection data and drafts a root-cause analysis for your review.</p></div></sc-if>
-          <sc-if value="{{ sel4 }}" hint-placeholder-val="{{ false }}"><div><h3 style="font-family:var(--font-sans); font-weight:700; font-size:clamp(19px, 1.9vw, 23px); letter-spacing:-.015em; margin:0; color:var(--ink-1);">Notify me when it happens</h3><p style="margin:14px 0 0; font-size:15.5px; line-height:1.62; color:var(--ink-2); max-width:520px;">Build notification workflows without code: pick a trigger, a condition, and who gets told. Agents watch so your team does not have to.</p></div></sc-if>
+          <sc-if value="{{ sel4 }}" hint-placeholder-val="{{ false }}"><div><h3 style="font-family:var(--font-sans); font-weight:700; font-size:clamp(19px, 1.9vw, 23px); letter-spacing:-.015em; margin:0; color:var(--ink-1);">Loops on a schedule</h3><p style="margin:14px 0 0; font-size:15.5px; line-height:1.62; color:var(--ink-2); max-width:520px;">Pick a cadence and a question: hourly sales on one product, a price threshold, receivables at risk. Deterministic checks and agentic investigations that alert only when something needs you.</p></div></sc-if>
           <sc-if value="{{ sel5 }}" hint-placeholder-val="{{ false }}"><div><h3 style="font-family:var(--font-sans); font-weight:700; font-size:clamp(19px, 1.9vw, 23px); letter-spacing:-.015em; margin:0; color:var(--ink-1);">Scheduled briefings</h3><p style="margin:14px 0 0; font-size:15.5px; line-height:1.62; color:var(--ink-2); max-width:520px;">Daily and weekly reports arrive before the workday: market prices, receivables at risk, sales recaps, collections. Bilingual, per-person, per-timezone.</p></div></sc-if>
           <sc-if value="{{ sel6 }}" hint-placeholder-val="{{ false }}"><div><h3 style="font-family:var(--font-sans); font-weight:700; font-size:clamp(19px, 1.9vw, 23px); letter-spacing:-.015em; margin:0; color:var(--ink-1);">Approval-gated writes</h3><p style="margin:14px 0 0; font-size:15.5px; line-height:1.62; color:var(--ink-2); max-width:520px;">Agents prepare the work; nothing is written to your systems until a person on your team approves it. Every action is logged and traceable.</p></div></sc-if>
         </div>
