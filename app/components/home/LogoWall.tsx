@@ -10,6 +10,7 @@ const customers = [
   { slug: "sl-produce", name: "SL Group" },
   { slug: "tierra-suelta", name: "Tierra Suelta" },
   { slug: "dal-campo", name: "Dal Campo" },
+  { slug: "ph-distribution", name: "PH Distribution" },
   { slug: "miranda-brands", name: "Miranda" },
   { slug: "royal-fresh", name: "Royal Fresh" },
 ];
