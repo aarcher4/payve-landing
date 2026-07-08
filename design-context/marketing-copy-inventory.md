@@ -36,9 +36,14 @@ Market Value Packhouse
 One platform
 The same platform moves the money and runs the back office.
 Payments
-Pay every supplier from one place. Domestic bank transfers, international payments to Mexico and Colombia at a competitive exchange rate, and no wire fees.
-Explore
-payments
+Every supplier in one payment run: bank transfers at home, local currency in Mexico and Colombia, no wire fees.
+Early pay
+Suppliers choose to be paid early on approved invoices and see the exact dollars and the fee before deciding.
+Payve Agents
+Organizational intelligence and automated back office workflows, with a person approving every write.
+Explore payments
+Explore early pay
+Explore Payve Agents
 Payment run
 Jul 10, 2026
 Casa de Tortillas SA de CV

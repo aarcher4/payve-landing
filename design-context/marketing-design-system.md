@@ -45,6 +45,22 @@ r3 (2026-07-08, Alex):
   (decorative icons removed; functional header/menu glyphs and in-demo working-state marks stay),
   type/spacing corrections, products/solutions/customers gap fixes, closing-CTA copy re-pick.
 
+r3 locked decisions (2026-07-08, evidence in docs/design-review-r3.md):
+- PRODUCT TOUR (home) = Mercury grammar on OUR tokens: full-bleed sage-900 dark chapter band;
+  left rail of hairline-separated (white/10) text rows, NO icons, NO boxed rows; active row =
+  small sage-400 dot + white bold title + 2-line white/70 description expansion; inactive titles
+  white/60; one quiet underlined text link under the rail following the active product
+  ("Explore payments" / "Explore early pay" / "Explore Payve Agents"); right = the working demo
+  in its light card, crossfading per selection; mobile = demo inline under the active row.
+- ICON DIET (site-wide): HowItWorks cards lose corner icons (mono 01-04 numbers carry them);
+  TrustSection tiles lose icons (titles carry them); ValueList rows lose checkmarks and adopt
+  the same hairline text-rail grammar (round 2). Functional glyphs stay: header chevrons/menu,
+  in-demo working-state checks/status dots.
+- TWO-TONE H2 device (Ramp): section H2s may split lead clause (ink-1) + second clause (ink-3);
+  applied to home tour/how-it-works/proof/trust H2s where a natural clause break exists.
+- CLOSING CTA (Alex pick): CtaBand H2 = "The money and the busywork, handled." (ring composition
+  with the hero). MidCta keeps "See it on your own data." Subs and buttons unchanged.
+
 CTA (site-wide): label = "Schedule time with us" (Alex 2026-07-07, supersedes "Book a demo"; personal/high-touch, not big-corporate). Destination stays locked: https://zcal.co/payve (the 30-minute scheduling flow, never a generic calendar or contact form).
 
 ## r3 backlog (explicitly NOT in r2)
