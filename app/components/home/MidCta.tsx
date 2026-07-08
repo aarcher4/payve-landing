@@ -4,7 +4,7 @@ import { bookDemoLabel, bookDemoUrl } from "../site/config";
 /** Quiet mid-page CTA (conversion checklist: CTA repeated at scroll points). */
 export default function MidCta() {
   return (
-    <section className="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6">
+    <section className="border-y border-hairline bg-paper-2 px-4 py-24 text-center sm:px-6">
       <Reveal>
         <h2 className="font-display text-2xl font-extrabold tracking-h1 text-ink-1">
           See it on your own data.

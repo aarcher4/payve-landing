@@ -37,10 +37,10 @@ const stats = [
 
 export default function Proof() {
   return (
-    <section className="border-y border-hairline bg-paper-elev">
+    <section className="border-y border-sage-100 bg-sage-50">
       <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
         <Reveal>
-          <span className="t-eyebrow">Customer proof</span>
+          <span className="t-eyebrow text-sage-600">Customer proof</span>
           <h2 className="mt-3 max-w-2xl font-display text-3xl font-extrabold tracking-display text-ink-1 sm:text-4xl">
             Dozens of hours back, every week.
           </h2>

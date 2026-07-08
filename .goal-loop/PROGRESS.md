@@ -44,3 +44,14 @@ Repo: C:\Users\Alex Archer\Desktop\payve-landing (stack on site/pr9-canvas-polis
 - did: downloaded all 13 .dc.html from the canvas file manager (right-click Download recipe; per-file, since no ZIP export exists and CORS blocks direct fetch), assembled design-context/claude-design-export-r2/ from r1 base (assets/_ds/support.js) + fresh pages + images/hero-home-r2.jpg (referenced by the new home). home.dc.html: 4x "Schedule time with us", hero-home-r2 wired, proof layer present. Heavy dirs auto-gitignored by the existing claude-design-export-* patterns. visual-diff auto-picks r2 now.
 - GATE: PASS (no app change; docs/export only)
 - next: CHECKPOINT 1 post for Alex (canvas home review) + W2 port branch site/pr11-home-critique (Hero chips out, ProductTour affordance/connector/centering, HowItWorks client + proof layer, section rhythm)
+
+## iteration 9 — W2 port: homepage critique items in the app
+- did: Hero.tsx chips+AgentChip deleted, left-aligned hero per canvas, dual gradient (vertical+diagonal), bg-position center 46%; ProductTour.tsx rebuilt per canvas (icon-tile rows, active sage rail/fill/bold-label, connector rail+dot into demo panel, selector column vertically centered, hover/focus/click activate, "Payve Agents", mobile inline demo kept, bg-paper-2 band); HowItWorks.tsx client component (4 hoverable cards, lift+sage tint 200ms, selected ring, sage bold "No rip and replace", "(or Spanish)", proof layer "What that looked like" default 01 swapping on hover/click/focus, reduced-motion safe); MidCta -> paper-2 band; Proof -> sage-50 band. scripts/hover-check.mjs added.
+- verification: build PASS; walk.mjs CLEAN (15 routes x2); hover-check CLEAN (proof default 01, swaps x4, tour activates x3, keyboard reachable); visual-diff home vs r2: 10.77%@1440 / 10.39%@390 (spacing cascade dominant, height delta 121px/23px; expected).
+- GATE: PASS
+- next: push + open W2 PR #14, then canvas batch 2 (3 product pages)
+
+## iteration 10 — canvas batch 2 sent (3 product pages)
+- did: sent batch-2 prompt in the same canvas chat: shared new pattern (PageHero CTA above fold -> demo split near top -> hover-expand value list replacing FeatureGrid -> CTA band), payments cross-border reposition (new H1/sub + MXN/COP tags in demo rows), early-pay liquidity reposition (new H1/sub), agents -> "Payve Agents" (title/H1/sub + or-Spanish line). Value list = 6 verbatim titles+descriptions per page, item 1 default, 200ms.
+- GATE: n/a mid-generation (build last PASS)
+- next: poll canvas, verify batch 2, download 3 pages into export r2, port as W3 (ValueList.tsx etc.)
