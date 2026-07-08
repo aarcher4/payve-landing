@@ -32,6 +32,47 @@ r2.1 (2026-07-07 eve, Alex):
 - LOOPS (new feature copy, Alex-approved): agents page gains a "Loops" split section ("A live pulse on the business.") with a running-loops panel (cadence tags: hourly / 15 min / 6:00 am); the "Notify me when it happens" value item becomes "Loops on a schedule"; one loops sentence each on the home See-everything proof and the FG/SL/Dal Campo stories. Claim "Every Payve customer runs loops today." approved by Alex 2026-07-07.
 - Imagery: hero-security/packaging/seafood are the new truck-free Midjourney selects (see docs/midjourney-prompts.md r2; NO semi trucks rule).
 
+r3 (2026-07-08, Alex):
+- NO-CANVAS EXCEPTION: the r3 polish wave is implemented app-direct (Alex explicit, one
+  iteration only, weekly canvas limit at 95%). Docs stay source of truth and are updated before
+  code; a canvas catch-up batch re-syncs the canvas after Fri Jul 10 and cuts export r3. Until
+  then export r2 is stale for touched sections.
+- Logo: back to assets payve-logo-transparent.png in nav + footer (the dark variant read badly;
+  vector SVGs still pending from the shared drive).
+- Logo wall eyebrow: "Trusted by supply chain leaders" (Alex; replaces the US/Mexico/Colombia line).
+- r3 scope: reference-benchmarked polish per docs/design-review-r3.md (live walks of Mercury/
+  Ramp/HappyRobot/Brex): ProductTour rebuild (type-led, no icon tiles), SITE-WIDE icon diet
+  (decorative icons removed; functional header/menu glyphs and in-demo working-state marks stay),
+  type/spacing corrections, products/solutions/customers gap fixes, closing-CTA copy re-pick.
+
+r3 locked decisions (2026-07-08, evidence in docs/design-review-r3.md):
+- PRODUCT TOUR (home) = Mercury grammar on OUR tokens: full-bleed sage-900 dark chapter band;
+  left rail of hairline-separated (white/10) text rows, NO icons, NO boxed rows; active row =
+  small sage-400 dot + white bold title + 2-line white/70 description expansion; inactive titles
+  white/60; one quiet underlined text link under the rail following the active product
+  ("Explore payments" / "Explore early pay" / "Explore Payve Agents"); right = the working demo
+  in its light card, crossfading per selection; mobile = demo inline under the active row.
+- ICON DIET (site-wide): HowItWorks cards lose corner icons (mono 01-04 numbers carry them);
+  TrustSection tiles lose icons (titles carry them); ValueList rows lose checkmarks and adopt
+  the same hairline text-rail grammar (round 2). Functional glyphs stay: header chevrons/menu,
+  in-demo working-state checks/status dots.
+- TWO-TONE H2 device (Ramp): section H2s may split lead clause (ink-1) + second clause (ink-3);
+  applied to home tour/how-it-works/proof/trust H2s where a natural clause break exists.
+- CLOSING CTA (Alex pick): CtaBand H2 = "The money and the busywork, handled." (ring composition
+  with the hero). MidCta keeps "See it on your own data." Subs and buttons unchanged.
+- ROUND 3 (customers, evidence lens 6 / Ramp story grammar): story detail becomes two-column at
+  lg with a STICKY FACT SIDEBAR (Company / Industry / What they run on Payve / About, sourced
+  from customers-data), absorbing the old runs-on chip card; body sections gain small caps
+  KICKERS above their H2s ("The problem" / "The solution" / "What Payve runs" register); hub
+  card industry tags render as small caps tracked pairs.
+- ROUND 2 (product/solutions, evidence lenses 1+7): ValueList adopts the hairline text-rail
+  grammar (rows separated by hairlines, active = sage dot + bold sage-800 title, NO checkmarks,
+  right expansion panel unchanged). Product pages gain a QUOTE BAND (Ramp pattern: sage-50 tinted
+  full-width band, the signed Geoff Pence quote, name + company) on agents + payments, and a
+  quiet CROSS-SELL text row above the CTA band (eyebrow "One platform" + text links to the other
+  two products; Mercury cross-sell grammar minus the cards). Solutions/security FeatureGrid keeps
+  text-only cells but swaps the boxed grid for TrustSection's border-t-2 sage rule grammar.
+
 CTA (site-wide): label = "Schedule time with us" (Alex 2026-07-07, supersedes "Book a demo"; personal/high-touch, not big-corporate). Destination stays locked: https://zcal.co/payve (the 30-minute scheduling flow, never a generic calendar or contact form).
 
 ## r3 backlog (explicitly NOT in r2)

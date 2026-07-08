@@ -1,6 +1,17 @@
-# Marketing copy inventory (r2, 2026-07-07 team critique)
+# Marketing copy inventory (r3, 2026-07-08 reference-benchmarked polish)
 
 Render this copy exactly. Do not rewrite, reorder, or expand it.
+
+r3 changelog (over r2):
+- Wall eyebrow: "Trusted by supply chain leaders". Closing CTA band H2 site-wide: "The money and
+  the busywork, handled." (ring composition; MidCta keeps "See it on your own data.").
+- Home tour: three new short blurbs + "Explore payments / Explore early pay / Explore Payve
+  Agents" links (see homepage section).
+- Product pages (payments + agents) gain the QuoteBand short pull: "Partnering with Payve
+  instantly felt like we added an entire crew of dedicated specialists to our workforce." /
+  Geoff Pence · Fortune Growers. All three product pages gain a cross-sell row: eyebrow
+  "One platform" + text links to the other two products (Payments / Early pay / Payve Agents).
+- No other copy changed; r3 is a visual-grammar round (icon diet, dark tour band, hairline rails).
 
 r2 changelog (over the r1 extraction of the built site):
 - CTA label site-wide: the former demo-booking label replaced by "Schedule time with us" (destination unchanged).
@@ -24,7 +35,7 @@ The money and the busywork, handled.
 Payve is the financial operating layer for supply chain trade. Pay every supplier from one place, give suppliers the option to be paid early, and put agents on the back office work your team does by hand.
 Schedule time with us
 Sign in
-Supply chain businesses across the US, Mexico, and Colombia
+Trusted by supply chain leaders
 Fortune Growers
 SL Produce
 Dal Campo
@@ -36,9 +47,14 @@ Market Value Packhouse
 One platform
 The same platform moves the money and runs the back office.
 Payments
-Pay every supplier from one place. Domestic bank transfers, international payments to Mexico and Colombia at a competitive exchange rate, and no wire fees.
-Explore
-payments
+Every supplier in one payment run: bank transfers at home, local currency in Mexico and Colombia, no wire fees.
+Early pay
+Suppliers choose to be paid early on approved invoices and see the exact dollars and the fee before deciding.
+Payve Agents
+Organizational intelligence and automated back office workflows, with a person approving every write.
+Explore payments
+Explore early pay
+Explore Payve Agents
 Payment run
 Jul 10, 2026
 Casa de Tortillas SA de CV
@@ -119,7 +135,7 @@ Credentials vaulted
 System credentials are vaulted and encrypted, never exposed.
 Payve is a financial technology company, not a bank.
 More on security
-See Payve on your own data.
+The money and the busywork, handled.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
 Schedule time with us
 Sign in
@@ -191,7 +207,7 @@ Every payment logged
 Each payment carries its full history: who approved it, when it moved, and what it settled.
 Suppliers onboard themselves
 Suppliers finish a short form from a link on their phone. No accounts payable back-and-forth over bank details.
-See Payve on your own data.
+The money and the busywork, handled.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
 Schedule time with us
 Sign in
@@ -254,7 +270,7 @@ Works cross-border
 Suppliers in Mexico and Colombia receive early payments too, in local currency at a competitive exchange rate.
 Optional fee coverage
 Buyers can choose to cover part of a supplier's early pay fee for strategic relationships.
-See Payve on your own data.
+The money and the busywork, handled.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
 Schedule time with us
 Sign in
@@ -326,7 +342,7 @@ Scheduled briefings
 Daily and weekly reports arrive before the workday: market prices, receivables at risk, sales recaps, collections. Bilingual, per-person, per-timezone.
 Approval-gated writes
 Agents prepare the work; nothing is written to your systems until a person on your team approves it. Every action is logged and traceable.
-See Payve on your own data.
+The money and the busywork, handled.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
 Schedule time with us
 Sign in
@@ -410,7 +426,7 @@ Cross-border without the wire desk
 Suppliers across the border receive payment in their own currency at a competitive rate. The wire fee line disappears.
 USDA market data in the loop
 Daily shipping-point and terminal-market prices land in your briefings next to your own sales numbers.
-See Payve on your own data.
+The money and the busywork, handled.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
 Schedule time with us
 Sign in
@@ -466,7 +482,7 @@ Certifications tracked
 Sustainability and origin certifications stay attached to the lots and orders they belong to.
 Briefings before the workday
 Inventory positions, receivables at risk, and open orders delivered to your team every morning.
-See Payve on your own data.
+The money and the busywork, handled.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
 Schedule time with us
 Sign in
@@ -522,7 +538,7 @@ Traceability that holds up
 Every document and payment stays attached to its lot and order, ready when a buyer or auditor asks.
 Compliance-ready records
 Terms, invoice trails, and payment history stay organized the way produce regulation expects.
-See Payve on your own data.
+The money and the busywork, handled.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
 Schedule time with us
 Sign in
@@ -586,7 +602,7 @@ One integration
 payments running without replacing a single system
 How a produce business added payments without a migration.
 Payments · Draft, publishes after customer review
-See Payve on your own data.
+The money and the busywork, handled.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
 Schedule time with us
 Sign in
@@ -651,7 +667,7 @@ Grower family · Sinaloa & US
 Every order
 How Dal Campo keeps high order complexity auditable.
 Wholesale produce · Miami
-See Payve on your own data.
+The money and the busywork, handled.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
 Schedule time with us
 Sign in
@@ -713,7 +729,7 @@ Grower-shipper · US & Mexico
 Every order
 How Dal Campo keeps high order complexity auditable.
 Wholesale produce · Miami
-See Payve on your own data.
+The money and the busywork, handled.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
 Schedule time with us
 Sign in
@@ -772,7 +788,7 @@ Grower-shipper · US & Mexico
 Any hour
 How the Selman family put a pulse on the whole business.
 Grower family · Sinaloa & US
-See Payve on your own data.
+The money and the busywork, handled.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
 Schedule time with us
 Sign in
@@ -832,7 +848,7 @@ Grower-shipper · US & Mexico
 Any hour
 How the Selman family put a pulse on the whole business.
 Grower family · Sinaloa & US
-See Payve on your own data.
+The money and the busywork, handled.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
 Schedule time with us
 Sign in
@@ -886,7 +902,7 @@ Payve is a financial technology company, not a bank.
 Funds held with Payve are safeguarded and always visible: your balance, pending deposits, and scheduled payments each show separately, and every movement is traceable to the invoice or payment behind it.
 Security questions? Write to
 infosec@getpayve.com
-See Payve on your own data.
+The money and the busywork, handled.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
 Schedule time with us
 Sign in
@@ -925,7 +941,7 @@ Supply chain businesses run on ERPs that do not talk, payments spread across ban
 Schedule time with us
 Payve gives buyers one place to pay every supplier, domestic and international. It gives suppliers the option to be paid early on approved invoices, with the cost stated in dollars before they decide. And it puts agents inside the operation: answering questions from the business's own data, delivering briefings before the workday, and doing the entry, matching, and reconciliation work that used to consume the week, with a person approving every write.
 We work with growers, shippers, distributors, importers, and packhouses across the US, Mexico, and Colombia.
-See Payve on your own data.
+The money and the busywork, handled.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
 Schedule time with us
 Sign in

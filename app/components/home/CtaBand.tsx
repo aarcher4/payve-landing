@@ -16,8 +16,10 @@ export default function CtaBand() {
       />
       <div className="relative mx-auto max-w-6xl px-4 py-20 text-center sm:px-6">
         <Reveal>
+          {/* Ring composition: the closing band repeats the hero headline
+              (docs/design-review-r3.md lens 8; Alex pick 2026-07-08). */}
           <h2 className="mx-auto max-w-2xl text-balance font-display text-3xl font-extrabold tracking-display text-white sm:text-4xl">
-            See Payve on your own data.
+            The money and the busywork, handled.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-balance text-sm leading-relaxed text-sage-200">
             A 30-minute walkthrough with your systems in mind. No rip and

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { StatBand, StoryBody, StoryHero } from "../StoryLayout";
+import { Kicker, StatBand, StoryBody, StoryHero } from "../StoryLayout";
 
 /**
  * GATED: customer naming pending consent. Ships draft + noindex + out of the
@@ -46,6 +46,7 @@ export default function ProducerProStory() {
           whether to modernize payments; it was whether it could happen
           without touching everything else.
         </p>
+        <Kicker>The solution</Kicker>
         <h2>The integration was the product.</h2>
         <p>
           Payve connected to the systems Producer Pro already ran. Supplier
@@ -54,6 +55,7 @@ export default function ProducerProStory() {
           competitive exchange rate, one approval per run. The invoices, the
           terms, and the records stay where the team already looks for them.
         </p>
+        <Kicker>The result</Kicker>
         <h2>Money movement came with its paper trail.</h2>
         <p>
           Every payment carries who approved it, when it moved, and what it

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { StatBand, StoryBody, StoryHero } from "../StoryLayout";
+import { Kicker, StatBand, StoryBody, StoryHero } from "../StoryLayout";
 
 export const metadata: Metadata = {
   title: "Fortune Growers customer story",
@@ -50,6 +50,7 @@ export default function FortuneGrowersStory() {
             Geoff Pence <span className="font-normal text-ink-3">· Fortune Growers</span>
           </footer>
         </blockquote>
+        <Kicker>The problem</Kicker>
         <h2>The data was there. The hours were not.</h2>
         <p>
           Sales history, purchase orders, inventory, price lists, quality
@@ -66,6 +67,7 @@ export default function FortuneGrowersStory() {
           snapshots against USDA prices, and receivables-risk digests before
           the workday starts.
         </p>
+        <Kicker>The solution</Kicker>
         <h2>The busywork moved to agents.</h2>
         <p>
           The same agents handle the entry work around the money: invoices

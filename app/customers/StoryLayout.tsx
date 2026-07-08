@@ -57,6 +57,11 @@ export function StatBand({
   );
 }
 
+/** r3 (design-review-r3 lens 6): small caps kicker above story-body H2s. */
+export function Kicker({ children }: { children: React.ReactNode }) {
+  return <p className="t-eyebrow !mt-10 mb-[-1.25rem] text-sage-600">{children}</p>;
+}
+
 export function StoryBody({
   children,
   runsOn,
@@ -66,25 +71,48 @@ export function StoryBody({
   runsOn: string[];
   currentSlug: string;
 }) {
+  const story = stories.find((s) => s.slug === currentSlug);
   const related = stories.filter((s) => s.slug !== currentSlug);
   return (
     <>
-      <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
-        <div className="space-y-6 text-base leading-relaxed text-ink-2 [&_blockquote]:border-l-2 [&_blockquote]:border-sage-300 [&_blockquote]:pl-6 [&_blockquote]:text-lg [&_blockquote]:text-ink-1 [&_h2]:mt-10 [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-extrabold [&_h2]:tracking-h1 [&_h2]:text-ink-1">
-          {children}
-        </div>
-        <div className="mt-12 rounded-lg border border-hairline bg-paper-elev p-6">
-          <span className="t-eyebrow">What they run on Payve</span>
-          <ul className="mt-3 flex flex-wrap gap-2">
-            {runsOn.map((r) => (
-              <li
-                key={r}
-                className="rounded-sm bg-paper-2 px-2.5 py-1 text-xs font-medium text-ink-2"
-              >
-                {r}
-              </li>
-            ))}
-          </ul>
+      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <div className="flex flex-wrap gap-x-14 gap-y-10">
+          <div className="min-w-[300px] max-w-3xl flex-1 basis-[560px] space-y-6 text-base leading-relaxed text-ink-2 [&_blockquote]:border-l-2 [&_blockquote]:border-sage-300 [&_blockquote]:pl-6 [&_blockquote]:text-lg [&_blockquote]:text-ink-1 [&_h2]:mt-10 [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-extrabold [&_h2]:tracking-h1 [&_h2]:text-ink-1">
+            {children}
+          </div>
+          {/* Sticky fact sidebar (Ramp story grammar) */}
+          <aside className="w-full max-w-xs flex-none basis-64">
+            <div className="sticky top-24 space-y-6 border-t-2 border-sage-600 pt-5">
+              {story && (
+                <>
+                  <div>
+                    <span className="t-eyebrow">Company</span>
+                    <p className="mt-1.5 text-sm font-semibold text-ink-1">{story.name}</p>
+                  </div>
+                  <div>
+                    <span className="t-eyebrow">Industry</span>
+                    <p className="mt-1.5 text-sm text-ink-2">{story.industryTag}</p>
+                  </div>
+                </>
+              )}
+              <div>
+                <span className="t-eyebrow">What they run on Payve</span>
+                <ul className="mt-1.5 space-y-1">
+                  {runsOn.map((r) => (
+                    <li key={r} className="text-sm text-ink-2">
+                      {r}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {story && (
+                <div>
+                  <span className="t-eyebrow">About</span>
+                  <p className="mt-1.5 text-sm leading-relaxed text-ink-3">{story.blurb}</p>
+                </div>
+              )}
+            </div>
+          </aside>
         </div>
       </section>
 

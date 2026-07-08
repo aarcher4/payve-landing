@@ -1,7 +1,6 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowLeftRight, Bot, Eye, Link2 } from "lucide-react";
 import { useState } from "react";
 import Reveal from "./Reveal";
 
@@ -9,7 +8,7 @@ const steps = [
   {
     n: "01",
     title: "Connect",
-    Icon: Link2,
+
     body: (
       <>
         We securely link your ERP and bank data.{" "}
@@ -23,7 +22,7 @@ const steps = [
   {
     n: "02",
     title: "See everything",
-    Icon: Eye,
+
     body: "Your data unified daily. Ask questions in plain English (or Spanish), get answers with the numbers behind them.",
     proof:
       "The owner of SL Produce asks the business questions at any hour and gets answers with the numbers behind them. What started with the owner now briefs the CFO and the receivables team every morning. Loops check what matters on a schedule the family sets, and every Payve customer runs them.",
@@ -31,7 +30,7 @@ const steps = [
   {
     n: "03",
     title: "Automate with approval",
-    Icon: Bot,
+
     body: "Agents do the entry, matching, and drafting. A person on your team approves every write.",
     proof:
       "At Fortune Growers, agents enter 800 vouchers a month, work that took about 3 minutes each by hand. The team approves every batch and gets about 40 hours a month back.",
@@ -39,7 +38,7 @@ const steps = [
   {
     n: "04",
     title: "Move the money",
-    Icon: ArrowLeftRight,
+
     body: "Pay every supplier from one place and offer early pay on approved invoices.",
     proof:
       "Suppliers in Mexico and Colombia receive local currency at a competitive exchange rate, and any supplier can choose early payment on an approved invoice. Suppliers with liquidity on open invoices stay closer to the buyers who offer it.",
@@ -54,8 +53,9 @@ export default function HowItWorks() {
   return (
     <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
       <Reveal>
-        <h2 className="max-w-2xl font-display text-3xl font-extrabold tracking-display text-ink-1 sm:text-4xl">
-          Built around the systems you already run.
+        <h2 className="max-w-3xl font-display text-3xl font-extrabold tracking-display text-ink-1 sm:text-4xl">
+          Built around the systems{" "}
+          <span className="text-ink-3">you already run.</span>
         </h2>
       </Reveal>
       <div className="mt-11 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -77,12 +77,9 @@ export default function HowItWorks() {
                     aria-hidden
                   />
                 )}
-                <div className="flex items-center justify-between">
-                  <span className="t-num font-mono text-xs font-semibold text-sage-600">
-                    {s.n}
-                  </span>
-                  <s.Icon className="h-5 w-5 text-ink-3" aria-hidden />
-                </div>
+                <span className="t-num font-mono text-xs font-semibold text-sage-600">
+                  {s.n}
+                </span>
                 <h3 className="mt-4 text-base font-semibold tracking-tight text-ink-1">
                   {s.title}
                 </h3>
@@ -98,7 +95,7 @@ export default function HowItWorks() {
         <span className="t-eyebrow mb-4 block text-sage-600">
           What that looked like
         </span>
-        <div className="flex min-h-[104px] items-center rounded-[10px] border border-hairline bg-paper-elev px-7 py-6 shadow-elev-1">
+        <div className="flex min-h-[96px] max-w-4xl items-center rounded-[10px] border border-hairline bg-paper-elev px-7 py-6 shadow-elev-1">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={selected.n}

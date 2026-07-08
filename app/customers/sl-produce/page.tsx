@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { StatBand, StoryBody, StoryHero } from "../StoryLayout";
+import { Kicker, StatBand, StoryBody, StoryHero } from "../StoryLayout";
 
 export const metadata: Metadata = {
   title: "SL Produce customer story",
@@ -40,6 +40,7 @@ export default function SlProduceStory() {
           peppers into the US market. The business runs in two countries, two
           languages, and two time zones at once.
         </p>
+        <Kicker>How it started</Kicker>
         <h2>It started with one person asking questions at night.</h2>
         <p>
           The owner began using a Payve agent the way owners actually think
@@ -55,6 +56,7 @@ export default function SlProduceStory() {
           collections, and the questions the family used to carry in their
           heads now arrive as scheduled briefings.
         </p>
+        <Kicker>What Payve runs</Kicker>
         <h2>Collections that follow the sun.</h2>
         <p>
           Payve agents deliver a collections report in Spanish six mornings a

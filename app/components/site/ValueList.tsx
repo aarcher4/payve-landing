@@ -1,15 +1,14 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Check } from "lucide-react";
 import { useState } from "react";
 import Reveal from "../home/Reveal";
 
 /**
- * r2 product-page value list: left checklist of value props, the active item
+ * r3 product-page value list: hairline text rail (docs/design-review-r3.md
+ * lens 1; no checkmarks, active row = sage dot + bold title), the active item
  * (hover/click/focus, item 1 by default) expands its description into the
- * panel on the right. Replaces the six-box FeatureGrid on product pages;
- * solutions pages keep FeatureGrid.
+ * panel on the right. Solutions pages keep FeatureGrid.
  */
 export default function ValueList({
   eyebrow,
@@ -28,7 +27,7 @@ export default function ValueList({
         <span className="t-eyebrow text-sage-600">{eyebrow}</span>
       </Reveal>
       <div className="mt-7 flex flex-wrap items-stretch gap-7">
-        <div className="flex min-w-[280px] flex-1 basis-80 flex-col justify-center gap-1 lg:max-w-sm">
+        <div className="min-w-[280px] flex-1 basis-80 self-center border-t border-hairline lg:max-w-sm">
           {items.map((item, i) => {
             const on = i === active;
             return (
@@ -39,20 +38,17 @@ export default function ValueList({
                 onClick={() => setActive(i)}
                 onMouseEnter={() => setActive(i)}
                 onFocus={() => setActive(i)}
-                className={`flex w-full cursor-pointer items-center gap-3 rounded-lg border px-4 py-3.5 text-left transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-sage-600 ${
-                  on
-                    ? "border-sage-100 bg-sage-50 shadow-[inset_3px_0_0_var(--sage-600)]"
-                    : "border-transparent bg-transparent hover:bg-sage-50"
-                }`}
+                className="flex w-full cursor-pointer items-baseline gap-3 border-b border-hairline py-3.5 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-sage-600"
               >
-                <Check
-                  className="h-4 w-4 flex-none text-sage-500"
-                  strokeWidth={2.5}
+                <span
+                  className={`h-1.5 w-1.5 flex-none translate-y-[-2px] rounded-full transition-colors duration-200 ${
+                    on ? "bg-sage-500" : "bg-transparent"
+                  }`}
                   aria-hidden
                 />
                 <span
-                  className={`text-[15px] tracking-tight ${
-                    on ? "font-bold text-sage-800" : "font-semibold text-ink-2"
+                  className={`text-[15px] tracking-tight transition-colors duration-200 ${
+                    on ? "font-bold text-sage-800" : "font-semibold text-ink-3 hover:text-ink-2"
                   }`}
                 >
                   {item.title}

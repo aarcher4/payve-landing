@@ -43,20 +43,20 @@ await page.locator('button:has(h3:text-is("Automate with approval"))').hover();
 await page.waitForTimeout(300);
 await page.screenshot({ path: "reports/hover/hiw-automate-hover.png", fullPage: false });
 
-// --- ProductTour ---
+// --- ProductTour (r3: click-activated text rail, Mercury grammar) ---
 const tourRows = ["Early pay", "Payve Agents", "Payments"];
 for (const t of tourRows) {
-  await page.locator(`button:has-text("${t}")`).first().hover();
+  await page.locator(`button:has-text("${t}")`).first().click();
   await page.waitForTimeout(400);
   const pressed = await page
     .locator(`button[aria-expanded="true"]:has-text("${t}")`)
     .count();
   if (!pressed) {
     failures++;
-    console.log(`FAIL tour row did not activate on hover: ${t}`);
+    console.log(`FAIL tour row did not activate on click: ${t}`);
   } else console.log(`ok   tour activates -> ${t}`);
 }
-await page.locator('button:has-text("Payve Agents")').first().hover();
+await page.locator('button:has-text("Payve Agents")').first().click();
 await page.waitForTimeout(400);
 const tour = page.locator("section", { hasText: "One platform" }).first();
 await tour.screenshot({ path: "reports/hover/tour-agents-active.png" });

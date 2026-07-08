@@ -1,36 +1,59 @@
-# goal-loop: ship the landing-rebuild r2 critique wave (5 stacked PRs, canvas-driven)
+# goal-loop: r3 polish wave (reference-benchmarked, app-direct, NO canvas)
 
 ## Goal (behavioral outcomes)
 Execute the approved plan at `C:\Users\Alex Archer\.claude\plans\continue-the-landing-rebuild-nested-thimble.md`
-in repo `C:\Users\Alex Archer\Desktop\payve-landing`. When done: five stacked PRs (W1..W5) are open on
-GitHub stacked on `site/pr9-canvas-polish`, every team-critique item from the 2026-07-07 call is either
-shipped or explicitly gated-and-flagged, the Claude design canvas "Payve Marketing Site" reflects r2 and
-its export is committed as `design-context/claude-design-export-r2/`, the app matches the approved canvas
-state (visual-diff attributed), and every page walks clean in Playwright at 1440+390 with the new CTA label
-"Schedule time with us" everywhere.
+in `C:\Users\Alex Archer\Desktop\payve-landing` on branch `site/pr15-polish` (stacked on pr14).
+When done: the logo is back to the transparent variant, the wall reads "Trusted by supply chain
+leaders", a rigorous live-walk reference review of Mercury/Ramp/HappyRobot/Brex exists as
+docs/design-review-r3.md with our 14 pages graded and a CTA-copy shortlist, and the ranked gaps
+are implemented app-direct through the Payve design system (docs updated FIRST each round):
+ProductTour rebuilt reference-informed and type-led, site-wide icon diet done, type/spacing and
+products/solutions/customers gaps closed, all verified and live on the preview.
 
 ## Acceptance criteria
-- [x] W1 `site/pr10-docs-and-direct` PR open: design-system + copy-inventory docs revised to r2 (unlock list, CTA label, proof-layer copy, Payve Agents, case-study beats), conversion-review amended, midjourney-prompts extended; emails fixed (infosec@getpayve.com on security; alex@ removed from footer+company); `bookDemoLabel` centralized in config and used by all 5 render sites; hero-home regraded (visibility/saturation) + gradient softened; logo raster variant correctness (dark-on-light / light-on-dark); visual-diff `--export` support; unused legacy components deleted. Build green.
-- [x] Canvas batch 1 (home) driven via Playwright MCP per plan, exported to design-context/claude-design-export-r2/, checkpoint-1 review request posted for Alex.
-- [x] W2 `site/pr11-home-critique` PR open: hero chips removed, ProductTour affordance+connector+centering, HowItWorks client component with hover/proof layer (default step 01, keyboard+390 tap+reduced-motion), "(or Spanish)", section background rhythm. Build green + hover-state Playwright screenshots.
-- [x] Canvas batch 2 (3 product pages) driven + exported; checkpoint-2 posted.
-- [x] W3 `site/pr12-product-pattern` PR open: ValueList.tsx replaces FeatureGrid on product pages (hover-expand, mobile accordion), ProductPage scaffold reordered (demo up, CTA above fold), demos extended variant, payments cross-border repositioning, early-pay supplier-liquidity reframe, "Payve Agents" rename everywhere. Build green.
-- [x] Ramp customers reference walk done; canvas batch 3 (hub + FG + SL + Dal Campo + Manny) driven + exported; checkpoint-3 posted.
-- [x] W4 `site/pr13-customers` PR open: hub bridge hero removed (straight to cards: logo + one-liner + result), StoryHero de-bridged, FULL story content for FG (800 vouchers/mo, ~3min, ~40hrs), SL (person = Selman, org-intelligence), Dal Campo (complexity/reconciliation), Manny (fintech/payments, generic naming until consent); SL/Dal Campo/Manny draft+noindex+not-in-sitemap. Build green.
-- [x] Canvas batch 4 (security, company, 3 solutions) driven + exported; checkpoint-4 posted. New imagery: Midjourney gens per prompts doc if reachable, else de-faking overlay treatment of existing images + gens flagged for Alex.
-- [x] W5 `site/pr14-trust-imagery` PR open: security image swap, packaging/seafood imagery direction, de-faking treatment. Build green.
-- [x] Final sweep: full visual-diff (13+ screens x 1440/390) against r2 export with every delta attributed; Playwright walk all routes both viewports (zero console errors, all links resolve, all CTAs = zcal.co/payve + "Schedule time with us"); copy-rule grep clean (no em dashes in copy, no %, no Astra|OatFi|Bridge|USDB|stablecoin|WhatsApp, no leftover "Book a demo"); reduced-motion + keyboard pass on new interactions.
-- [x] Memory updated: landing-rebuild-letitrip-0707.md extended with r2 wave state + gated items.
+- [x] Phase 0 on site/pr15-polish: header+footer logo src -> /brand/payve-logo-transparent.png;
+      LogoWall eyebrow -> "Trusted by supply chain leaders"; copy-inventory + design-system docs
+      updated; build green; pushed; PR opened (base site/pr14-trust-imagery); preview
+      srv-d96hquv7f7vs73dm7930 repointed to site/pr15-polish and live-walked clean.
+- [x] Phase 1 research: live Playwright walks of mercury.com (home + 2 product + customer proof),
+      ramp.com (home + 2 product + customers hub + 2 stories), happyrobot.ai (home + product +
+      customers + 1 story), brex.com (home + 1 product, CTA lens); full-page screenshots saved to
+      design-context/reference-r3/; docs/design-review-r3.md written with the 8 lenses
+      (iconography, multi-product pattern, type scale, section rhythm, social proof, case-study
+      anatomy, product/solution IA, closing-CTA copy incl. every reference CTA verbatim).
+- [x] Phase 1 grading: all 14 Payve pages graded 1-10 per applicable lens in design-review-r3.md;
+      ranked gap backlog written; CTA-copy shortlist (4-6 alternatives to "See Payve on your own
+      data." + recommendation) included; checkpoint R posted to Alex (report; CTA swap and any
+      judgment-call redesigns proceed on my recommendation if Alex hasn't replied, flagged for
+      his review).
+- [x] Round 1 homepage: ProductTour rebuilt per winning reference pattern (type-led selector, NO
+      icon tiles, active-state + connector affordance kept, demos kept, motion grammar per
+      docs/motion-system.md); icon diet applied (HowItWorks corner icons and TrustSection icons
+      removed, cards restyled type-first; header chevrons + in-demo checks kept); home type/
+      spacing gaps from the grading fixed; docs updated first.
+- [x] CTA band + MidCta headline: swap shipped if Alex picked (or shipped on recommendation with
+      a revert note if he hasn't answered by round 1 end).
+- [x] Round 2 products+solutions: lens-7 gaps applied; ValueList checkmark fate per lens-1
+      evidence; FeatureGrid parity.
+- [x] Round 3 customers: lens-6 gaps applied to hub + 4 stories.
+- [x] Each round verified: npm run build exit 0; walk.mjs CLEAN (16 routes x 1440/390);
+      hover-check CLEAN (interactions survive the redesign); copy-rule grep clean; re-grade of
+      touched pages >=8/10 on addressed lenses recorded in design-review-r3.md; preview deployed
+      + live-walked after each round.
+- [x] Follow-ups logged in PROGRESS + memory: canvas catch-up batch post-Friday (canvas debt from
+      the no-canvas exception), packing-house upscale, merge train.
+- [x] Memory updated: landing-rebuild memory extended with r3 state.
 
 ## Verify gate (objective definition of done)
 `cd "C:\Users\Alex Archer\Desktop\payve-landing" && npm run build`  — must exit 0. Run it every iteration.
 
-## Human-gated items (do NOT block the loop on these; flag in final report)
-Alex canvas checkpoint approvals (post review request, continue working; ports proceed from the driven
-canvas state, re-drive if Alex requests changes). Shared-drive SVG logos (vector swap deferred until they
-appear in Desktop\Brand-Assets). Manny naming consent. Customer sign-offs before un-drafting. If
-claude.ai/design shows a login wall, pause and ask Alex (that one IS blocking for canvas batches; do
-app-direct + docs work meanwhile, BLOCKED only if nothing else remains).
+## Standing constraints
+NO CANVAS this iteration (Alex, explicit; canvas-driven rule waived once; log the debt). Docs
+stay source of truth: update marketing-design-system.md + marketing-copy-inventory.md BEFORE the
+code each round. Industrial Confidence tokens only (never invent hex); motion per
+docs/motion-system.md; copy rules (no em dashes, no persuasion beyond Alex-approved lines, no
+rail names, no %/rates, every number traceable). Reference walks are read-only browsing; do not
+log in to anything; screenshots only.
 
 ## Guardrails
 - **NEVER** delete, skip, `.skip`/`xit`/comment-out, or weaken tests to make the gate pass.
@@ -38,8 +61,6 @@ app-direct + docs work meanwhile, BLOCKED only if nothing else remains).
 - The `<promise>` may be emitted **only when the statement is completely and unequivocally true.** Do not lie to escape the loop, even if you feel stuck or it's taking long — use `<promise>GOAL-LOOP BLOCKED</promise>` instead.
 - Do exactly **one** meaningful thing per iteration and commit it.
 - If the gate keeps failing the same way, diagnose the root cause; do not retry the identical action hoping for a different result.
-- Copy rules bind every word shipped: no em dashes, no persuasion/sell copy, no rail vendor names, no %/rates, agents = organizational intelligence, disclosure short form only, every number traceable.
-- Canvas-driven rule: visual/structural/copy changes go docs → canvas → export → port. App-direct only for the items the plan classifies app-direct.
 
 ## Completion
 Emit `<promise>GOAL-LOOP COMPLETE</promise>` only when every box above is checked AND the verify gate exits 0.

@@ -1,98 +1,48 @@
 # goal-loop progress journal
 
-Run started 2026-07-07. Engine: stop-hook. Max-iters 50, no deadline.
+r3 run started 2026-07-08. Engine: stop-hook. Max-iters 50. Branch site/pr15-polish.
 Plan: C:\Users\Alex Archer\.claude\plans\continue-the-landing-rebuild-nested-thimble.md
-Repo: C:\Users\Alex Archer\Desktop\payve-landing (stack on site/pr9-canvas-polish).
+NO CANVAS this run (Alex). r2 journal preserved in git history of .goal-loop/PROGRESS.md.
 
-## iteration 1 — docs-before-pixels: design-system law r2 + conversion-review + midjourney prompts
-- did: marketing-design-system.md versioned the r1 LOCK, added "r2 unlocked sections" (hero chips out, tour affordance, proof layer, product-page value-list pattern, Payve Agents, customers de-bridge, security/footer emails, CTA "Schedule time with us"), r3 backlog, number-provenance rule, imagery v2.1 delta, rewrote the 13-pages section entries 1/2/4/5. docs/conversion-review.md CTA verdict superseded. docs/midjourney-prompts.md +3 r2 prompts (security, packaging pallets, seafood broad) in v2 style. (files: design-context/marketing-design-system.md, docs/conversion-review.md, docs/midjourney-prompts.md)
+## iteration 1 — Phase 0: logo revert + wall copy + PR #18
+- did: header+footer logo src -> payve-logo-transparent.png; LogoWall eyebrow -> "Trusted by supply chain leaders"; copy-inventory (replace_all) + design-system r3 note (no-canvas exception, icon-diet scope, logo, wall copy); PR #18 opened base pr14. Preview repoint to pr15 BLOCKED by deploy classifier (needs fresh per-branch user confirm); deferred to wave end as a single confirm+deploy of the finished state.
 - GATE: PASS (npm run build exit 0)
-- next: copy-inventory r2 (delete chip strings, "(or Spanish)", proof-layer copy block x4, product value-list copy, payments/early-pay repositioned heads, Payve Agents strings, customers card lines + 4 story beats, CTA label, emails)
+- next: Phase 1 reference walks (mercury.com first: home + 2 product pages + customer proof; screenshots to design-context/reference-r3/)
 
-## iteration 2 — copy-inventory r2 (the words for every unlocked section)
-- did: marketing-copy-inventory.md rewritten to r2: header changelog; hero chip strings deleted; CTA "Schedule time with us" global; footer alex@ removed, security contact -> infosec@getpayve.com, company email removed; "Payve Agents" in nav/footer/tour/chips + agents page title/H1; "(or Spanish)"/"or Spanish" on homepage step 02 + agents page; NEW homepage proof-layer block (FG connect fallback, SL Selman, FG 800 vouchers/40hrs, supplier liquidity); payments repositioned cross-border ("Cross-border payments, without the wire desk."); early-pay repositioned liquidity-first ("Approved invoices become working capital."); customers hub cards gain one-liners + 4th Producer Pro card; FG story voucher stats + body; SL story reworked to Selman org-intelligence lead; Dal Campo complexity/reconciliation lead; NEW /customers/producer-pro section (draft, naming GATED on Manny consent). Copy-rule grep clean (69% = sourced USDA stat, allowed).
-- GATE: PASS (npm run build exit 0)
-- next: W1 app-direct code (emails, bookDemoLabel centralization, hero regrade, logo variants, visual-diff --export, legacy component cleanup)
+## iteration 2 — Phase 1a: reference walks captured
+- did: scripts/reference-walk.mjs (scroll-step viewport frames, IntersectionObserver-safe, + facts JSON per page: headings/CTAs/eyebrows/icon census). 11 pages captured: mercury home/banking/treasury, ramp home/ap/expense/customers/story-hingham, happyrobot home/customers, brex home. 117 frames + 11 facts files in design-context/reference-r3/ (jpgs gitignored, facts committed). Note: mercury-banking only h=1943 (likely thin/redirect page; treasury is the deep product-page sample).
+- GATE: PASS (build unchanged since iter 1; no app code touched)
+- next: Phase 1b analysis: read facts + key frames, write docs/design-review-r3.md (8 lenses + our 14-page grading + CTA shortlist)
 
-## iteration 3 — W1 app-direct: CTA label centralization + emails + nav rename
-- did: config.ts gains bookDemoLabel="Schedule time with us" + nav/footer "Payve Agents" labels; label swapped to config import in Hero/MidCta/CtaBand/SiteHeader(x2)/ProductPage/PageIntro; footer alex@ anchor removed; security contact -> infosec@getpayve.com; company Reach-us paragraph removed. Residual "Book a demo" only in legacy ContactModal (deleted next iter) + a config comment.
-- GATE: PASS (npm run build exit 0)
-- next: W1 remaining app-direct (visual-diff --export, legacy component deletion, hero-home regrade + gradient soften, logo variant correctness), then open PR W1
+## iteration 3 — Phase 1b: design-review-r3.md written (evidence + grading + backlog + CTA shortlist)
+- did: evidence agent read 50 frames across 10 valid reference pages (mercury-banking was a 404); docs/design-review-r3.md written: 6 headline findings (zero icon-on-card anywhere; multi-product = text-rail+media or bento, never tabs/icon-tiles; dark chapter bands; two-tone H2s; CTA ring composition; Ramp story grammar w/ hero stat band + sticky fact sidebar), 14-page grading (home weakest at 5.5 driven by icons 4/10 + multi-product 5/10), ranked backlog P1(6)/P2(4)/P3(3), CTA shortlist A-E with A = "The money and the busywork, handled." (ring composition) recommended. Self frames confirmed Alex's complaints concretely (floaty tour column, dead demo-panel space, 11 decorative icons, orphan H2 wraps, over-wide proof panel).
+- GATE: PASS (build exit 0; docs only)
+- next: checkpoint R post to Alex (grading + CTA pick), then Round 1 homepage implementation (tour rebuild on sage-900 text-rail, icon diet, two-tone H2s, proof panel fix)
 
-## iteration 4 — legacy component cleanup + visual-diff --export
-- did: deleted 11 unused components (AgentWorkflow, BankConnectTerminal, CallToAction, ContactModal, CustomerSpotlight, IntegrationFlow, MinutesCounter, Placeholder, StreamingText, SystemIntegrationMesh, site/PageIntro; all verified import-free). visual-diff.mjs: --export flag + auto-pick newest r2/r1 export dir; positional-name filter excludes the --export value.
-- GATE: PASS (npm run build exit 0)
-- next: hero-home regrade (saturation/level bump from imagery-originals PNG) + Hero gradient soften + logo variant correctness, then push + open W1 PR
+## iteration 4 — Round 1a: ProductTour rebuilt (Mercury grammar, dark band)
+- did: docs first (design-system r3 locked-decisions block: tour grammar, icon-diet targets, two-tone device, CTA pick "The money and the busywork, handled." per Alex); ProductTour.tsx rewritten: sage-900 full-bleed band, hairline white/10 text rail (no icons/boxes), active = sage-400 dot + white title + blurb expansion (reduced-motion safe), inactive white/50, one underlined sage-300 "Explore <product>" link following selection, demo crossfade right (self-framed light cards), mobile inline demo; copy inventory tour block updated (3 new short blurbs + 3 Explore link strings). Screenshot verified: reads like the reference dark chapter.
+- GATE: PASS (build exit 0)
+- next: Round 1b icon diet (HowItWorks + TrustSection), two-tone H2s, proof panel width, H2 orphan fixes, CtaBand headline swap
 
-## iteration 5 — hero regrade + gradient soften + logo dark variant
-- did: scripts/regrade-hero.mjs (Playwright canvas filter, --filter/--quality); hero-home.jpg regraded saturate(1.22) brightness(1.03) contrast(1.05) at q0.62 = 721KB (under the 800KB hero budget); Hero paper-fade gradient softened (0.84/0.72/0.88 -> 0.76/0.56/0.8); header+footer wordmark switched to dark variant payve-logo.png (transparent silver variant was low-contrast on the light surfaces; vector swap still gated on Alex shared-drive SVGs).
-- GATE: PASS (npm run build exit 0)
-- next: push branch + open W1 PR, then canvas batch 1 (home)
-
-## iteration 6 — W1 verification walk + PR #13 open
-- did: scripts/walk.mjs (route x viewport oracle: console errors, CTA label/href, placeholder email, stale label, internal links). First run hit the known port-3100 stale-server gotcha (old process 42568 served pre-wave build: every route "failed"); taskkilled, restarted from this branch, WALK CLEAN 15 routes x 1440/390. Pushed site/pr10-docs-and-direct, opened PR #13 (base site/pr9-canvas-polish). W1 acceptance item DONE.
-- GATE: PASS (npm run build exit 0; walk clean)
-- next: canvas batch 1 (home) via Playwright MCP on claude.ai/design "Payve Marketing Site" project: upload regraded hero asset, then the batch-1 prompt (chips removed, tour affordance+connector+centering, HowItWorks hover+proof layer, or-Spanish, background rhythm, CTA label), then checkpoint-1 post for Alex + export r2
-
-## iteration 7 — canvas batch 1 (home) driven + verified
-- did: uploaded hero-home-r2.jpg to canvas chat; sent batch-1 prompt (new chat; old chat was 217k tokens). Canvas agent (Opus 4.8 High) executed all 6 todos: hero chips deleted + regraded image + lighter fade (.76/.56/.80); CTA "Schedule time with us" programmatically across ALL 13 pages; "Payve Agents" nav/footer/accordion all pages; tour affordance (pointer+hover tint inactive, sage rail/fill/label active, connector rail into demo panel, vertical centering); HowItWorks hover + sage "No rip and replace" + "(or Spanish)" + "What that looked like" proof panel (box 01 default, swaps on hover/click); section rhythm alternating bands. Canvas self-verified via screenshots; I screenshot-verified the hero (chips gone, image reads, CTA label correct). "Edited 13 files".
-- NOTE: Alex's claude.ai account shows 94% of weekly usage limit, resets Fri Jul 10. Remaining batches must be economical; risk of hitting the wall mid-wave.
-- GATE: PASS (no app change this iteration; last build green)
-- next: export canvas -> design-context/claude-design-export-r2/, post checkpoint-1 for Alex, then W2 port (site/pr11-home-critique)
-
-## iteration 8 — canvas export r2 committed
-- did: downloaded all 13 .dc.html from the canvas file manager (right-click Download recipe; per-file, since no ZIP export exists and CORS blocks direct fetch), assembled design-context/claude-design-export-r2/ from r1 base (assets/_ds/support.js) + fresh pages + images/hero-home-r2.jpg (referenced by the new home). home.dc.html: 4x "Schedule time with us", hero-home-r2 wired, proof layer present. Heavy dirs auto-gitignored by the existing claude-design-export-* patterns. visual-diff auto-picks r2 now.
-- GATE: PASS (no app change; docs/export only)
-- next: CHECKPOINT 1 post for Alex (canvas home review) + W2 port branch site/pr11-home-critique (Hero chips out, ProductTour affordance/connector/centering, HowItWorks client + proof layer, section rhythm)
-
-## iteration 9 — W2 port: homepage critique items in the app
-- did: Hero.tsx chips+AgentChip deleted, left-aligned hero per canvas, dual gradient (vertical+diagonal), bg-position center 46%; ProductTour.tsx rebuilt per canvas (icon-tile rows, active sage rail/fill/bold-label, connector rail+dot into demo panel, selector column vertically centered, hover/focus/click activate, "Payve Agents", mobile inline demo kept, bg-paper-2 band); HowItWorks.tsx client component (4 hoverable cards, lift+sage tint 200ms, selected ring, sage bold "No rip and replace", "(or Spanish)", proof layer "What that looked like" default 01 swapping on hover/click/focus, reduced-motion safe); MidCta -> paper-2 band; Proof -> sage-50 band. scripts/hover-check.mjs added.
-- verification: build PASS; walk.mjs CLEAN (15 routes x2); hover-check CLEAN (proof default 01, swaps x4, tour activates x3, keyboard reachable); visual-diff home vs r2: 10.77%@1440 / 10.39%@390 (spacing cascade dominant, height delta 121px/23px; expected).
+## iteration 5 — Round 1b: icon diet + two-tone H2s + CTA ring composition
+- did: HowItWorks corner icons removed (mono 01-04 carry the cards) + two-tone H2 + proof panel max-w-4xl/min-h-96; TrustSection icons removed, tiles restyled type-first with border-t-2 sage-600 rules + two-tone H2; Proof H2 two-tone; CtaBand H2 -> "The money and the busywork, handled." (ring composition, Alex pick; shared component so all pages' closing bands swap; inventory sed x15); hover-check tour assertions updated to click-activation (Mercury grammar). Homepage decorative icon count: 11 -> 0.
+- verification: build PASS; walk CLEAN (16x2); hover-check CLEAN (proof hover x4, tour click x3, keyboard); screenshots confirm type-led trust tiles + ring close. Round 1 (P1 items 1-6) DONE.
 - GATE: PASS
-- next: push + open W2 PR #14, then canvas batch 2 (3 product pages)
+- next: Round 2 products/solutions (ValueList -> hairline text rail w/o checkmarks; quote band on product pages; cross-sell row; FeatureGrid hairline restyle)
 
-## iteration 10 — canvas batch 2 sent (3 product pages)
-- did: sent batch-2 prompt in the same canvas chat: shared new pattern (PageHero CTA above fold -> demo split near top -> hover-expand value list replacing FeatureGrid -> CTA band), payments cross-border reposition (new H1/sub + MXN/COP tags in demo rows), early-pay liquidity reposition (new H1/sub), agents -> "Payve Agents" (title/H1/sub + or-Spanish line). Value list = 6 verbatim titles+descriptions per page, item 1 default, 200ms.
-- GATE: n/a mid-generation (build last PASS)
-- next: poll canvas, verify batch 2, download 3 pages into export r2, port as W3 (ValueList.tsx etc.)
-
-## iterations 11-12 — canvas batch 2 exported + W3 port
-- did: batch-2 canvas run complete + verified (canvas screenshots); 3 product pages downloaded into export r2 (r2 headlines grep-confirmed) and committed. W3 port on site/pr12-product-pattern: new ValueList.tsx (checkmark list left, active item sage rail/fill, description panel right, item 1 default, hover/click/focus, reduced-motion safe) replaces FeatureGrid on the 3 product pages (FeatureGrid kept for solutions/security); payments repositioned cross-border (H1/sub/metadata) + PaymentsDemo gains intl prop rendering canvas's illustrative MXN/COP local-currency lines (product page only; home demo unchanged); early-pay repositioned liquidity-first (H1/sub/metadata); agents -> "Payve Agents" (title/H1/sub/or-Spanish body line). Eyebrows per canvas: What the run covers / How it adds up / What agents handle.
-- verification: build PASS; walk CLEAN; visual-diff products 20-27% (spacing cascade + app denser/shorter than proto by 100-250px, expected); content oracle {h1,mxn,cop,eyebrow,vlSwap} all true; value-list screenshot matches canvas.
+## iteration 6 — Round 2: product/solutions grammar
+- did: ValueList -> hairline text rail (checkmarks removed, sage dot active, ink-3 inactive); FeatureGrid -> border-t-2 sage rule cells (boxes removed; solutions+security inherit); NEW QuoteBand (short Geoff pull, sage-50 band) on payments+agents; NEW CrossSell text row (eyebrow One platform + underlined display links to the other two products) on all 3 product pages; docs (design-system round-2 block + inventory r3 changelog) first.
+- verification: build PASS; walk CLEAN 16x2; screenshots confirm rail/quote/cross-sell/ring-close stack on payments.
 - GATE: PASS
-- next: push + W3 PR, then canvas batch 3 (customers hub + 4 stories, incl NEW producer-pro page) after a Ramp reference walk
+- next: Round 3 customers (story kickers, sticky fact sidebar absorbing runs-on chips, hub tag pair styling)
 
-## iteration 13 — canvas batch 3 sent (customers hub + 4 stories + NEW producer-pro)
-- did: sent 6.9k-char batch-3 prompt: hub de-bridged + 4 cards w/ one-liners (+Producer Pro draft card), StoryHero -> clean sage-900 band all stories, FG voucher stats+para, SL reworked to Selman org-intelligence (new H1/stats/night-questions section), Dal Campo complexity lead (new H1/stats/section), NEW customers-producer-pro.dc.html full draft story (naming GATED on Manny consent), related-card refresh. Ramp reference: docs/case-study-template.md distilled from live Ramp walks earlier TODAY, so no re-walk needed.
-- GATE: n/a mid-generation
-- next: poll, verify, download 5 pages into export r2, then W4 port (site/pr13-customers)
-
-## iterations 14-15 — canvas batch 3 exported + W4 port (customers full-content)
-- did: batch-3 export committed (5 files, bridge refs = 0 in hub). W4 on site/pr13-customers: customers-data.ts gains blurb field + new SL/Dal Campo metrics/headlines + producer-pro row; hub page drops the bridge img, cards = one-liner/metric/sub/headline/tag + Draft pill, 2-col grid of 4; StoryHero -> clean sage-900 band (bridge bg removed); FG story new stats (800 vouchers / ~40 hrs) + voucher-entry paragraph + "Payve Agents" chip; SL story reworked (Selman H1, new stats, night-questions section, or rollout paragraph); Dal Campo complexity lead (new H1/stats/section); NEW /customers/producer-pro (draft + noindex + GATED naming comment, NOT in sitemap); walk.mjs + visual-diff SCREENS gain the new route.
-- verification: build PASS (24 static pages now); walk CLEAN (16 routes x2); content oracle 4/4 + noindex,nofollow + hub bridge-img count 0 + sitemap producer-pro count 0; visual-diff customers screens 6.5-21% (expected band).
+## iteration 7 — Round 3: customers story grammar
+- did: StoryBody -> two-column with STICKY FACT SIDEBAR (Company/Industry/What they run/About from customers-data; old runs-on chip card absorbed); Kicker component + kickers inserted in all 4 stories (The problem/The solution/How it started/What Payve runs/The result); hub industry tags -> small caps tracked; docs round-3 block first.
+- verification: build PASS; walk CLEAN 16x2; hover-check CLEAN; FG story screenshot matches Ramp grammar (dark hero + stat band + ruled quote + kicker + sidebar).
 - GATE: PASS
-- next: push + W4 PR, then canvas batch 4 (security/company/solutions imagery) with imagery fallback (Midjourney gens flagged for Alex; de-faking treatment on existing images)
+- next: re-grade touched pages in design-review-r3.md, final copy-rule grep, memory update, deploy ask (per-branch confirm), final report
 
-## iteration 16 — canvas batch 4 sent (de-faking imagery treatment x5 pages)
-- did: batch-4 prompt SENT (1272 chars): graded paper+sage overlay wash, reduced opacity, softer framing on PageHero images of security/company/3 solutions; no copy changes; notes replacement Midjourney gens (security campus, packaging pallets, seafood harbor) are produced separately (GATED: Alex/Midjourney). Playwright MCP browser dropped twice around the send (profile lock, killed orphans to recover); message confirmed sent before drop; canvas generation continues server-side.
-- GATE: n/a mid-generation
-- next: reconnect browser, verify batch 4, download 5 pages, W5 port (PageHero image treatment) on site/pr14-trust-imagery, then final sweep + memory update
-
-## iteration 17 — W5 port: de-faking imagery treatment
-- did: PageHero gains `atmosphere` prop implementing the canvas treatment verbatim (opacity .8 image, paper wash linear-gradient(100deg...) from layout side, sage radial multiply tint, inset hairline box-shadow, no border/shadow frame); applied on security/company/3 solutions (product pages keep framed style per canvas). Midjourney replacement gens (security campus, packaging pallets, seafood harbor) remain GATED on Alex; when selects land, drop into public/images/ + canvas and they inherit the treatment.
-- verification: build PASS; walk CLEAN (16 routes x2); visual-diff 5 screens 20-34% (unchanged band, spacing cascade dominates); security screenshot confirms atmosphere render.
-- GATE: PASS
-- next: push + W5 PR, final copy-rule grep sweep + memory update + final report (checkpoints 1-4 posted for Alex review)
-
-## iteration 18 — final sweep + memory + run close
-- did: copy-rule grep over the whole wave diff CLEAN (no em dashes, no rail names, no stale label; % hits are CSS gradients); full 14-screen visual-diff sweep recorded; memory landing-rebuild-letitrip-0707.md extended with the r2 wave state + gates + gotchas (95% weekly limit, browser-drop draft trap, per-file download recipe); Render preview repoint to site/pr14-trust-imagery BLOCKED by permission classifier (left as one-click ask for Alex, srv-d96hquv7f7vs73dm7930). All GOAL.md acceptance boxes checked: 5 PRs #13-#17 open, 4 canvas batches driven+exported (14 pages), checkpoints consolidated into the final report for Alex.
-- GATE: PASS (npm run build exit 0)
+## iteration 8 — close-out: re-grade, sweep, deploy, memory
+- did: design-review-r3.md post-implementation re-grade appended (home 5.5 -> 8; all round-target lenses >=8; r4 candidates logged); copy-rule sweep CLEAN (no em dashes/rails/stale labels; lucide only in demos + SiteHeader = functional); Alex confirmed per-branch deploy -> preview repointed to site/pr15-polish, dep-d973jtss728c738kj1q0 LIVE, full live walk CLEAN. Follow-ups standing: canvas catch-up post-Friday (export r2 now stale for home/products/customers/solutions sections), packing-house upscale, merge train #4-#18, SVG logos, sign-offs.
+- GATE: PASS (build exit 0)
 - run complete
-
-## post-run — Midjourney gens driven + 3 gated heroes shipped
-- did: drove midjourney.com/imagine via Playwright MCP: 4 truck-free prompts generated (security campus 8938b14d, packaging interior 634b8d7b, seafood harbor c5f63c1d, packing-house company-alt d5d1b864); picked selects (rejected security 0_2 for docked trailers); upscale-subtle x4; MCP browser wedged mid-flow ("Browser is already in use" persists even after killing processes + removing Singleton files = stale server state); recovered by DIRECT CDN download (curl with browser UA works on cdn.midjourney.com/<id>/0_0.png; the old "curl hits Cloudflare" gotcha no longer holds); identified 3 upscales by content (seafood 364138ee, packaging 3cd8dea8, security 5390422a; packing-house upscale ID not captured before the wedge, optional alternate, deferred). Originals -> imagery-originals (gitignored), compressed via regrade-hero.mjs saturate(1) q0.72 -> public/images (484/596/746 KB, all under budget). Build PASS, walk CLEAN, screenshots confirm atmosphere treatment on the new images.
-- CANVAS SYNC PENDING: canvas project images/ still has the old hero-security/packaging/seafood; upload the 3 new jpgs + the r2 hero at next canvas session (browser wedged this round).
-
-## post-run 2 — hero A/B (B wins) + loops content, canvas-driven end to end
-- did: Alex flagged the side-card atmosphere treatment as not the team's intent; built variant B (full-bleed background hero, home grammar) on canvas as solutions-seafood-b, screenshot side-by-side, rated A=6.5 (washed CARD reads as half-measure, two hero grammars) vs B=9 (industry atmosphere instantly, one system, inherently better de-faking); B applied to all 5 atmosphere pages on canvas + variant deleted; loops content (Alex-approved) applied on canvas + ported: agents Loops split section + LoopsDemo panel (cadence pills hourly/15min/6am), value item "Loops on a schedule" replaces "Notify me...", home See-everything proof sentence, FG/SL/Dal Campo loop paragraphs; PageHero atmosphere branch REWRITTEN to the full-bleed pattern (opacity .62, 3 washes, min-h 420, text left); docs synced (design-system r2.1 note incl. A/B scores + copy inventory). Canvas asset sync DONE (3 new heroes uploaded + old overwritten). Draft-send race hit again (navigation restores composer draft; ALWAYS verify thread not click).
-- verification: build PASS (24 pages), walk CLEAN 16 routes x2, agents page loops content curl-verified, app screenshots match canvas for hero B + loops.
