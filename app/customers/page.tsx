@@ -27,13 +27,6 @@ export default function CustomersPage() {
               pay, and put agents on their back office.
             </p>
           </Reveal>
-          <Reveal delayIndex={1}>
-            <img
-              src="/images/hero-customers.jpg"
-              alt="Semi trucks with refrigerated trailers crossing a river bridge at sunrise"
-              className="mt-10 aspect-[21/9] w-full rounded-lg border border-hairline object-cover shadow-elev-3"
-            />
-          </Reveal>
           <div className="mt-12">
             <LogoRow />
           </div>
@@ -41,21 +34,29 @@ export default function CustomersPage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2">
           {stories.map((s, i) => (
             <Reveal key={s.slug} delayIndex={i}>
               <Link
                 href={`/customers/${s.slug}`}
                 className="flex h-full flex-col rounded-lg border border-hairline bg-paper-elev p-7 transition-shadow hover:shadow-elev-3"
               >
-                <p className="t-num font-display text-3xl font-extrabold tracking-h1 text-ink-1">
+                <p className="text-sm leading-relaxed text-ink-2">{s.blurb}</p>
+                <p className="t-num mt-5 font-display text-3xl font-extrabold tracking-h1 text-ink-1">
                   {s.metric}
                 </p>
                 <p className="mt-1 text-sm text-ink-2">{s.metricSub}</p>
                 <h2 className="mt-6 font-display text-lg font-bold leading-snug tracking-h2 text-ink-1">
                   {s.headline}
                 </h2>
-                <span className="mt-auto pt-6 text-xs text-ink-3">{s.industryTag}</span>
+                <span className="mt-auto flex items-center gap-2 pt-6 text-xs text-ink-3">
+                  {s.industryTag}
+                  {s.draft && (
+                    <span className="rounded-sm bg-paper-2 px-1.5 py-0.5 text-[11px] font-medium text-ink-3">
+                      Draft
+                    </span>
+                  )}
+                </span>
               </Link>
             </Reveal>
           ))}

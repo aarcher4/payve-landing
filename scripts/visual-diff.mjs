@@ -53,6 +53,7 @@ const SCREENS = [
   { name: "customers-fortune-growers", app: "/customers/fortune-growers", proto: "customers-fortune-growers.dc.html" },
   { name: "customers-sl-produce", app: "/customers/sl-produce", proto: "customers-sl-produce.dc.html" },
   { name: "customers-dal-campo", app: "/customers/dal-campo", proto: "customers-dal-campo.dc.html" },
+  { name: "customers-producer-pro", app: "/customers/producer-pro", proto: "customers-producer-pro.dc.html" },
   { name: "security", app: "/security", proto: "security.dc.html" },
   { name: "company", app: "/company", proto: "company.dc.html" },
 ];

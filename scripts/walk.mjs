@@ -15,7 +15,8 @@ const ROUTES = [
   "/", "/products/payments", "/products/early-pay", "/products/agents",
   "/solutions/fresh-produce", "/solutions/seafood", "/solutions/packaging",
   "/customers", "/customers/fortune-growers", "/customers/sl-produce",
-  "/customers/dal-campo", "/security", "/company", "/privacy", "/terms",
+  "/customers/dal-campo", "/customers/producer-pro",
+  "/security", "/company", "/privacy", "/terms",
 ];
 const VIEWPORTS = [
   { width: 1440, height: 960 },

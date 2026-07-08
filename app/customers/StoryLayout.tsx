@@ -16,16 +16,6 @@ export function StoryHero({
 }) {
   return (
     <section className="relative overflow-hidden border-b border-hairline bg-sage-900">
-      <div
-        className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-25"
-        style={{ backgroundImage: "url('/images/hero-customers.jpg')" }}
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{ background: "linear-gradient(180deg, rgba(28,44,38,0.82) 0%, rgba(28,44,38,0.94) 100%)" }}
-        aria-hidden
-      />
       <div className="relative mx-auto max-w-6xl px-4 pb-16 pt-20 sm:px-6">
         <Reveal>
           <span className="t-eyebrow !text-sage-300">{industryTag}</span>

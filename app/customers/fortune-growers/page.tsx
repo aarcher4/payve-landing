@@ -22,16 +22,16 @@ export default function FortuneGrowersStory() {
             sub: "saved every week, in the customer's own words",
           },
           {
-            value: "Thousands of dollars",
-            sub: "in waste and inefficiency eliminated weekly",
+            value: "800 vouchers a month",
+            sub: "entered by agents, approved by the team",
           },
           {
-            value: "Every morning",
-            sub: "the team starts with briefings instead of report-pulling",
+            value: "About 40 hours a month",
+            sub: "of manual entry work returned to the back office",
           },
         ]}
       />
-      <StoryBody currentSlug="fortune-growers" runsOn={["Payments", "Early pay", "Agents"]}>
+      <StoryBody currentSlug="fortune-growers" runsOn={["Payments", "Early pay", "Payve Agents"]}>
         <p>
           Fortune Growers is a grower-shipper with two decades in fresh
           produce, operations in the Midwest, California, and South Texas,
@@ -73,6 +73,16 @@ export default function FortuneGrowersStory() {
           customer complaints traced to the affected lots with a drafted
           root-cause analysis. A person at Fortune Growers approves every
           write before anything posts.
+        </p>
+        <p>
+          The clearest example is voucher entry. Cold storage service
+          invoices used to be keyed into the ERP by hand, about 800 entries a
+          month at roughly 3 minutes each. Agents now read, itemize, and
+          enter those vouchers in batches the team approves, returning about
+          40 hours of entry work to the back office every month. When
+          something in a load does not match, the agent flags it with the
+          records attached, so problems get reported with evidence instead of
+          found at reconciliation.
         </p>
         <p>
           Payments run through the same platform, so paying growers and
