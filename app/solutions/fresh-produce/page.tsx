@@ -29,9 +29,9 @@ export default function FreshProducePage() {
       <StatStrip
         stats={[
           {
-            value: "$35.6B",
-            label: "US fresh fruit and vegetable imports forecast for 2025",
-            source: "USDA Economic Research Service",
+            value: "$32B",
+            label: "US fresh fruit and vegetable imports in fiscal 2025",
+            source: "USDA Economic Research Service, May 2026",
           },
           {
             value: "69%",
@@ -40,8 +40,8 @@ export default function FreshProducePage() {
           },
           {
             value: "30 to 45 days",
-            label: "typical wait for cash after shipping, against PACA's 30-day ceiling",
-            source: "Industry payment-practice data",
+            label: "typical wait for cash after shipping, three to four times PACA's 10-day default payment clock",
+            source: "USDA PACA regulations; industry payment-practice data",
           },
         ]}
       />
@@ -88,7 +88,7 @@ export default function FreshProducePage() {
         items={[
           {
             title: "One place to pay",
-            body: "Domestic growers get bank transfers, Mexican and Colombian suppliers get local currency. One payment run, one approval.",
+            body: "Grower settlements, domestic and cross-border, from one place: US growers get bank transfers, Mexican and Colombian suppliers get local currency. One payment run, one approval.",
           },
           {
             title: "Deductions and disputes, documented",

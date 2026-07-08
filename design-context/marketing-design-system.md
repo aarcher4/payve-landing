@@ -45,6 +45,13 @@ r3 (2026-07-08, Alex):
   (decorative icons removed; functional header/menu glyphs and in-demo working-state marks stay),
   type/spacing corrections, products/solutions/customers gap fixes, closing-CTA copy re-pick.
 
+r4a (2026-07-08, Alex): solutions CONTENT refresh only — framework, heroes, and voice locked;
+StatStrips + feature bodies re-grounded in vertical research (docs/solutions-research-r4.md:
+web citations + the internal prospect corpus, insight-only, no non-customer names). Seafood is
+species-broad (shrimp demoted to one of several); packaging grounded in PACA/PTI/FSMA-204/
+deduction reality; produce stats verified ($35.6B replaced with $32B FY2025 ERS actuals).
+Every StatStrip tile site-wide now carries a named source.
+
 r3 locked decisions (2026-07-08, evidence in docs/design-review-r3.md):
 - PRODUCT TOUR (home) = Mercury grammar on OUR tokens: full-bleed sage-900 dark chapter band;
   left rail of hairline-separated (white/10) text rows, NO icons, NO boxed rows; active row =

@@ -27,17 +27,19 @@ export default function PackagingPage() {
       <StatStrip
         stats={[
           {
-            value: "2,000 lbs/day",
-            label: "the handling volume where federal produce licensing rules kick in",
-            source: "USDA PACA",
+            value: "2,000 lbs",
+            label: "buy or sell that much produce in a single day and you are a federally licensed dealer",
+            source: "USDA PACA, 7 CFR 46.2",
           },
           {
-            value: "Both directions",
-            label: "invoices owed to growers and receivables from retail, managed at once",
+            value: "10 days",
+            label: "PACA's default payment deadline; written terms past 30 days void trust protection",
+            source: "USDA PACA, 7 CFR 46.46",
           },
           {
-            value: "One person",
-            label: "the size of many packhouse back offices. Agents make it enough.",
+            value: "July 20, 2028",
+            label: "FDA deadline for lot-level traceability records on every case you pack",
+            source: "FDA FSMA 204",
           },
         ]}
       />
@@ -54,7 +56,7 @@ export default function PackagingPage() {
           },
           {
             title: "Billing entered by agents",
-            body: "Repack and storage invoices itemized, reconciled, and entered in batches your bookkeeper approves.",
+            body: "Repack, storage, and grading invoices itemized, reconciled, and entered in batches one back-office seat can approve.",
           },
           {
             title: "Receiving documents matched",
@@ -62,11 +64,11 @@ export default function PackagingPage() {
           },
           {
             title: "Traceability that holds up",
-            body: "Every document and payment stays attached to its lot and order, ready when a buyer or auditor asks.",
+            body: "Every case label, lot code, document, and payment stays attached to its order, ready when a retailer or auditor asks.",
           },
           {
-            title: "Compliance-ready records",
-            body: "Terms, invoice trails, and payment history stay organized the way produce regulation expects.",
+            title: "Deductions answered with records",
+            body: "When a retail program deducts for a case that arrived late or short, the invoice, receiving record, and payment history are already lined up to dispute it.",
           },
         ]}
       />
