@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import {
-  FeatureGrid,
   PageHero,
   ProductCtaBand,
   SplitSection,
 } from "../../components/site/ProductPage";
+import ValueList from "../../components/site/ValueList";
 import { EarlyPayDemo } from "../../components/home/demos";
 
 export const metadata: Metadata = {
   title: "Early pay",
   description:
-    "Suppliers choose to be paid early on approved invoices. They see the exact dollars they receive and the fee. Buyers earn income each time.",
+    "Approved invoices become working capital. Suppliers choose to be paid faster and see the exact dollars, the fee, and the arrival time before they decide.",
 };
 
 export default function EarlyPayPage() {
@@ -18,10 +18,10 @@ export default function EarlyPayPage() {
     <main>
       <PageHero
         eyebrow="Products"
-        title="Suppliers get paid early. Buyers earn on it."
+        title="Approved invoices become working capital."
         image="/images/hero-early-pay.jpg"
         imageAlt="Fresh green produce moving along a packing line in bright daylight"
-        sub="When a purchase order is approved, the supplier can choose to be paid early. They see the exact dollars they receive today, the fee, and when the money arrives. Nothing changes about how the buyer pays."
+        sub="Suppliers wait out payment terms while the money sits on approved invoices. With early pay, a supplier can choose to be paid faster and see the exact dollars received today, the fee, and when the money arrives. Nothing changes about how the buyer pays, and the buyer earns each time a supplier accepts."
       />
 
       <SplitSection
@@ -41,7 +41,8 @@ export default function EarlyPayPage() {
         </p>
       </SplitSection>
 
-      <FeatureGrid
+      <ValueList
+        eyebrow="How it adds up"
         items={[
           {
             title: "Buyers earn income",

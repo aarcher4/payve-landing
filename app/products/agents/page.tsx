@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import {
-  FeatureGrid,
   PageHero,
   ProductCtaBand,
   SplitSection,
 } from "../../components/site/ProductPage";
+import ValueList from "../../components/site/ValueList";
 import { AgentsDemo } from "../../components/home/demos";
 
 export const metadata: Metadata = {
-  title: "Agents",
+  title: "Payve Agents",
   description:
-    "Payve agents bring organizational intelligence and automate back office workflows: briefings, order entry, document matching, complaint root cause, and notifications. A person approves every write.",
+    "Payve Agents bring organizational intelligence and automate back office workflows: briefings, order entry, document matching, complaint root cause, and notifications. A person approves every write.",
 };
 
 export default function AgentsPage() {
@@ -18,10 +18,10 @@ export default function AgentsPage() {
     <main>
       <PageHero
         eyebrow="Products"
-        title="Agents that know your business and do the busywork."
+        title="Payve Agents know your business and do the busywork."
         image="/images/hero-agents.jpg"
         imageAlt="Terraced green fields on Andean mountainsides with a farm truck on the road"
-        sub="Payve agents connect to the systems you already run, answer questions about your business in plain English, and automate the back office work your team does by hand. A person on your team approves every write."
+        sub="Payve Agents connect to the systems you already run, answer questions about your business in plain English or Spanish, and automate the back office work your team does by hand. A person on your team approves every write."
       />
 
       <SplitSection
@@ -36,12 +36,13 @@ export default function AgentsPage() {
           collections summary, in English or Spanish.
         </p>
         <p>
-          Ask a question in plain English and get the answer with the numbers
-          behind it, drawn from your own systems.
+          Ask a question in plain English or Spanish and get the answer with
+          the numbers behind it, drawn from your own systems.
         </p>
       </SplitSection>
 
-      <FeatureGrid
+      <ValueList
+        eyebrow="What agents handle"
         items={[
           {
             title: "Order entry",

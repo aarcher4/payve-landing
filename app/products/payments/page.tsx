@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import {
-  FeatureGrid,
   PageHero,
   ProductCtaBand,
   SplitSection,
 } from "../../components/site/ProductPage";
+import ValueList from "../../components/site/ValueList";
 import { PaymentsDemo } from "../../components/home/demos";
 
 export const metadata: Metadata = {
   title: "Payments",
   description:
-    "Pay every supplier from one place. Domestic bank transfers, international payments to Mexico and Colombia at a competitive exchange rate, and no wire fees.",
+    "Cross-border payments without the wire desk. Suppliers in Mexico and Colombia receive pesos at a competitive exchange rate, from the same run that pays domestic suppliers.",
 };
 
 export default function PaymentsPage() {
@@ -18,16 +18,16 @@ export default function PaymentsPage() {
     <main>
       <PageHero
         eyebrow="Products"
-        title="Pay every supplier from one place."
+        title="Cross-border payments, without the wire desk."
         image="/images/hero-payments.jpg"
         imageAlt="Pallets of boxed produce loading into a refrigerated trailer at a busy dock"
-        sub="Domestic and international suppliers, one payment run. Domestic suppliers receive bank transfers. Suppliers in Mexico and Colombia receive local currency at a competitive exchange rate, without wire fees."
+        sub="Pay suppliers in Mexico and Colombia in their own pesos at a competitive exchange rate, with no wire fees, from the same payment run that pays your domestic suppliers by bank transfer. One run, one approval."
       />
 
       <SplitSection
         eyebrow="One payment run"
         title="Every supplier, one approval."
-        visual={<PaymentsDemo />}
+        visual={<PaymentsDemo intl />}
       >
         <p>
           Build a payment run across all of your suppliers and approve it
@@ -42,7 +42,8 @@ export default function PaymentsPage() {
         </p>
       </SplitSection>
 
-      <FeatureGrid
+      <ValueList
+        eyebrow="What the run covers"
         items={[
           {
             title: "No wire fees",
