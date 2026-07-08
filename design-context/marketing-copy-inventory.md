@@ -2,6 +2,14 @@
 
 Render this copy exactly. Do not rewrite, reorder, or expand it.
 
+r4b polish additions (2026-07-08, Alex): home Proof stat cards stretch to align with the quote
+column; the how-it-works proof panel is a MINI CASE STUDY at full grid width (customer logo or
+name + caps descriptor + outcome sentence + "Read the story"/"Explore early pay" link; FG for
+01/03, SL for 02, platform-wide for 04); payments hero sub + metadata: **Mexico, Colombia,
+Brazil, and Europe presented as LIVE corridors (Alex explicit, 2026-07-08)** with "More
+corridors are on the way." Value-item timing strings stay MX/CO-scoped (SLA claims not extended
+to BR/EU).
+
 r4b changelog (2026-07-08, Alex): /solutions/packaging REPIVOTED from produce packhouses to
 PACKAGING MANUFACTURERS (corrugated box plants, converters, sheet plants). New hero "Built for
 the plants that supply the supply chain.", FBA/Atradius stat trio, manufacturer-side features
@@ -128,6 +136,14 @@ Agents do the entry, matching, and drafting. A person on your team approves ever
 Move the money
 Pay every supplier from one place and offer early pay on approved invoices.
 What that looked like
+Fortune Growers
+Grower-shipper · US & Mexico
+Read the story
+SL Produce
+Grower family · Sinaloa & US
+Across the platform
+Suppliers in the US, Mexico & Colombia
+Explore early pay
 Fortune Growers connected the ERP it has run for two decades. Nothing was replaced, and nothing was installed on their side.
 The owner of SL Produce asks the business questions at any hour and gets answers with the numbers behind them. What started with the owner now briefs the CFO and the receivables team every morning. Loops check what matters on a schedule the family sets, and every Payve customer runs them.
 At Fortune Growers, agents enter 800 vouchers a month, work that took about 3 minutes each by hand. The team approves every batch and gets about 40 hours a month back.
@@ -188,7 +204,7 @@ Sign in
 Schedule time with us
 Products
 Cross-border payments, without the wire desk.
-Pay suppliers in Mexico and Colombia in their own pesos at a competitive exchange rate, with no wire fees, from the same payment run that pays your domestic suppliers by bank transfer. One run, one approval.
+Pay suppliers in Mexico, Colombia, Brazil, and Europe in their own currency at a competitive exchange rate, with no wire fees, from the same payment run that pays your domestic suppliers by bank transfer. One run, one approval. More corridors are on the way.
 Schedule time with us
 One payment run
 Every supplier, one approval.

@@ -12,7 +12,7 @@ import { PaymentsDemo } from "../../components/home/demos";
 export const metadata: Metadata = {
   title: "Payments",
   description:
-    "Cross-border payments without the wire desk. Suppliers in Mexico and Colombia receive pesos at a competitive exchange rate, from the same run that pays domestic suppliers.",
+    "Cross-border payments without the wire desk. Suppliers in Mexico, Colombia, Brazil, and Europe receive their own currency at a competitive exchange rate, from the same run that pays domestic suppliers.",
 };
 
 export default function PaymentsPage() {
@@ -23,7 +23,7 @@ export default function PaymentsPage() {
         title="Cross-border payments, without the wire desk."
         image="/images/hero-payments.jpg"
         imageAlt="Pallets of boxed produce loading into a refrigerated trailer at a busy dock"
-        sub="Pay suppliers in Mexico and Colombia in their own pesos at a competitive exchange rate, with no wire fees, from the same payment run that pays your domestic suppliers by bank transfer. One run, one approval."
+        sub="Pay suppliers in Mexico, Colombia, Brazil, and Europe in their own currency at a competitive exchange rate, with no wire fees, from the same payment run that pays your domestic suppliers by bank transfer. One run, one approval. More corridors are on the way."
       />
 
       <SplitSection

@@ -71,10 +71,12 @@ export default function Proof() {
             </Link>
           </Reveal>
 
-          <div className="grid gap-6">
+          {/* Stretch the stat column to the quote column's height so the two
+              sides top- and bottom-align (r4b polish, Alex). */}
+          <div className="flex h-full flex-col gap-6">
             {stats.map((s, i) => (
-              <Reveal key={s.label} delayIndex={i}>
-                <motion.div className="rounded-lg border border-hairline bg-paper p-5">
+              <Reveal key={s.label} delayIndex={i} className="flex-1">
+                <motion.div className="flex h-full flex-col justify-center rounded-lg border border-hairline bg-paper p-5">
                   <p className="font-display text-3xl font-extrabold tracking-h1 text-ink-1">
                     <CountUp to={s.to} suffix={s.suffix} />
                   </p>
