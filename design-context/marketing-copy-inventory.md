@@ -2,6 +2,13 @@
 
 Render this copy exactly. Do not rewrite, reorder, or expand it.
 
+r4b changelog (2026-07-08, Alex): /solutions/packaging REPIVOTED from produce packhouses to
+PACKAGING MANUFACTURERS (corrugated box plants, converters, sheet plants). New hero "Built for
+the plants that supply the supply chain.", FBA/Atradius stat trio, manufacturer-side features
+(supplier-elected early pay on receivables, releases/blanket-PO order entry, short-pay disputes,
+statements, MX plants paid in pesos, briefings). Nav description updated. Research in
+docs/solutions-research-r4.md r4b section; the r4a packhouse copy is superseded.
+
 r4a changelog (over r3, solutions content refresh; research in docs/solutions-research-r4.md):
 - All three solutions StatStrips replaced/sharpened; every tile now carries a named source.
   Produce: $32B FY2025 actuals (the old $35.6B was not ERS-defensible) / 69% kept / 30-45 days
@@ -527,28 +534,30 @@ Company
 Sign in
 Schedule time with us
 Solutions
-A packhouse back office that runs itself.
-A repack operation sits between growers and retail with invoices moving in both directions, cold chain receiving standards rising, and a back office that is often one person deep. Payve consolidates the money movement and puts agents on the bookkeeping.
+Built for the plants that supply the supply chain.
+The food chain is corrugated's largest customer, and the plants that serve it sell on terms while board prices move monthly and harvest orders arrive in surges. Payve turns approved invoices into working capital when you choose, and puts agents on the order entry and statements.
 Schedule time with us
-2,000 lbs
-buy or sell that much produce in a single day and you are a federally licensed dealer
-USDA PACA
-10 days
-PACA's default payment deadline; written terms past 30 days void trust protection
-July 20, 2028
-FDA deadline for lot-level traceability records on every case you pack
-Growers paid from one place
-Domestic and cross-border growers paid in one run, in their own currency, without wire fees.
-Cash sooner on receivables
-Choose early payment on your own approved invoices when a buyer offers it through Payve, and see the exact dollars before you decide.
-Billing entered by agents
-Repack, storage, and grading invoices itemized, reconciled, and entered in batches one back-office seat can approve.
-Receiving documents matched
-Inbound load paperwork, count sheets, and grading records matched to the right order automatically.
-Traceability that holds up
-Every case label, lot code, document, and payment stays attached to its order, ready when a retailer or auditor asks.
-Deductions answered with records
-When a retail program deducts for a case that arrived late or short, the invoice, receiving record, and payment history are already lined up to dispute it.
+$40.8B
+US corrugated industry shipments in 2024
+Fibre Box Association, 2024
+43%
+of US B2B invoiced sales are paid late
+Atradius Payment Practices Barometer, North America, 2025
+1,092
+US corrugated plants in 2024, and 634 of them are independent-scale sheet plants
+Fibre Box Association, 2024
+Approved invoices become cash when you choose
+When a customer approves your invoice through Payve, you can choose early payment per invoice, with the exact dollars and the fee in view before you decide.
+Releases entered by agents
+Blanket POs drawn down in releases, repeat specs, and emailed orders are drafted into your system by agents. A person approves every entry.
+Short-pays answered with records
+When a national account short-pays over counts, freight, or plate charges, the invoice, release, and delivery paperwork are already matched and lined up to dispute it.
+Statements kept current
+Hundreds of line items a month across accounts are itemized, reconciled, and entered in batches one back-office seat can approve.
+Cross-border without the wire desk
+Plants in Mexico are paid in pesos at a competitive exchange rate, with no US bank account required and no wire fees.
+Briefings before the workday
+What is due, what is late, and which accounts changed, delivered every morning with the numbers behind it.
 The money and the busywork, handled.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
 Schedule time with us

@@ -58,7 +58,37 @@ but no platform early-pay in the vertical. Vocabulary: cash on the water, contai
 fish tickets, retro payments, ex-vessel price, A/B seasons, IQF, chain of custody, first
 receivers.
 
-## Packhouse / repack (deepest round)
+## Packaging manufacturers (r4b REPIVOT, 2026-07-08, Alex)
+
+The /solutions/packaging page audience is PACKAGING MANUFACTURERS (corrugated box plants,
+converters, sheet plants; the Pratt Industries / ZenPack archetype, never named on the site),
+NOT produce packhouses. The packhouse research below is retained for reference (its PACA/PTI
+facts partly migrated to produce-adjacent copy) but the shipped page now uses:
+
+Chosen StatStrip:
+1. "$40.8B / US corrugated industry shipments in 2024 / Fibre Box Association, 2024" (381B sq ft).
+2. "43% / of US B2B invoiced sales are paid late / Atradius Payment Practices Barometer, North
+   America, 2025" (the supplier-on-terms pain stat; ~5% of long-overdue invoices written off).
+3. "1,092 / US corrugated plants in 2024, and 634 of them are independent-scale sheet plants /
+   Fibre Box Association, 2024" (the small-independent proxy; AICC publishes no share figure).
+Directionally solid but weakly sourced (kept OUT of tiles): food & beverage = largest corrugated
+end market (~40%, commercial research houses only; used qualitatively in the hero sub);
+independents' 30-35% market share (blog-sourced); PMA 53% terms-stretch survey (adjacent
+manufacturing). Other citables held in reserve: $2.4B fresh-produce corrugated demand (Freedonia
+2024); $60-70/ton Jan-2025 linerboard increases (Fastmarkets); OCC $74->$44/ton in a year
+(Fastmarkets/IndexBox 2025); $47B total US box demand -> $52B by 2029 (Freedonia); Mexico
+corrugated market ~$2.5B (IMARC 2024).
+Operator reality: the converter is the working-capital shock absorber ("we bank our customers"):
+mills sell board on short terms while national accounts drift net-30 -> 60 -> 90; board/OCC
+price swings squeeze margin through contract-reset lag; harvest-driven order surges; blanket POs
+drawn down in releases; hundreds of invoices/month per account; short-pays over counts, freight,
+plate/die charges; MX plants supply US produce importers. Vocabulary: linerboard, medium, OCC,
+open-market tonnage, price letters, sheet plant, releases, plate charges, delivered pricing.
+Product-claims check: early pay stays supplier-elected and conditional ("when a customer
+approves your invoice through Payve"); dollars + fee only; no invented features (no board-index
+pricing, no freight audit).
+
+## Packhouse / repack (superseded for this page by the r4b repivot above; kept for reference)
 
 Chosen StatStrip:
 1. "2,000 lbs / buy or sell that much produce in a single day and you are a federally licensed
