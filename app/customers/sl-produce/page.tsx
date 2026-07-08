@@ -4,7 +4,7 @@ import { StatBand, StoryBody, StoryHero } from "../StoryLayout";
 export const metadata: Metadata = {
   title: "SL Produce customer story",
   description:
-    "How a Sinaloa grower family runs collections across the border with Payve.",
+    "How the Selman family put a pulse on the whole business with Payve organizational intelligence.",
   robots: { index: false, follow: false },
 };
 
@@ -14,31 +14,46 @@ export default function SlProduceStory() {
       <StoryHero
         name="SL Produce"
         industryTag="Grower family · Sinaloa & US"
-        headline="A Sinaloa grower family runs collections across the border."
+        headline="The Selman family put a pulse on the whole business."
         draft
       />
       <StatBand
         stats={[
           {
+            value: "Any hour",
+            sub: "the owner asks the business a question and gets an answer",
+          },
+          {
+            value: "3 roles",
+            sub: "what started with the owner now briefs the CFO and receivables",
+          },
+          {
             value: "6 days a week",
             sub: "collections briefed in Spanish before the workday",
           },
-          {
-            value: "Two countries",
-            sub: "one view of sales, receivables, and crop movement",
-          },
-          {
-            value: "Twice daily",
-            sub: "crop accumulation reports during the season",
-          },
         ]}
       />
-      <StoryBody currentSlug="sl-produce" runsOn={["Payments", "Agents"]}>
+      <StoryBody currentSlug="sl-produce" runsOn={["Payments", "Payve Agents"]}>
         <p>
-          SL Produce is the US arm of a family growing operation based in
-          Guasave, Sinaloa, moving green beans, cucumbers, and peppers into
-          the US market. The business runs in two countries, two languages,
-          and two time zones at once.
+          SL Produce is the US arm of the Selman family growing operation
+          based in Guasave, Sinaloa, moving green beans, cucumbers, and
+          peppers into the US market. The business runs in two countries, two
+          languages, and two time zones at once.
+        </p>
+        <h2>It started with one person asking questions at night.</h2>
+        <p>
+          The owner began using a Payve agent the way owners actually think
+          about their business: at odd hours, one question at a time. What
+          sold this week. Which receivables moved. What changed since
+          yesterday. Each answer came back with the numbers behind it, drawn
+          from the family&apos;s own systems, without waiting for someone to
+          build a report.
+        </p>
+        <p>
+          What worked for the owner rolled out to the rest of the operation.
+          The CFO gets the financial picture, the receivables team gets
+          collections, and the questions the family used to carry in their
+          heads now arrive as scheduled briefings.
         </p>
         <h2>Collections that follow the sun.</h2>
         <p>

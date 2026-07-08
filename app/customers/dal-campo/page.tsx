@@ -4,7 +4,7 @@ import { StatBand, StoryBody, StoryHero } from "../StoryLayout";
 export const metadata: Metadata = {
   title: "Dal Campo customer story",
   description:
-    "How Dal Campo pays growers on both sides of the border from one place with Payve.",
+    "How Dal Campo keeps high order complexity auditable with Payve: documents verified, orders reconciled, growers paid from one place.",
   robots: { index: false, follow: false },
 };
 
@@ -14,30 +14,39 @@ export default function DalCampoStory() {
       <StoryHero
         name="Dal Campo"
         industryTag="Wholesale produce · Miami"
-        headline="Dal Campo pays growers without the wire desk."
+        headline="Dal Campo keeps high order complexity auditable."
         draft
       />
       <StatBand
         stats={[
           {
-            value: "One place",
-            sub: "to pay domestic and international growers",
+            value: "Every order",
+            sub: "reconciled, documented, and traceable",
+          },
+          {
+            value: "Every document",
+            sub: "verified and matched to the order it belongs to",
           },
           {
             value: "No wire fees",
             sub: "international suppliers receive local currency at a competitive rate",
-          },
-          {
-            value: "Every payment",
-            sub: "logged, traceable, and tied to its invoice",
           },
         ]}
       />
       <StoryBody currentSlug="dal-campo" runsOn={["Payments", "Early pay"]}>
         <p>
           Dal Campo is a Miami wholesale produce business buying from growers
-          across the Americas. Paying that supplier base used to mean wire
-          forms, wire fees, and a paper trail spread across banks.
+          across the Americas. For its size it moves an unusual number of
+          orders at once, each with its own paperwork, growers on both sides
+          of the border, and money moving in both directions.
+        </p>
+        <h2>The complexity lives in the orders, not the org chart.</h2>
+        <p>
+          A high count of small orders means a high count of invoices, count
+          sheets, and adjustments to keep straight. Payve agents read and
+          verify the documents, match them to the right orders, and reconcile
+          what was billed against what moved, so every order stays traceable
+          when a question comes back weeks later.
         </p>
         <h2>One payment run, every grower.</h2>
         <p>
