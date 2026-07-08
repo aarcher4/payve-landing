@@ -10,7 +10,9 @@
  * at 1440 + 390 with reduced motion, pixelmatches, writes
  * reports/visual-diff/<name>/<viewport>/{app,proto,diff}.png + summary.json.
  *
- * Run: node scripts/visual-diff.mjs [name...] [--base http://...]
+ * Run: node scripts/visual-diff.mjs [name...] [--base http://...] [--export dir]
+ * Export default: newest design-context/claude-design-export-r* that exists
+ * (r2 supersedes r1 as it lands batch by batch).
  */
 import { chromium } from "playwright";
 import { PNG } from "pngjs";
@@ -19,7 +21,17 @@ import { mkdirSync, writeFileSync, readFileSync, existsSync, statSync } from "no
 import { createServer } from "node:http";
 import { extname, join } from "node:path";
 
-const EXPORT_DIR = "design-context/claude-design-export-r1";
+const EXPORT_DIR = (() => {
+  const i = process.argv.indexOf("--export");
+  if (i >= 0 && process.argv[i + 1]) return process.argv[i + 1].replace(/\/$/, "");
+  for (const candidate of [
+    "design-context/claude-design-export-r2",
+    "design-context/claude-design-export-r1",
+  ]) {
+    if (existsSync(candidate)) return candidate;
+  }
+  return "design-context/claude-design-export-r1";
+})();
 const OUT_DIR = "reports/visual-diff";
 const APP_BASE = (() => {
   const i = process.argv.indexOf("--base");
@@ -91,7 +103,9 @@ async function shoot(page, url, viewport, outPath) {
   return PNG.sync.read(buf);
 }
 
-const only = process.argv.slice(2).filter((a) => !a.startsWith("--") && a !== APP_BASE);
+const only = process.argv
+  .slice(2)
+  .filter((a) => !a.startsWith("--") && a !== APP_BASE && a !== EXPORT_DIR);
 const screens = only.length ? SCREENS.filter((s) => only.includes(s.name)) : SCREENS;
 
 const srv = await serveExport();

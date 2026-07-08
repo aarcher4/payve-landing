@@ -18,3 +18,8 @@ Repo: C:\Users\Alex Archer\Desktop\payve-landing (stack on site/pr9-canvas-polis
 - did: config.ts gains bookDemoLabel="Schedule time with us" + nav/footer "Payve Agents" labels; label swapped to config import in Hero/MidCta/CtaBand/SiteHeader(x2)/ProductPage/PageIntro; footer alex@ anchor removed; security contact -> infosec@getpayve.com; company Reach-us paragraph removed. Residual "Book a demo" only in legacy ContactModal (deleted next iter) + a config comment.
 - GATE: PASS (npm run build exit 0)
 - next: W1 remaining app-direct (visual-diff --export, legacy component deletion, hero-home regrade + gradient soften, logo variant correctness), then open PR W1
+
+## iteration 4 — legacy component cleanup + visual-diff --export
+- did: deleted 11 unused components (AgentWorkflow, BankConnectTerminal, CallToAction, ContactModal, CustomerSpotlight, IntegrationFlow, MinutesCounter, Placeholder, StreamingText, SystemIntegrationMesh, site/PageIntro; all verified import-free). visual-diff.mjs: --export flag + auto-pick newest r2/r1 export dir; positional-name filter excludes the --export value.
+- GATE: PASS (npm run build exit 0)
+- next: hero-home regrade (saturation/level bump from imagery-originals PNG) + Hero gradient soften + logo variant correctness, then push + open W1 PR
