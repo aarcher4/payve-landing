@@ -63,7 +63,7 @@ export const navGroups: NavGroup[] = [
       {
         label: "Packaging",
         href: "/solutions/packaging",
-        description: "Packhouses and packaging suppliers to the food industry.",
+        description: "Box plants, converters, and packaging manufacturers supplying the food chain.",
       },
     ],
   },

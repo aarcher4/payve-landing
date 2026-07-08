@@ -9,7 +9,7 @@ import StatStrip from "../../components/site/StatStrip";
 export const metadata: Metadata = {
   title: "Packaging",
   description:
-    "Payve for packhouses and repack operations: consolidated payments, early pay, and agents on billing and reconciliation.",
+    "Payve for packaging manufacturers and converters: early pay on approved invoices, agents on order entry and statements, and cross-border payments without wire fees.",
 };
 
 export default function PackagingPage() {
@@ -17,27 +17,29 @@ export default function PackagingPage() {
     <main>
       <PageHero
         eyebrow="Solutions"
-        title="A packhouse back office that runs itself."
+        title="Built for the plants that supply the supply chain."
         image="/images/hero-packaging.jpg"
-        imageAlt="A combine harvesting golden grain with a grain elevator in the distance"
+        imageAlt="Stacked corrugated cartons and paper rolls inside a sunlit packaging plant"
         atmosphere
-        sub="A repack operation sits between growers and retail with invoices moving in both directions, cold chain receiving standards rising, and a back office that is often one person deep. Payve consolidates the money movement and puts agents on the bookkeeping."
+        sub="The food chain is corrugated's largest customer, and the plants that serve it sell on terms while board prices move monthly and harvest orders arrive in surges. Payve turns approved invoices into working capital when you choose, and puts agents on the order entry and statements."
       />
 
       <StatStrip
         stats={[
           {
-            value: "2,000 lbs/day",
-            label: "the handling volume where federal produce licensing rules kick in",
-            source: "USDA PACA",
+            value: "$40.8B",
+            label: "US corrugated industry shipments in 2024",
+            source: "Fibre Box Association, 2024",
           },
           {
-            value: "Both directions",
-            label: "invoices owed to growers and receivables from retail, managed at once",
+            value: "43%",
+            label: "of US B2B invoiced sales are paid late",
+            source: "Atradius Payment Practices Barometer, North America, 2025",
           },
           {
-            value: "One person",
-            label: "the size of many packhouse back offices. Agents make it enough.",
+            value: "1,092",
+            label: "US corrugated plants in 2024, and 634 of them are independent-scale sheet plants",
+            source: "Fibre Box Association, 2024",
           },
         ]}
       />
@@ -45,28 +47,28 @@ export default function PackagingPage() {
       <FeatureGrid
         items={[
           {
-            title: "Growers paid from one place",
-            body: "Domestic and cross-border growers paid in one run, in their own currency, without wire fees.",
+            title: "Approved invoices become cash when you choose",
+            body: "When a customer approves your invoice through Payve, you can choose early payment per invoice, with the exact dollars and the fee in view before you decide.",
           },
           {
-            title: "Cash sooner on receivables",
-            body: "Choose early payment on your own approved invoices when a buyer offers it through Payve, and see the exact dollars before you decide.",
+            title: "Releases entered by agents",
+            body: "Blanket POs drawn down in releases, repeat specs, and emailed orders are drafted into your system by agents. A person approves every entry.",
           },
           {
-            title: "Billing entered by agents",
-            body: "Repack and storage invoices itemized, reconciled, and entered in batches your bookkeeper approves.",
+            title: "Short-pays answered with records",
+            body: "When a national account short-pays over counts, freight, or plate charges, the invoice, release, and delivery paperwork are already matched and lined up to dispute it.",
           },
           {
-            title: "Receiving documents matched",
-            body: "Inbound load paperwork, count sheets, and grading records matched to the right order automatically.",
+            title: "Statements kept current",
+            body: "Hundreds of line items a month across accounts are itemized, reconciled, and entered in batches one back-office seat can approve.",
           },
           {
-            title: "Traceability that holds up",
-            body: "Every document and payment stays attached to its lot and order, ready when a buyer or auditor asks.",
+            title: "Cross-border without the wire desk",
+            body: "Plants in Mexico are paid in pesos at a competitive exchange rate, with no US bank account required and no wire fees.",
           },
           {
-            title: "Compliance-ready records",
-            body: "Terms, invoice trails, and payment history stay organized the way produce regulation expects.",
+            title: "Briefings before the workday",
+            body: "What is due, what is late, and which accounts changed, delivered every morning with the numbers behind it.",
           },
         ]}
       />

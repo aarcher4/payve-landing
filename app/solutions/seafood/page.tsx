@@ -27,17 +27,19 @@ export default function SeafoodPage() {
       <StatStrip
         stats={[
           {
-            value: "$6.6B",
-            label: "US shrimp imports in 2024",
-            source: "US import data",
+            value: "$25.5B",
+            label: "US seafood imports in 2024, second only to the EU worldwide",
+            source: "USDA Economic Research Service, 2025",
           },
           {
-            value: "Weeks at sea",
-            label: "inventory financed across ocean freight before cash comes back",
+            value: "About 80%",
+            label: "of the seafood Americans eat is imported",
+            source: "NOAA Fisheries",
           },
           {
-            value: "Every load",
-            label: "temperature, certification, and traceability documents to keep straight",
+            value: "$6.0B and $5.9B",
+            label: "shrimp and salmon, the top two import lines, nearly tied, with tuna, tilapia, and crab close behind",
+            source: "NOAA Fisheries trade data, 2024",
           },
         ]}
       />
@@ -50,7 +52,7 @@ export default function SeafoodPage() {
           },
           {
             title: "Liquidity on open invoices",
-            body: "Suppliers can choose early payment on approved invoices and see the exact dollars and the fee before they decide.",
+            body: "Seafood sellers have no PACA trust protecting them the way produce sellers do. Suppliers can choose early payment on approved invoices and see the exact dollars and the fee before they decide.",
           },
           {
             title: "Purchase orders drafted by agents",
@@ -61,8 +63,8 @@ export default function SeafoodPage() {
             body: "Stacks of cold storage invoices are itemized, reconciled, and entered into your ERP in approved batches.",
           },
           {
-            title: "Certifications tracked",
-            body: "Sustainability and origin certifications stay attached to the lots and orders they belong to.",
+            title: "Catch documentation tracked",
+            body: "Catch records, chain-of-custody papers, and sustainability and origin certifications stay attached to the lots and orders they belong to, across every species you bring in.",
           },
           {
             title: "Briefings before the workday",

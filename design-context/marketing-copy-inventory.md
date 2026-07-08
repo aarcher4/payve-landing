@@ -2,6 +2,32 @@
 
 Render this copy exactly. Do not rewrite, reorder, or expand it.
 
+r4b polish additions (2026-07-08, Alex): home Proof stat cards stretch to align with the quote
+column; the how-it-works proof panel is a MINI CASE STUDY at full grid width (customer logo or
+name + caps descriptor + outcome sentence + "Read the story"/"Explore early pay" link; FG for
+01/03, SL for 02, platform-wide for 04); payments hero sub + metadata: **Mexico, Colombia,
+Brazil, and Europe presented as LIVE corridors (Alex explicit, 2026-07-08)** with "More
+corridors are on the way." Value-item timing strings stay MX/CO-scoped (SLA claims not extended
+to BR/EU).
+
+r4b changelog (2026-07-08, Alex): /solutions/packaging REPIVOTED from produce packhouses to
+PACKAGING MANUFACTURERS (corrugated box plants, converters, sheet plants). New hero "Built for
+the plants that supply the supply chain.", FBA/Atradius stat trio, manufacturer-side features
+(supplier-elected early pay on receivables, releases/blanket-PO order entry, short-pay disputes,
+statements, MX plants paid in pesos, briefings). Nav description updated. Research in
+docs/solutions-research-r4.md r4b section; the r4a packhouse copy is superseded.
+
+r4a changelog (over r3, solutions content refresh; research in docs/solutions-research-r4.md):
+- All three solutions StatStrips replaced/sharpened; every tile now carries a named source.
+  Produce: $32B FY2025 actuals (the old $35.6B was not ERS-defensible) / 69% kept / 30-45 days
+  resourced against PACA's 10-day default clock. Seafood: species-broad trio ($25.5B ERS 2025,
+  about 80% imported NOAA, shrimp+salmon nearly tied NOAA 2024) replacing the shrimp-only lead.
+  Packaging: PACA dealer rule fixed to buy-or-sell-in-a-single-day phrasing (7 CFR 46.2), 10-day
+  PACA payment clock (7 CFR 46.46), FSMA 204 July 20 2028 deadline.
+- Feature-body retunes: seafood liquidity gains the no-PACA-trust insight + catch-documentation
+  card; packaging gains one-back-office-seat, case-label/lot-code, and deductions-dispute cards;
+  produce feature 1 gains grower-settlements vocabulary. Heroes/framework/voice unchanged.
+
 r3 changelog (over r2):
 - Wall eyebrow: "Trusted by supply chain leaders". Closing CTA band H2 site-wide: "The money and
   the busywork, handled." (ring composition; MidCta keeps "See it on your own data.").
@@ -110,6 +136,14 @@ Agents do the entry, matching, and drafting. A person on your team approves ever
 Move the money
 Pay every supplier from one place and offer early pay on approved invoices.
 What that looked like
+Fortune Growers
+Grower-shipper · US & Mexico
+Read the story
+SL Produce
+Grower family · Sinaloa & US
+Across the platform
+Suppliers in the US, Mexico & Colombia
+Explore early pay
 Fortune Growers connected the ERP it has run for two decades. Nothing was replaced, and nothing was installed on their side.
 The owner of SL Produce asks the business questions at any hour and gets answers with the numbers behind them. What started with the owner now briefs the CFO and the receivables team every morning. Loops check what matters on a schedule the family sets, and every Payve customer runs them.
 At Fortune Growers, agents enter 800 vouchers a month, work that took about 3 minutes each by hand. The team approves every batch and gets about 40 hours a month back.
@@ -170,7 +204,7 @@ Sign in
 Schedule time with us
 Products
 Cross-border payments, without the wire desk.
-Pay suppliers in Mexico and Colombia in their own pesos at a competitive exchange rate, with no wire fees, from the same payment run that pays your domestic suppliers by bank transfer. One run, one approval.
+Pay suppliers in Mexico, Colombia, Brazil, and Europe in their own currency at a competitive exchange rate, with no wire fees, from the same payment run that pays your domestic suppliers by bank transfer. One run, one approval. More corridors are on the way.
 Schedule time with us
 One payment run
 Every supplier, one approval.
@@ -379,14 +413,14 @@ Solutions
 Built for the pace of perishables.
 Produce runs on 30-day terms, cross-border supply, and systems that were never built to share. Payve pays your growers and suppliers from one place, gives them liquidity on open invoices, and puts agents on the back office work that eats your team's week.
 Schedule time with us
-$35.6B
-US fresh fruit and vegetable imports forecast for 2025
+$32B
+US fresh fruit and vegetable imports in fiscal 2025
 USDA Economic Research Service
 69%
 of US fresh vegetable imports come from Mexico
 USDA Economic Research Service, 2024
 30 to 45 days
-typical wait for cash after shipping, against PACA's 30-day ceiling
+typical wait for cash after shipping, three to four times PACA's 10-day default payment clock
 Industry payment-practice data
 Supplier liquidity
 Your growers wait weeks for cash. They don't have to.
@@ -415,7 +449,7 @@ Morning briefing drafted
 Nothing is written without your approval.
 Approve
 One place to pay
-Domestic growers get bank transfers, Mexican and Colombian suppliers get local currency. One payment run, one approval.
+Grower settlements, domestic and cross-border, from one place: US growers get bank transfers, Mexican and Colombian suppliers get local currency. One payment run, one approval.
 Deductions and disputes, documented
 Every invoice, payment, and adjustment stays traceable, so chargebacks and short pays get answered with records instead of memory.
 Paperwork that keeps itself moving
@@ -463,23 +497,23 @@ Solutions
 Cold chain operations, without the paper chase.
 Seafood importers finance inventory across an ocean crossing before a receivable turns to cash, while the cold chain runs on strict timing and documentation. Payve handles the supplier payments and puts agents on the paperwork.
 Schedule time with us
-$6.6B
-US shrimp imports in 2024
-US import data
-Weeks at sea
-inventory financed across ocean freight before cash comes back
-Every load
-temperature, certification, and traceability documents to keep straight
+$25.5B
+US seafood imports in 2024, second only to the EU worldwide
+USDA Economic Research Service, 2025
+About 80%
+of the seafood Americans eat is imported
+$6.0B and $5.9B
+shrimp and salmon, the top two import lines, nearly tied, with tuna, tilapia, and crab close behind
 Suppliers paid their way
 Domestic suppliers get bank transfers; international suppliers receive local currency at a competitive exchange rate.
 Liquidity on open invoices
-Suppliers can choose early payment on approved invoices and see the exact dollars and the fee before they decide.
+Seafood sellers have no PACA trust protecting them the way produce sellers do. Suppliers can choose early payment on approved invoices and see the exact dollars and the fee before they decide.
 Purchase orders drafted by agents
 Agents pre-fill species, grade, origin, temperature zone, and terms from your own history, ask only what they cannot infer, and hand you a draft to confirm.
 Cold storage paperwork, entered
 Stacks of cold storage invoices are itemized, reconciled, and entered into your ERP in approved batches.
-Certifications tracked
-Sustainability and origin certifications stay attached to the lots and orders they belong to.
+Catch documentation tracked
+Catch records, chain-of-custody papers, and sustainability and origin certifications stay attached to the lots and orders they belong to, across every species you bring in.
 Briefings before the workday
 Inventory positions, receivables at risk, and open orders delivered to your team every morning.
 The money and the busywork, handled.
@@ -516,28 +550,30 @@ Company
 Sign in
 Schedule time with us
 Solutions
-A packhouse back office that runs itself.
-A repack operation sits between growers and retail with invoices moving in both directions, cold chain receiving standards rising, and a back office that is often one person deep. Payve consolidates the money movement and puts agents on the bookkeeping.
+Built for the plants that supply the supply chain.
+The food chain is corrugated's largest customer, and the plants that serve it sell on terms while board prices move monthly and harvest orders arrive in surges. Payve turns approved invoices into working capital when you choose, and puts agents on the order entry and statements.
 Schedule time with us
-2,000 lbs/day
-the handling volume where federal produce licensing rules kick in
-USDA PACA
-Both directions
-invoices owed to growers and receivables from retail, managed at once
-One person
-the size of many packhouse back offices. Agents make it enough.
-Growers paid from one place
-Domestic and cross-border growers paid in one run, in their own currency, without wire fees.
-Cash sooner on receivables
-Choose early payment on your own approved invoices when a buyer offers it through Payve, and see the exact dollars before you decide.
-Billing entered by agents
-Repack and storage invoices itemized, reconciled, and entered in batches your bookkeeper approves.
-Receiving documents matched
-Inbound load paperwork, count sheets, and grading records matched to the right order automatically.
-Traceability that holds up
-Every document and payment stays attached to its lot and order, ready when a buyer or auditor asks.
-Compliance-ready records
-Terms, invoice trails, and payment history stay organized the way produce regulation expects.
+$40.8B
+US corrugated industry shipments in 2024
+Fibre Box Association, 2024
+43%
+of US B2B invoiced sales are paid late
+Atradius Payment Practices Barometer, North America, 2025
+1,092
+US corrugated plants in 2024, and 634 of them are independent-scale sheet plants
+Fibre Box Association, 2024
+Approved invoices become cash when you choose
+When a customer approves your invoice through Payve, you can choose early payment per invoice, with the exact dollars and the fee in view before you decide.
+Releases entered by agents
+Blanket POs drawn down in releases, repeat specs, and emailed orders are drafted into your system by agents. A person approves every entry.
+Short-pays answered with records
+When a national account short-pays over counts, freight, or plate charges, the invoice, release, and delivery paperwork are already matched and lined up to dispute it.
+Statements kept current
+Hundreds of line items a month across accounts are itemized, reconciled, and entered in batches one back-office seat can approve.
+Cross-border without the wire desk
+Plants in Mexico are paid in pesos at a competitive exchange rate, with no US bank account required and no wire fees.
+Briefings before the workday
+What is due, what is late, and which accounts changed, delivered every morning with the numbers behind it.
 The money and the busywork, handled.
 A 30-minute walkthrough with your systems in mind. No rip and replace, nothing to install.
 Schedule time with us
