@@ -60,6 +60,13 @@ r3 locked decisions (2026-07-08, evidence in docs/design-review-r3.md):
   applied to home tour/how-it-works/proof/trust H2s where a natural clause break exists.
 - CLOSING CTA (Alex pick): CtaBand H2 = "The money and the busywork, handled." (ring composition
   with the hero). MidCta keeps "See it on your own data." Subs and buttons unchanged.
+- ROUND 2 (product/solutions, evidence lenses 1+7): ValueList adopts the hairline text-rail
+  grammar (rows separated by hairlines, active = sage dot + bold sage-800 title, NO checkmarks,
+  right expansion panel unchanged). Product pages gain a QUOTE BAND (Ramp pattern: sage-50 tinted
+  full-width band, the signed Geoff Pence quote, name + company) on agents + payments, and a
+  quiet CROSS-SELL text row above the CTA band (eyebrow "One platform" + text links to the other
+  two products; Mercury cross-sell grammar minus the cards). Solutions/security FeatureGrid keeps
+  text-only cells but swaps the boxed grid for TrustSection's border-t-2 sage rule grammar.
 
 CTA (site-wide): label = "Schedule time with us" (Alex 2026-07-07, supersedes "Book a demo"; personal/high-touch, not big-corporate). Destination stays locked: https://zcal.co/payve (the 30-minute scheduling flow, never a generic calendar or contact form).
 

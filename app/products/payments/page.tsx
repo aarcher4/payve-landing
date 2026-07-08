@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import {
   PageHero,
+  CrossSell,
   ProductCtaBand,
+  QuoteBand,
   SplitSection,
 } from "../../components/site/ProductPage";
 import ValueList from "../../components/site/ValueList";
@@ -69,6 +71,15 @@ export default function PaymentsPage() {
             title: "Suppliers onboard themselves",
             body: "Suppliers finish a short form from a link on their phone. No accounts payable back-and-forth over bank details.",
           },
+        ]}
+      />
+
+      <QuoteBand />
+
+      <CrossSell
+        links={[
+          { label: "Early pay", href: "/products/early-pay" },
+          { label: "Payve Agents", href: "/products/agents" },
         ]}
       />
 

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import {
   PageHero,
+  CrossSell,
   ProductCtaBand,
+  QuoteBand,
   SplitSection,
 } from "../../components/site/ProductPage";
 import ValueList from "../../components/site/ValueList";
@@ -88,6 +90,15 @@ export default function AgentsPage() {
             title: "Approval-gated writes",
             body: "Agents prepare the work; nothing is written to your systems until a person on your team approves it. Every action is logged and traceable.",
           },
+        ]}
+      />
+
+      <QuoteBand />
+
+      <CrossSell
+        links={[
+          { label: "Payments", href: "/products/payments" },
+          { label: "Early pay", href: "/products/early-pay" },
         ]}
       />
 

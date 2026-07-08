@@ -1,6 +1,17 @@
-# Marketing copy inventory (r2, 2026-07-07 team critique)
+# Marketing copy inventory (r3, 2026-07-08 reference-benchmarked polish)
 
 Render this copy exactly. Do not rewrite, reorder, or expand it.
+
+r3 changelog (over r2):
+- Wall eyebrow: "Trusted by supply chain leaders". Closing CTA band H2 site-wide: "The money and
+  the busywork, handled." (ring composition; MidCta keeps "See it on your own data.").
+- Home tour: three new short blurbs + "Explore payments / Explore early pay / Explore Payve
+  Agents" links (see homepage section).
+- Product pages (payments + agents) gain the QuoteBand short pull: "Partnering with Payve
+  instantly felt like we added an entire crew of dedicated specialists to our workforce." /
+  Geoff Pence · Fortune Growers. All three product pages gain a cross-sell row: eyebrow
+  "One platform" + text links to the other two products (Payments / Early pay / Payve Agents).
+- No other copy changed; r3 is a visual-grammar round (icon diet, dark tour band, hairline rails).
 
 r2 changelog (over the r1 extraction of the built site):
 - CTA label site-wide: the former demo-booking label replaced by "Schedule time with us" (destination unchanged).

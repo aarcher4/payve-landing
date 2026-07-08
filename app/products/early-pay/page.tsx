@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import {
   PageHero,
+  CrossSell,
   ProductCtaBand,
   SplitSection,
 } from "../../components/site/ProductPage";
@@ -68,6 +69,13 @@ export default function EarlyPayPage() {
             title: "Optional fee coverage",
             body: "Buyers can choose to cover part of a supplier's early pay fee for strategic relationships.",
           },
+        ]}
+      />
+
+      <CrossSell
+        links={[
+          { label: "Payments", href: "/products/payments" },
+          { label: "Payve Agents", href: "/products/agents" },
         ]}
       />
 

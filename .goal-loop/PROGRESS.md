@@ -29,3 +29,9 @@ NO CANVAS this run (Alex). r2 journal preserved in git history of .goal-loop/PRO
 - verification: build PASS; walk CLEAN (16x2); hover-check CLEAN (proof hover x4, tour click x3, keyboard); screenshots confirm type-led trust tiles + ring close. Round 1 (P1 items 1-6) DONE.
 - GATE: PASS
 - next: Round 2 products/solutions (ValueList -> hairline text rail w/o checkmarks; quote band on product pages; cross-sell row; FeatureGrid hairline restyle)
+
+## iteration 6 — Round 2: product/solutions grammar
+- did: ValueList -> hairline text rail (checkmarks removed, sage dot active, ink-3 inactive); FeatureGrid -> border-t-2 sage rule cells (boxes removed; solutions+security inherit); NEW QuoteBand (short Geoff pull, sage-50 band) on payments+agents; NEW CrossSell text row (eyebrow One platform + underlined display links to the other two products) on all 3 product pages; docs (design-system round-2 block + inventory r3 changelog) first.
+- verification: build PASS; walk CLEAN 16x2; screenshots confirm rail/quote/cross-sell/ring-close stack on payments.
+- GATE: PASS
+- next: Round 3 customers (story kickers, sticky fact sidebar absorbing runs-on chips, hub tag pair styling)

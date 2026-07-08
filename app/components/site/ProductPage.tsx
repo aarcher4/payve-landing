@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Reveal from "../home/Reveal";
 import CtaBand from "../home/CtaBand";
 import { bookDemoLabel, bookDemoUrl } from "./config";
@@ -163,10 +164,10 @@ export function FeatureGrid({
   return (
     <section className="border-y border-hairline bg-paper-elev">
       <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-        <div className="grid gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((f, i) => (
-            <Reveal key={f.title} delayIndex={i % 3} className="bg-paper">
-              <div className="h-full p-6">
+            <Reveal key={f.title} delayIndex={i % 3}>
+              <div className="h-full border-t-2 border-sage-600 pt-4">
                 <h3 className="text-sm font-semibold text-ink-1">{f.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-ink-2">{f.body}</p>
               </div>
@@ -174,6 +175,57 @@ export function FeatureGrid({
           ))}
         </div>
       </div>
+    </section>
+  );
+}
+
+/**
+ * r3 quote band (Ramp pattern, docs/design-review-r3.md lens 5): the signed
+ * customer quote on a tinted full-width band. Used on product pages.
+ */
+export function QuoteBand() {
+  return (
+    <section className="border-y border-sage-100 bg-sage-50">
+      <div className="mx-auto max-w-4xl px-4 py-20 text-center sm:px-6">
+        <Reveal>
+          <p className="text-balance font-display text-xl font-semibold leading-relaxed tracking-h2 text-ink-1 sm:text-2xl">
+            &ldquo;Partnering with Payve instantly felt like we added an entire
+            crew of dedicated specialists to our workforce.&rdquo;
+          </p>
+          <p className="mt-6 text-sm font-semibold text-ink-1">
+            Geoff Pence <span className="font-normal text-ink-3">· Fortune Growers</span>
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * r3 cross-sell row (Mercury grammar minus the cards): quiet text links to
+ * the rest of the platform above the closing CTA band.
+ */
+export function CrossSell({
+  links,
+}: {
+  links: { label: string; href: string }[];
+}) {
+  return (
+    <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+      <Reveal>
+        <span className="t-eyebrow text-sage-600">One platform</span>
+        <div className="mt-4 flex flex-wrap gap-x-10 gap-y-3">
+          {links.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="font-display text-lg font-bold tracking-h2 text-ink-2 underline decoration-hairline underline-offset-8 transition-colors hover:text-ink-1 hover:decoration-sage-500"
+            >
+              {l.label}
+            </Link>
+          ))}
+        </div>
+      </Reveal>
     </section>
   );
 }
