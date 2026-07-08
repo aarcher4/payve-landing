@@ -9,7 +9,7 @@ export default function SiteFooter() {
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5">
           <div className="col-span-2 sm:col-span-3 lg:col-span-1">
             <Image
-              src="/brand/payve-logo.png"
+              src="/brand/payve-logo-transparent.png"
               alt="Payve"
               width={109}
               height={50}

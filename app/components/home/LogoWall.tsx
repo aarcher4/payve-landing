@@ -37,7 +37,7 @@ export default function LogoWall() {
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <Reveal>
           <p className="t-eyebrow pb-8 text-center">
-            Supply chain businesses across the US, Mexico, and Colombia
+            Trusted by supply chain leaders
           </p>
         </Reveal>
         <LogoRow />

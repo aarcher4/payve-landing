@@ -32,6 +32,19 @@ r2.1 (2026-07-07 eve, Alex):
 - LOOPS (new feature copy, Alex-approved): agents page gains a "Loops" split section ("A live pulse on the business.") with a running-loops panel (cadence tags: hourly / 15 min / 6:00 am); the "Notify me when it happens" value item becomes "Loops on a schedule"; one loops sentence each on the home See-everything proof and the FG/SL/Dal Campo stories. Claim "Every Payve customer runs loops today." approved by Alex 2026-07-07.
 - Imagery: hero-security/packaging/seafood are the new truck-free Midjourney selects (see docs/midjourney-prompts.md r2; NO semi trucks rule).
 
+r3 (2026-07-08, Alex):
+- NO-CANVAS EXCEPTION: the r3 polish wave is implemented app-direct (Alex explicit, one
+  iteration only, weekly canvas limit at 95%). Docs stay source of truth and are updated before
+  code; a canvas catch-up batch re-syncs the canvas after Fri Jul 10 and cuts export r3. Until
+  then export r2 is stale for touched sections.
+- Logo: back to assets payve-logo-transparent.png in nav + footer (the dark variant read badly;
+  vector SVGs still pending from the shared drive).
+- Logo wall eyebrow: "Trusted by supply chain leaders" (Alex; replaces the US/Mexico/Colombia line).
+- r3 scope: reference-benchmarked polish per docs/design-review-r3.md (live walks of Mercury/
+  Ramp/HappyRobot/Brex): ProductTour rebuild (type-led, no icon tiles), SITE-WIDE icon diet
+  (decorative icons removed; functional header/menu glyphs and in-demo working-state marks stay),
+  type/spacing corrections, products/solutions/customers gap fixes, closing-CTA copy re-pick.
+
 CTA (site-wide): label = "Schedule time with us" (Alex 2026-07-07, supersedes "Book a demo"; personal/high-touch, not big-corporate). Destination stays locked: https://zcal.co/payve (the 30-minute scheduling flow, never a generic calendar or contact form).
 
 ## r3 backlog (explicitly NOT in r2)
