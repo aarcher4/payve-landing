@@ -42,3 +42,4 @@ design-context/claude-design-export-*/assets/
 design-context/claude-design-export-*/screenshots/
 reports/
 .goal-loop/loop.local.md
+.goal-loop/next-start.log
