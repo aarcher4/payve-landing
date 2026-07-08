@@ -72,3 +72,8 @@ Repo: C:\Users\Alex Archer\Desktop\payve-landing (stack on site/pr9-canvas-polis
 - verification: build PASS (24 static pages now); walk CLEAN (16 routes x2); content oracle 4/4 + noindex,nofollow + hub bridge-img count 0 + sitemap producer-pro count 0; visual-diff customers screens 6.5-21% (expected band).
 - GATE: PASS
 - next: push + W4 PR, then canvas batch 4 (security/company/solutions imagery) with imagery fallback (Midjourney gens flagged for Alex; de-faking treatment on existing images)
+
+## iteration 16 — canvas batch 4 sent (de-faking imagery treatment x5 pages)
+- did: batch-4 prompt SENT (1272 chars): graded paper+sage overlay wash, reduced opacity, softer framing on PageHero images of security/company/3 solutions; no copy changes; notes replacement Midjourney gens (security campus, packaging pallets, seafood harbor) are produced separately (GATED: Alex/Midjourney). Playwright MCP browser dropped twice around the send (profile lock, killed orphans to recover); message confirmed sent before drop; canvas generation continues server-side.
+- GATE: n/a mid-generation
+- next: reconnect browser, verify batch 4, download 5 pages, W5 port (PageHero image treatment) on site/pr14-trust-imagery, then final sweep + memory update
