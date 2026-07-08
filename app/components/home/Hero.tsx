@@ -103,7 +103,7 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "linear-gradient(180deg, rgba(247,248,249,0.84) 0%, rgba(247,248,249,0.72) 45%, rgba(247,248,249,0.88) 78%, var(--paper) 100%)",
+            "linear-gradient(180deg, rgba(247,248,249,0.76) 0%, rgba(247,248,249,0.56) 45%, rgba(247,248,249,0.8) 78%, var(--paper) 100%)",
         }}
         aria-hidden
       />

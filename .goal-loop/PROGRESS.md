@@ -23,3 +23,8 @@ Repo: C:\Users\Alex Archer\Desktop\payve-landing (stack on site/pr9-canvas-polis
 - did: deleted 11 unused components (AgentWorkflow, BankConnectTerminal, CallToAction, ContactModal, CustomerSpotlight, IntegrationFlow, MinutesCounter, Placeholder, StreamingText, SystemIntegrationMesh, site/PageIntro; all verified import-free). visual-diff.mjs: --export flag + auto-pick newest r2/r1 export dir; positional-name filter excludes the --export value.
 - GATE: PASS (npm run build exit 0)
 - next: hero-home regrade (saturation/level bump from imagery-originals PNG) + Hero gradient soften + logo variant correctness, then push + open W1 PR
+
+## iteration 5 — hero regrade + gradient soften + logo dark variant
+- did: scripts/regrade-hero.mjs (Playwright canvas filter, --filter/--quality); hero-home.jpg regraded saturate(1.22) brightness(1.03) contrast(1.05) at q0.62 = 721KB (under the 800KB hero budget); Hero paper-fade gradient softened (0.84/0.72/0.88 -> 0.76/0.56/0.8); header+footer wordmark switched to dark variant payve-logo.png (transparent silver variant was low-contrast on the light surfaces; vector swap still gated on Alex shared-drive SVGs).
+- GATE: PASS (npm run build exit 0)
+- next: push branch + open W1 PR, then canvas batch 1 (home)

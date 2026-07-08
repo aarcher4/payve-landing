@@ -46,7 +46,7 @@ export default function SiteHeader() {
           onClick={() => setOpenGroup(null)}
         >
           <Image
-            src="/brand/payve-logo-transparent.png"
+            src="/brand/payve-logo.png"
             alt="Payve"
             width={109}
             height={50}
