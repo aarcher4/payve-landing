@@ -66,8 +66,8 @@ export default function SecurityPage() {
           </p>
           <p className="mt-4 text-sm text-ink-3">
             Security questions? Write to{" "}
-            <a href="mailto:alex@getpayve.com" className="font-medium text-ink-2 hover:text-ink-1">
-              alex@getpayve.com
+            <a href="mailto:infosec@getpayve.com" className="font-medium text-ink-2 hover:text-ink-1">
+              infosec@getpayve.com
             </a>
             .
           </p>

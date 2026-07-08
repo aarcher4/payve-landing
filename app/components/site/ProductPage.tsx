@@ -1,6 +1,6 @@
 import Reveal from "../home/Reveal";
 import CtaBand from "../home/CtaBand";
-import { bookDemoUrl } from "./config";
+import { bookDemoLabel, bookDemoUrl } from "./config";
 
 /**
  * Shared scaffolding for product and solution pages:
@@ -37,7 +37,7 @@ export function PageHero({
               href={bookDemoUrl}
               className="mt-8 inline-flex rounded-md bg-sage-700 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-sage-800"
             >
-              Book a demo
+              {bookDemoLabel}
             </a>
           </Reveal>
           {image && (

@@ -6,6 +6,12 @@
 
 export const bookDemoUrl = "https://zcal.co/payve";
 
+/**
+ * Site-wide demo CTA label (Alex 2026-07-07 team critique: personal and
+ * high-touch over generic; supersedes "Book a demo").
+ */
+export const bookDemoLabel = "Schedule time with us";
+
 export const signInUrl = "https://app.getpayve.com";
 
 export type NavLink = {
@@ -35,7 +41,7 @@ export const navGroups: NavGroup[] = [
         description: "Suppliers get paid early on open invoices. Buyers earn on every election.",
       },
       {
-        label: "Agents",
+        label: "Payve Agents",
         href: "/products/agents",
         description: "Organizational intelligence and automated back office workflows.",
       },
@@ -88,7 +94,7 @@ export const footerColumns: { heading: string; links: NavLink[] }[] = [
     links: [
       { label: "Payments", href: "/products/payments" },
       { label: "Early pay", href: "/products/early-pay" },
-      { label: "Agents", href: "/products/agents" },
+      { label: "Payve Agents", href: "/products/agents" },
     ],
   },
   {

@@ -42,16 +42,10 @@ export default function SiteFooter() {
           <p className="max-w-3xl text-xs leading-relaxed text-ink-3">
             {notABankDisclosure}
           </p>
-          <div className="mt-4 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+          <div className="mt-4">
             <p className="text-xs text-ink-3">
               © {new Date().getFullYear()} Payve, Inc. All rights reserved.
             </p>
-            <a
-              href="mailto:alex@getpayve.com"
-              className="text-xs text-ink-3 transition-colors hover:text-ink-1"
-            >
-              alex@getpayve.com
-            </a>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { CheckCircle2, FileText, Landmark, Sparkles, Clock } from "lucide-react";
-import { bookDemoUrl } from "../site/config";
+import { bookDemoLabel, bookDemoUrl } from "../site/config";
 
 const chips = [
   {
@@ -132,7 +132,7 @@ export default function Hero() {
               href={bookDemoUrl}
               className="rounded-md bg-sage-700 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-sage-800"
             >
-              Book a demo
+              {bookDemoLabel}
             </a>
           </div>
         </motion.div>

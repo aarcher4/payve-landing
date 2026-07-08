@@ -1,5 +1,5 @@
 import Reveal from "./Reveal";
-import { bookDemoUrl } from "../site/config";
+import { bookDemoLabel, bookDemoUrl } from "../site/config";
 
 /** Quiet mid-page CTA (conversion checklist: CTA repeated at scroll points). */
 export default function MidCta() {
@@ -13,7 +13,7 @@ export default function MidCta() {
           href={bookDemoUrl}
           className="mt-6 inline-flex rounded-md bg-sage-700 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-sage-800"
         >
-          Book a demo
+          {bookDemoLabel}
         </a>
       </Reveal>
     </section>

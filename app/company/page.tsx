@@ -36,16 +36,6 @@ export default function CompanyPage() {
               We work with growers, shippers, distributors, importers, and
               packhouses across the US, Mexico, and Colombia.
             </p>
-            <p>
-              Reach us at{" "}
-              <a
-                href="mailto:alex@getpayve.com"
-                className="font-medium text-sage-700 hover:underline"
-              >
-                alex@getpayve.com
-              </a>
-              .
-            </p>
           </div>
         </Reveal>
       </section>

@@ -1,4 +1,4 @@
-import { bookDemoUrl } from "./config";
+import { bookDemoLabel, bookDemoUrl } from "./config";
 
 /**
  * Interim page shell used while a section's full page is being built.
@@ -28,7 +28,7 @@ export default function PageIntro({
           href={bookDemoUrl}
           className="inline-flex rounded-md bg-sage-700 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-sage-800"
         >
-          Book a demo
+          {bookDemoLabel}
         </a>
       </div>
     </main>

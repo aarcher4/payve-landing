@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
-import { bookDemoUrl, navGroups, signInUrl } from "./config";
+import { bookDemoLabel, bookDemoUrl, navGroups, signInUrl } from "./config";
 
 export default function SiteHeader() {
   const [openGroup, setOpenGroup] = useState<string | null>(null);
@@ -126,7 +126,7 @@ export default function SiteHeader() {
             href={bookDemoUrl}
             className="rounded-md bg-sage-700 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-sage-800"
           >
-            Book a demo
+            {bookDemoLabel}
           </a>
         </div>
 
@@ -177,7 +177,7 @@ export default function SiteHeader() {
               href={bookDemoUrl}
               className="rounded-md bg-sage-700 px-4 py-2.5 text-center text-sm font-semibold text-white"
             >
-              Book a demo
+              {bookDemoLabel}
             </a>
             <a
               href={signInUrl}
