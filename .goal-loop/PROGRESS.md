@@ -41,3 +41,8 @@ NO CANVAS this run (Alex). r2 journal preserved in git history of .goal-loop/PRO
 - verification: build PASS; walk CLEAN 16x2; hover-check CLEAN; FG story screenshot matches Ramp grammar (dark hero + stat band + ruled quote + kicker + sidebar).
 - GATE: PASS
 - next: re-grade touched pages in design-review-r3.md, final copy-rule grep, memory update, deploy ask (per-branch confirm), final report
+
+## iteration 8 — close-out: re-grade, sweep, deploy, memory
+- did: design-review-r3.md post-implementation re-grade appended (home 5.5 -> 8; all round-target lenses >=8; r4 candidates logged); copy-rule sweep CLEAN (no em dashes/rails/stale labels; lucide only in demos + SiteHeader = functional); Alex confirmed per-branch deploy -> preview repointed to site/pr15-polish, dep-d973jtss728c738kj1q0 LIVE, full live walk CLEAN. Follow-ups standing: canvas catch-up post-Friday (export r2 now stale for home/products/customers/solutions sections), packing-house upscale, merge train #4-#18, SVG logos, sign-offs.
+- GATE: PASS (build exit 0)
+- run complete

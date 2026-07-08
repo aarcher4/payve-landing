@@ -44,6 +44,19 @@ below the grading. mercury-banking 404'd; mercury-treasury is the deep Mercury p
 Home is the weakest page and the highest-traffic one; its two failing lenses (icons,
 multi-product) are exactly what Alex flagged.
 
+## Post-implementation re-grade (2026-07-08, after rounds 1-3 on site/pr15-polish)
+
+| Page | Icons | Multi-product | Type | Rhythm | Proof | Case-study | Product IA | Overall |
+|---|---|---|---|---|---|---|---|---|
+| home | 9 (0 decorative icons) | 8.5 (Mercury dark-band text rail) | 8 (two-tone H2s) | 8 (dark chapter band) | 7 | - | - | **8** |
+| products x3 | 9 (rail, no checks) | - | 8 | 7 | 8 (QuoteBand) | - | 8 (quote + cross-sell added) | **8** |
+| solutions x3 + security | 9 (ruled grids) | - | 7 | 7 | 6 | - | 7 | **7.5** |
+| customers hub | 9 | - | 7 | 7 | 7 | 8 (caps tags) | - | **7.5** |
+| stories x4 | 9 | - | 8 | 7 | 8 | 8.5 (kickers + sticky fact sidebar) | - | **8** |
+
+All round-target lenses reached >=8. Remaining sub-8 items (solutions proof depth, hub type
+scale, FAQ/cross-sell breadth on product pages) are logged as r4 candidates, not regressions.
+
 ## Ranked backlog
 
 **P1 (Round 1, homepage):**
