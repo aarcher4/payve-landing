@@ -39,3 +39,8 @@ Repo: C:\Users\Alex Archer\Desktop\payve-landing (stack on site/pr9-canvas-polis
 - NOTE: Alex's claude.ai account shows 94% of weekly usage limit, resets Fri Jul 10. Remaining batches must be economical; risk of hitting the wall mid-wave.
 - GATE: PASS (no app change this iteration; last build green)
 - next: export canvas -> design-context/claude-design-export-r2/, post checkpoint-1 for Alex, then W2 port (site/pr11-home-critique)
+
+## iteration 8 — canvas export r2 committed
+- did: downloaded all 13 .dc.html from the canvas file manager (right-click Download recipe; per-file, since no ZIP export exists and CORS blocks direct fetch), assembled design-context/claude-design-export-r2/ from r1 base (assets/_ds/support.js) + fresh pages + images/hero-home-r2.jpg (referenced by the new home). home.dc.html: 4x "Schedule time with us", hero-home-r2 wired, proof layer present. Heavy dirs auto-gitignored by the existing claude-design-export-* patterns. visual-diff auto-picks r2 now.
+- GATE: PASS (no app change; docs/export only)
+- next: CHECKPOINT 1 post for Alex (canvas home review) + W2 port branch site/pr11-home-critique (Hero chips out, ProductTour affordance/connector/centering, HowItWorks client + proof layer, section rhythm)
