@@ -28,3 +28,8 @@ Repo: C:\Users\Alex Archer\Desktop\payve-landing (stack on site/pr9-canvas-polis
 - did: scripts/regrade-hero.mjs (Playwright canvas filter, --filter/--quality); hero-home.jpg regraded saturate(1.22) brightness(1.03) contrast(1.05) at q0.62 = 721KB (under the 800KB hero budget); Hero paper-fade gradient softened (0.84/0.72/0.88 -> 0.76/0.56/0.8); header+footer wordmark switched to dark variant payve-logo.png (transparent silver variant was low-contrast on the light surfaces; vector swap still gated on Alex shared-drive SVGs).
 - GATE: PASS (npm run build exit 0)
 - next: push branch + open W1 PR, then canvas batch 1 (home)
+
+## iteration 6 — W1 verification walk + PR #13 open
+- did: scripts/walk.mjs (route x viewport oracle: console errors, CTA label/href, placeholder email, stale label, internal links). First run hit the known port-3100 stale-server gotcha (old process 42568 served pre-wave build: every route "failed"); taskkilled, restarted from this branch, WALK CLEAN 15 routes x 1440/390. Pushed site/pr10-docs-and-direct, opened PR #13 (base site/pr9-canvas-polish). W1 acceptance item DONE.
+- GATE: PASS (npm run build exit 0; walk clean)
+- next: canvas batch 1 (home) via Playwright MCP on claude.ai/design "Payve Marketing Site" project: upload regraded hero asset, then the batch-1 prompt (chips removed, tour affordance+connector+centering, HowItWorks hover+proof layer, or-Spanish, background rhythm, CTA label), then checkpoint-1 post for Alex + export r2
