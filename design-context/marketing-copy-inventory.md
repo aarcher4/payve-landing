@@ -95,7 +95,7 @@ Move the money
 Pay every supplier from one place and offer early pay on approved invoices.
 What that looked like
 Fortune Growers connected the ERP it has run for two decades. Nothing was replaced, and nothing was installed on their side.
-The owner of SL Produce asks the business questions at any hour and gets answers with the numbers behind them. What started with the owner now briefs the CFO and the receivables team every morning.
+The owner of SL Produce asks the business questions at any hour and gets answers with the numbers behind them. What started with the owner now briefs the CFO and the receivables team every morning. Loops check what matters on a schedule the family sets, and every Payve customer runs them.
 At Fortune Growers, agents enter 800 vouchers a month, work that took about 3 minutes each by hand. The team approves every batch and gets about 40 hours a month back.
 Suppliers in Mexico and Colombia receive local currency at a competitive exchange rate, and any supplier can choose early payment on an approved invoice. Suppliers with liquidity on open invoices stay closer to the buyers who offer it.
 Customer proof
@@ -295,6 +295,17 @@ Organizational intelligence
 The day starts with answers.
 Agents sync your sales, receivables, inventory, quality, and market data daily, then deliver scheduled briefings to the people who need them: a morning market snapshot, a receivables risk report, a collections summary, in English or Spanish.
 Ask a question in plain English or Spanish and get the answer with the numbers behind it, drawn from your own systems.
+Loops
+A live pulse on the business.
+Loops are checks that agents run on a schedule you set: every fifteen minutes, every hour, every morning. Watch sales of a single product, a price threshold, receivables that matter, or an inventory position, and get told the moment something needs a person.
+Some loops are deterministic, the same check every time. Some are agentic, where the agent investigates what changed and why. Every Payve customer runs loops today.
+Loops · running
+hourly
+Sales pace, roma tomatoes
+15 min
+Price floor watch, bell peppers
+6:00 am
+Receivables at risk
 Payve agent
 Working
 Reading overnight orders and documents
@@ -309,8 +320,8 @@ Document matching
 Invoices, bills of lading, and count sheets are read, validated, de-duplicated, and matched to the right order before anything posts.
 Complaint root cause
 When a customer complaint comes in, an agent pulls the related orders and inspection data and drafts a root-cause analysis for your review.
-Notify me when it happens
-Build notification workflows without code: pick a trigger, a condition, and who gets told. Agents watch so your team does not have to.
+Loops on a schedule
+Pick a cadence and a question: hourly sales on one product, a price threshold, receivables at risk. Deterministic checks and agentic investigations that alert only when something needs you.
 Scheduled briefings
 Daily and weekly reports arrive before the workday: market prices, receivables at risk, sales recaps, collections. Bilingual, per-person, per-timezone.
 Approval-gated writes
@@ -627,6 +638,7 @@ Payve agents connected to the systems Fortune Growers already ran and unified th
 The busywork moved to agents.
 The same agents handle the entry work around the money: invoices itemized and reconciled, documents matched to the right orders, and customer complaints traced to the affected lots with a drafted root-cause analysis. A person at Fortune Growers approves every write before anything posts.
 The clearest example is voucher entry. Cold storage service invoices used to be keyed into the ERP by hand, about 800 entries a month at roughly 3 minutes each. Agents now read, itemize, and enter those vouchers in batches the team approves, returning about 40 hours of entry work to the back office every month. When something in a load does not match, the agent flags it with the records attached, so problems get reported with evidence instead of found at reconciliation.
+Loops watch the rest: scheduled checks on sales pace and receivables that alert the team the moment something moves.
 Payments run through the same platform, so paying growers and suppliers on both sides of the border happens from one place, and suppliers can choose early payment on approved invoices.
 What they run on Payve
 Payments
@@ -689,6 +701,7 @@ What worked for the owner rolled out to the rest of the operation. The CFO gets 
 Collections that follow the sun.
 Payve agents deliver a collections report in Spanish six mornings a week, on Sinaloa time, so the team starts each day knowing who owes what and what changed overnight. During the season, crop accumulation reports land twice a day, and a weekly sales recap closes the loop.
 The same platform gives the family one view of receivables and sales on both sides of the border, without anyone rebuilding spreadsheets between offices.
+Loops carry the rhythm: a deterministic check runs collections every morning, and during the season an agentic loop watches crop movement and flags what changed.
 This story is a draft. Specific results publish after review with SL Produce.
 What they run on Payve
 Payments
@@ -745,7 +758,7 @@ No wire fees
 international suppliers receive local currency at a competitive rate
 Dal Campo is a Miami wholesale produce business buying from growers across the Americas. For its size it moves an unusual number of orders at once, each with its own paperwork, growers on both sides of the border, and money moving in both directions.
 The complexity lives in the orders, not the org chart.
-A high count of small orders means a high count of invoices, count sheets, and adjustments to keep straight. Payve agents read and verify the documents, match them to the right orders, and reconcile what was billed against what moved, so every order stays traceable when a question comes back weeks later.
+A high count of small orders means a high count of invoices, count sheets, and adjustments to keep straight. Payve agents read and verify the documents, match them to the right orders, and reconcile what was billed against what moved, so every order stays traceable when a question comes back weeks later. Loops recheck open orders on a schedule, so nothing waits for someone to remember to look.
 One payment run, every grower.
 With Payve, domestic growers receive bank transfers and international growers receive their own currency at a competitive exchange rate, from a single payment run with a single approval. Suppliers can choose early payment on approved invoices and see exactly what they receive and what it costs, in dollars.
 This story is a draft. Specific results publish after review with Dal Campo.

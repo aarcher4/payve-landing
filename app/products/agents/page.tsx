@@ -5,7 +5,7 @@ import {
   SplitSection,
 } from "../../components/site/ProductPage";
 import ValueList from "../../components/site/ValueList";
-import { AgentsDemo } from "../../components/home/demos";
+import { AgentsDemo, LoopsDemo } from "../../components/home/demos";
 
 export const metadata: Metadata = {
   title: "Payve Agents",
@@ -41,6 +41,26 @@ export default function AgentsPage() {
         </p>
       </SplitSection>
 
+      <SplitSection
+        eyebrow="Loops"
+        title="A live pulse on the business."
+        visual={<LoopsDemo />}
+        flip
+      >
+        <p>
+          Loops are checks that agents run on a schedule you set: every
+          fifteen minutes, every hour, every morning. Watch sales of a single
+          product, a price threshold, receivables that matter, or an
+          inventory position, and get told the moment something needs a
+          person.
+        </p>
+        <p>
+          Some loops are deterministic, the same check every time. Some are
+          agentic, where the agent investigates what changed and why. Every
+          Payve customer runs loops today.
+        </p>
+      </SplitSection>
+
       <ValueList
         eyebrow="What agents handle"
         items={[
@@ -57,8 +77,8 @@ export default function AgentsPage() {
             body: "When a customer complaint comes in, an agent pulls the related orders and inspection data and drafts a root-cause analysis for your review.",
           },
           {
-            title: "Notify me when it happens",
-            body: "Build notification workflows without code: pick a trigger, a condition, and who gets told. Agents watch so your team does not have to.",
+            title: "Loops on a schedule",
+            body: "Pick a cadence and a question: hourly sales on one product, a price threshold, receivables at risk. Deterministic checks and agentic investigations that alert only when something needs you.",
           },
           {
             title: "Scheduled briefings",

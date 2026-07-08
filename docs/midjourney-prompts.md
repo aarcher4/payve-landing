@@ -11,7 +11,7 @@ Every prompt shares the same base so the whole site reads as one photographer's 
 - Cinematic editorial photography, film still quality, epic scale, subtle lens flare where it fits
 - Golden sunrise / morning golden-hour light, crisp clear air, sun-drenched and optimistic. NOT overcast, NOT hazy-gray
 - Beautiful working environments of the supply chain: Michoacán orchard mountains, Andean terraces, Nebraska sandhills grain, sunlit harbors, valley farmland
-- Distribution elements stay in frame: refrigerated trailers at docks, harvest crates, grain elevators and rail cars, harbor totes, trucks on bridges and mountain roads
+- Distribution elements stay in frame: harvest crates, pallets, packing lines, grain elevators and rail cars, harbor totes and cranes, warehouse and packing-shed architecture. NO semi trucks or trailers (the model mangles them; a broken truck reads as AI instantly)
 - Vibrant natural color; the site's sage palette comes from the landscapes themselves, not a desaturated grade
 - People only as small distant figures, never faces or close-ups, never posed
 - No text, no logos, no signage that reads as a brand
@@ -95,19 +95,36 @@ extreme close up of morning condensation on the corrugated steel wall of a refri
 
 Write these in the locked v2 style (golden-sunrise cinematic base above, NOT the v1 base suffix kept below for history). The critique retires the security cold-room and rebalances two solutions pages.
 
+**NO SEMI TRUCKS OR TRAILERS in any prompt (Alex 2026-07-07): the model consistently mangles them (wrong wheel counts, melted cabs, warped trailers) and a broken truck reads instantly as AI. Carry distribution scale with crates, pallets, packing lines, grain elevators, rail cars, harbors, and warehouse architecture instead.**
+
 ### 13. Security page replacement (16:9)
 ```
-golden sunrise over a modern distribution campus, long warehouse rooflines and orderly trailer yard seen from a calm elevated angle, crisp clear morning air, sense of order and stewardship, distant small figures only --ar 16:9 --style raw --v 7
+golden sunrise over a modern distribution campus, long clean warehouse rooflines and a quiet paved yard seen from a calm elevated angle, rows of stacked produce crates near the dock doors, crisp clear morning air, sense of order and stewardship, distant small figures only, no vehicles --ar 16:9 --style raw --v 7
 ```
 
 ### 14. Packaging solutions replacement (16:9)
 ```
-sunlit interior of a corrugated packaging operation, tall stacks of flat cardboard cartons on wooden pallets, a forklift lane receding toward open dock doors glowing with morning light, warm golden shafts through skylights, ordered geometry --ar 16:9 --style raw --v 7
+sunlit interior of a corrugated packaging operation, tall stacks of flat cardboard cartons on wooden pallets receding in ordered rows, warm golden shafts through high skylights onto the concrete floor, paper rolls along one wall, calm ordered geometry, no vehicles --ar 16:9 --style raw --v 7
 ```
 
 ### 15. Seafood solutions replacement (16:9)
 ```
-working seafood harbor at golden sunrise, boats unloading insulated totes onto a busy quay beside a processing house, cranes and stacked crates in frame, warm light on cold water, broad industry scene not a single catch --ar 16:9 --style raw --v 7
+working seafood harbor at golden sunrise, moored fishing boats beside a quay stacked with insulated totes and ice bins, a dockside crane lifting a net of crates, processing house with open doors in the background, warm light on cold water, broad industry scene not a single catch --ar 16:9 --style raw --v 7
+```
+
+### 16. Customers hub alternate, in case a warm atmosphere band returns (16:9)
+```
+golden-hour orchard valley with wooden harvest crates stacked at the row ends and a packing shed glowing in the distance, long soft shadows across the rows, crisp air, sense of a full harvest day ending well, small distant figures only, no vehicles --ar 16:9 --style raw --v 7
+```
+
+### 17. Company page alternate (16:9)
+```
+early morning inside a produce packing house, sorting line with bright produce moving past, workers as small figures along the line, golden light through open bay doors, stacked cartons and pallets in soft focus foreground, honest working atmosphere, no vehicles --ar 16:9 --style raw --v 7
+```
+
+### 18. Hero-home alternate, only if the current Michoacán select needs a sibling (16:9)
+```
+aerial golden sunrise over terraced orchard mountains, a winding dirt road with NO vehicles, mist in the valley folds, a small cluster of packing sheds with stacked crates at the mountain base, epic scale, crisp optimistic light --ar 16:9 --style raw --v 7
 ```
 
 ## After generating

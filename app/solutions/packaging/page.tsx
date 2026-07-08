@@ -20,6 +20,7 @@ export default function PackagingPage() {
         title="A packhouse back office that runs itself."
         image="/images/hero-packaging.jpg"
         imageAlt="A combine harvesting golden grain with a grain elevator in the distance"
+        atmosphere
         sub="A repack operation sits between growers and retail with invoices moving in both directions, cold chain receiving standards rising, and a back office that is often one person deep. Payve consolidates the money movement and puts agents on the bookkeeping."
       />
 

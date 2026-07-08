@@ -26,7 +26,7 @@ const steps = [
     Icon: Eye,
     body: "Your data unified daily. Ask questions in plain English (or Spanish), get answers with the numbers behind them.",
     proof:
-      "The owner of SL Produce asks the business questions at any hour and gets answers with the numbers behind them. What started with the owner now briefs the CFO and the receivables team every morning.",
+      "The owner of SL Produce asks the business questions at any hour and gets answers with the numbers behind them. What started with the owner now briefs the CFO and the receivables team every morning. Loops check what matters on a schedule the family sets, and every Payve customer runs them.",
   },
   {
     n: "03",

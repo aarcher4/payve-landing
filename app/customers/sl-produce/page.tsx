@@ -68,6 +68,11 @@ export default function SlProduceStory() {
           sales on both sides of the border, without anyone rebuilding
           spreadsheets between offices.
         </p>
+        <p>
+          Loops carry the rhythm: a deterministic check runs collections
+          every morning, and during the season an agentic loop watches crop
+          movement and flags what changed.
+        </p>
         <p className="text-sm text-ink-3">
           This story is a draft. Specific results publish after review with
           SL Produce.

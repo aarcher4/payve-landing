@@ -27,6 +27,11 @@ Trust/company:
 - Security: hero image replaced (cold-storage/warehouse felt wrong); contact becomes infosec@getpayve.com.
 - Footer/company: placeholder alex@getpayve.com removed.
 
+r2.1 (2026-07-07 eve, Alex):
+- HERO GRAMMAR UNIFIED: the five atmosphere pages (3 solutions, security, company) use the home-style FULL-BLEED BACKGROUND hero (image behind the text at 0.62 opacity under paper + sage washes, headline left, no side card). This is variant B, which won the team A/B against the side-card treatment 9 to 6.5. Product pages keep framed side-image heroes.
+- LOOPS (new feature copy, Alex-approved): agents page gains a "Loops" split section ("A live pulse on the business.") with a running-loops panel (cadence tags: hourly / 15 min / 6:00 am); the "Notify me when it happens" value item becomes "Loops on a schedule"; one loops sentence each on the home See-everything proof and the FG/SL/Dal Campo stories. Claim "Every Payve customer runs loops today." approved by Alex 2026-07-07.
+- Imagery: hero-security/packaging/seafood are the new truck-free Midjourney selects (see docs/midjourney-prompts.md r2; NO semi trucks rule).
+
 CTA (site-wide): label = "Schedule time with us" (Alex 2026-07-07, supersedes "Book a demo"; personal/high-touch, not big-corporate). Destination stays locked: https://zcal.co/payve (the 30-minute scheduling flow, never a generic calendar or contact form).
 
 ## r3 backlog (explicitly NOT in r2)
