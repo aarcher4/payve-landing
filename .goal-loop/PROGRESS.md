@@ -50,3 +50,8 @@ Repo: C:\Users\Alex Archer\Desktop\payve-landing (stack on site/pr9-canvas-polis
 - verification: build PASS; walk.mjs CLEAN (15 routes x2); hover-check CLEAN (proof default 01, swaps x4, tour activates x3, keyboard reachable); visual-diff home vs r2: 10.77%@1440 / 10.39%@390 (spacing cascade dominant, height delta 121px/23px; expected).
 - GATE: PASS
 - next: push + open W2 PR #14, then canvas batch 2 (3 product pages)
+
+## iteration 10 — canvas batch 2 sent (3 product pages)
+- did: sent batch-2 prompt in the same canvas chat: shared new pattern (PageHero CTA above fold -> demo split near top -> hover-expand value list replacing FeatureGrid -> CTA band), payments cross-border reposition (new H1/sub + MXN/COP tags in demo rows), early-pay liquidity reposition (new H1/sub), agents -> "Payve Agents" (title/H1/sub + or-Spanish line). Value list = 6 verbatim titles+descriptions per page, item 1 default, 200ms.
+- GATE: n/a mid-generation (build last PASS)
+- next: poll canvas, verify batch 2, download 3 pages into export r2, port as W3 (ValueList.tsx etc.)
