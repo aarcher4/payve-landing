@@ -22,13 +22,69 @@ export function PageHero({
   image?: string;
   imageAlt?: string;
   /**
-   * r2 de-faking treatment: the image reads as a background texture panel
-   * (paper wash from the layout side, sage multiply tint, reduced opacity,
-   * inset hairline) instead of a framed photo. Used on security/company/
-   * solutions; product pages keep the framed style.
+   * r2 hero grammar (variant B won the team A/B): the image is a FULL-BLEED
+   * BACKGROUND behind the hero text, home-style (opacity 0.62 under paper +
+   * sage gradient washes, headline left-aligned and AA-readable, no side
+   * card). Used on security/company/solutions; product pages keep the
+   * framed side-image style.
    */
   atmosphere?: boolean;
 }) {
+  if (atmosphere && image) {
+    return (
+      <section className="relative overflow-hidden border-b border-hairline bg-paper">
+        <img
+          src={image}
+          alt={imageAlt}
+          loading="eager"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.62]"
+          style={{ objectPosition: "center 46%" }}
+        />
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(100deg, rgba(247,248,249,0.94) 0%, rgba(247,248,249,0.82) 30%, rgba(247,248,249,0.5) 58%, rgba(247,248,249,0.28) 100%)",
+          }}
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(247,248,249,0.6) 0%, rgba(247,248,249,0) 30%, rgba(247,248,249,0) 66%, rgba(247,248,249,0.78) 100%)",
+          }}
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute inset-0 mix-blend-multiply"
+          style={{
+            background:
+              "radial-gradient(120% 90% at 12% 12%, rgba(141,168,154,0.16) 0%, rgba(141,168,154,0) 60%)",
+          }}
+          aria-hidden
+        />
+        <div className="relative z-[2] mx-auto flex min-h-[420px] max-w-6xl items-center px-4 py-24 sm:px-6">
+          <Reveal className="max-w-xl">
+            <span className="t-eyebrow text-sage-700">{eyebrow}</span>
+            <h1 className="mt-3 text-balance font-display text-4xl font-extrabold tracking-display text-ink-1 sm:text-5xl">
+              {title}
+            </h1>
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-ink-2 sm:text-lg">
+              {sub}
+            </p>
+            <a
+              href={bookDemoUrl}
+              className="mt-8 inline-flex rounded-md bg-sage-700 px-5 py-2.5 text-sm font-semibold text-white shadow-elev-2 transition-colors hover:bg-sage-800"
+            >
+              {bookDemoLabel}
+            </a>
+          </Reveal>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="border-b border-hairline bg-paper-elev">
       <div className="mx-auto max-w-6xl px-4 pb-16 pt-20 sm:px-6">
@@ -50,44 +106,12 @@ export function PageHero({
           </Reveal>
           {image && (
             <Reveal delayIndex={1}>
-              {atmosphere ? (
-                <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg">
-                  <img
-                    src={image}
-                    alt={imageAlt}
-                    loading="eager"
-                    className="block h-full w-full object-cover opacity-80"
-                  />
-                  <div
-                    className="pointer-events-none absolute inset-0"
-                    style={{
-                      background:
-                        "linear-gradient(100deg, var(--paper) 0%, rgba(247,248,249,0.52) 34%, rgba(247,248,249,0) 68%)",
-                    }}
-                    aria-hidden
-                  />
-                  <div
-                    className="pointer-events-none absolute inset-0 mix-blend-multiply"
-                    style={{
-                      background:
-                        "radial-gradient(125% 100% at 28% 18%, rgba(141,168,154,0.22) 0%, rgba(141,168,154,0) 62%)",
-                    }}
-                    aria-hidden
-                  />
-                  <div
-                    className="pointer-events-none absolute inset-0"
-                    style={{ boxShadow: "inset 0 0 0 1px rgba(225,228,232,0.5)" }}
-                    aria-hidden
-                  />
-                </div>
-              ) : (
-                <img
-                  src={image}
-                  alt={imageAlt}
-                  loading="eager"
-                  className="aspect-[16/10] w-full rounded-lg border border-hairline object-cover shadow-elev-3"
-                />
-              )}
+              <img
+                src={image}
+                alt={imageAlt}
+                loading="eager"
+                className="aspect-[16/10] w-full rounded-lg border border-hairline object-cover shadow-elev-3"
+              />
             </Reveal>
           )}
         </div>

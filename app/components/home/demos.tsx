@@ -227,3 +227,38 @@ export function AgentsDemo() {
     </div>
   );
 }
+
+/* ------------------------------------------------------------------ */
+
+const loopRows = [
+  { cadence: "hourly", check: "Sales pace, roma tomatoes" },
+  { cadence: "15 min", check: "Price floor watch, bell peppers" },
+  { cadence: "6:00 am", check: "Receivables at risk" },
+];
+
+/** r2 Loops panel: scheduled agent checks with cadence tags. */
+export function LoopsDemo() {
+  return (
+    <div className="rounded-xl border border-hairline bg-paper-elev p-5 shadow-elev-2">
+      <div className="flex items-center gap-2.5 border-b border-hairline pb-4">
+        <span className="relative flex h-2 w-2 items-center justify-center">
+          <span className="absolute h-2 w-2 animate-ping rounded-full bg-sage-500 opacity-60" />
+          <span className="h-2 w-2 rounded-full bg-sage-500" />
+        </span>
+        <span className="t-num font-mono text-xs font-semibold tracking-wide text-ink-2">
+          Loops · running
+        </span>
+      </div>
+      <ul className="divide-y divide-hairline">
+        {loopRows.map((row) => (
+          <li key={row.check} className="flex items-center gap-3.5 py-3.5">
+            <span className="t-num inline-flex h-6 min-w-16 flex-none items-center justify-center rounded-full border border-sage-100 bg-sage-50 px-2.5 font-mono text-[11.5px] font-semibold text-sage-800">
+              {row.cadence}
+            </span>
+            <span className="text-sm text-ink-1">{row.check}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}

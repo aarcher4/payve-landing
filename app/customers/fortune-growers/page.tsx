@@ -85,6 +85,10 @@ export default function FortuneGrowersStory() {
           found at reconciliation.
         </p>
         <p>
+          Loops watch the rest: scheduled checks on sales pace and
+          receivables that alert the team the moment something moves.
+        </p>
+        <p>
           Payments run through the same platform, so paying growers and
           suppliers on both sides of the border happens from one place, and
           suppliers can choose early payment on approved invoices.

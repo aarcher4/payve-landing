@@ -46,7 +46,8 @@ export default function DalCampoStory() {
           sheets, and adjustments to keep straight. Payve agents read and
           verify the documents, match them to the right orders, and reconcile
           what was billed against what moved, so every order stays traceable
-          when a question comes back weeks later.
+          when a question comes back weeks later. Loops recheck open orders
+          on a schedule, so nothing waits for someone to remember to look.
         </p>
         <h2>One payment run, every grower.</h2>
         <p>
