@@ -61,3 +61,8 @@ Repo: C:\Users\Alex Archer\Desktop\payve-landing (stack on site/pr9-canvas-polis
 - verification: build PASS; walk CLEAN; visual-diff products 20-27% (spacing cascade + app denser/shorter than proto by 100-250px, expected); content oracle {h1,mxn,cop,eyebrow,vlSwap} all true; value-list screenshot matches canvas.
 - GATE: PASS
 - next: push + W3 PR, then canvas batch 3 (customers hub + 4 stories, incl NEW producer-pro page) after a Ramp reference walk
+
+## iteration 13 — canvas batch 3 sent (customers hub + 4 stories + NEW producer-pro)
+- did: sent 6.9k-char batch-3 prompt: hub de-bridged + 4 cards w/ one-liners (+Producer Pro draft card), StoryHero -> clean sage-900 band all stories, FG voucher stats+para, SL reworked to Selman org-intelligence (new H1/stats/night-questions section), Dal Campo complexity lead (new H1/stats/section), NEW customers-producer-pro.dc.html full draft story (naming GATED on Manny consent), related-card refresh. Ramp reference: docs/case-study-template.md distilled from live Ramp walks earlier TODAY, so no re-walk needed.
+- GATE: n/a mid-generation
+- next: poll, verify, download 5 pages into export r2, then W4 port (site/pr13-customers)
