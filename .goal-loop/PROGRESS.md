@@ -44,3 +44,8 @@ Locked user decisions: two products only; full-site rebrand; softer fee framing 
 - did: scripts/screenshot-pages.mjs (reusable, reduced-motion, fullPage 1440+390, 9 routes); captured .goal-loop/screens/r1/; deep-reviewed home/network/agentic/fresh-produce; wrote REVIEW.md round 1: 5 must-fix (CascadeFlow illegible @390, stale footer tagline, CrossSell "One platform" eyebrow, orphaned CorridorStrip, FlowLine unused) + 3 polish. Verdict NOT YET.
 - GATE: PASS
 - next: fix the 5 must-fixes (+polish 6-8 where cheap), re-screenshot, round 2 incl. pages not yet deep-reviewed
+
+## iteration 9 — round-1 must-fixes applied (all 5 + polish 6-8)
+- did: CascadeFlow mobile stacked-tree variant (sm:hidden) + desktop labels 12/10 on 118x52 nodes + status order Enrolled→Suppliers unlocked→Network growing; footer tagline → "The payment network for supply chain trade."; CrossSell eyebrow → "One network"; corridor band on /products/network gets FlowLine (page's one ambient element) + "Five corridors, one network" eyebrow; ProductTour rail gets corridor mono line (white/40).
+- GATE: PASS
+- next: design review round 2 — re-screenshot, verify fixes landed visually, deep-review remaining pages (seafood, packaging, customers, company, security + 390 variants)

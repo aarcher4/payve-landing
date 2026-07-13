@@ -8,7 +8,7 @@ import {
 } from "../../components/site/ProductPage";
 import ValueList from "../../components/site/ValueList";
 import { EarlyPayDemo, PaymentsDemo, AgentsDemo } from "../../components/home/demos";
-import { CascadeFlow, CorridorStrip } from "../../components/site/network";
+import { CascadeFlow, CorridorStrip, FlowLine } from "../../components/site/network";
 
 export const metadata: Metadata = {
   title: "The Payve Network",
@@ -44,8 +44,12 @@ export default function NetworkPage() {
         </p>
       </SplitSection>
 
-      <section className="mx-auto max-w-6xl px-4 sm:px-6">
-        <CorridorStrip />
+      <section className="mx-auto max-w-6xl px-4 pb-2 sm:px-6">
+        <FlowLine className="h-10 w-full" />
+        <span className="t-eyebrow mt-5 block">Five corridors, one network</span>
+        <div className="mt-4">
+          <CorridorStrip />
+        </div>
       </section>
 
       <SplitSection

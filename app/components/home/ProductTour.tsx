@@ -109,6 +109,9 @@ export default function ProductTour() {
             >
               {current.linkLabel}
             </Link>
+            <p className="mt-10 font-mono text-xs tracking-wide text-white/40">
+              United States · Mexico · Colombia · Brazil · European Union
+            </p>
           </div>
 
           {/* Demo panel, desktop */}

@@ -76,12 +76,12 @@ type CascadeNode = {
 };
 
 const NODES: CascadeNode[] = [
-  { id: "you", label: "Your company", sub: "Enrolled", x: 60, y: 130, tier: 1 },
+  { id: "you", label: "Your company", sub: "Enrolled", x: 40, y: 130, tier: 1 },
   { id: "casa", label: "Casa de Tortillas", sub: "MX · paid today", x: 300, y: 40, tier: 2 },
   { id: "quindio", label: "Café del Quindío", sub: "CO · paid today", x: 300, y: 130, tier: 2 },
   { id: "maple", label: "Pacific NW Maple", sub: "US · paid today", x: 300, y: 220, tier: 2 },
-  { id: "harina", label: "Harina del Bajío", sub: "MX · paid today", x: 540, y: 40, tier: 3 },
-  { id: "empaques", label: "Empaques Anáhuac", sub: "MX · paid today", x: 540, y: 130, tier: 3 },
+  { id: "harina", label: "Harina del Bajío", sub: "MX · paid today", x: 560, y: 40, tier: 3 },
+  { id: "empaques", label: "Empaques Anáhuac", sub: "MX · paid today", x: 560, y: 130, tier: 3 },
 ];
 
 const EDGES: Array<{ from: string; to: string; appearAt: number }> = [
@@ -117,11 +117,12 @@ export function CascadeFlow() {
             <span className="absolute h-2.5 w-2.5 animate-ping rounded-full bg-sage-400 opacity-50" />
             <span className="h-1.5 w-1.5 rounded-full bg-sage-600" />
           </span>
-          {step < 2 ? "Suppliers unlocked" : "Network growing"}
+          {step < 1 ? "Enrolled" : step < 2 ? "Suppliers unlocked" : "Network growing"}
         </span>
       </div>
 
-      <div className="px-4 py-5">
+      {/* Desktop/tablet: the cascade as a left-to-right diagram */}
+      <div className="hidden px-4 py-5 sm:block">
         <svg viewBox="0 0 700 260" className="w-full" role="img" aria-label="When your company enrolls, your suppliers are paid instantly; when a supplier enrolls, its own suppliers unlock too.">
           {EDGES.map((e) => {
             const a = nodeById[e.from];
@@ -130,7 +131,7 @@ export function CascadeFlow() {
             return (
               <motion.path
                 key={`${e.from}-${e.to}`}
-                d={`M ${a.x + 96} ${a.y} C ${a.x + 160} ${a.y}, ${b.x - 64} ${b.y}, ${b.x} ${b.y}`}
+                d={`M ${a.x + 118} ${a.y} C ${a.x + 178} ${a.y}, ${b.x - 60} ${b.y}, ${b.x} ${b.y}`}
                 stroke={on ? "var(--sage-500)" : "var(--hairline)"}
                 strokeWidth="1.25"
                 fill="none"
@@ -152,24 +153,24 @@ export function CascadeFlow() {
               >
                 <rect
                   x={n.x}
-                  y={n.y - 22}
-                  width="96"
-                  height="44"
+                  y={n.y - 26}
+                  width="118"
+                  height="52"
                   rx="6"
                   fill={enrolled ? "var(--sage-50)" : "var(--paper-elev)"}
                   stroke={enrolled ? "var(--sage-500)" : "var(--hairline-2)"}
                   strokeWidth="1"
                 />
                 <text
-                  x={n.x + 10}
-                  y={n.y - 4}
-                  fontSize="10.5"
+                  x={n.x + 11}
+                  y={n.y - 5}
+                  fontSize="12"
                   fontWeight="600"
                   fill="var(--ink-1)"
                 >
                   {n.label}
                 </text>
-                <text x={n.x + 10} y={n.y + 12} fontSize="9" fill={active ? "var(--sage-600)" : "var(--ink-3)"}>
+                <text x={n.x + 11} y={n.y + 13} fontSize="10" fill={active ? "var(--sage-600)" : "var(--ink-3)"}>
                   {enrolled && n.tier !== 1 ? "Enrolled · paying its own" : n.sub}
                 </text>
               </motion.g>
@@ -177,6 +178,40 @@ export function CascadeFlow() {
           })}
         </svg>
       </div>
+
+      {/* Mobile: the same story as a stacked tree (SVG labels don't survive 390px) */}
+      <ul className="space-y-2 px-4 py-5 sm:hidden">
+        {NODES.map((n) => {
+          const active = nodeActive(n);
+          const enrolled = nodeEnrolled(n);
+          return (
+            <motion.li
+              key={n.id}
+              initial={false}
+              animate={{ opacity: active ? 1 : 0.3 }}
+              transition={{ duration: 0.5 }}
+              className={
+                n.tier === 1
+                  ? ""
+                  : n.tier === 2
+                    ? "ml-4 border-l border-hairline pl-3"
+                    : "ml-10 border-l border-hairline pl-3"
+              }
+            >
+              <span
+                className={`flex items-center justify-between gap-2 rounded-md border px-3 py-2 ${
+                  enrolled ? "border-sage-500 bg-sage-50" : "border-hairline-2 bg-paper-elev"
+                }`}
+              >
+                <span className="min-w-0 truncate text-sm font-semibold text-ink-1">{n.label}</span>
+                <span className={`shrink-0 text-[11px] ${active ? "text-sage-600" : "text-ink-3"}`}>
+                  {enrolled && n.tier !== 1 ? "Enrolled · paying its own" : n.sub}
+                </span>
+              </span>
+            </motion.li>
+          );
+        })}
+      </ul>
 
       <div className="border-t border-hairline bg-paper px-4 py-2.5 text-xs text-ink-3">
         Suppliers enroll at no cost. Each one strengthens the network you trade in.
