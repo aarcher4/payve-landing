@@ -58,7 +58,7 @@ for (const f of copyFiles) {
   // tokens CORRIDOR_* and PascalCase `Corridor`) are not copy; strip them,
   // then flag any remaining prose form (corridor, corridors, Corridors...).
   const corridorLine = copyLines.find((l) =>
-    /corridor/i.test(l.replace(/\bCORRIDORS?\w*/g, "").replace(/\bCorridor\b/g, "")),
+    /corridor/i.test(l.replace(/\bCORRIDORS?\w*/g, "").replace(/\bCorridor(?:[A-Z]\w*)?\b/g, "")),
   );
   if (corridorLine) fail(`"corridor" in copy in ${f}: "${corridorLine.trim().slice(0, 80)}"`);
 }

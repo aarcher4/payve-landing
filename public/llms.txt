@@ -6,7 +6,7 @@ Payve is a financial technology company, not a bank.
 
 ## Products
 
-- [The Payve Network](https://www.getpayve.com/products/network): Enroll once. Pay domestic and international suppliers from one approval, in local currency across five corridors (US, Mexico, Colombia, Brazil, EU) without wire fees. Suppliers who enroll can choose early payment on approved invoices, seeing the exact dollars and fee first; buyers earn income on every election. Funds live in one operating account, and every payment lands as connected data.
+- [The Payve Network](https://www.getpayve.com/products/network): Enroll once. Send a payment and it's there: domestic and international suppliers paid from one approval, in local currency, across the US, Mexico, Colombia, Brazil, and the EU. Members are connected to global liquidity: suppliers who enroll can choose early payment on approved invoices, seeing the exact dollars and fee first, and buyers earn income on every election. Funds live in one operating account, and every payment lands as connected data.
 - [Agentic Intelligence](https://www.getpayve.com/products/agentic-intelligence): Agents on the network's connected data and your existing systems: plain-English/Spanish answers, scheduled briefings, order entry, document matching, reconciliation without chasing wire references, complaint root cause, and Loops (scheduled checks). A person approves every write.
 
 ## Solutions

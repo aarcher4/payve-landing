@@ -21,7 +21,7 @@ const modules = [
     href: "/products/network",
     linkLabel: "Explore the network",
     blurb:
-      "Enroll once: pay every supplier instantly in their own currency, unlock early payment for them on approved invoices, and run it all from one operating account.",
+      "Send a payment and it's there: any supplier, paid instantly in their own currency. Enrolling connects your suppliers to capital, so they can grow with you.",
     Demo: CascadeFlow,
   },
   {

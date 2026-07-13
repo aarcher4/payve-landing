@@ -13,7 +13,7 @@ import { CascadeFlow, NetworkCanvas } from "../../components/site/network";
 export const metadata: Metadata = {
   title: "The Payve Network",
   description:
-    "The payment network for the fresh supply chain. Enroll once: pay any supplier instantly across the US, Mexico, Colombia, Brazil, and the European Union with no wire fees. Enrolling unlocks on-demand working capital for every supplier you pay.",
+    "The payment network for the fresh supply chain. Send a payment and it's there: any supplier in the US, Mexico, Colombia, Brazil, or the European Union, paid instantly in their own currency. Enrolling connects your suppliers to global liquidity, so they get the capital they need, quicker.",
 };
 
 export default function NetworkPage() {
@@ -24,7 +24,7 @@ export default function NetworkPage() {
         title="The payment network for the fresh supply chain."
         image="/images/hero-payments.jpg"
         imageAlt="Pallets of boxed produce loading into a refrigerated trailer at a busy dock"
-        sub="The network gives a member three things. Instant payments: any supplier in the US, Mexico, Colombia, Brazil, and the European Union, paid in their own currency with no wire fees, from one approval. Liquidity: every supplier you pay can elect early payment on approved invoices. And one operating account, where every payment lands as connected data your team and your agents can use."
+        sub="Payments sent on the network arrive instantly: any supplier, any country, paid in their own currency. Every member is connected to global liquidity, so your suppliers can take the capital they need the moment they need it. Funded suppliers stay close, ship first, and grow with you."
       />
 
       <SplitSection
@@ -44,7 +44,7 @@ export default function NetworkPage() {
       </SplitSection>
 
       <section className="mx-auto max-w-6xl px-4 pb-2 sm:px-6">
-        <span className="t-eyebrow block">Five corridors, one network</span>
+        <span className="t-eyebrow block">Send it. It&rsquo;s there.</span>
         <div className="mt-4">
           <NetworkCanvas />
         </div>
@@ -99,7 +99,7 @@ export default function NetworkPage() {
             body: "Fund once and pay from your Payve balance. Available funds, pending deposits, and scheduled payments each stay visible and separate.",
           },
           {
-            title: "Fast supplier receipt",
+            title: "Received in minutes, not days",
             body: "Domestic bank transfers arrive within one business day. Suppliers in Mexico and Colombia can withdraw to their local bank within an hour, around the clock.",
           },
           {

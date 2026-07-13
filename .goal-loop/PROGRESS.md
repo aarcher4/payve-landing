@@ -74,3 +74,8 @@ Alex r3 notes: customers don't care about corridors; benefits language (send it 
 - did: docs/network-rebrand.md §0 r3 voice rules (corridor ban, benefits-first test, canonical instant/liquidity/relationships lines, fees down-page), §5 → Countries, §9 benefit-led heading note; verify-rebrand.mjs corridor check (prose only; CORRIDOR*/Corridor identifiers exempt after 2 precision fixes). NetworkCanvas aria-label audited: already corridor-free.
 - GATE: FAIL corridor-copy x2 (network page eyebrow, llms.txt) — the exact copy iteration 2 rewrites
 - next: r3 copy pass (network page hero/eyebrow/ValueList, ProductTour blurb, layout description, llms.txt)
+
+## r3 iteration 2 — benefits copy pass, gate GREEN
+- did: network page (eyebrow "Send it. It's there.", benefits hero sub: instant/global liquidity/relationships, metadata, "Received in minutes, not days"); ProductTour Network blurb; layout.tsx description + OG; llms.txt (corridor out, global liquidity in). Gate regex handles PascalCase identifiers (CorridorStrip); walk failure was a 3100 port collision from the prior screenshot server, clean after kill.
+- GATE: PASS (incl. corridor check live)
+- next: review round 5 — screenshots + in-context copy read against the voice rules, REVIEW.md verdict

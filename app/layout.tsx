@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     template: "%s · Payve",
   },
   description:
-    "Payve is the payment network for supply chain trade. Members pay any supplier instantly across the US, Mexico, Colombia, Brazil, and the EU, unlock working capital for their suppliers, and put agentic intelligence on the back office.",
+    "Payve is the payment network for supply chain trade. Send a payment and it's there: any supplier in the US, Mexico, Colombia, Brazil, or the EU, paid instantly in their own currency. Members connect their suppliers to global liquidity, and agentic intelligence runs the back office.",
   keywords: [
     "B2B payment network",
     "supplier payments",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Payve",
     description:
-      "The payment network for supply chain trade. Pay any supplier instantly across borders, unlock working capital for your suppliers, and put agentic intelligence on the back office.",
+      "The payment network for supply chain trade. Send a payment and it's there. Connect your suppliers to the capital they need, and put agentic intelligence on the back office.",
     type: "website",
     url: "https://www.getpayve.com",
     images: [{ url: "/images/og-default.jpg", width: 1200, height: 673 }],
