@@ -9,3 +9,8 @@ Locked user decisions: two products only; full-site rebrand; softer fee framing 
 - did: wrote docs/network-rebrand.md (two-product architecture, canonical cascade sentence, vocabulary/banned-words, softer fee framing, five uniform corridors, page-level copy directions, design-evolution rules). Fixed fileURLToPath bug in scripts/verify-rebrand.mjs; full gate now runs end-to-end (build green, walk CLEAN 1440/390, greps clean).
 - GATE: FAIL redirects-missing x3 (/products/payments, /products/early-pay, /products/agents expected redirect, got 200) — expected until Step 3 IA lands
 - next: build the three new components (FlowLine, CascadeFlow, CorridorStrip) so the /products/network page has its materials
+
+## iteration 2 — network components (FlowLine, CascadeFlow, CorridorStrip)
+- did: app/components/site/network.tsx — FlowLine (ambient sage path + animateMotion pulse, reduced-motion static), CascadeFlow (framed demo: enroll → 3 suppliers paid → Casa de Tortillas enrolls → its 2 suppliers unlock; framer-motion pathLength edges, aria-label, final-state-static under reduced motion), CorridorStrip (5 corridors uniform, type-led). Matches demos.tsx grammar (frame/frameHeader, useSteps=useLoopStep pattern, accent only where money moves).
+- GATE: FAIL redirects-missing x3 (2nd consecutive — next iter must flip signature by landing IA)
+- next: IA step — /products/network + /products/agentic-intelligence pages, next.config.ts redirects, walk.mjs routes, nav/footer config → gate green
