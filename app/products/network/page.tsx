@@ -44,16 +44,9 @@ export default function NetworkPage() {
       </SplitSection>
 
       <section className="mx-auto max-w-6xl px-4 pb-2 sm:px-6">
-        <div className="relative h-[380px] overflow-hidden border-y border-hairline sm:h-[540px]">
+        <span className="t-eyebrow block">Send it. It&rsquo;s there.</span>
+        <div className="mt-4">
           <NetworkCanvas />
-          <div className="pointer-events-none relative z-[2] pt-11 text-center sm:pt-14">
-            <h2 className="font-display text-3xl font-extrabold tracking-display text-ink-1 sm:text-4xl">
-              Send it. <span className="text-ink-3">It&rsquo;s there.</span>
-            </h2>
-            <p className="mx-auto mt-3 max-w-md px-6 text-sm leading-relaxed text-ink-2 sm:text-base">
-              Any supplier, any country, paid in their own currency.
-            </p>
-          </div>
         </div>
       </section>
 

@@ -145,3 +145,6 @@ Alex: everyone also pays EU; reverse flows; country-to-country (MX-CO, CO-BR); i
 
 ## post-r5 revert — back to the r4 rotating globe (Alex: r5 static looked worse)
 - did: network.tsx + proto restored from e75b31c (rotating earth, 30s/rev, 5 arcs, original composition, BR lat -10, CY 0.12). Gate PASS.
+
+## post-r5 revert 2 — back to the r3 flat network map (Alex: pre-globe version)
+- did: network.tsx + network page + proto restored from de5126f (flat arc-map NetworkCanvas, "Send it. It's there." eyebrow band). All r3 copy intact. Gate PASS.

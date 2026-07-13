@@ -5,46 +5,33 @@ import { Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 /* ------------------------------------------------------------------ */
-/* NetworkCanvas (r4: particle globe — docs/network-rebrand.md §9)     */
+/* NetworkCanvas (r2, Dakota grammar — docs/network-rebrand.md §9)     */
 /* ------------------------------------------------------------------ */
 
-type GlobeAnchor = { id: string; full: string; short: string; ccy: string; lat: number; lon: number };
+type Corridor = { id: string; full: string; short: string; ccy: string; x: number; y: number };
 
-const GLOBE_ANCHORS: GlobeAnchor[] = [
-  { id: "us", full: "United States", short: "US", ccy: "USD", lat: 38, lon: -97 },
-  { id: "mx", full: "Mexico", short: "MX", ccy: "MXN", lat: 23, lon: -102 },
-  { id: "co", full: "Colombia", short: "CO", ccy: "COP", lat: 4, lon: -74 },
-  { id: "br", full: "Brazil", short: "BR", ccy: "BRL", lat: -10, lon: -55 },
-  { id: "eu", full: "European Union", short: "EU", ccy: "EUR", lat: 50, lon: 10 },
+const CORRIDOR_NODES: Corridor[] = [
+  { id: "us", full: "United States", short: "US", ccy: "USD", x: 0.26, y: 0.3 },
+  { id: "eu", full: "European Union", short: "EU", ccy: "EUR", x: 0.84, y: 0.22 },
+  { id: "mx", full: "Mexico", short: "MX", ccy: "MXN", x: 0.13, y: 0.66 },
+  { id: "co", full: "Colombia", short: "CO", ccy: "COP", x: 0.46, y: 0.8 },
+  { id: "br", full: "Brazil", short: "BR", ccy: "BRL", x: 0.72, y: 0.66 },
 ];
 
-const GLOBE_ARCS = [
+const CORRIDOR_ARCS = [
   { a: "us", b: "mx", dur: 6.0, phase: 0.0 },
   { a: "us", b: "co", dur: 7.2, phase: 0.35 },
-  { a: "us", b: "br", dur: 8.2, phase: 0.62 },
-  { a: "us", b: "eu", dur: 7.0, phase: 0.18 },
-  { a: "mx", b: "eu", dur: 9.2, phase: 0.8 },
+  { a: "us", b: "br", dur: 8.0, phase: 0.62 },
+  { a: "us", b: "eu", dur: 6.8, phase: 0.18 },
+  { a: "mx", b: "eu", dur: 9.0, phase: 0.8 },
 ];
 
-const TAU = Math.PI * 2;
-const GLOBE = {
-  dots: 1300,
-  rotPeriod: 30, // seconds per revolution
-  tilt: 0.3, // viewer looks slightly down at the globe (equator lifts into frame)
-  w0: -3.78, // base spin: Americas centered at first view
-  staticT: 2.0, // reduced-motion freeze frame
-};
-
-type V3 = { x: number; y: number; z: number };
-
 /**
- * "Send it. It's there." — the upper hemisphere of a rotating particle globe
- * rising from the bottom of the band (proto: design-context/network-canvas-proto.html,
- * critique passes in .goal-loop/REVIEW.md round 6). Boxed mono country chips ride
- * the rotation; dotted payment arcs slerp over the surface with sage-500 pulses
- * (accent only where money moves). 2D canvas, dpr-aware, rAF pauses off-screen,
- * reduced motion renders one static composed frame. The page's ONE ambient element.
- * Fills its positioned parent (absolute inset-0); the parent supplies height + heading.
+ * The corridor visualization: dotted sage arcs between boxed mono corridor
+ * chips, sage-500 pulses traveling the arcs (accent only where money moves),
+ * faint particle field for depth. 2D canvas, dpr-aware, rAF pauses
+ * off-screen, reduced motion renders one static frame. This is the network
+ * page's ONE ambient element.
  */
 export function NetworkCanvas() {
   const sceneRef = useRef<HTMLDivElement>(null);
@@ -58,50 +45,9 @@ export function NetworkCanvas() {
     const ctx = canvas?.getContext("2d");
     if (!scene || !canvas || !ctx) return;
 
-    const latlon = (lat: number, lon: number): V3 => {
-      const la = (lat * Math.PI) / 180;
-      const lo = (lon * Math.PI) / 180;
-      return { x: Math.cos(la) * Math.cos(lo), y: -Math.sin(la), z: Math.cos(la) * Math.sin(lo) };
-    };
-    const hash = (i: number, k: number) => {
-      const v = Math.sin(i * 127.1 + k * 311.7) * 43758.5453;
-      return v - Math.floor(v);
-    };
-    const DOTS = Array.from({ length: GLOBE.dots }, (_, i) => {
-      const y0 = 1 - (i / (GLOBE.dots - 1)) * 2;
-      const y = Math.max(-1, Math.min(1, y0 + (hash(i, 1) - 0.5) * 0.045));
-      const r = Math.sqrt(Math.max(0, 1 - y * y));
-      const th = i * 2.399963229728653 + (hash(i, 2) - 0.5) * 0.14;
-      return { x: Math.cos(th) * r, y, z: Math.sin(th) * r, sz: 0.78 + hash(i, 3) * 0.42 };
-    });
-    const A: Record<string, V3> = Object.fromEntries(
-      GLOBE_ANCHORS.map((a) => [a.id, latlon(a.lat, a.lon)]),
-    );
-
-    const ct = Math.cos(GLOBE.tilt);
-    const st = Math.sin(GLOBE.tilt);
-    const rotate = (p: V3, w: number): V3 => {
-      const cw = Math.cos(w);
-      const sw = Math.sin(w);
-      const x = p.x * cw + p.z * sw;
-      const z = -p.x * sw + p.z * cw;
-      return { x, y: p.y * ct - z * st, z: p.y * st + z * ct };
-    };
-    const slerp = (a: V3, b: V3, t: number): V3 => {
-      const dot = Math.max(-1, Math.min(1, a.x * b.x + a.y * b.y + a.z * b.z));
-      const th = Math.acos(dot);
-      if (th < 1e-4) return { ...a };
-      const s = Math.sin(th);
-      const ka = Math.sin((1 - t) * th) / s;
-      const kb = Math.sin(t * th) / s;
-      return { x: a.x * ka + b.x * kb, y: a.y * ka + b.y * kb, z: a.z * ka + b.z * kb };
-    };
-
+    const byId = Object.fromEntries(CORRIDOR_NODES.map((n) => [n.id, n]));
     let W = 0;
     let H = 0;
-    let R = 0;
-    let CX = 0;
-    let CY = 0;
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       W = scene.clientWidth;
@@ -109,125 +55,99 @@ export function NetworkCanvas() {
       canvas.width = W * dpr;
       canvas.height = H * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      R = Math.min(Math.max(W * 0.33, 210), H * 0.72);
-      CX = W / 2;
-      CY = H + R * 0.12; // upper hemisphere rises from the bottom edge
-      if (reduced) draw(GLOBE.staticT);
     };
-    const proj = (p: V3) => ({ x: CX + p.x * R, y: CY + p.y * R, z: p.z });
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(scene);
 
+    const px = (n: Corridor) => ({ x: n.x * W, y: n.y * H });
+    const ctrl = (a: { x: number; y: number }, b: { x: number; y: number }) => {
+      const d = Math.hypot(b.x - a.x, b.y - a.y);
+      return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 - Math.min(d * 0.3, H * 0.34) };
+    };
+    const qPoint = (
+      a: { x: number; y: number },
+      c: { x: number; y: number },
+      b: { x: number; y: number },
+      t: number,
+    ) => ({
+      x: (1 - t) ** 2 * a.x + 2 * (1 - t) * t * c.x + t * t * b.x,
+      y: (1 - t) ** 2 * a.y + 2 * (1 - t) * t * c.y + t * t * b.y,
+    });
+
+    const particles = Array.from({ length: 90 }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      r: 0.6 + Math.random() * 0.9,
+      a: 0.06 + Math.random() * 0.16,
+      sp: 0.2 + Math.random() * 0.6,
+      ph: Math.random() * Math.PI * 2,
+    }));
     const hits: Record<string, boolean> = {};
-    function draw(tSec: number) {
-      if (!ctx) return;
+
+    const draw = (tSec: number) => {
       ctx.clearRect(0, 0, W, H);
-      const w = GLOBE.w0 + (tSec / GLOBE.rotPeriod) * TAU;
-
-      // atmosphere glow
-      const g = ctx.createRadialGradient(CX, CY, R * 0.2, CX, CY, R * 1.18);
-      g.addColorStop(0, "rgba(238,243,239,0.5)");
-      g.addColorStop(0.7, "rgba(238,243,239,0.18)");
-      g.addColorStop(1, "rgba(238,243,239,0)");
-      ctx.fillStyle = g;
-      ctx.beginPath();
-      ctx.arc(CX, CY, R * 1.18, 0, TAU);
-      ctx.fill();
-
-      // sphere dots, back-to-front
-      const pts: Array<{ x: number; y: number; z: number; sz: number }> = [];
-      for (const d of DOTS) {
-        const q = proj(rotate(d, w));
-        if (q.y < H + 8) pts.push({ ...q, sz: d.sz });
-      }
-      pts.sort((a, b) => a.z - b.z);
-      for (const q of pts) {
-        const f = Math.max(0, q.z);
-        ctx.globalAlpha = 0.1 + 0.72 * Math.pow(f, 1.35);
-        ctx.fillStyle = f > 0.6 ? "#506B60" : "#A8C0B3";
+      ctx.fillStyle = "#A8C0B3";
+      for (const p of particles) {
+        const tw = 0.5 + 0.5 * Math.sin(tSec * p.sp + p.ph);
+        ctx.globalAlpha = p.a * tw;
+        const dx = Math.sin(tSec * 0.05 + p.ph) * 6;
         ctx.beginPath();
-        ctx.arc(q.x, q.y, (0.8 + 1.3 * f) * q.sz, 0, TAU);
+        ctx.arc(p.x * W + dx, p.y * H, p.r, 0, Math.PI * 2);
         ctx.fill();
       }
-
-      // limb
-      ctx.globalAlpha = 0.35;
-      ctx.strokeStyle = "#C5D5CC";
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.arc(CX, CY, R, 0, TAU);
-      ctx.stroke();
-
-      // surface arcs + pulses
-      for (const arc of GLOBE_ARCS) {
-        const a = A[arc.a];
-        const b = A[arc.b];
-        const steps = 44;
+      for (const arc of CORRIDOR_ARCS) {
+        const a = px(byId[arc.a]);
+        const b = px(byId[arc.b]);
+        const c = ctrl(a, b);
+        const steps = Math.max(24, Math.floor(Math.hypot(b.x - a.x, b.y - a.y) / 9));
+        ctx.fillStyle = "#A8C0B3";
         for (let i = 1; i < steps; i++) {
           const t = i / steps;
-          const s = slerp(a, b, t);
-          const lift = 1 + 0.17 * Math.sin(Math.PI * t);
-          const q = proj(rotate({ x: s.x * lift, y: s.y * lift, z: s.z * lift }, w));
-          if (q.z < -0.05 || q.y > H + 4) continue;
-          ctx.globalAlpha =
-            (0.28 + 0.42 * Math.max(0, q.z)) * (0.55 + 0.45 * Math.sin(Math.PI * t));
-          ctx.fillStyle = "#A8C0B3";
+          const p = qPoint(a, c, b, t);
+          ctx.globalAlpha = 0.34 + 0.26 * Math.sin(t * Math.PI);
           ctx.beginPath();
-          ctx.arc(q.x, q.y, 1.3, 0, TAU);
+          ctx.arc(p.x, p.y, 1.15, 0, Math.PI * 2);
           ctx.fill();
         }
-        if (!reduced) {
+      }
+      if (!reduced) {
+        for (const arc of CORRIDOR_ARCS) {
+          const a = px(byId[arc.a]);
+          const b = px(byId[arc.b]);
+          const c = ctrl(a, b);
           const cycle = (tSec / arc.dur + arc.phase) % 1;
           const fwd = Math.floor(tSec / arc.dur + arc.phase) % 2 === 0;
           const t = fwd ? cycle : 1 - cycle;
           for (let k = 5; k >= 0; k--) {
-            const tt = Math.max(0.02, Math.min(0.98, t - k * 0.014 * (fwd ? 1 : -1)));
-            const s = slerp(a, b, tt);
-            const lift = 1 + 0.17 * Math.sin(Math.PI * tt);
-            const q = proj(rotate({ x: s.x * lift, y: s.y * lift, z: s.z * lift }, w));
-            if (q.z < -0.02 || q.y > H + 4) continue;
-            ctx.globalAlpha =
-              (k === 0 ? 0.95 : 0.36 - k * 0.05) * (0.35 + 0.65 * Math.max(0, q.z));
+            const tt = Math.max(0, Math.min(1, t - k * 0.012 * (fwd ? 1 : -1)));
+            const p = qPoint(a, c, b, tt);
+            ctx.globalAlpha = k === 0 ? 0.95 : 0.36 - k * 0.05;
             ctx.fillStyle = "#6F8D7C";
             ctx.beginPath();
-            ctx.arc(q.x, q.y, k === 0 ? 2.6 : 1.6, 0, TAU);
+            ctx.arc(p.x, p.y, k === 0 ? 2.7 : 1.7, 0, Math.PI * 2);
             ctx.fill();
           }
-          const destId = fwd ? arc.b : arc.a;
-          if (cycle > 0.96 && !hits[destId]) {
-            hits[destId] = true;
-            const el = chipRefs.current[destId];
+          const dest = fwd ? arc.b : arc.a;
+          if (cycle > 0.96 && !hits[dest]) {
+            hits[dest] = true;
+            const el = chipRefs.current[dest];
             el?.classList.add("chip-hit");
             setTimeout(() => {
               el?.classList.remove("chip-hit");
-              hits[destId] = false;
+              hits[dest] = false;
             }, 600);
           }
         }
       }
       ctx.globalAlpha = 1;
-
-      // chips ride the globe
-      for (const a of GLOBE_ANCHORS) {
-        const q = proj(rotate(A[a.id], w));
-        const el = chipRefs.current[a.id];
-        if (!el) continue;
-        const vis = Math.max(0, Math.min(1, (q.z + 0.25) / 0.5));
-        el.style.opacity = String(q.y > H - 6 ? 0 : vis);
-        el.style.transform = `translate(${q.x}px, ${q.y}px) translate(-50%, -50%) scale(${
-          0.82 + 0.18 * Math.max(0, q.z)
-        })`;
-        el.style.zIndex = q.z > 0 ? "3" : "1";
-      }
-    }
-
-    resize();
-    const ro = new ResizeObserver(resize);
-    ro.observe(scene);
+    };
 
     let raf: number | null = null;
     let visible = true;
     const t0 = performance.now();
     const loop = (now: number) => {
-      draw((now - t0) / 1000 + GLOBE.staticT);
+      draw((now - t0) / 1000);
       raf = visible && !reduced ? requestAnimationFrame(loop) : null;
     };
     const io = new IntersectionObserver(([e]) => {
@@ -239,7 +159,7 @@ export function NetworkCanvas() {
       }
     });
     io.observe(scene);
-    if (reduced) draw(GLOBE.staticT);
+    if (reduced) draw(3.7);
     else raf = requestAnimationFrame(loop);
 
     return () => {
@@ -252,18 +172,19 @@ export function NetworkCanvas() {
   return (
     <div
       ref={sceneRef}
-      className="absolute inset-0"
+      className="relative h-[300px] overflow-hidden border-y border-hairline sm:h-[400px]"
       role="img"
-      aria-label="A globe of the Payve Network: payments traveling between the United States, Mexico, Colombia, Brazil, and the European Union, each settled in local currency."
+      aria-label="The Payve Network: payments traveling between the United States, Mexico, Colombia, Brazil, and the European Union, each settled in local currency."
     >
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden />
-      {GLOBE_ANCHORS.map((n) => (
+      {CORRIDOR_NODES.map((n) => (
         <div
           key={n.id}
           ref={(el) => {
             chipRefs.current[n.id] = el;
           }}
-          className="absolute left-0 top-0 flex items-center gap-1.5 whitespace-nowrap rounded border border-hairline-2 bg-paper-elev px-2 py-1 font-mono text-[9px] font-semibold uppercase tracking-wider text-ink-1 opacity-0 shadow-elev-1 will-change-transform sm:px-2.5 sm:py-1.5 sm:text-[10.5px]"
+          className="absolute flex -translate-x-1/2 -translate-y-1/2 items-center gap-1.5 whitespace-nowrap rounded border border-hairline-2 bg-paper-elev px-2 py-1 font-mono text-[9px] font-semibold uppercase tracking-wider text-ink-1 shadow-elev-1 sm:px-2.5 sm:py-1.5 sm:text-[10.5px]"
+          style={{ left: `${n.x * 100}%`, top: `${n.y * 100}%` }}
         >
           <span className="chip-dot h-[5px] w-[5px] rounded-full bg-sage-500 transition-shadow duration-300" aria-hidden />
           <span className="hidden sm:inline">{n.full}</span>
