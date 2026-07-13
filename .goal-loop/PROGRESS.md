@@ -59,3 +59,8 @@ Locked user decisions: two products only; full-site rebrand; softer fee framing 
 - did: customers hub hero sub + metadata to network phrasing (#10); r3 screenshots post-change; deep-reviewed company/seafood/packaging/home-390; wrote round-3 scoring (clarity/credibility/craft) with zero open must-fixes; REVIEW.md carries VERDICT: EXTRAORDINARY — SHIP from a pass performed after the last code change. Design-review acceptance box checked.
 - GATE: PASS
 - next: final item — draft PR against site/pr16-solutions-content with before/after screenshots + Render preview note
+
+## iteration 12 — draft PR opened; run complete
+- did: pushed site/network-rebrand; opened draft PR #20 against site/pr16-solutions-content (https://github.com/aarcher4/payve-landing/pull/20) with full change summary, verification record, before/after screenshot pointers (.goal-loop/screens/r1→r3), and Render branch-preview note. Final GOAL box checked — ALL acceptance criteria met.
+- GATE: PASS (final run)
+- next: none — run complete
