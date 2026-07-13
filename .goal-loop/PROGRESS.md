@@ -19,3 +19,8 @@ Locked user decisions: two products only; full-site rebrand; softer fee framing 
 - did: /products/network (hero + Enroll/CascadeFlow + CorridorStrip + Move money/PaymentsDemo + Unlock your suppliers/EarlyPayDemo + membership ValueList + Connected data/AgentsDemo bridge + QuoteBand); /products/agentic-intelligence (agents page reframed on network data, reconciliation-on-network-data value item, cross-sell to Network); deleted old 3 product dirs; next.config.ts permanent redirects; config.ts nav+footer = two products; walk.mjs routes updated (old kept via redirect). Checked 7 GOAL boxes.
 - GATE: PASS (build green, redirects 308 verified, WALK CLEAN 1440/390, greps clean)
 - next: homepage — ProductTour 3→2 rows, Hero subhead reframe + cascade sentence, HowItWorks step 01 Enroll, links off old routes
+
+## iteration 4 — homepage reframe (arc unchanged)
+- did: Hero subhead = network category + THE cascade sentence + agents-on-connected-network (headline untouched); ProductTour 3→2 rows (The Payve Network w/ CascadeFlow demo, Agentic Intelligence w/ AgentsDemo; eyebrow "One network", H2 "The network moves the money and runs the back office."); HowItWorks step 01 Connect→Enroll, step 04 link → /products/network, corridor descriptor 5 regions. Section arc + Proof/Trust/LogoWall untouched.
+- GATE: PASS
+- next: solutions pages network-membership reframe (fresh-produce, seafood, packaging)
