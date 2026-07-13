@@ -122,10 +122,16 @@ with a measurable or concrete claim.
 - No literal node-and-mesh hero graphics; no me-too mesh gradients. Network is expressed through
   motion, reserved accent, and corridor texture (Wise pattern).
 
-## 9. NetworkCanvas — the network visualization (r2, Dakota grammar; r3: benefit-led heading)
+## 9. NetworkCanvas — the network visualization (r4: particle globe)
 
-r3: the band's heading is benefit language ("Send it. It's there."), not inventory language
-("five corridors"). The scene itself is unchanged: country + currency chips are concrete.
+r4: the band is a statement section. Display H2 "Send it. It's there." (two-tone) + one benefits
+sub-line over the upper hemisphere of a rotating particle globe (2D canvas, no deps): 1300
+hash-jittered Fibonacci dots with z-depth falloff, tilt +0.30 (viewer looks slightly down so the
+equator lifts into frame), country chips riding the projection and fading at the back limb,
+dotted slerped payment arcs with sage-500 pulses and chip-hit flashes. Reduced motion renders one
+static composed frame (Americas front). Proto + critique history:
+`design-context/network-canvas-proto.html`, REVIEW.md round 6 (5 passes). The band remains the
+network page's ONE ambient element.
 
 Reference: dakota.xyz hero (screenshots in `design-context/reference-dakota/`), a Three.js particle
 globe with thin arcs between labeled rail chips (ACH, SWIFT, USDC) and pulses traveling the arcs.

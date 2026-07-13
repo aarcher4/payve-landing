@@ -103,3 +103,8 @@ Plan: .goal-loop/PLAN.md (r4). Bar: absolutely incredible; proto passes before p
 - did: pass 2 (density/falloff/R/limb), pass 3 (hash jitter kills lattice, phase, glow, CY), pass 4 (center Americas, arc presence), pass 5 (tilt +0.30 lifts equator: all 5 countries reachable in frame; 4 visible at once w/ arcs). REVIEW.md round-6 passes logged; PROTO VERDICT: CLEAN — PORT IT. Both proto acceptance boxes checked.
 - GATE: PASS
 - next: port globe into NetworkCanvas + band → statement section + docs §9
+
+## r4 iteration 3 — globe ported into NetworkCanvas + statement section
+- did: network.tsx flat-map NetworkCanvas replaced with the pass-5 globe (GLOBE_ANCHORS lat/lon, jittered Fibonacci dots, tilt +0.30, chips riding projection w/ chip-hit kept, arcs+pulses; component now fills its positioned parent); page band = statement section (display H2 two-tone + benefits sub-line over the globe, 380/540px); docs §9 rewritten. tsc clean.
+- GATE: PASS
+- next: in-app verification (screenshots 1440+390, reduced-motion probe, rAF frame-time sample) then final review round
