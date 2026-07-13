@@ -10,7 +10,7 @@ On branch `site/network-rebrand`, per `.goal-loop/PLAN.md`: the "Send it. It's t
 - [x] `app/products/network/page.tsx`: band → statement section (display H2 "Send it. It's there." two-tone + benefits sub-line, canvas below/behind); `docs/network-rebrand.md` §9 updated
 - [x] In-app verification: screenshots 1440+390; reduced-motion probe (static frame, no rAF); rAF frame-time sample steady (comfortably 60fps)
 - [x] REVIEW.md final round: zero must-fixes on a POST-CHANGE pass carrying `VERDICT: INCREDIBLE — SHIP`
-- [ ] Gate green; pushed to origin; Render preview deploy live (srv-d96hquv7f7vs73dm7930, auto-deploy on push); smoke-check `/products/network` on payve-site-preview.onrender.com
+- [x] Gate green; pushed to origin; Render preview deploy live (srv-d96hquv7f7vs73dm7930, auto-deploy on push); smoke-check `/products/network` on payve-site-preview.onrender.com
 
 ## Verify gate (objective definition of done)
 `node scripts/verify-rebrand.mjs` — must exit 0 every iteration (kill any :3100 listener first; known port-collision failure mode). Build; walk 1440/390 zero console errors; redirects; banned-words/free-claim/em-dash/operating-account/corridor greps.

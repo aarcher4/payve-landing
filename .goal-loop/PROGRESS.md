@@ -118,3 +118,8 @@ Plan: .goal-loop/PLAN.md (r4). Bar: absolutely incredible; proto passes before p
 - did: fresh post-change shots (r4final-1440/390); six-lens scoring, zero must-fixes; REVIEW.md carries VERDICT: INCREDIBLE — SHIP. Final-review box checked.
 - GATE: PASS
 - next: push, confirm Render deploy, smoke-check → COMPLETE
+
+## r4 iteration 6 — shipped; run complete
+- did: pushed 722de5e; Render deploy live; smoke-checked /products/network (200, heading + canvas markup serving). Final box checked — ALL r4 acceptance criteria met.
+- GATE: PASS (final run)
+- next: none — r4 run complete
