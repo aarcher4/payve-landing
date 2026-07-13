@@ -1,14 +1,13 @@
 # Payve
 
-> Payve is a payments and operations platform for supply chain trade. Buyers pay every supplier from one place. Suppliers can get paid early on approved invoices and receive international payments at a competitive exchange rate. Payve agents bring organizational intelligence and automate back office workflows like orders, invoices, quality holds, and reconciliation.
+> Payve is the payment network for supply chain trade, with two products. The Payve Network: members enroll once and pay any supplier instantly across the US, Mexico, Colombia, Brazil, and the European Union in the supplier's own currency, with no wire fees, from global accounts — and every supplier they pay gains the option of early payment (working capital) on approved invoices; suppliers enroll at no cost, and when they enroll, their own suppliers gain the same. Agentic Intelligence: agents that run on the network's connected payment and invoice data plus the customer's existing systems, answering business questions in plain English or Spanish, delivering scheduled briefings, and automating order entry, document matching, reconciliation, and complaint root-cause analysis. A person approves every write.
 
 Payve is a financial technology company, not a bank.
 
 ## Products
 
-- [Payments](https://www.getpayve.com/products/payments): Pay domestic and international suppliers from one place. Domestic bank transfers; local currency to Mexico and Colombia without wire fees. Pay now or schedule payments.
-- [Early pay](https://www.getpayve.com/products/early-pay): Suppliers choose to be paid early on approved invoices. They see the exact dollars received today and the fee. Buyers earn income on every election.
-- [Agents](https://www.getpayve.com/products/agents): Agents connect to existing systems, answer business questions in plain English, deliver scheduled briefings, and automate order entry, document matching, complaint root-cause analysis, and notifications. A person approves every write.
+- [The Payve Network](https://www.getpayve.com/products/network): Enroll once. Pay domestic and international suppliers from one approval — local currency across five corridors (US, Mexico, Colombia, Brazil, EU) without wire fees. Suppliers who enroll can choose early payment on approved invoices, seeing the exact dollars and fee first; buyers earn income on every election. Every payment lands as connected data.
+- [Agentic Intelligence](https://www.getpayve.com/products/agentic-intelligence): Agents on the network's connected data and your existing systems: plain-English/Spanish answers, scheduled briefings, order entry, document matching, reconciliation without chasing wire references, complaint root cause, and Loops (scheduled checks). A person approves every write.
 
 ## Solutions
 

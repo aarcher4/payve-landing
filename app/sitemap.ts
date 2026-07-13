@@ -5,9 +5,8 @@ const base = "https://www.getpayve.com";
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     "",
-    "/products/payments",
-    "/products/early-pay",
-    "/products/agents",
+    "/products/network",
+    "/products/agentic-intelligence",
     "/solutions/fresh-produce",
     "/solutions/seafood",
     "/solutions/packaging",

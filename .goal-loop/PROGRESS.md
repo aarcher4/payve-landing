@@ -34,3 +34,8 @@ Locked user decisions: two products only; full-site rebrand; softer fee framing 
 - did: runsOn chips → ["The Payve Network","Agentic Intelligence"] (fortune-growers, sl-produce); company page: metadata = payment-network framing, "network that moves your money", "one network to pay", "suppliers who enroll", corridors → 5. Security page needed no changes (approval gate/isolation copy is product-agnostic); disclosure line untouched site-wide (config-driven).
 - GATE: PASS
 - next: metadata (app/layout.tsx) + public/llms.txt + app/sitemap.ts to two-product framing + new routes
+
+## iteration 7 — metadata, llms.txt, sitemap
+- did: layout.tsx (title "The payment network for supply chain trade", description w/ 5 corridors + working capital + agentic intelligence, keywords → B2B payment network / working capital network / agentic intelligence, OG updated); sitemap.ts → /products/network + /products/agentic-intelligence (old routes dropped from sitemap, still redirect); llms.txt rewritten to two-product framing incl. cascade + no-cost supplier enrollment + not-a-bank line kept.
+- GATE: PASS
+- next: design-review loop round 1 — Playwright full-page screenshots 1440+390 of all rebranded pages, ruthless critique in REVIEW.md, fix must-fixes
