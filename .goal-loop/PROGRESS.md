@@ -137,3 +137,8 @@ Alex: everyone also pays EU; reverse flows; country-to-country (MX-CO, CO-BR); i
 - did: mobile two-moment proof (all 5 chips, moving pulses, both frames alive, zero pageerrors); reduced-motion static frame ✔; frame times p50/p95 16.7ms with 9 arcs; FOUND+FIXED MX chip viewport clipping (x clamp 46..W-46, component + proto). Boxes 3-4 checked.
 - GATE: PASS
 - next: final round-7 verdict (ALIVE — SHIP) then push/deploy/smoke → COMPLETE
+
+## r5 iteration 3 — verdict + shipped; run complete
+- did: post-clamp final shot clean (all 5 chips, MX on-screen); REVIEW round 7 VERDICT: ALIVE — SHIP; pushed 141484d; Render deploy live; smoke 200. ALL r5 boxes checked.
+- GATE: PASS (final run)
+- next: none — r5 run complete
