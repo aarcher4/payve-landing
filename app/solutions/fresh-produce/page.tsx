@@ -11,7 +11,7 @@ import { EarlyPayDemo, AgentsDemo } from "../../components/home/demos";
 export const metadata: Metadata = {
   title: "Fresh produce",
   description:
-    "Payve for growers, shippers, distributors, and importers moving perishables across the US, Mexico, and Colombia.",
+    "The Payve Network for growers, shippers, distributors, and importers moving perishables across the US, Mexico, Colombia, Brazil, and the EU.",
 };
 
 export default function FreshProducePage() {
@@ -23,7 +23,7 @@ export default function FreshProducePage() {
         image="/images/hero-produce.jpg"
         imageAlt="A tractor hauling harvest crates through rows of leafy crops"
         atmosphere
-        sub="Produce runs on 30-day terms, cross-border supply, and systems that were never built to share. Payve pays your growers and suppliers from one place, gives them liquidity on open invoices, and puts agents on the back office work that eats your team's week."
+        sub="Produce runs on 30-day terms, cross-border supply, and systems that were never built to share. The Payve Network pays your growers and suppliers in their own currency from one place and unlocks liquidity for them on open invoices, while agents take on the back office work that eats your team's week."
       />
 
       <StatStrip
@@ -53,9 +53,10 @@ export default function FreshProducePage() {
       >
         <p>
           A grower-shipper harvests, packs, and ships before a dollar comes
-          back, then waits out the terms. With Payve, your suppliers can
-          choose early payment on approved invoices and see exactly what they
-          receive today and what it costs, in dollars.
+          back, then waits out the terms. Once your growers enroll in the
+          network &mdash; at no cost, from a short form on their phone &mdash;
+          they can choose early payment on approved invoices and see exactly
+          what they receive today and what it costs, in dollars.
         </p>
         <p>
           Cross-border suppliers in Mexico and Colombia receive local
@@ -67,7 +68,7 @@ export default function FreshProducePage() {
 
       <SplitSection
         flip
-        eyebrow="Organizational intelligence"
+        eyebrow="Agentic intelligence"
         title="Market prices, receivables, and quality, briefed daily."
         visual={<AgentsDemo />}
       >
@@ -87,7 +88,7 @@ export default function FreshProducePage() {
       <FeatureGrid
         items={[
           {
-            title: "One place to pay",
+            title: "One network to pay",
             body: "Grower settlements, domestic and cross-border, from one place: US growers get bank transfers, Mexican and Colombian suppliers get local currency. One payment run, one approval.",
           },
           {

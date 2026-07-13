@@ -9,7 +9,7 @@ import StatStrip from "../../components/site/StatStrip";
 export const metadata: Metadata = {
   title: "Seafood",
   description:
-    "Payve for seafood importers and processors: supplier payments, early pay on approved invoices, and agents on cold chain paperwork.",
+    "The Payve Network for seafood importers and processors: supplier payments in local currency, liquidity on approved invoices, and agents on cold chain paperwork.",
 };
 
 export default function SeafoodPage() {
@@ -21,7 +21,7 @@ export default function SeafoodPage() {
         image="/images/hero-seafood.jpg"
         imageAlt="A boat crane lifting insulated seafood totes onto a sunny quay"
         atmosphere
-        sub="An importer's cash sits on the water for weeks while the cold chain runs on strict timing and paperwork. Payve handles the supplier payments and puts agents on the documentation."
+        sub="An importer's cash sits on the water for weeks while the cold chain runs on strict timing and paperwork. The Payve Network pays your suppliers in their own currency and unlocks liquidity for them on approved invoices, while agents handle the documentation."
       />
 
       <StatStrip
@@ -52,7 +52,7 @@ export default function SeafoodPage() {
           },
           {
             title: "Liquidity on open invoices",
-            body: "Seafood sellers have no PACA trust protecting them the way produce sellers do. Suppliers can choose early payment on approved invoices and see the exact dollars and the fee before they decide.",
+            body: "Seafood sellers have no PACA trust protecting them the way produce sellers do. Suppliers who enroll in the network can choose early payment on approved invoices and see the exact dollars and the fee before they decide.",
           },
           {
             title: "Purchase orders drafted by agents",

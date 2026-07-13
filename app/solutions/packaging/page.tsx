@@ -9,7 +9,7 @@ import StatStrip from "../../components/site/StatStrip";
 export const metadata: Metadata = {
   title: "Packaging",
   description:
-    "Payve for packaging manufacturers and converters: early pay on approved invoices, agents on order entry and statements, and cross-border payments without wire fees.",
+    "The Payve Network for packaging manufacturers and converters: working capital on approved invoices, agents on order entry and statements, and cross-border payments without wire fees.",
 };
 
 export default function PackagingPage() {
@@ -21,7 +21,7 @@ export default function PackagingPage() {
         image="/images/hero-packaging.jpg"
         imageAlt="Stacked corrugated cartons and paper rolls inside a sunlit packaging plant"
         atmosphere
-        sub="The food chain is corrugated's largest customer, and the plants that serve it sell on terms while board prices move monthly and harvest orders arrive in surges. Payve turns approved invoices into working capital when you choose, and puts agents on the order entry and statements."
+        sub="The food chain is corrugated's largest customer, and the plants that serve it sell on terms while board prices move monthly and harvest orders arrive in surges. When your customers pay through the Payve Network, approved invoices become working capital you can take when you choose — and agents handle the order entry and statements."
       />
 
       <StatStrip
@@ -48,7 +48,7 @@ export default function PackagingPage() {
         items={[
           {
             title: "Approved invoices become cash when you choose",
-            body: "When a customer approves your invoice through Payve, you can choose early payment per invoice, with the exact dollars and the fee in view before you decide.",
+            body: "When a customer approves your invoice through the Payve Network, you can choose early payment per invoice, with the exact dollars and the fee in view before you decide.",
           },
           {
             title: "Releases entered by agents",

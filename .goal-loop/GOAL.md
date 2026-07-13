@@ -11,7 +11,7 @@ The payve-landing site, on branch `site/network-rebrand` (based off site/pr16-so
 - [x] `next.config.ts` redirects: /products/payments → /products/network, /products/early-pay → /products/network, /products/agents → /products/agentic-intelligence
 - [x] Nav + footer (`app/components/site/config.ts`): Products ▾ = The Payve Network · Agentic Intelligence (two only)
 - [x] Homepage: SAME section arc (Hero → LogoWall → ProductTour → HowItWorks → MidCta → Proof → TrustSection → CtaBand); hero subhead reframed to two products + cascade woven in; ProductTour 3 rows → 2; HowItWorks step 01 Connect → Enroll; links updated; Proof/Trust/LogoWall otherwise untouched
-- [ ] Solutions pages (fresh-produce, seafood, packaging): supplier-liquidity sections reframed to network membership; product names/links updated; structure + stats kept
+- [x] Solutions pages (fresh-produce, seafood, packaging): supplier-liquidity sections reframed to network membership; product names/links updated; structure + stats kept
 - [ ] Customers/company/security: label-level pass (Payve Agents → Agentic Intelligence, links); disclosure line kept everywhere
 - [ ] Metadata (`app/layout.tsx`), `public/llms.txt`, `app/sitemap.ts` updated to two-product framing + new routes
 - [x] `scripts/walk.mjs` ROUTES updated: new product routes ADDED, old routes KEPT (they must resolve via redirect)
