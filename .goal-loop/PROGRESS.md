@@ -113,3 +113,8 @@ Plan: .goal-loop/PLAN.md (r4). Bar: absolutely incredible; proto passes before p
 - did: live screenshots 1440/390 (zero pageerrors); reduced-motion probe {staticFrame:true, rafCount:0, painted:true}; frame-time sample p50/p95 16.7ms (locked 60fps, one 33ms outlier). FOUND+FIXED mobile must-fix: width-driven radius made the sphere 129px w/ stacked chips → R floor clamped to 210 (component + proto), rebuilt, re-shot: mobile fills the band, chips spread.
 - GATE: PASS
 - next: final review round (REVIEW.md, VERDICT: INCREDIBLE — SHIP) then push/deploy/smoke
+
+## r4 iteration 5 — final review: INCREDIBLE — SHIP
+- did: fresh post-change shots (r4final-1440/390); six-lens scoring, zero must-fixes; REVIEW.md carries VERDICT: INCREDIBLE — SHIP. Final-review box checked.
+- GATE: PASS
+- next: push, confirm Render deploy, smoke-check → COMPLETE

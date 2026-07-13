@@ -169,3 +169,24 @@ VERDICT: NOT YET (pass 2 owed)
 Pass 5 judgment against the bar (sphere legibility ✔ / dot falloff ✔ / rotation speed ✔ 30s /
 chip tracking ✔ / arc elegance ✔ / composition with heading ✔): zero must-fixes.
 PROTO VERDICT: CLEAN — PORT IT.
+
+## Round 6 (r4 globe) — FINAL — 2026-07-13 (post-change shots .goal-loop/screens/r4final-*, post mobile-clamp)
+
+Scored against the six lenses on fresh post-change screenshots (1440 + 390; mobile also verified
+post-clamp in r4app-globe-390b):
+- Sphere legibility: unmistakable globe; organic jittered field, z-graded size/alpha, grounded limb. ✔
+- Dot falloff: front sage-600 presence → faint sage-300 back texture; real depth. ✔
+- Rotation: 30s/rev, tilt +0.30 keeps all five countries reachable; Americas front at first view
+  and in the reduced-motion frame. ✔
+- Chip tracking: chips ride the projection, fade/scale at the limb (EU mid-fade in the final shot
+  while US/MX/CO sit front); mobile abbreviates and no longer stacks. ✔
+- Arc elegance: dotted slerped arcs with lift; pulse visible cresting the US→EU arc over the
+  sphere crown; chip-hit flashes on arrival. ✔
+- Composition: two-tone display H2 + benefits sub-line breathe above the crown; band borders
+  frame the crop; the section reads as the page's statement piece without fighting the demos. ✔
+Technical: zero pageerrors; reduced-motion = static painted frame, rafCount 0; frame times
+p50/p95 16.7ms. Gate green with all copy checks.
+
+Zero must-fix critiques. This pass postdates the last code change (radius clamp).
+
+VERDICT: INCREDIBLE — SHIP
