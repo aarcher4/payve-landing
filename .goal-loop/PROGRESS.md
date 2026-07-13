@@ -132,3 +132,8 @@ Alex: everyone also pays EU; reverse flows; country-to-country (MX-CO, CO-BR); i
 - did: GLOBE_ARCS 5→9 (component+proto); rotating-globe evidence showed ~40% dead rotation → static earth at mid-Atlantic composition (Alex's instruction, evidence logged REVIEW round 7); Brazil chip below crop → CY raised + BR lat -4; r5c shot: all five chips + live pulses in one composition. tsc + build clean.
 - GATE: PASS
 - next: mobile two-moment verification + reduced-motion/frame-time re-probe, then final verdict + ship
+
+## r5 iteration 2 — mobile + technical verification, edge-chip clamp
+- did: mobile two-moment proof (all 5 chips, moving pulses, both frames alive, zero pageerrors); reduced-motion static frame ✔; frame times p50/p95 16.7ms with 9 arcs; FOUND+FIXED MX chip viewport clipping (x clamp 46..W-46, component + proto). Boxes 3-4 checked.
+- GATE: PASS
+- next: final round-7 verdict (ALIVE — SHIP) then push/deploy/smoke → COMPLETE

@@ -218,7 +218,8 @@ export function NetworkCanvas() {
         if (!el) continue;
         const vis = Math.max(0, Math.min(1, (q.z + 0.25) / 0.5));
         el.style.opacity = String(q.y > H - 6 ? 0 : vis);
-        el.style.transform = `translate(${q.x}px, ${q.y}px) translate(-50%, -50%) scale(${
+        const cx = Math.min(Math.max(q.x, 46), W - 46); // keep edge chips fully on-screen (mobile)
+        el.style.transform = `translate(${cx}px, ${q.y}px) translate(-50%, -50%) scale(${
           0.82 + 0.18 * Math.max(0, q.z)
         })`;
         el.style.zIndex = q.z > 0 ? "3" : "1";

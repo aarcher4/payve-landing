@@ -214,3 +214,10 @@ moving continuously. Rotation code path removed from the draw; pulses consume th
 
 Remaining for next pass: mobile two-moment verification + frame-time/reduced-motion re-probe, then
 final verdict.
+
+### Round 7 — mobile + technical verification (r5 iteration 2)
+- Mobile two-moment (r5c-m1/m2-390): ALL FIVE chips visible in both frames, composition stable,
+  pulse positions differ between moments (traffic moving), zero pageerrors. No dead air at 390. ✔
+- MX chip clipped at the right viewport edge → chip x clamped to [46, W-46] (component + proto);
+  labels stay fully readable, desktop unaffected. ✔
+- Reduced-motion: static painted frame confirmed. Frame times with 9 arcs: p50/p95 = 16.7ms. ✔
