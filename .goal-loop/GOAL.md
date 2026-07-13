@@ -13,7 +13,7 @@ On branch `site/network-rebrand`, per `.goal-loop/PLAN.md`: the site's copy spea
 - [x] `public/llms.txt` → no "corridor", benefits framing, country list kept
 - [x] Grep-audit: zero "corridor" hits in app/ copy + llms.txt; solutions/customers/company stragglers fixed
 - [x] Review loop: screenshot pass (network page + homepage minimum, full site on final round) + in-context copy read appended to `.goal-loop/REVIEW.md` as round 5+; iterate fix→review until a POST-CHANGE round has zero must-fix critiques and carries `VERDICT: HIGHER ESSENCE — SHIP`
-- [ ] Pushed to origin; Render preview deploy live (service srv-d96hquv7f7vs73dm7930, auto-deploys on push; confirm via API); smoke-check new copy on payve-site-preview.onrender.com
+- [x] Pushed to origin; Render preview deploy live (service srv-d96hquv7f7vs73dm7930, auto-deploys on push; confirm via API); smoke-check new copy on payve-site-preview.onrender.com
 
 ## Verify gate (objective definition of done)
 `node scripts/verify-rebrand.mjs` — must exit 0 every iteration (build; walk 1440/390 zero console errors; redirects; banned-words + free-claim + em-dash + operating-account + corridor greps).

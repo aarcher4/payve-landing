@@ -84,3 +84,8 @@ Alex r3 notes: customers don't care about corridors; benefits language (send it 
 - did: r5 screenshots (network hero, canvas band, home tour); line-by-line voice-rule read; REVIEW.md round 5 with zero must-fixes and VERDICT: HIGHER ESSENCE — SHIP (post-change). Review acceptance box checked.
 - GATE: PASS
 - next: final box — push, confirm Render deploy live, smoke-check copy on preview → COMPLETE
+
+## r3 iteration 4 — shipped; run complete
+- did: pushed d0f72bd; Render deploy dep live on payve-site-preview.onrender.com; smoke-checked live copy ("Send it. It's there.", "arrive instantly", "connected to global liquidity", zero "corridor"). Final GOAL box checked — ALL r3 acceptance criteria met.
+- GATE: PASS (final run)
+- next: none — r3 run complete
