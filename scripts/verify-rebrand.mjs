@@ -11,8 +11,9 @@
 import { spawn, spawnSync } from "node:child_process";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const ROOT = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+const ROOT = join(fileURLToPath(import.meta.url), "..", "..");
 const PORT = 3100;
 const BASE = `http://localhost:${PORT}`;
 const SKIP_BUILD = process.argv.includes("--skip-build");
