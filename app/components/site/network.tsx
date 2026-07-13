@@ -14,7 +14,7 @@ const GLOBE_ANCHORS: GlobeAnchor[] = [
   { id: "us", full: "United States", short: "US", ccy: "USD", lat: 38, lon: -97 },
   { id: "mx", full: "Mexico", short: "MX", ccy: "MXN", lat: 23, lon: -102 },
   { id: "co", full: "Colombia", short: "CO", ccy: "COP", lat: 4, lon: -74 },
-  { id: "br", full: "Brazil", short: "BR", ccy: "BRL", lat: -10, lon: -55 },
+  { id: "br", full: "Brazil", short: "BR", ccy: "BRL", lat: -4, lon: -55 },
   { id: "eu", full: "European Union", short: "EU", ccy: "EUR", lat: 50, lon: 10 },
 ];
 
@@ -24,15 +24,21 @@ const GLOBE_ARCS = [
   { a: "us", b: "br", dur: 8.2, phase: 0.62 },
   { a: "us", b: "eu", dur: 7.0, phase: 0.18 },
   { a: "mx", b: "eu", dur: 9.2, phase: 0.8 },
+  { a: "co", b: "eu", dur: 8.6, phase: 0.1 },
+  { a: "br", b: "eu", dur: 7.6, phase: 0.48 },
+  { a: "mx", b: "co", dur: 5.6, phase: 0.72 },
+  { a: "co", b: "br", dur: 6.4, phase: 0.26 },
 ];
 
 const TAU = Math.PI * 2;
 const GLOBE = {
   dots: 1300,
-  rotPeriod: 30, // seconds per revolution
   tilt: 0.3, // viewer looks slightly down at the globe (equator lifts into frame)
-  w0: -3.78, // base spin: Americas centered at first view
-  staticT: 2.0, // reduced-motion freeze frame
+  // r5: the earth is STATIC (Alex) — a fixed mid-Atlantic composition puts all
+  // five countries on the visible hemisphere so payment traffic never hides.
+  // Rotation caused dead air: ~40% of each revolution had every anchor back-side.
+  wStatic: -2.269, // lon ≈ -40° centered front
+  staticT: 0, // time is only consumed by the pulses now
 };
 
 type V3 = { x: number; y: number; z: number };
@@ -111,7 +117,7 @@ export function NetworkCanvas() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       R = Math.min(Math.max(W * 0.33, 210), H * 0.72);
       CX = W / 2;
-      CY = H + R * 0.12; // upper hemisphere rises from the bottom edge
+      CY = H + R * 0.05; // upper hemisphere rises from the bottom edge (r5: raised so Brazil clears the crop)
       if (reduced) draw(GLOBE.staticT);
     };
     const proj = (p: V3) => ({ x: CX + p.x * R, y: CY + p.y * R, z: p.z });
@@ -120,7 +126,7 @@ export function NetworkCanvas() {
     function draw(tSec: number) {
       if (!ctx) return;
       ctx.clearRect(0, 0, W, H);
-      const w = GLOBE.w0 + (tSec / GLOBE.rotPeriod) * TAU;
+      const w = GLOBE.wStatic;
 
       // atmosphere glow
       const g = ctx.createRadialGradient(CX, CY, R * 0.2, CX, CY, R * 1.18);

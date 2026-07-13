@@ -50,7 +50,7 @@
 <script>
 (() => {
   const TAU = Math.PI * 2;
-  const W0 = -3.78;               // base spin: Americas centered at first view
+  const W0 = -2.269;              // r5 STATIC earth: mid-Atlantic composition, all five countries front
   const N_DOTS = 1300;
   const ROT_PERIOD = 30;            // seconds per revolution
   const TILT = 0.3;                 // radians about X: viewer looks slightly DOWN at the globe (equator lifts into frame)
@@ -60,7 +60,7 @@
     { id: "us", full: "United States", short: "US", ccy: "USD", lat: 38, lon: -97 },
     { id: "mx", full: "Mexico", short: "MX", ccy: "MXN", lat: 23, lon: -102 },
     { id: "co", full: "Colombia", short: "CO", ccy: "COP", lat: 4, lon: -74 },
-    { id: "br", full: "Brazil", short: "BR", ccy: "BRL", lat: -10, lon: -55 },
+    { id: "br", full: "Brazil", short: "BR", ccy: "BRL", lat: -4, lon: -55 },
     { id: "eu", full: "European Union", short: "EU", ccy: "EUR", lat: 50, lon: 10 },
   ];
   const ARCS = [
@@ -69,6 +69,10 @@
     { a: "us", b: "br", dur: 8.2, phase: 0.62 },
     { a: "us", b: "eu", dur: 7.0, phase: 0.18 },
     { a: "mx", b: "eu", dur: 9.2, phase: 0.80 },
+    { a: "co", b: "eu", dur: 8.6, phase: 0.10 },
+    { a: "br", b: "eu", dur: 7.6, phase: 0.48 },
+    { a: "mx", b: "co", dur: 5.6, phase: 0.72 },
+    { a: "co", b: "br", dur: 6.4, phase: 0.26 },
   ];
 
   const scene = document.getElementById("scene");
@@ -124,7 +128,7 @@
     canvas.width = W * dpr; canvas.height = H * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     R = Math.min(Math.max(W * 0.33, 210), H * 0.72);
-    CX = W / 2; CY = H + R * 0.12;   // upper hemisphere rises from the bottom edge
+    CX = W / 2; CY = H + R * 0.05;   // raised so Brazil clears the crop (r5)
     if (reduced) draw(STATIC_T);
   }
 
@@ -134,7 +138,7 @@
   const hits = {};
   function draw(tSec) {
     ctx.clearRect(0, 0, W, H);
-    const w = W0 + (tSec / ROT_PERIOD) * TAU;
+    const w = W0; // static earth (r5); pulses consume the clock
 
     // atmosphere glow behind the sphere
     const g = ctx.createRadialGradient(CX, CY, R * 0.2, CX, CY, R * 1.18);

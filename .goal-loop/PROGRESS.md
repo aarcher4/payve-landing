@@ -123,3 +123,12 @@ Plan: .goal-loop/PLAN.md (r4). Bar: absolutely incredible; proto passes before p
 - did: pushed 722de5e; Render deploy live; smoke-checked /products/network (200, heading + canvas markup serving). Final box checked — ALL r4 acceptance criteria met.
 - GATE: PASS (final run)
 - next: none — r4 run complete
+
+# ---- r5 run: interconnected traffic, no dead air ----
+r5 run started 2026-07-13. Engine: stop-hook. Max-iters 10. Branch site/network-rebrand (continuing).
+Alex: everyone also pays EU; reverse flows; country-to-country (MX-CO, CO-BR); if rotating looks off, STATIC earth with moving payments (first-class option); iterate until fully satisfied.
+
+## r5 iteration 1 — 9-arc mesh + STATIC earth decision + Brazil crop fix
+- did: GLOBE_ARCS 5→9 (component+proto); rotating-globe evidence showed ~40% dead rotation → static earth at mid-Atlantic composition (Alex's instruction, evidence logged REVIEW round 7); Brazil chip below crop → CY raised + BR lat -4; r5c shot: all five chips + live pulses in one composition. tsc + build clean.
+- GATE: PASS
+- next: mobile two-moment verification + reduced-motion/frame-time re-probe, then final verdict + ship

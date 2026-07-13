@@ -190,3 +190,27 @@ p50/p95 16.7ms. Gate green with all copy checks.
 Zero must-fix critiques. This pass postdates the last code change (radius clamp).
 
 VERDICT: INCREDIBLE — SHIP
+
+## Round 7 (r5 interconnected traffic) — 2026-07-13
+
+### Mesh 5 → 9
+Added CO↔EU, BR↔EU (everyone pays Europe), MX↔CO, CO↔BR (countries pay each other); durations
+5.6-9.2s, scattered phases; per-cycle direction alternation kept (reverse flows).
+
+### Rotating vs static — DECISION: STATIC (evidence-based, per Alex's instruction)
+Two-moment shots on the ROTATING globe (r5-m1/m2-1440): moment 1 rich; moment 2 (+9s) near-blank —
+the rotation carries all five anchors to the back hemisphere for ~40% of every revolution, so no
+amount of arcs fixes the dead air. Switched to a STATIC earth at a mid-Atlantic composition
+(wStatic = -2.269 rad ≈ lon -40 front): all five countries on the visible hemisphere, payments
+moving continuously. Rotation code path removed from the draw; pulses consume the clock.
+
+### Post-change fixes
+- Brazil chip landed below the bottom crop in the static frame → sphere raised (CY = H + 0.05R)
+  and BR display latitude nudged -10 → -4 (artistic license per Alex: "don't have to be super
+  specific"). r5c-1440: ALL FIVE chips visible in one composition, EU left, US/MX/CO/BR right,
+  pulses live on multiple arcs simultaneously.
+- Arc clutter check at 9 arcs on the static sphere: reads as texture, not noise — no alpha change
+  needed. EU arrival flashes are debounced per-chip (hits map) — no strobe.
+
+Remaining for next pass: mobile two-moment verification + frame-time/reduced-motion re-probe, then
+final verdict.
