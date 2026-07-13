@@ -23,7 +23,7 @@ export default function AgenticIntelligencePage() {
         title="Agentic intelligence that already knows your business."
         image="/images/hero-agents.jpg"
         imageAlt="Terraced green fields on Andean mountainsides with a farm truck on the road"
-        sub="Payve agents run on your network's connected data — every payment, invoice, and order already in one place — plus the systems you run today. They answer questions in plain English or Spanish and do the back office work your team does by hand. A person on your team approves every write."
+        sub="Payve agents run on your network's connected data: every payment, invoice, and order already in one place, plus the systems you run today. They answer questions in plain English or Spanish and do the back office work your team does by hand. A person on your team approves every write."
       />
 
       <SplitSection
@@ -76,7 +76,7 @@ export default function AgenticIntelligencePage() {
           },
           {
             title: "Reconciliation on network data",
-            body: "Payments made on the Payve Network carry their invoice, approval, and settlement as one record — so agents reconcile them without chasing wire references.",
+            body: "Payments made on the Payve Network carry their invoice, approval, and settlement as one record, so agents reconcile them without chasing wire references.",
           },
           {
             title: "Complaint root cause",

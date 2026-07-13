@@ -48,9 +48,9 @@ export default function Hero() {
           <p className="mt-6 max-w-xl text-balance text-base leading-relaxed text-ink-2 sm:text-lg">
             Payve is the payment network for supply chain trade. When you
             enroll, every supplier you pay gains instant payment and
-            on-demand working capital &mdash; and when they enroll, so do
-            theirs. Agents built on that connected network handle the back
-            office work your team does by hand.
+            on-demand working capital. When they enroll, so do theirs.
+            Agents built on that connected network handle the back office
+            work your team does by hand.
           </p>
           <div className="mt-9 flex">
             <a

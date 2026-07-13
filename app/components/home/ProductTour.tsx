@@ -17,20 +17,20 @@ import { CascadeFlow } from "../site/network";
 const modules = [
   {
     key: "network",
-    title: "The Payve Network",
+    title: "Network",
     href: "/products/network",
-    linkLabel: "Explore the Payve Network",
+    linkLabel: "Explore the network",
     blurb:
-      "Enroll once: pay every supplier from one run in their own currency, with no wire fees — and give each one the choice of early payment on approved invoices.",
+      "Enroll once: pay every supplier instantly in their own currency, unlock early payment for them on approved invoices, and run it all from one operating account.",
     Demo: CascadeFlow,
   },
   {
-    key: "agentic-intelligence",
-    title: "Agentic Intelligence",
+    key: "intelligence",
+    title: "Intelligence",
     href: "/products/agentic-intelligence",
-    linkLabel: "Explore Agentic Intelligence",
+    linkLabel: "Explore intelligence",
     blurb:
-      "Agents that answer questions, reconcile documents, and run the back office on your network's connected data — a person approving every write.",
+      "Agents that answer questions, reconcile documents, and run the back office on your network's connected data, with a person approving every write.",
     Demo: AgentsDemo,
   },
 ] as const;

@@ -53,10 +53,10 @@ export default function FreshProducePage() {
       >
         <p>
           A grower-shipper harvests, packs, and ships before a dollar comes
-          back, then waits out the terms. Once your growers enroll in the
-          network &mdash; at no cost, from a short form on their phone &mdash;
-          they can choose early payment on approved invoices and see exactly
-          what they receive today and what it costs, in dollars.
+          back, then waits out the terms. Your growers enroll in the network
+          at no cost, from a short form on their phone. From then on they
+          can choose early payment on approved invoices and see exactly what
+          they receive today and what it costs, in dollars.
         </p>
         <p>
           Cross-border suppliers in Mexico and Colombia receive local

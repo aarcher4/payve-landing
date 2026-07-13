@@ -92,3 +92,19 @@ Scoring against the bar:
 Zero must-fix critiques open. This pass postdates the last code change.
 
 VERDICT: EXTRAORDINARY — SHIP
+
+## Round 4 — 2026-07-13 (r2 refinement pass, Alex's notes; screenshots .goal-loop/screens/r4-*)
+
+Scope: design-system-sync discipline (docs first, app-direct); em-dash purge (15 removed, now
+gate-enforced); nav/rail → Network / Intelligence; "operating account" replaces "global account"
+(gate-enforced); network explained in three beats (instant payments · liquidity · operating account
++ connected data) on the network hero; NetworkCanvas shipped.
+
+- NetworkCanvas (1440): dotted sage arcs between boxed mono corridor chips, pulses traveling,
+  particle field subtle; Dakota grammar translated into light Industrial Confidence. ✔
+- NetworkCanvas (390): chips abbreviate (US · USD), scene stays legible at 300px. ✔
+- Home tour: "Network" / "Intelligence" rail; three-beat blurb; corridor mono line. ✔
+- CascadeFlow: mono uppercase sub-labels + rx-4 chips match the new grammar. ✔
+- Gate: PASS with new em-dash + operating-account checks live.
+
+VERDICT: EXTRAORDINARY — SHIP (r2)

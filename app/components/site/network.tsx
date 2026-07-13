@@ -4,6 +4,198 @@ import { motion, useInView, useReducedMotion } from "framer-motion";
 import { Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
+/* ------------------------------------------------------------------ */
+/* NetworkCanvas (r2, Dakota grammar — docs/network-rebrand.md §9)     */
+/* ------------------------------------------------------------------ */
+
+type Corridor = { id: string; full: string; short: string; ccy: string; x: number; y: number };
+
+const CORRIDOR_NODES: Corridor[] = [
+  { id: "us", full: "United States", short: "US", ccy: "USD", x: 0.26, y: 0.3 },
+  { id: "eu", full: "European Union", short: "EU", ccy: "EUR", x: 0.84, y: 0.22 },
+  { id: "mx", full: "Mexico", short: "MX", ccy: "MXN", x: 0.13, y: 0.66 },
+  { id: "co", full: "Colombia", short: "CO", ccy: "COP", x: 0.46, y: 0.8 },
+  { id: "br", full: "Brazil", short: "BR", ccy: "BRL", x: 0.72, y: 0.66 },
+];
+
+const CORRIDOR_ARCS = [
+  { a: "us", b: "mx", dur: 6.0, phase: 0.0 },
+  { a: "us", b: "co", dur: 7.2, phase: 0.35 },
+  { a: "us", b: "br", dur: 8.0, phase: 0.62 },
+  { a: "us", b: "eu", dur: 6.8, phase: 0.18 },
+  { a: "mx", b: "eu", dur: 9.0, phase: 0.8 },
+];
+
+/**
+ * The corridor visualization: dotted sage arcs between boxed mono corridor
+ * chips, sage-500 pulses traveling the arcs (accent only where money moves),
+ * faint particle field for depth. 2D canvas, dpr-aware, rAF pauses
+ * off-screen, reduced motion renders one static frame. This is the network
+ * page's ONE ambient element.
+ */
+export function NetworkCanvas() {
+  const sceneRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const chipRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const reduced = useReducedMotion() ?? false;
+
+  useEffect(() => {
+    const scene = sceneRef.current;
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+    if (!scene || !canvas || !ctx) return;
+
+    const byId = Object.fromEntries(CORRIDOR_NODES.map((n) => [n.id, n]));
+    let W = 0;
+    let H = 0;
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = scene.clientWidth;
+      H = scene.clientHeight;
+      canvas.width = W * dpr;
+      canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(scene);
+
+    const px = (n: Corridor) => ({ x: n.x * W, y: n.y * H });
+    const ctrl = (a: { x: number; y: number }, b: { x: number; y: number }) => {
+      const d = Math.hypot(b.x - a.x, b.y - a.y);
+      return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 - Math.min(d * 0.3, H * 0.34) };
+    };
+    const qPoint = (
+      a: { x: number; y: number },
+      c: { x: number; y: number },
+      b: { x: number; y: number },
+      t: number,
+    ) => ({
+      x: (1 - t) ** 2 * a.x + 2 * (1 - t) * t * c.x + t * t * b.x,
+      y: (1 - t) ** 2 * a.y + 2 * (1 - t) * t * c.y + t * t * b.y,
+    });
+
+    const particles = Array.from({ length: 90 }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      r: 0.6 + Math.random() * 0.9,
+      a: 0.06 + Math.random() * 0.16,
+      sp: 0.2 + Math.random() * 0.6,
+      ph: Math.random() * Math.PI * 2,
+    }));
+    const hits: Record<string, boolean> = {};
+
+    const draw = (tSec: number) => {
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = "#A8C0B3";
+      for (const p of particles) {
+        const tw = 0.5 + 0.5 * Math.sin(tSec * p.sp + p.ph);
+        ctx.globalAlpha = p.a * tw;
+        const dx = Math.sin(tSec * 0.05 + p.ph) * 6;
+        ctx.beginPath();
+        ctx.arc(p.x * W + dx, p.y * H, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      for (const arc of CORRIDOR_ARCS) {
+        const a = px(byId[arc.a]);
+        const b = px(byId[arc.b]);
+        const c = ctrl(a, b);
+        const steps = Math.max(24, Math.floor(Math.hypot(b.x - a.x, b.y - a.y) / 9));
+        ctx.fillStyle = "#A8C0B3";
+        for (let i = 1; i < steps; i++) {
+          const t = i / steps;
+          const p = qPoint(a, c, b, t);
+          ctx.globalAlpha = 0.34 + 0.26 * Math.sin(t * Math.PI);
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 1.15, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      if (!reduced) {
+        for (const arc of CORRIDOR_ARCS) {
+          const a = px(byId[arc.a]);
+          const b = px(byId[arc.b]);
+          const c = ctrl(a, b);
+          const cycle = (tSec / arc.dur + arc.phase) % 1;
+          const fwd = Math.floor(tSec / arc.dur + arc.phase) % 2 === 0;
+          const t = fwd ? cycle : 1 - cycle;
+          for (let k = 5; k >= 0; k--) {
+            const tt = Math.max(0, Math.min(1, t - k * 0.012 * (fwd ? 1 : -1)));
+            const p = qPoint(a, c, b, tt);
+            ctx.globalAlpha = k === 0 ? 0.95 : 0.36 - k * 0.05;
+            ctx.fillStyle = "#6F8D7C";
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, k === 0 ? 2.7 : 1.7, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          const dest = fwd ? arc.b : arc.a;
+          if (cycle > 0.96 && !hits[dest]) {
+            hits[dest] = true;
+            const el = chipRefs.current[dest];
+            el?.classList.add("chip-hit");
+            setTimeout(() => {
+              el?.classList.remove("chip-hit");
+              hits[dest] = false;
+            }, 600);
+          }
+        }
+      }
+      ctx.globalAlpha = 1;
+    };
+
+    let raf: number | null = null;
+    let visible = true;
+    const t0 = performance.now();
+    const loop = (now: number) => {
+      draw((now - t0) / 1000);
+      raf = visible && !reduced ? requestAnimationFrame(loop) : null;
+    };
+    const io = new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      if (visible && !reduced && raf === null) raf = requestAnimationFrame(loop);
+      if (!visible && raf !== null) {
+        cancelAnimationFrame(raf);
+        raf = null;
+      }
+    });
+    io.observe(scene);
+    if (reduced) draw(3.7);
+    else raf = requestAnimationFrame(loop);
+
+    return () => {
+      ro.disconnect();
+      io.disconnect();
+      if (raf !== null) cancelAnimationFrame(raf);
+    };
+  }, [reduced]);
+
+  return (
+    <div
+      ref={sceneRef}
+      className="relative h-[300px] overflow-hidden border-y border-hairline sm:h-[400px]"
+      role="img"
+      aria-label="The Payve Network: payments traveling between the United States, Mexico, Colombia, Brazil, and the European Union, each settled in local currency."
+    >
+      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden />
+      {CORRIDOR_NODES.map((n) => (
+        <div
+          key={n.id}
+          ref={(el) => {
+            chipRefs.current[n.id] = el;
+          }}
+          className="absolute flex -translate-x-1/2 -translate-y-1/2 items-center gap-1.5 whitespace-nowrap rounded border border-hairline-2 bg-paper-elev px-2 py-1 font-mono text-[9px] font-semibold uppercase tracking-wider text-ink-1 shadow-elev-1 sm:px-2.5 sm:py-1.5 sm:text-[10.5px]"
+          style={{ left: `${n.x * 100}%`, top: `${n.y * 100}%` }}
+        >
+          <span className="chip-dot h-[5px] w-[5px] rounded-full bg-sage-500 transition-shadow duration-300" aria-hidden />
+          <span className="hidden sm:inline">{n.full}</span>
+          <span className="sm:hidden">{n.short}</span>
+          <span className="font-medium text-ink-3">{n.ccy}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /**
  * Network-rebrand components (docs/network-rebrand.md §8).
  * - FlowLine: the ONE ambient element on a page — a thin sage path with a
@@ -156,7 +348,7 @@ export function CascadeFlow() {
                   y={n.y - 26}
                   width="118"
                   height="52"
-                  rx="6"
+                  rx="4"
                   fill={enrolled ? "var(--sage-50)" : "var(--paper-elev)"}
                   stroke={enrolled ? "var(--sage-500)" : "var(--hairline-2)"}
                   strokeWidth="1"
@@ -170,8 +362,15 @@ export function CascadeFlow() {
                 >
                   {n.label}
                 </text>
-                <text x={n.x + 11} y={n.y + 13} fontSize="10" fill={active ? "var(--sage-600)" : "var(--ink-3)"}>
-                  {enrolled && n.tier !== 1 ? "Enrolled · paying its own" : n.sub}
+                <text
+                  x={n.x + 11}
+                  y={n.y + 13}
+                  fontSize="9"
+                  fontFamily="var(--font-geist-mono), monospace"
+                  letterSpacing="0.04em"
+                  fill={active ? "var(--sage-600)" : "var(--ink-3)"}
+                >
+                  {enrolled && n.tier !== 1 ? "ENROLLED · PAYING ITS OWN" : n.sub.toUpperCase()}
                 </text>
               </motion.g>
             );
@@ -204,7 +403,7 @@ export function CascadeFlow() {
                 }`}
               >
                 <span className="min-w-0 truncate text-sm font-semibold text-ink-1">{n.label}</span>
-                <span className={`shrink-0 text-[11px] ${active ? "text-sage-600" : "text-ink-3"}`}>
+                <span className={`shrink-0 font-mono text-[9.5px] uppercase tracking-wide ${active ? "text-sage-600" : "text-ink-3"}`}>
                   {enrolled && n.tier !== 1 ? "Enrolled · paying its own" : n.sub}
                 </span>
               </span>

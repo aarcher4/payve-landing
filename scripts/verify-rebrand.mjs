@@ -47,8 +47,15 @@ for (const f of copyFiles) {
     const m = text.match(re);
     if (m) fail(`absolute free-claim "${m[0]}" in ${f} (locked decision: softer framing)`);
   }
+  if (/global account/i.test(text)) fail(`"global account" in ${f} (r2: say "operating account")`);
+  // r2 copy style: no em dashes in copy. Comment lines are exempt.
+  const copyLines = text
+    .split("\n")
+    .filter((l) => !/^\s*(\/\/|\*|\/\*)/.test(l));
+  const dashLine = copyLines.find((l) => /—|&mdash;/.test(l));
+  if (dashLine) fail(`em dash in copy in ${f}: "${dashLine.trim().slice(0, 80)}"`);
 }
-if (!failures) ok("banned-words + free-claim grep clean");
+if (!failures) ok("banned-words + free-claim + em-dash + operating-account greps clean");
 
 // ---------- 1. build ----------
 if (!SKIP_BUILD) {

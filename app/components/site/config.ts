@@ -31,14 +31,14 @@ export const navGroups: NavGroup[] = [
     label: "Products",
     items: [
       {
-        label: "The Payve Network",
+        label: "Network",
         href: "/products/network",
-        description: "Enroll once: instant cross-border payments, global accounts, and working capital for your suppliers.",
+        description: "Instant payments and liquidity for your whole supplier base.",
       },
       {
-        label: "Agentic Intelligence",
+        label: "Intelligence",
         href: "/products/agentic-intelligence",
-        description: "Agents that answer, reconcile, and run the back office on your network's data.",
+        description: "Agents that answer, reconcile, and run the back office on network data.",
       },
     ],
   },
@@ -87,8 +87,8 @@ export const footerColumns: { heading: string; links: NavLink[] }[] = [
   {
     heading: "Products",
     links: [
-      { label: "The Payve Network", href: "/products/network" },
-      { label: "Agentic Intelligence", href: "/products/agentic-intelligence" },
+      { label: "Network", href: "/products/network" },
+      { label: "Intelligence", href: "/products/agentic-intelligence" },
     ],
   },
   {

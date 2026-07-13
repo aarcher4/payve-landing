@@ -3,12 +3,26 @@
 Single source of truth for all copy on branch `site/network-rebrand`. Every page edit conforms to this
 doc. Research base: positioning study of Visa/Visa Direct, Wise Platform, C2FO, Taulia, PrimeRevenue,
 BILL, Paystand, Tradeshift, Melio, SWIFT gpi (2026-07-12). Keep in sync with `public/llms.txt`.
+Discipline per payve-fintech's `design-system-sync` skill (r2 pass, 2026-07-13): docs first, canonical
+tokens only, translation layer (no vendor names), tabular numerics, screenshot-verify before done.
+App-direct implementation; canvas re-sync deferred (documented exception).
+
+## 0. Copy style (r2, Alex)
+
+- **No em dashes in copy.** Break the sentence in two, or use a colon or comma. (Code comments exempt.)
+- Explain the network in three plain beats wherever it is introduced:
+  **instant payments** (any supplier, their own currency, one approval) ·
+  **liquidity** (suppliers elect early payment on approved invoices) ·
+  **operating account + connected data** (fund once; every payment lands as data).
+- Product names: **Network** and **Intelligence** in nav, footer, and selector rails. Full names
+  "The Payve Network" / "Agentic Intelligence" in H1s and prose where natural.
+- **"Operating account"**, never "global account".
 
 ## 1. Product architecture — exactly two products
 
 | Product | Route | What it is |
 |---|---|---|
-| **The Payve Network** | `/products/network` | Enroll once. Move money instantly across borders, hold global accounts, and unlock on-demand working capital for every supplier you pay. Payments, early pay, and global accounts are *features inside* this product — never named as standalone products. |
+| **The Payve Network** | `/products/network` | Enroll once. Move money instantly across borders, run one operating account, and unlock on-demand working capital for every supplier you pay. Payments, early pay, and the operating account are *features inside* this product — never named as standalone products. |
 | **Agentic Intelligence** | `/products/agentic-intelligence` | Agents that run on the network's connected data: reconciliation, briefings, order entry, document matching, Loops — a person approving every write. Powerful *because* the network's data is already connected. |
 
 Everything else on the site (solutions, customers, security) frames itself in terms of these two.
@@ -24,7 +38,7 @@ Canonical sentence (adapt tense/person per page, keep the two-beat shape):
 
 Rules:
 - The cascade is upside, never prerequisite. Every headline must survive: *"what do I get if I'm the
-  only member today?"* Day-one answer: instant cross-border payment, global accounts, agent-ready data.
+  only member today?"* Day-one answer: instant cross-border payment, one operating account, agent-ready data.
 - Never lecture about "network effects" (investor vocabulary; banned). Show the flywheel as concrete
   member benefit.
 
@@ -93,3 +107,20 @@ with a measurable or concrete claim.
   or a member lights up — CTAs, live counters, pulse dots, cascade nodes.
 - No literal node-and-mesh hero graphics; no me-too mesh gradients. Network is expressed through
   motion, reserved accent, and corridor texture (Wise pattern).
+
+## 9. NetworkCanvas — corridor visualization (r2, Dakota grammar)
+
+Reference: dakota.xyz hero (screenshots in `design-context/reference-dakota/`), a Three.js particle
+globe with thin arcs between labeled rail chips (ACH, SWIFT, USDC) and pulses traveling the arcs.
+We take the **grammar** (particle arcs + boxed mono endpoint chips + traveling pulses + faint
+ambient texture), translated into light Industrial Confidence. Not the dark theme.
+
+- 2D `<canvas>`, no new dependencies. Scene: a dotted arc field on paper; five corridor endpoints
+  as boxed mono chips (region + currency code); thin sage arcs; small `--sage-500` pulses traveling
+  the arcs (accent only where money moves); faint `--sage-200` particle field for depth.
+- Craft: devicePixelRatio-aware; rAF paused off-screen (IntersectionObserver); prefers-reduced-motion
+  renders one static frame; sizes 390 to 1440 gracefully.
+- Placement: the corridor band on /products/network (replaces FlowLine + CorridorStrip there).
+  It is that page's ONE ambient element. CascadeFlow keeps the enrollment story in SVG, styled to
+  the same grammar (dotted arcs, boxed mono chips).
+- Prototype at `design-context/network-canvas-proto.html`, then port.

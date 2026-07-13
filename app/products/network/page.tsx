@@ -8,12 +8,12 @@ import {
 } from "../../components/site/ProductPage";
 import ValueList from "../../components/site/ValueList";
 import { EarlyPayDemo, PaymentsDemo, AgentsDemo } from "../../components/home/demos";
-import { CascadeFlow, CorridorStrip, FlowLine } from "../../components/site/network";
+import { CascadeFlow, NetworkCanvas } from "../../components/site/network";
 
 export const metadata: Metadata = {
   title: "The Payve Network",
   description:
-    "The payment network for the fresh supply chain. Enroll once: pay any supplier instantly across the US, Mexico, Colombia, Brazil, and the European Union with no wire fees — and unlock on-demand working capital for every supplier you pay.",
+    "The payment network for the fresh supply chain. Enroll once: pay any supplier instantly across the US, Mexico, Colombia, Brazil, and the European Union with no wire fees. Enrolling unlocks on-demand working capital for every supplier you pay.",
 };
 
 export default function NetworkPage() {
@@ -24,7 +24,7 @@ export default function NetworkPage() {
         title="The payment network for the fresh supply chain."
         image="/images/hero-payments.jpg"
         imageAlt="Pallets of boxed produce loading into a refrigerated trailer at a busy dock"
-        sub="Pay any supplier in the US, Mexico, Colombia, Brazil, and the European Union in their own currency, with no wire fees, from one approval. Hold balances in a global account, and every payment lands as connected data your team and your agents can use."
+        sub="The network gives a member three things. Instant payments: any supplier in the US, Mexico, Colombia, Brazil, and the European Union, paid in their own currency with no wire fees, from one approval. Liquidity: every supplier you pay can elect early payment on approved invoices. And one operating account, where every payment lands as connected data your team and your agents can use."
       />
 
       <SplitSection
@@ -34,8 +34,7 @@ export default function NetworkPage() {
       >
         <p>
           When you enroll, every supplier you pay gains instant payment and
-          on-demand working capital &mdash; and when they enroll, so do
-          theirs.
+          on-demand working capital. When they enroll, so do theirs.
         </p>
         <p>
           Suppliers enroll at no cost, from a short form on their phone. Each
@@ -45,10 +44,9 @@ export default function NetworkPage() {
       </SplitSection>
 
       <section className="mx-auto max-w-6xl px-4 pb-2 sm:px-6">
-        <FlowLine className="h-10 w-full" />
-        <span className="t-eyebrow mt-5 block">Five corridors, one network</span>
+        <span className="t-eyebrow block">Five corridors, one network</span>
         <div className="mt-4">
-          <CorridorStrip />
+          <NetworkCanvas />
         </div>
       </section>
 
@@ -65,8 +63,7 @@ export default function NetworkPage() {
         </p>
         <p>
           Invoices show what is due. Pay now or schedule a payment on a date
-          you pick &mdash; a scheduled payment stays cancellable until it
-          runs.
+          you pick. A scheduled payment stays cancellable until it runs.
         </p>
       </SplitSection>
 
@@ -80,8 +77,8 @@ export default function NetworkPage() {
           Suppliers wait out payment terms while money sits on approved
           invoices. On the network, a supplier can choose to be paid early
           and see the exact dollars received today, the fee, and when the
-          money arrives &mdash; before deciding. Nothing changes about how
-          you pay.
+          money arrives, all before deciding. Nothing changes about how you
+          pay.
         </p>
         <p>
           Suppliers with liquidity on open invoices ship sooner, stay closer,
@@ -98,7 +95,7 @@ export default function NetworkPage() {
             body: "International suppliers receive local currency at a competitive exchange rate. The wire fee line disappears from your cost of doing business.",
           },
           {
-            title: "Global accounts",
+            title: "Operating account",
             body: "Fund once and pay from your Payve balance. Available funds, pending deposits, and scheduled payments each stay visible and separate.",
           },
           {
@@ -111,7 +108,7 @@ export default function NetworkPage() {
           },
           {
             title: "Buyers earn income",
-            body: "Each time a supplier chooses early pay, the buyer earns income on the payment — with no change to the buyer's own cash flow or terms.",
+            body: "Each time a supplier chooses early pay, the buyer earns income on the payment, with no change to the buyer's own cash flow or terms.",
           },
           {
             title: "Stronger supplier relationships",
@@ -127,9 +124,9 @@ export default function NetworkPage() {
       >
         <p>
           A network payment is not a wire reference to chase. It carries its
-          invoice, approval, and settlement as one connected record &mdash;
-          so reconciliation stops being detective work, for your team and
-          for your suppliers&rsquo; teams too.
+          invoice, approval, and settlement as one connected record, so
+          reconciliation stops being detective work, for your team and for
+          your suppliers&rsquo; teams too.
         </p>
         <p>
           That connected record is what Agentic Intelligence runs on:

@@ -21,7 +21,7 @@ export default function PackagingPage() {
         image="/images/hero-packaging.jpg"
         imageAlt="Stacked corrugated cartons and paper rolls inside a sunlit packaging plant"
         atmosphere
-        sub="The food chain is corrugated's largest customer, and the plants that serve it sell on terms while board prices move monthly and harvest orders arrive in surges. When your customers pay through the Payve Network, approved invoices become working capital you can take when you choose — and agents handle the order entry and statements."
+        sub="The food chain is corrugated's largest customer, and the plants that serve it sell on terms while board prices move monthly and harvest orders arrive in surges. When your customers pay through the Payve Network, approved invoices become working capital you can take when you choose, and agents handle the order entry and statements."
       />
 
       <StatStrip
