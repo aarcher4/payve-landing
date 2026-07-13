@@ -109,7 +109,7 @@ export function NetworkCanvas() {
       canvas.width = W * dpr;
       canvas.height = H * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      R = Math.min(W * 0.33, H * 0.72);
+      R = Math.min(Math.max(W * 0.33, 210), H * 0.72);
       CX = W / 2;
       CY = H + R * 0.12; // upper hemisphere rises from the bottom edge
       if (reduced) draw(GLOBE.staticT);

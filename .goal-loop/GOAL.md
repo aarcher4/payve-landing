@@ -8,7 +8,7 @@ On branch `site/network-rebrand`, per `.goal-loop/PLAN.md`: the "Send it. It's t
 - [x] Proto critique loop: at least TWO full passes (screenshot 1440+390 → ruthless critique in `.goal-loop/REVIEW.md` round-6 series → fix) continuing until a pass has zero must-fixes
 - [x] Port into `NetworkCanvas` (`app/components/site/network.tsx`): replace the flat arc-map, keep the exported name + chip/.chip-hit mechanism; dpr-aware; rAF paused off-screen; prefers-reduced-motion renders one static composed frame; band ~540px desktop / ~380px mobile
 - [x] `app/products/network/page.tsx`: band → statement section (display H2 "Send it. It's there." two-tone + benefits sub-line, canvas below/behind); `docs/network-rebrand.md` §9 updated
-- [ ] In-app verification: screenshots 1440+390; reduced-motion probe (static frame, no rAF); rAF frame-time sample steady (comfortably 60fps)
+- [x] In-app verification: screenshots 1440+390; reduced-motion probe (static frame, no rAF); rAF frame-time sample steady (comfortably 60fps)
 - [ ] REVIEW.md final round: zero must-fixes on a POST-CHANGE pass carrying `VERDICT: INCREDIBLE — SHIP`
 - [ ] Gate green; pushed to origin; Render preview deploy live (srv-d96hquv7f7vs73dm7930, auto-deploy on push); smoke-check `/products/network` on payve-site-preview.onrender.com
 

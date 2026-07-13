@@ -108,3 +108,8 @@ Plan: .goal-loop/PLAN.md (r4). Bar: absolutely incredible; proto passes before p
 - did: network.tsx flat-map NetworkCanvas replaced with the pass-5 globe (GLOBE_ANCHORS lat/lon, jittered Fibonacci dots, tilt +0.30, chips riding projection w/ chip-hit kept, arcs+pulses; component now fills its positioned parent); page band = statement section (display H2 two-tone + benefits sub-line over the globe, 380/540px); docs §9 rewritten. tsc clean.
 - GATE: PASS
 - next: in-app verification (screenshots 1440+390, reduced-motion probe, rAF frame-time sample) then final review round
+
+## r4 iteration 4 — in-app verification (+ mobile radius must-fix)
+- did: live screenshots 1440/390 (zero pageerrors); reduced-motion probe {staticFrame:true, rafCount:0, painted:true}; frame-time sample p50/p95 16.7ms (locked 60fps, one 33ms outlier). FOUND+FIXED mobile must-fix: width-driven radius made the sphere 129px w/ stacked chips → R floor clamped to 210 (component + proto), rebuilt, re-shot: mobile fills the band, chips spread.
+- GATE: PASS
+- next: final review round (REVIEW.md, VERDICT: INCREDIBLE — SHIP) then push/deploy/smoke
