@@ -142,3 +142,6 @@ Alex: everyone also pays EU; reverse flows; country-to-country (MX-CO, CO-BR); i
 - did: post-clamp final shot clean (all 5 chips, MX on-screen); REVIEW round 7 VERDICT: ALIVE — SHIP; pushed 141484d; Render deploy live; smoke 200. ALL r5 boxes checked.
 - GATE: PASS (final run)
 - next: none — r5 run complete
+
+## post-r5 revert — back to the r4 rotating globe (Alex: r5 static looked worse)
+- did: network.tsx + proto restored from e75b31c (rotating earth, 30s/rev, 5 arcs, original composition, BR lat -10, CY 0.12). Gate PASS.
