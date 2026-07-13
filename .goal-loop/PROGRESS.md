@@ -14,3 +14,8 @@ Locked user decisions: two products only; full-site rebrand; softer fee framing 
 - did: app/components/site/network.tsx — FlowLine (ambient sage path + animateMotion pulse, reduced-motion static), CascadeFlow (framed demo: enroll → 3 suppliers paid → Casa de Tortillas enrolls → its 2 suppliers unlock; framer-motion pathLength edges, aria-label, final-state-static under reduced motion), CorridorStrip (5 corridors uniform, type-led). Matches demos.tsx grammar (frame/frameHeader, useSteps=useLoopStep pattern, accent only where money moves).
 - GATE: FAIL redirects-missing x3 (2nd consecutive — next iter must flip signature by landing IA)
 - next: IA step — /products/network + /products/agentic-intelligence pages, next.config.ts redirects, walk.mjs routes, nav/footer config → gate green
+
+## iteration 3 — IA lands: two-product architecture, gate GREEN
+- did: /products/network (hero + Enroll/CascadeFlow + CorridorStrip + Move money/PaymentsDemo + Unlock your suppliers/EarlyPayDemo + membership ValueList + Connected data/AgentsDemo bridge + QuoteBand); /products/agentic-intelligence (agents page reframed on network data, reconciliation-on-network-data value item, cross-sell to Network); deleted old 3 product dirs; next.config.ts permanent redirects; config.ts nav+footer = two products; walk.mjs routes updated (old kept via redirect). Checked 7 GOAL boxes.
+- GATE: PASS (build green, redirects 308 verified, WALK CLEAN 1440/390, greps clean)
+- next: homepage — ProductTour 3→2 rows, Hero subhead reframe + cascade sentence, HowItWorks step 01 Enroll, links off old routes

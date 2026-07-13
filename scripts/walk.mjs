@@ -12,7 +12,9 @@ const CTA_LABEL = "Schedule time with us";
 const CTA_HREF = "https://zcal.co/payve";
 
 const ROUTES = [
-  "/", "/products/payments", "/products/early-pay", "/products/agents",
+  "/", "/products/network", "/products/agentic-intelligence",
+  // Old product routes stay listed: they must keep resolving (via redirect).
+  "/products/payments", "/products/early-pay", "/products/agents",
   "/solutions/fresh-produce", "/solutions/seafood", "/solutions/packaging",
   "/customers", "/customers/fortune-growers", "/customers/sl-produce",
   "/customers/dal-campo", "/customers/producer-pro",

@@ -10,20 +10,20 @@ import ValueList from "../../components/site/ValueList";
 import { AgentsDemo, LoopsDemo } from "../../components/home/demos";
 
 export const metadata: Metadata = {
-  title: "Payve Agents",
+  title: "Agentic Intelligence",
   description:
-    "Payve Agents bring organizational intelligence and automate back office workflows: briefings, order entry, document matching, complaint root cause, and notifications. A person approves every write.",
+    "Agentic Intelligence runs on the Payve Network's connected data: briefings, order entry, document matching, reconciliation, complaint root cause, and Loops. A person approves every write.",
 };
 
-export default function AgentsPage() {
+export default function AgenticIntelligencePage() {
   return (
     <main>
       <PageHero
         eyebrow="Products"
-        title="Payve Agents know your business and do the busywork."
+        title="Agentic intelligence that already knows your business."
         image="/images/hero-agents.jpg"
         imageAlt="Terraced green fields on Andean mountainsides with a farm truck on the road"
-        sub="Payve Agents connect to the systems you already run, answer questions about your business in plain English or Spanish, and automate the back office work your team does by hand. A person on your team approves every write."
+        sub="Payve agents run on your network's connected data — every payment, invoice, and order already in one place — plus the systems you run today. They answer questions in plain English or Spanish and do the back office work your team does by hand. A person on your team approves every write."
       />
 
       <SplitSection
@@ -75,12 +75,12 @@ export default function AgentsPage() {
             body: "Invoices, bills of lading, and count sheets are read, validated, de-duplicated, and matched to the right order before anything posts.",
           },
           {
-            title: "Complaint root cause",
-            body: "When a customer complaint comes in, an agent pulls the related orders and inspection data and drafts a root-cause analysis for your review.",
+            title: "Reconciliation on network data",
+            body: "Payments made on the Payve Network carry their invoice, approval, and settlement as one record — so agents reconcile them without chasing wire references.",
           },
           {
-            title: "Loops on a schedule",
-            body: "Pick a cadence and a question: hourly sales on one product, a price threshold, receivables at risk. Deterministic checks and agentic investigations that alert only when something needs you.",
+            title: "Complaint root cause",
+            body: "When a customer complaint comes in, an agent pulls the related orders and inspection data and drafts a root-cause analysis for your review.",
           },
           {
             title: "Scheduled briefings",
@@ -96,10 +96,7 @@ export default function AgentsPage() {
       <QuoteBand />
 
       <CrossSell
-        links={[
-          { label: "Payments", href: "/products/payments" },
-          { label: "Early pay", href: "/products/early-pay" },
-        ]}
+        links={[{ label: "The Payve Network", href: "/products/network" }]}
       />
 
       <ProductCtaBand />
