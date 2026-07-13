@@ -42,3 +42,35 @@ owed in round 2.
 - Fresh-produce: enroll-at-no-cost grower paragraph reads naturally; stats band credible.
 
 VERDICT: NOT YET — 5 must-fixes open.
+
+## Round 2 — 2026-07-13 (post iter-9 fixes, screenshots .goal-loop/screens/r2 + r2b)
+
+### Round-1 fixes verified visually
+1. CascadeFlow @390: stacked tree legible, status chips read; desktop labels 12px clear. ✔
+2. Footer tagline "The payment network for supply chain trade." on every page. ✔
+3. CrossSell eyebrow "One network". ✔
+4. Corridor band: FlowLine + "Five corridors, one network" eyebrow — reads intentional. ✔
+5. FlowLine live as the network page's one ambient element. ✔
+6-8. Status order / label size / tour corridor line. ✔
+
+### NEW — CRITICAL (found & FIXED this round)
+9. **Reduced-motion users got permanently blank customers + company pages** (pre-existing, also on
+   the pr16 base): Reveal returned a plain <div> under prefers-reduced-motion, leaving framer's SSR
+   inline `opacity:0` style in place on pages with no other client re-render. Probed and confirmed
+   (computed opacity 0 on h1 wrappers). FIX: Reveal's reduced branch now renders the same motion.div
+   driven instantly to the final state (initial={false}, animate opacity 1, duration 0). Verified
+   opacity 1 on /products/network, /customers, /company under reduce; full-page screenshots now
+   capture complete pages.
+
+### MUST-FIX (open, small)
+10. Customers hub hero sub still three-product phrasing: "…use Payve to pay suppliers, offer early
+    pay, and put agents on their back office." → network phrasing ("pay suppliers across the
+    network, unlock early payment for them, and put agentic intelligence on the back office").
+    Same page metadata description too.
+
+### Deep-review coverage
+home ✔, products/network ✔ (1440+390), products/agentic-intelligence ✔, fresh-produce ✔,
+customers ✔ (r2b). Remaining to eyeball in round 3: seafood, packaging, company, security (all
+template pages sharing PageHero-atmosphere + FeatureGrid; low delta) + home-390.
+
+VERDICT: NOT YET — 1 small must-fix open + round-3 sweep owed.

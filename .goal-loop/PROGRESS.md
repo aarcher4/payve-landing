@@ -49,3 +49,8 @@ Locked user decisions: two products only; full-site rebrand; softer fee framing 
 - did: CascadeFlow mobile stacked-tree variant (sm:hidden) + desktop labels 12/10 on 118x52 nodes + status order Enrolled→Suppliers unlocked→Network growing; footer tagline → "The payment network for supply chain trade."; CrossSell eyebrow → "One network"; corridor band on /products/network gets FlowLine (page's one ambient element) + "Five corridors, one network" eyebrow; ProductTour rail gets corridor mono line (white/40).
 - GATE: PASS
 - next: design review round 2 — re-screenshot, verify fixes landed visually, deep-review remaining pages (seafood, packaging, customers, company, security + 390 variants)
+
+## iteration 10 — design review round 2 + critical Reveal a11y fix
+- did: r2/r2b screenshots; verified all 8 round-1 fixes visually; FOUND+FIXED critical pre-existing bug — Reveal left framer SSR opacity:0 inline style on reduced-motion (customers/company rendered blank for reduced-motion users); Reveal reduced branch now same motion.div driven to final state instantly, probe-verified opacity 1 across routes. New small must-fix logged: customers hub hero sub still three-product phrasing.
+- GATE: PASS
+- next: fix customers hub copy (#10), round-3 sweep (seafood, packaging, company, security, home-390), then verdict
