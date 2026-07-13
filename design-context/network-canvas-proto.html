@@ -3,171 +3,223 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>NetworkCanvas proto — Payve corridor visualization</title>
+<title>NetworkCanvas proto v2 — "Send it. It's there." particle globe</title>
 <style>
   /* Industrial Confidence tokens (mirror of design-context/colors_and_type.css) */
   :root {
     --paper: #F7F8F9; --paper-2: #EEF0F2; --paper-elev: #FFFFFF;
     --ink-1: #0B0D12; --ink-2: #4A4F58; --ink-3: #767C86;
     --hairline: #E1E4E8; --hairline-2: #CFD3D9;
-    --sage-200: #C5D5CC; --sage-300: #A8C0B3; --sage-500: #6F8D7C;
-    --sage-600: #506B60; --sage-700: #3B5448;
+    --sage-50: #EEF3EF; --sage-200: #C5D5CC; --sage-300: #A8C0B3;
+    --sage-500: #6F8D7C; --sage-600: #506B60; --sage-700: #3B5448;
   }
-  body { margin: 0; background: var(--paper); font-family: system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); font-family: system-ui, -apple-system, sans-serif; }
   .wrap { max-width: 1104px; margin: 40px auto; padding: 0 16px; }
-  .eyebrow { font: 600 11px/1.2 monospace; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 16px; }
-  .scene { position: relative; height: 400px; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); overflow: hidden; }
+  .scene { position: relative; height: 540px; overflow: hidden; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
   canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .chip { position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 6px;
+  .copy { position: relative; z-index: 2; text-align: center; padding-top: 60px; pointer-events: none; }
+  .copy h2 { margin: 0; font-weight: 800; letter-spacing: -0.022em; font-size: 40px; color: var(--ink-1); }
+  .copy h2 .dim { color: var(--ink-3); }
+  .copy p { margin: 12px 0 0; font-size: 15px; color: var(--ink-2); }
+  .chip { position: absolute; left: 0; top: 0; z-index: 1; display: flex; align-items: center; gap: 6px;
     background: var(--paper-elev); border: 1px solid var(--hairline-2); border-radius: 4px;
     padding: 5px 9px; font: 600 10.5px/1 ui-monospace, monospace; letter-spacing: .06em; text-transform: uppercase;
-    color: var(--ink-1); white-space: nowrap; box-shadow: 0 1px 2px rgba(11,13,18,0.06); }
+    color: var(--ink-1); white-space: nowrap; box-shadow: 0 1px 2px rgba(11,13,18,0.06); will-change: transform, opacity; }
   .chip .ccy { color: var(--ink-3); font-weight: 500; }
   .chip .dot { width: 5px; height: 5px; border-radius: 999px; background: var(--sage-500); transition: box-shadow .3s, background .3s; }
   .chip.hit .dot { background: var(--sage-600); box-shadow: 0 0 0 3px rgba(111,141,124,0.25); }
-  @media (max-width: 640px) { .scene { height: 300px; } .chip { padding: 4px 7px; font-size: 9px; } .chip .region-full { display: none; } }
+  @media (max-width: 640px) {
+    .scene { height: 380px; }
+    .copy { padding-top: 44px; } .copy h2 { font-size: 28px; } .copy p { font-size: 13px; padding: 0 24px; }
+    .chip { padding: 4px 7px; font-size: 9px; } .chip .region-full { display: none; }
+  }
   @media (min-width: 641px) { .chip .region-short { display: none; } }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="eyebrow">Five corridors, one network</div>
   <div class="scene" id="scene">
-    <canvas id="net" aria-hidden="true"></canvas>
+    <canvas id="globe" aria-hidden="true"></canvas>
+    <div class="copy">
+      <h2>Send it. <span class="dim">It&rsquo;s there.</span></h2>
+      <p>Any supplier, any country, paid in their own currency.</p>
+    </div>
   </div>
 </div>
 <script>
 (() => {
-  const NODES = [
-    { id: "us", full: "United States", short: "US", ccy: "USD", x: 0.26, y: 0.30 },
-    { id: "eu", full: "European Union", short: "EU", ccy: "EUR", x: 0.84, y: 0.22 },
-    { id: "mx", full: "Mexico", short: "MX", ccy: "MXN", x: 0.13, y: 0.66 },
-    { id: "co", full: "Colombia", short: "CO", ccy: "COP", x: 0.46, y: 0.80 },
-    { id: "br", full: "Brazil", short: "BR", ccy: "BRL", x: 0.72, y: 0.66 },
+  const TAU = Math.PI * 2;
+  const N_DOTS = 800;
+  const ROT_PERIOD = 26;            // seconds per revolution
+  const TILT = -0.21;               // radians about X (north pole toward viewer)
+  const STATIC_T = 9.5;             // reduced-motion freeze time (US/MX/EU front)
+
+  const ANCHORS = [
+    { id: "us", full: "United States", short: "US", ccy: "USD", lat: 38, lon: -97 },
+    { id: "mx", full: "Mexico", short: "MX", ccy: "MXN", lat: 23, lon: -102 },
+    { id: "co", full: "Colombia", short: "CO", ccy: "COP", lat: 4, lon: -74 },
+    { id: "br", full: "Brazil", short: "BR", ccy: "BRL", lat: -10, lon: -55 },
+    { id: "eu", full: "European Union", short: "EU", ccy: "EUR", lat: 50, lon: 10 },
   ];
   const ARCS = [
     { a: "us", b: "mx", dur: 6.0, phase: 0.00 },
     { a: "us", b: "co", dur: 7.2, phase: 0.35 },
-    { a: "us", b: "br", dur: 8.0, phase: 0.62 },
-    { a: "us", b: "eu", dur: 6.8, phase: 0.18 },
-    { a: "mx", b: "eu", dur: 9.0, phase: 0.80 },
+    { a: "us", b: "br", dur: 8.2, phase: 0.62 },
+    { a: "us", b: "eu", dur: 7.0, phase: 0.18 },
+    { a: "mx", b: "eu", dur: 9.2, phase: 0.80 },
   ];
+
   const scene = document.getElementById("scene");
-  const canvas = document.getElementById("net");
+  const canvas = document.getElementById("globe");
   const ctx = canvas.getContext("2d");
-  const byId = Object.fromEntries(NODES.map(n => [n.id, n]));
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // DOM chips
+  // ---- geometry ----
+  const latlon = (lat, lon) => {
+    const la = (lat * Math.PI) / 180, lo = (lon * Math.PI) / 180;
+    return { x: Math.cos(la) * Math.cos(lo), y: -Math.sin(la), z: Math.cos(la) * Math.sin(lo) };
+  };
+  const DOTS = Array.from({ length: N_DOTS }, (_, i) => {
+    const y = 1 - (i / (N_DOTS - 1)) * 2;
+    const r = Math.sqrt(Math.max(0, 1 - y * y));
+    const th = i * 2.399963229728653; // golden angle
+    return { x: Math.cos(th) * r, y, z: Math.sin(th) * r };
+  });
+  const A = Object.fromEntries(ANCHORS.map((a) => [a.id, latlon(a.lat, a.lon)]));
+
+  const rotate = (p, w) => {
+    // Y-axis spin then X tilt
+    const cx = Math.cos(w), sx = Math.sin(w);
+    const x = p.x * cx + p.z * sx, z = -p.x * sx + p.z * cx, y = p.y;
+    const ct = Math.cos(TILT), st = Math.sin(TILT);
+    return { x, y: y * ct - z * st, z: y * st + z * ct };
+  };
+  const slerp = (a, b, t) => {
+    const dot = Math.max(-1, Math.min(1, a.x * b.x + a.y * b.y + a.z * b.z));
+    const th = Math.acos(dot);
+    if (th < 1e-4) return { ...a };
+    const s = Math.sin(th), ka = Math.sin((1 - t) * th) / s, kb = Math.sin(t * th) / s;
+    return { x: a.x * ka + b.x * kb, y: a.y * ka + b.y * kb, z: a.z * ka + b.z * kb };
+  };
+
+  // ---- chips ----
   const chipEls = {};
-  for (const n of NODES) {
+  for (const a of ANCHORS) {
     const el = document.createElement("div");
     el.className = "chip";
-    el.style.left = (n.x * 100) + "%";
-    el.style.top = (n.y * 100) + "%";
-    el.innerHTML = `<span class="dot"></span><span class="region-full">${n.full}</span><span class="region-short">${n.short}</span><span class="ccy">${n.ccy}</span>`;
+    el.innerHTML = `<span class="dot"></span><span class="region-full">${a.full}</span><span class="region-short">${a.short}</span><span class="ccy">${a.ccy}</span>`;
     scene.appendChild(el);
-    chipEls[n.id] = el;
+    chipEls[a.id] = el;
   }
 
-  let W = 0, H = 0, dpr = 1;
+  // ---- sizing ----
+  let W = 0, H = 0, R = 0, CX = 0, CY = 0;
   function resize() {
-    dpr = Math.min(devicePixelRatio || 1, 2);
+    const dpr = Math.min(devicePixelRatio || 1, 2);
     W = scene.clientWidth; H = scene.clientHeight;
     canvas.width = W * dpr; canvas.height = H * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    R = Math.min(W * 0.46, H * 1.12);
+    CX = W / 2; CY = H + R * 0.24;   // upper hemisphere rises from the bottom edge
+    if (reduced) draw(STATIC_T);
   }
-  resize();
-  new ResizeObserver(resize).observe(scene);
 
-  const px = n => ({ x: n.x * W, y: n.y * H });
-  // Quadratic arc: control point lifted perpendicular-ish (upward bias)
-  function ctrl(a, b) {
-    const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
-    const d = Math.hypot(b.x - a.x, b.y - a.y);
-    return { x: mx, y: my - Math.min(d * 0.30, H * 0.34) };
-  }
-  const qPoint = (a, c, b, t) => ({
-    x: (1 - t) ** 2 * a.x + 2 * (1 - t) * t * c.x + t * t * b.x,
-    y: (1 - t) ** 2 * a.y + 2 * (1 - t) * t * c.y + t * t * b.y,
-  });
+  const proj = (p) => ({ x: CX + p.x * R, y: CY + p.y * R, z: p.z });
 
-  // Ambient particle field
-  const P = Array.from({ length: 90 }, () => ({
-    x: Math.random(), y: Math.random(),
-    r: 0.6 + Math.random() * 0.9,
-    a: 0.06 + Math.random() * 0.16,
-    sp: 0.2 + Math.random() * 0.6, ph: Math.random() * Math.PI * 2,
-  }));
-
-  const hits = {}; // chip flash timers
+  // ---- draw ----
+  const hits = {};
   function draw(tSec) {
     ctx.clearRect(0, 0, W, H);
+    const w = (tSec / ROT_PERIOD) * TAU;
 
-    // particles (twinkle + slow drift)
-    ctx.fillStyle = "#A8C0B3";
-    for (const p of P) {
-      const tw = 0.5 + 0.5 * Math.sin(tSec * p.sp + p.ph);
-      ctx.globalAlpha = p.a * tw;
-      const dx = Math.sin(tSec * 0.05 + p.ph) * 6;
-      ctx.beginPath();
-      ctx.arc(p.x * W + dx, p.y * H, p.r, 0, Math.PI * 2);
-      ctx.fill();
+    // atmosphere glow behind the sphere
+    const g = ctx.createRadialGradient(CX, CY, R * 0.2, CX, CY, R * 1.18);
+    g.addColorStop(0, "rgba(238,243,239,0.9)");   // sage-50
+    g.addColorStop(0.72, "rgba(238,243,239,0.35)");
+    g.addColorStop(1, "rgba(238,243,239,0)");
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(CX, CY, R * 1.18, 0, TAU); ctx.fill();
+
+    // sphere dots (back first for cheap painter's order)
+    const pts = [];
+    for (const d of DOTS) { const q = proj(rotate(d, w)); if (q.y < H + 8) pts.push(q); }
+    pts.sort((a, b) => a.z - b.z);
+    for (const q of pts) {
+      const f = Math.max(0, q.z); // 0..1 frontness
+      ctx.globalAlpha = 0.07 + 0.6 * Math.pow(f, 1.6);
+      ctx.fillStyle = f > 0.55 ? "#6F8D7C" : "#A8C0B3";
+      ctx.beginPath(); ctx.arc(q.x, q.y, 0.7 + 1.0 * f, 0, TAU); ctx.fill();
     }
 
-    // dotted arcs
+    // limb: faint circle edge grounds the sphere
+    ctx.globalAlpha = 0.25;
+    ctx.strokeStyle = "#C5D5CC";
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(CX, CY, R, 0, TAU); ctx.stroke();
+
+    // surface arcs (dotted, lifted great circles)
     for (const arc of ARCS) {
-      const a = px(byId[arc.a]), b = px(byId[arc.b]), c = ctrl(a, b);
-      const d = Math.hypot(b.x - a.x, b.y - a.y);
-      const steps = Math.max(24, Math.floor(d / 9));
-      ctx.fillStyle = "#A8C0B3";
+      const a = A[arc.a], b = A[arc.b];
+      const steps = 44;
       for (let i = 1; i < steps; i++) {
         const t = i / steps;
-        const p = qPoint(a, c, b, t);
-        ctx.globalAlpha = 0.34 + 0.26 * Math.sin(t * Math.PI);
-        ctx.beginPath(); ctx.arc(p.x, p.y, 1.15, 0, Math.PI * 2); ctx.fill();
+        const s = slerp(a, b, t);
+        const lift = 1 + 0.17 * Math.sin(Math.PI * t);
+        const q = proj(rotate({ x: s.x * lift, y: s.y * lift, z: s.z * lift }, w));
+        if (q.z < -0.05 || q.y > H + 4) continue;
+        ctx.globalAlpha = (0.16 + 0.3 * Math.max(0, q.z)) * (0.55 + 0.45 * Math.sin(Math.PI * t));
+        ctx.fillStyle = "#A8C0B3";
+        ctx.beginPath(); ctx.arc(q.x, q.y, 1.15, 0, TAU); ctx.fill();
       }
-    }
-
-    // pulses with trails
-    if (!reduced) {
-      for (const arc of ARCS) {
-        const a = px(byId[arc.a]), b = px(byId[arc.b]), c = ctrl(a, b);
-        const cycle = ((tSec / arc.dur) + arc.phase) % 1;
-        // forward then reverse alternate: use cycle<0.5 → a→b, else b→a
-        const fwd = (Math.floor((tSec / arc.dur) + arc.phase) % 2) === 0;
+      // pulse + trail
+      if (!reduced) {
+        const cycle = (tSec / arc.dur + arc.phase) % 1;
+        const fwd = Math.floor(tSec / arc.dur + arc.phase) % 2 === 0;
         const t = fwd ? cycle : 1 - cycle;
         for (let k = 5; k >= 0; k--) {
-          const tt = Math.max(0, Math.min(1, t - k * 0.012 * (fwd ? 1 : -1)));
-          const p = qPoint(a, c, b, tt);
-          ctx.globalAlpha = k === 0 ? 0.95 : 0.36 - k * 0.05;
+          const tt = Math.max(0.02, Math.min(0.98, t - k * 0.014 * (fwd ? 1 : -1)));
+          const s = slerp(a, b, tt);
+          const lift = 1 + 0.17 * Math.sin(Math.PI * tt);
+          const q = proj(rotate({ x: s.x * lift, y: s.y * lift, z: s.z * lift }, w));
+          if (q.z < -0.02 || q.y > H + 4) continue;
+          ctx.globalAlpha = (k === 0 ? 0.95 : 0.36 - k * 0.05) * (0.35 + 0.65 * Math.max(0, q.z));
           ctx.fillStyle = "#6F8D7C";
-          ctx.beginPath(); ctx.arc(p.x, p.y, k === 0 ? 2.7 : 1.7, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.arc(q.x, q.y, k === 0 ? 2.6 : 1.6, 0, TAU); ctx.fill();
         }
-        // arrival flash on chip
-        const dest = fwd ? arc.b : arc.a;
-        if (cycle > 0.96 && !hits[dest]) {
-          hits[dest] = true;
-          chipEls[dest].classList.add("hit");
-          setTimeout(() => { chipEls[dest].classList.remove("hit"); hits[dest] = false; }, 600);
+        const destId = fwd ? arc.b : arc.a;
+        if (cycle > 0.96 && !hits[destId]) {
+          hits[destId] = true;
+          chipEls[destId].classList.add("hit");
+          setTimeout(() => { chipEls[destId].classList.remove("hit"); hits[destId] = false; }, 600);
         }
       }
     }
     ctx.globalAlpha = 1;
+
+    // chips ride the globe
+    for (const a of ANCHORS) {
+      const q = proj(rotate(A[a.id], w));
+      const el = chipEls[a.id];
+      const vis = Math.max(0, Math.min(1, (q.z + 0.18) / 0.55));
+      el.style.opacity = String(vis * (q.y > H - 6 ? 0 : 1));
+      el.style.transform = `translate(${q.x}px, ${q.y}px) translate(-50%, -50%) scale(${0.82 + 0.18 * Math.max(0, q.z)})`;
+      el.style.zIndex = q.z > 0 ? "3" : "1";
+    }
   }
 
+  // ---- loop ----
   let raf = null, visible = true;
   const t0 = performance.now();
-  function loop(now) {
-    draw((now - t0) / 1000);
-    if (visible && !reduced) raf = requestAnimationFrame(loop);
-  }
+  const loop = (now) => { draw((now - t0) / 1000 + STATIC_T); raf = visible && !reduced ? requestAnimationFrame(loop) : null; };
   new IntersectionObserver(([e]) => {
     visible = e.isIntersecting;
     if (visible && !reduced && raf === null) raf = requestAnimationFrame(loop);
     if (!visible && raf !== null) { cancelAnimationFrame(raf); raf = null; }
   }).observe(scene);
-  if (reduced) draw(3.7); else raf = requestAnimationFrame(loop);
+  resize();
+  new ResizeObserver(resize).observe(scene);
+  if (reduced) draw(STATIC_T); else raf = requestAnimationFrame(loop);
 })();
 </script>
 </body>

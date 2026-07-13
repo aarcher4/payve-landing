@@ -133,3 +133,21 @@ Zero must-fix critiques. This pass postdates the last code change (r5 screenshot
 iter-2 commit; no code changed during this round).
 
 VERDICT: HIGHER ESSENCE — SHIP
+
+## Round 6 (r4 globe) — proto pass 1 — 2026-07-13 (.goal-loop/screens/proto2-*)
+
+Scene built: Fibonacci sphere (800 dots), Y-spin + X-tilt, anchors from lat/long, chips riding
+projection, slerped surface arcs + pulses, bottom-crop composition under the display heading.
+
+### MUST-FIX (pass 1 → pass 2)
+1. Sphere does not READ as a sphere: dots far too faint/sparse (form dissolves into noise).
+   → 1300 dots; front alpha 0.10 + 0.72·f^1.35; radius 0.8 + 1.3f; sage-600 for f>0.6; back floor 0.10.
+2. Radius too large / center too low: curvature so gentle it reads as an arch, not a globe.
+   → R = min(W·0.33, H·0.72), CY = H + R·0.18 (visible curvature, unmistakable sphere).
+3. Rotation phase centers the Atlantic: only US + EU chips visible, Americas back-side.
+   → base rotation W0 = -2.88 rad so the Americas face front at t0 and in the reduced-motion frame.
+4. Chips float on emptiness (consequence of 1) and fade too aggressively → vis window widened.
+5. Arcs sub-visible → alpha up (0.22 + 0.4·frontness); limb stroke 0.35.
+
+Heading/sub composition works (two-tone display over the crop). Rotation speed slowed 26→30s.
+VERDICT: NOT YET (pass 2 owed)

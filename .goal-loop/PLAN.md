@@ -1,39 +1,37 @@
-# Payve Network Rebrand — r3: Benefits-First Customer Voice
+# Payve Network Rebrand — r4: "Send it. It's there." Globe
 
 ## Context
 
-r2 shipped (Network/Intelligence nav, no em dashes, operating account, NetworkCanvas). Alex's r3 note, from a designer-for-the-audience perspective: **customers don't care about corridors** or feature mechanics. The theme is the *benefits of the network*: payments are sent on the network and received instantly ("you send it, and it's there"), members are connected to **global liquidity** so suppliers get the capital they need quicker, and that builds stronger relationships. De-emphasize fee talk in headline positions (keep the factual "no wire fees" in detail lists). Every section must answer: what does the member get, what problem does this kill.
+r3 shipped the benefits voice. Alex's r4 ask: take another **canvas-driven** pass at the "Send it. It's there." band on `/products/network` and put a **globe under it** — a sphere of dots that makes it feel like you're sending money across a globe. Multiple passes; the bar is "absolutely incredible," highest standard. Reference remains Dakota's hero (particle globe, labeled chips, traveling arcs — screenshots already in `design-context/reference-dakota/`), translated into the light Industrial Confidence system.
 
-All changes on `site/network-rebrand`; copy-only plus one eyebrow/label pass — no structural or component changes. The NetworkCanvas stays exactly as built (country + currency chips are concrete, not jargon); only its heading and aria text change.
+## The scene (designed before code)
 
-## Voice rules (added to docs/network-rebrand.md §0)
+The band is promoted from an eyebrow + flat arc-map to a **statement section**:
 
-- **"Corridor" is banned in customer-facing copy** (gate-enforced). Country names are welcome; the word corridor is ours, not theirs.
-- Benefits-first test: every headline/eyebrow/blurb answers "what do I get" or "what problem disappears," not "what the feature is."
-- Canonical benefit lines to weave (Alex's words, polished):
-  - Instant: "Send a payment on the network and it's there." / "received instantly"
-  - Liquidity: "connected to global liquidity, so your suppliers get the capital they need, quicker"
-  - Relationships: "funded suppliers ship first / stay close / grow with you" → win more business
-- Fee claims move down-page: no fee talk in heros/eyebrows; "no wire fees" survives only in detail lists (ValueList/FeatureGrid). Absolute "free" stays banned.
+- Centered display heading **"Send it. It's there."** (existing `font-display` H2 scale, two-tone pattern) with one short sub-line under it (benefits voice, e.g. "Any supplier, any country, paid in their own currency.").
+- Beneath/behind it, the **upper hemisphere of a rotating particle globe** rising from the bottom edge of the band (Dakota's crop), drawn on 2D `<canvas>` — no new dependencies:
+  - ~800 dots distributed by Fibonacci sphere, orthographic projection, slow Y-axis rotation (~24s/rev).
+  - Depth: front-hemisphere dots larger/brighter (sage-300/500 by z), back hemisphere very faint — reads unmistakably as a 3D sphere on paper.
+  - **Five country anchors** pinned to plausible lat/longs (US, MX, CO, BR, EU), rotating with the sphere. The existing boxed mono chips (region + currency) track their projected positions via per-frame DOM transforms, fading/scaling as they rotate toward the back limb.
+  - **Payment arcs over the surface**: slerp between anchor pairs, lifted radially at mid-arc, projected; drawn dotted; sage-500 pulses travel them (accent only where money moves); chip dot flashes on arrival (existing `.chip-hit` mechanism). Arcs fade when an endpoint is back-facing.
+  - Subtle paper-tone radial glow behind the sphere for atmosphere; keep the faint ambient particle drift.
+- Craft requirements (unchanged from §9 + new): dpr-aware; rAF paused off-screen via IntersectionObserver; `prefers-reduced-motion` renders one static, well-composed frame (globe at a flattering rotation, arcs visible, no pulses); 390→1440 responsive (globe radius from container width; band ~540px desktop / ~380px mobile); frame budget comfortably 60fps (≤1k dots, no shadows/blur).
 
-## Copy changes by file
+## Process — canvas-driven, multiple passes to "incredible"
 
-1. **`app/products/network/page.tsx`**
-   - Canvas band eyebrow: "Five corridors, one network" → **"Send it. It's there."**
-   - Hero sub → benefits voice, e.g.: "Payments sent on the network arrive instantly: any supplier, any country, paid in their own currency. Every member is connected to global liquidity, so your suppliers can take the capital they need the moment they need it. Funded suppliers stay close, ship first, and grow with you."
-   - Metadata description to match (instant + global liquidity + relationships, no corridor).
-   - ValueList title touch-ups where feature-y: "Fast supplier receipt" → "Received in minutes, not days" (body unchanged); others already read as benefits.
-   - "Move money" section body: drop residual fee-forward phrasing from the first sentence if it reads feature-first; keep facts.
-2. **`app/components/site/network.tsx`** — NetworkCanvas `aria-label` reworded without "corridors"; CORRIDOR_* internal names stay (code, not copy).
-3. **`app/components/home/ProductTour.tsx`** — Network blurb → "Send a payment and it's there: any supplier, paid instantly in their own currency. Enrolling connects your suppliers to capital, so they can grow with you." (operating-account mention moves out of the blurb; it lives on the product page.)
-4. **`app/layout.tsx`** — site description: benefits voice ("send instantly… connect your suppliers to global liquidity…").
-5. **`public/llms.txt`** — replace "five corridors (US, Mexico, Colombia, Brazil, EU)" phrasing with country list + instant/liquidity benefits.
-6. **`docs/network-rebrand.md`** — §0 voice rules above; §5 retitled from "Corridors" to "Countries" (five, uniform — unchanged decision); §9 note that the visualization heading is now benefit-led.
-7. **`scripts/verify-rebrand.mjs`** — add `/corridor/i` to the copy-banned list (comments exempt, same mechanism as em-dash check). Grep-audit "corridor" across `app/` + `public/llms.txt` and fix all hits.
-8. Solutions/customers/company: grep pass only; fix any corridor/feature-first stragglers (fresh-produce metadata says "across the US, Mexico, Colombia, Brazil, and the EU" — fine, countries stay).
+1. **Proto v2** in `design-context/network-canvas-proto.html` (replace v1 contents; v1 is in git history): build the globe scene standalone with inline tokens.
+2. **Critique loop on the proto** (this is where the passes happen): screenshot at 1440 + 390 with the repo's Playwright (`scripts/` pattern), review ruthlessly against the bar — sphere legibility, dot density/falloff, rotation speed, chip tracking smoothness, arc elegance, composition with the heading — fix, re-shoot. Minimum two full passes; iterate until a pass has zero must-fixes. Log passes in `.goal-loop/REVIEW.md` (round 6 series).
+3. **Port** into `NetworkCanvas` in `app/components/site/network.tsx` (replace the flat arc-map implementation; keep the exported name and the chip/`.chip-hit` mechanism). Restructure the band in `app/products/network/page.tsx`: heading becomes the display H2 + sub-line, canvas below/behind; update `docs/network-rebrand.md` §9.
+4. **Verify + ship**: `node scripts/verify-rebrand.mjs` (kill port 3100 first — known collision); in-app screenshots desktop/mobile + reduced-motion probe (computed static frame) + a quick rAF frame-time sample via CDP/evaluate; REVIEW.md final round with verdict; commit, push (auto-deploys preview), confirm deploy live via Render API, smoke-check, send Alex the link.
+
+## Key files
+`design-context/network-canvas-proto.html` (v2 proto) · `app/components/site/network.tsx` (NetworkCanvas rewrite) · `app/products/network/page.tsx` (band → statement section) · `docs/network-rebrand.md` §9 · `.goal-loop/REVIEW.md`
+
+## Guardrails (carried)
+Locked color tokens; no new dependencies; no absolute "free" claims; no "corridor"/em dashes in copy (gate-enforced); the globe band remains the page's ONE ambient element; homepage untouched.
 
 ## Verification
-
-1. `node scripts/verify-rebrand.mjs` exit 0 (now also failing on "corridor" in copy).
-2. Screenshot the network page + homepage tour (existing `scripts/screenshot-pages.mjs` pattern); read the copy in-context for voice; append REVIEW.md round 5.
-3. Commit, push (auto-deploys the preview), confirm deploy live via Render API, smoke-check the new copy on payve-site-preview.onrender.com, send Alex the link.
+1. Proto passes logged with screenshots until zero must-fixes.
+2. `node scripts/verify-rebrand.mjs` exit 0.
+3. Reduced-motion renders a static composed frame (probe computed canvas + no rAF); rAF sample shows steady frame times.
+4. Push → Render deploy live → smoke-check `/products/network` → send preview link.

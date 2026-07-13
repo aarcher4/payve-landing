@@ -89,3 +89,12 @@ Alex r3 notes: customers don't care about corridors; benefits language (send it 
 - did: pushed d0f72bd; Render deploy dep live on payve-site-preview.onrender.com; smoke-checked live copy ("Send it. It's there.", "arrive instantly", "connected to global liquidity", zero "corridor"). Final GOAL box checked — ALL r3 acceptance criteria met.
 - GATE: PASS (final run)
 - next: none — r3 run complete
+
+# ---- r4 run: particle globe under "Send it. It's there." ----
+r4 run started 2026-07-13. Engine: stop-hook. Max-iters 20. Branch site/network-rebrand (continuing).
+Plan: .goal-loop/PLAN.md (r4). Bar: absolutely incredible; proto passes before porting.
+
+## r4 iteration 1 — proto v2 globe built + pass-1 critique
+- did: design-context/network-canvas-proto.html rewritten as the particle-globe scene (Fibonacci sphere, spin+tilt, anchors/chips riding projection, slerped dotted arcs + pulses, heading overlay); pass-1 screenshots; ruthless critique in REVIEW.md round 6 (5 must-fixes: dot presence, radius/curvature, rotation phase, chip fade, arc alpha).
+- GATE: PASS (proto is design-context only; site untouched)
+- next: apply pass-2 fixes to proto, re-shoot, critique again
