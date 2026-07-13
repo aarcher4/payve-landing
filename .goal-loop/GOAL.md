@@ -1,59 +1,26 @@
-# goal-loop: r3 polish wave (reference-benchmarked, app-direct, NO canvas)
+# goal-loop: Payve Network rebrand — extraordinary, on branch site/network-rebrand
 
 ## Goal (behavioral outcomes)
-Execute the approved plan at `C:\Users\Alex Archer\.claude\plans\continue-the-landing-rebuild-nested-thimble.md`
-in `C:\Users\Alex Archer\Desktop\payve-landing` on branch `site/pr15-polish` (stacked on pr14).
-When done: the logo is back to the transparent variant, the wall reads "Trusted by supply chain
-leaders", a rigorous live-walk reference review of Mercury/Ramp/HappyRobot/Brex exists as
-docs/design-review-r3.md with our 14 pages graded and a CTA-copy shortlist, and the ranked gaps
-are implemented app-direct through the Payve design system (docs updated FIRST each round):
-ProductTour rebuilt reference-informed and type-led, site-wide icon diet done, type/spacing and
-products/solutions/customers gaps closed, all verified and live on the preview.
+The payve-landing site, on branch `site/network-rebrand` (based off site/pr16-solutions-content, which stays untouched), is rebranded around exactly two products — **The Payve Network** and **Agentic Intelligence** — per the frozen plan in `.goal-loop/PLAN.md`. A visitor experiences: a homepage with the same general structure/details as today but reframed to the two products; a `/products/network` page that merges payments + early-pay into the network story (enroll once → instant cross-border money movement across US/Mexico/Colombia/Brazil/EU presented uniformly → connected data → supplier liquidity cascade); a `/products/agentic-intelligence` page (reframed agents page); solutions pages in network-membership language; old product URLs redirect. The craft bar is not "good" — it is extraordinary: clear, credible, remarkable design that evolves (not replaces) the Industrial Confidence system and its motion rules.
 
 ## Acceptance criteria
-- [x] Phase 0 on site/pr15-polish: header+footer logo src -> /brand/payve-logo-transparent.png;
-      LogoWall eyebrow -> "Trusted by supply chain leaders"; copy-inventory + design-system docs
-      updated; build green; pushed; PR opened (base site/pr14-trust-imagery); preview
-      srv-d96hquv7f7vs73dm7930 repointed to site/pr15-polish and live-walked clean.
-- [x] Phase 1 research: live Playwright walks of mercury.com (home + 2 product + customer proof),
-      ramp.com (home + 2 product + customers hub + 2 stories), happyrobot.ai (home + product +
-      customers + 1 story), brex.com (home + 1 product, CTA lens); full-page screenshots saved to
-      design-context/reference-r3/; docs/design-review-r3.md written with the 8 lenses
-      (iconography, multi-product pattern, type scale, section rhythm, social proof, case-study
-      anatomy, product/solution IA, closing-CTA copy incl. every reference CTA verbatim).
-- [x] Phase 1 grading: all 14 Payve pages graded 1-10 per applicable lens in design-review-r3.md;
-      ranked gap backlog written; CTA-copy shortlist (4-6 alternatives to "See Payve on your own
-      data." + recommendation) included; checkpoint R posted to Alex (report; CTA swap and any
-      judgment-call redesigns proceed on my recommendation if Alex hasn't replied, flagged for
-      his review).
-- [x] Round 1 homepage: ProductTour rebuilt per winning reference pattern (type-led selector, NO
-      icon tiles, active-state + connector affordance kept, demos kept, motion grammar per
-      docs/motion-system.md); icon diet applied (HowItWorks corner icons and TrustSection icons
-      removed, cards restyled type-first; header chevrons + in-demo checks kept); home type/
-      spacing gaps from the grading fixed; docs updated first.
-- [x] CTA band + MidCta headline: swap shipped if Alex picked (or shipped on recommendation with
-      a revert note if he hasn't answered by round 1 end).
-- [x] Round 2 products+solutions: lens-7 gaps applied; ValueList checkmark fate per lens-1
-      evidence; FeatureGrid parity.
-- [x] Round 3 customers: lens-6 gaps applied to hub + 4 stories.
-- [x] Each round verified: npm run build exit 0; walk.mjs CLEAN (16 routes x 1440/390);
-      hover-check CLEAN (interactions survive the redesign); copy-rule grep clean; re-grade of
-      touched pages >=8/10 on addressed lenses recorded in design-review-r3.md; preview deployed
-      + live-walked after each round.
-- [x] Follow-ups logged in PROGRESS + memory: canvas catch-up batch post-Friday (canvas debt from
-      the no-canvas exception), packing-house upscale, merge train.
-- [x] Memory updated: landing-rebuild memory extended with r3 state.
+- [ ] Positioning spec `docs/network-rebrand.md` written: two-product architecture, the ONE-sentence cascade, vocabulary (enroll/unlock/member; never lend/finance/factor), banned-words list, softer fee framing (no absolute "free"), five corridors uniform, design-evolution rules (accent only where money moves; one ambient element per page)
+- [ ] New components built per docs/motion-system.md rules + prefers-reduced-motion: `FlowLine` (ambient traveling pulse), `CascadeFlow` (enroll→unlock→cascade visualization), `CorridorStrip` (five regions, uniform)
+- [ ] `/products/network` page live with section arc: hero (category claim + the cascade sentence + softer fee line) → Enroll → Move money (CorridorStrip + ported PaymentsDemo content) → Unlock your suppliers (ported EarlyPayDemo + benefits ladder: paid faster → certainty/visibility → stronger relationships, win/secure more business; free-for-suppliers explicit) → Connected data (bridge to Agentic Intelligence) → QuoteBand → CtaBand
+- [ ] `/products/agentic-intelligence` live: agents page moved/reframed — agents are powerful because the network's data is already connected; Loops + approval-gate content kept; cross-sell to Network
+- [ ] `next.config.ts` redirects: /products/payments → /products/network, /products/early-pay → /products/network, /products/agents → /products/agentic-intelligence
+- [ ] Nav + footer (`app/components/site/config.ts`): Products ▾ = The Payve Network · Agentic Intelligence (two only)
+- [ ] Homepage: SAME section arc (Hero → LogoWall → ProductTour → HowItWorks → MidCta → Proof → TrustSection → CtaBand); hero subhead reframed to two products + cascade woven in; ProductTour 3 rows → 2; HowItWorks step 01 Connect → Enroll; links updated; Proof/Trust/LogoWall otherwise untouched
+- [ ] Solutions pages (fresh-produce, seafood, packaging): supplier-liquidity sections reframed to network membership; product names/links updated; structure + stats kept
+- [ ] Customers/company/security: label-level pass (Payve Agents → Agentic Intelligence, links); disclosure line kept everywhere
+- [ ] Metadata (`app/layout.tsx`), `public/llms.txt`, `app/sitemap.ts` updated to two-product framing + new routes
+- [ ] `scripts/walk.mjs` ROUTES updated: new product routes ADDED, old routes KEPT (they must resolve via redirect)
+- [ ] Design review: `.goal-loop/REVIEW.md` contains a full-site critique pass (Playwright screenshots, 1440 + 390, every rebranded page) scored on clarity, credibility, craft; iterate until the LATEST pass has zero must-fix critiques and an explicit `VERDICT: EXTRAORDINARY — SHIP`. A pass may only carry that verdict if it was performed AFTER the last code change.
+- [ ] Draft PR opened against `site/pr16-solutions-content` with before/after screenshots and a Render branch-preview note
 
 ## Verify gate (objective definition of done)
-`cd "C:\Users\Alex Archer\Desktop\payve-landing" && npm run build`  — must exit 0. Run it every iteration.
-
-## Standing constraints
-NO CANVAS this iteration (Alex, explicit; canvas-driven rule waived once; log the debt). Docs
-stay source of truth: update marketing-design-system.md + marketing-copy-inventory.md BEFORE the
-code each round. Industrial Confidence tokens only (never invent hex); motion per
-docs/motion-system.md; copy rules (no em dashes, no persuasion beyond Alex-approved lines, no
-rail names, no %/rates, every number traceable). Reference walks are read-only browsing; do not
-log in to anything; screenshots only.
+`node scripts/verify-rebrand.mjs`  — must exit 0. Run it every iteration once it exists (iteration 1 creates it; if an early iteration only touches docs, still run it).
+The gate runs: (1) next build; (2) next start + scripts/walk.mjs (all routes incl. new ones, 1440/390, zero console errors); (3) redirect assertions for the three old product URLs; (4) banned-words grep over app/ + public/llms.txt (seamless, frictionless, revolutioniz, reimagin, ecosystem, next-generation, cutting-edge, empower, "network effects"); (5) absolute-free-claim grep ("for free", "$0", "zero fees", "no transaction costs").
 
 ## Guardrails
 - **NEVER** delete, skip, `.skip`/`xit`/comment-out, or weaken tests to make the gate pass.
@@ -61,7 +28,8 @@ log in to anything; screenshots only.
 - The `<promise>` may be emitted **only when the statement is completely and unequivocally true.** Do not lie to escape the loop, even if you feel stuck or it's taking long — use `<promise>GOAL-LOOP BLOCKED</promise>` instead.
 - Do exactly **one** meaningful thing per iteration and commit it.
 - If the gate keeps failing the same way, diagnose the root cause; do not retry the identical action hoping for a different result.
+- Rebrand-specific: do not change the locked color token values in `app/globals.css` (Industrial Confidence β — adding new motion vars is fine); no absolute "free"/"$0" payment claims; never name technical vendors; the cascade recursion is stated in at most ONE sentence per page; homepage keeps its current section arc.
 
 ## Completion
-Emit `<promise>GOAL-LOOP COMPLETE</promise>` only when every box above is checked AND the verify gate exits 0.
+Emit `<promise>GOAL-LOOP COMPLETE</promise>` only when every box above is checked AND `node scripts/verify-rebrand.mjs` exits 0.
 Emit `<promise>GOAL-LOOP BLOCKED</promise>` if genuinely stuck (and write why in PROGRESS.md).
