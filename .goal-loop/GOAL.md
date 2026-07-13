@@ -12,7 +12,7 @@ The payve-landing site, on branch `site/network-rebrand` (based off site/pr16-so
 - [x] Nav + footer (`app/components/site/config.ts`): Products ▾ = The Payve Network · Agentic Intelligence (two only)
 - [x] Homepage: SAME section arc (Hero → LogoWall → ProductTour → HowItWorks → MidCta → Proof → TrustSection → CtaBand); hero subhead reframed to two products + cascade woven in; ProductTour 3 rows → 2; HowItWorks step 01 Connect → Enroll; links updated; Proof/Trust/LogoWall otherwise untouched
 - [x] Solutions pages (fresh-produce, seafood, packaging): supplier-liquidity sections reframed to network membership; product names/links updated; structure + stats kept
-- [ ] Customers/company/security: label-level pass (Payve Agents → Agentic Intelligence, links); disclosure line kept everywhere
+- [x] Customers/company/security: label-level pass (Payve Agents → Agentic Intelligence, links); disclosure line kept everywhere
 - [ ] Metadata (`app/layout.tsx`), `public/llms.txt`, `app/sitemap.ts` updated to two-product framing + new routes
 - [x] `scripts/walk.mjs` ROUTES updated: new product routes ADDED, old routes KEPT (they must resolve via redirect)
 - [ ] Design review: `.goal-loop/REVIEW.md` contains a full-site critique pass (Playwright screenshots, 1440 + 390, every rebranded page) scored on clarity, credibility, craft; iterate until the LATEST pass has zero must-fix critiques and an explicit `VERDICT: EXTRAORDINARY — SHIP`. A pass may only carry that verdict if it was performed AFTER the last code change.

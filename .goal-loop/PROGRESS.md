@@ -29,3 +29,8 @@ Locked user decisions: two products only; full-site rebrand; softer fee framing 
 - did: fresh-produce (hero sub = Network pays in own currency + unlocks liquidity; grower-enroll sentence in Supplier liquidity; eyebrow Agentic intelligence; "One network to pay"; metadata 5 corridors), seafood (hero sub network liquidity; "suppliers who enroll"), packaging (supplier-side: "when your customers pay through the Payve Network, approved invoices become working capital"). Structure + StatStrips untouched.
 - GATE: PASS
 - next: customers/company/security label pass (Payve Agents → Agentic Intelligence)
+
+## iteration 6 — customers/company/security label pass
+- did: runsOn chips → ["The Payve Network","Agentic Intelligence"] (fortune-growers, sl-produce); company page: metadata = payment-network framing, "network that moves your money", "one network to pay", "suppliers who enroll", corridors → 5. Security page needed no changes (approval gate/isolation copy is product-agnostic); disclosure line untouched site-wide (config-driven).
+- GATE: PASS
+- next: metadata (app/layout.tsx) + public/llms.txt + app/sitemap.ts to two-product framing + new routes
