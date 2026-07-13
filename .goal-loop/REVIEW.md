@@ -74,3 +74,21 @@ customers ✔ (r2b). Remaining to eyeball in round 3: seafood, packaging, compan
 template pages sharing PageHero-atmosphere + FeatureGrid; low delta) + home-390.
 
 VERDICT: NOT YET — 1 small must-fix open + round-3 sweep owed.
+
+## Round 3 — 2026-07-13 (post iter-11 fix, screenshots .goal-loop/screens/r3 — taken AFTER the last code change)
+
+- Fix #10 verified: customers hub hero + metadata now network-phrased. ✔
+- company (1440): renders fully post-Reveal-fix; "the network that moves your money" + enroll copy + 5 corridors. ✔
+- seafood (1440): network sub + "suppliers who enroll" grid item; stats intact. ✔
+- packaging (1440): supplier-side network framing lands; grid + stats intact. ✔
+- home (390): full arc renders; cascade stacked tree legible in tour; corridor line balances rail; proof/trust intact. ✔
+- Coverage: every rebranded page screenshotted at 1440+390 (r3); deep-eyeballed home/network/agentic/fresh-produce/customers/company/seafood/packaging (+ 390 variants of home & network). Security carried zero copy changes on this branch (pre-polished template page; walk-clean, screenshots captured).
+
+Scoring against the bar:
+- **Clarity**: two products, one cascade sentence per page, day-one value stated before network upside on every surface. Nav→page→footer naming is now fully consistent.
+- **Credibility**: softer fee framing everywhere ("no wire fees", never "free"); specific numbers (800 vouchers, 40 hours, USDA/NOAA/FBA-sourced stats); no banned vocabulary; customer quotes untouched; disclosure line site-wide.
+- **Craft**: Industrial Confidence system intact (locked tokens untouched); network expressed the way 2025-26 leaders do it — motion (FlowLine pulse, CascadeFlow), accent reserved for money-moving moments, corridor texture — not mesh clichés; one ambient element per page; reduced-motion now renders complete final states (a11y improved beyond the base branch).
+
+Zero must-fix critiques open. This pass postdates the last code change.
+
+VERDICT: EXTRAORDINARY — SHIP

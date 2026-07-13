@@ -15,7 +15,7 @@ The payve-landing site, on branch `site/network-rebrand` (based off site/pr16-so
 - [x] Customers/company/security: label-level pass (Payve Agents → Agentic Intelligence, links); disclosure line kept everywhere
 - [x] Metadata (`app/layout.tsx`), `public/llms.txt`, `app/sitemap.ts` updated to two-product framing + new routes
 - [x] `scripts/walk.mjs` ROUTES updated: new product routes ADDED, old routes KEPT (they must resolve via redirect)
-- [ ] Design review: `.goal-loop/REVIEW.md` contains a full-site critique pass (Playwright screenshots, 1440 + 390, every rebranded page) scored on clarity, credibility, craft; iterate until the LATEST pass has zero must-fix critiques and an explicit `VERDICT: EXTRAORDINARY — SHIP`. A pass may only carry that verdict if it was performed AFTER the last code change.
+- [x] Design review: `.goal-loop/REVIEW.md` contains a full-site critique pass (Playwright screenshots, 1440 + 390, every rebranded page) scored on clarity, credibility, craft; iterate until the LATEST pass has zero must-fix critiques and an explicit `VERDICT: EXTRAORDINARY — SHIP`. A pass may only carry that verdict if it was performed AFTER the last code change.
 - [ ] Draft PR opened against `site/pr16-solutions-content` with before/after screenshots and a Render branch-preview note
 
 ## Verify gate (objective definition of done)

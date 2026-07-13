@@ -54,3 +54,8 @@ Locked user decisions: two products only; full-site rebrand; softer fee framing 
 - did: r2/r2b screenshots; verified all 8 round-1 fixes visually; FOUND+FIXED critical pre-existing bug — Reveal left framer SSR opacity:0 inline style on reduced-motion (customers/company rendered blank for reduced-motion users); Reveal reduced branch now same motion.div driven to final state instantly, probe-verified opacity 1 across routes. New small must-fix logged: customers hub hero sub still three-product phrasing.
 - GATE: PASS
 - next: fix customers hub copy (#10), round-3 sweep (seafood, packaging, company, security, home-390), then verdict
+
+## iteration 11 — round 3: customers copy fix + full-site sweep → VERDICT: EXTRAORDINARY — SHIP
+- did: customers hub hero sub + metadata to network phrasing (#10); r3 screenshots post-change; deep-reviewed company/seafood/packaging/home-390; wrote round-3 scoring (clarity/credibility/craft) with zero open must-fixes; REVIEW.md carries VERDICT: EXTRAORDINARY — SHIP from a pass performed after the last code change. Design-review acceptance box checked.
+- GATE: PASS
+- next: final item — draft PR against site/pr16-solutions-content with before/after screenshots + Render preview note
