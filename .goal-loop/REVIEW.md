@@ -151,3 +151,21 @@ projection, slerped surface arcs + pulses, bottom-crop composition under the dis
 
 Heading/sub composition works (two-tone display over the crop). Rotation speed slowed 26→30s.
 VERDICT: NOT YET (pass 2 owed)
+
+## Round 6 (r4 globe) — proto passes 2-5 — 2026-07-13
+
+- Pass 2 (fixes 1-5 from pass 1): sphere now READS (1300 dots, stronger falloff, smaller R, limb).
+  New finds: Fibonacci lattice too regular (polka-dot fabric); rotation phase hides Americas; glow
+  edge shows as a pale dome; composition can tighten.
+- Pass 3: per-dot hash jitter + size variance → organic field ✔; W0 phase + quieter glow + CY
+  tightened. New find: Americas hug the right limb at first view.
+- Pass 4: phase centered, arc dots 1.3px + alpha up. STRUCTURAL FIND: negative tilt pushes
+  equator/southern anchors (Colombia, Brazil) permanently below the band crop — 2 of 5 countries
+  could never appear.
+- Pass 5: TILT flipped to +0.30 (viewer looks slightly down at the globe): equator lifts into frame;
+  EU, US, MX, Colombia visible simultaneously with arcs traveling (US→EU arching over the top);
+  Brazil rotates through. Mobile (390): sphere reads, chips abbreviate, arcs legible.
+
+Pass 5 judgment against the bar (sphere legibility ✔ / dot falloff ✔ / rotation speed ✔ 30s /
+chip tracking ✔ / arc elegance ✔ / composition with heading ✔): zero must-fixes.
+PROTO VERDICT: CLEAN — PORT IT.

@@ -4,8 +4,8 @@
 On branch `site/network-rebrand`, per `.goal-loop/PLAN.md`: the "Send it. It's there." band on `/products/network` becomes a statement section — centered display heading + one benefits sub-line over the upper hemisphere of a rotating particle globe (2D canvas, no new deps): ~800 Fibonacci-sphere dots with z-depth falloff, five country anchors whose boxed mono chips ride the rotation (fading toward the back limb), dotted payment arcs slerped over the surface with sage-500 pulses and chip-hit flashes. Dakota's hero grammar in light Industrial Confidence. The bar: absolutely incredible, highest standard — reached through repeated canvas-driven proto passes before porting.
 
 ## Acceptance criteria
-- [ ] Proto v2 globe scene in `design-context/network-canvas-proto.html` (inline tokens; rotation, depth falloff, chips tracking anchors, surface arcs + pulses, bottom-crop composition with the heading)
-- [ ] Proto critique loop: at least TWO full passes (screenshot 1440+390 → ruthless critique in `.goal-loop/REVIEW.md` round-6 series → fix) continuing until a pass has zero must-fixes
+- [x] Proto v2 globe scene in `design-context/network-canvas-proto.html` (inline tokens; rotation, depth falloff, chips tracking anchors, surface arcs + pulses, bottom-crop composition with the heading)
+- [x] Proto critique loop: at least TWO full passes (screenshot 1440+390 → ruthless critique in `.goal-loop/REVIEW.md` round-6 series → fix) continuing until a pass has zero must-fixes
 - [ ] Port into `NetworkCanvas` (`app/components/site/network.tsx`): replace the flat arc-map, keep the exported name + chip/.chip-hit mechanism; dpr-aware; rAF paused off-screen; prefers-reduced-motion renders one static composed frame; band ~540px desktop / ~380px mobile
 - [ ] `app/products/network/page.tsx`: band → statement section (display H2 "Send it. It's there." two-tone + benefits sub-line, canvas below/behind); `docs/network-rebrand.md` §9 updated
 - [ ] In-app verification: screenshots 1440+390; reduced-motion probe (static frame, no rAF); rAF frame-time sample steady (comfortably 60fps)

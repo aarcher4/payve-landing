@@ -98,3 +98,8 @@ Plan: .goal-loop/PLAN.md (r4). Bar: absolutely incredible; proto passes before p
 - did: design-context/network-canvas-proto.html rewritten as the particle-globe scene (Fibonacci sphere, spin+tilt, anchors/chips riding projection, slerped dotted arcs + pulses, heading overlay); pass-1 screenshots; ruthless critique in REVIEW.md round 6 (5 must-fixes: dot presence, radius/curvature, rotation phase, chip fade, arc alpha).
 - GATE: PASS (proto is design-context only; site untouched)
 - next: apply pass-2 fixes to proto, re-shoot, critique again
+
+## r4 iteration 2 — proto passes 2-5: globe reaches the bar, proto CLEAN
+- did: pass 2 (density/falloff/R/limb), pass 3 (hash jitter kills lattice, phase, glow, CY), pass 4 (center Americas, arc presence), pass 5 (tilt +0.30 lifts equator: all 5 countries reachable in frame; 4 visible at once w/ arcs). REVIEW.md round-6 passes logged; PROTO VERDICT: CLEAN — PORT IT. Both proto acceptance boxes checked.
+- GATE: PASS
+- next: port globe into NetworkCanvas + band → statement section + docs §9
