@@ -7,7 +7,7 @@ Discipline per payve-fintech's `design-system-sync` skill (r2 pass, 2026-07-13):
 tokens only, translation layer (no vendor names), tabular numerics, screenshot-verify before done.
 App-direct implementation; canvas re-sync deferred (documented exception).
 
-## 0. Copy style (r2, Alex)
+## 0. Copy style (r2 + r3, Alex)
 
 - **No em dashes in copy.** Break the sentence in two, or use a colon or comma. (Code comments exempt.)
 - Explain the network in three plain beats wherever it is introduced:
@@ -17,6 +17,19 @@ App-direct implementation; canvas re-sync deferred (documented exception).
 - Product names: **Network** and **Intelligence** in nav, footer, and selector rails. Full names
   "The Payve Network" / "Agentic Intelligence" in H1s and prose where natural.
 - **"Operating account"**, never "global account".
+
+### r3 voice rules — benefits first (designer-for-the-audience)
+
+- **"Corridor" is banned in customer-facing copy** (gate-enforced). It is our word, not the
+  customer's. Country and currency names are concrete and always welcome.
+- **Benefits-first test**: every headline, eyebrow, and blurb must answer "what do I get" or
+  "what problem disappears," never "what the feature is." Write for a produce buyer or grower.
+- Canonical benefit lines (weave, don't repeat verbatim everywhere):
+  - Instant: "Send a payment on the network and it's there." / "received instantly"
+  - Liquidity: "connected to global liquidity, so your suppliers get the capital they need, quicker"
+  - Relationships: funded suppliers stay close, ship first, grow with you; that wins more business
+- **Fee claims move down-page**: no fee talk in heros or eyebrows. "No wire fees" survives only in
+  detail lists (ValueList / FeatureGrid). Absolute "free" stays banned.
 
 ## 1. Product architecture — exactly two products
 
@@ -63,10 +76,11 @@ explicitly ("Suppliers enroll at no cost") — the invited party never pays to j
   cost", "keep the spread banks take".
 - Banned (absolute claims): "free", "for free", "$0", "zero fees", "no transaction costs", "100% free".
 
-## 5. Corridors (locked decision: five, uniform)
+## 5. Countries (locked decision: five, uniform)
 
 **United States · Mexico · Colombia · Brazil · European Union** — always all five, always presented
 uniformly (no live/coming split anywhere on this branch). Pay in USD, MXN, COP, BRL, EUR.
+(r3: never call them "corridors" in copy; say countries, or just name them.)
 
 ## 6. Banned words (enforced by `scripts/verify-rebrand.mjs`)
 
@@ -108,7 +122,10 @@ with a measurable or concrete claim.
 - No literal node-and-mesh hero graphics; no me-too mesh gradients. Network is expressed through
   motion, reserved accent, and corridor texture (Wise pattern).
 
-## 9. NetworkCanvas — corridor visualization (r2, Dakota grammar)
+## 9. NetworkCanvas — the network visualization (r2, Dakota grammar; r3: benefit-led heading)
+
+r3: the band's heading is benefit language ("Send it. It's there."), not inventory language
+("five corridors"). The scene itself is unchanged: country + currency chips are concrete.
 
 Reference: dakota.xyz hero (screenshots in `design-context/reference-dakota/`), a Three.js particle
 globe with thin arcs between labeled rail chips (ACH, SWIFT, USDC) and pulses traveling the arcs.

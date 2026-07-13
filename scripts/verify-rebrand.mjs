@@ -48,12 +48,19 @@ for (const f of copyFiles) {
     if (m) fail(`absolute free-claim "${m[0]}" in ${f} (locked decision: softer framing)`);
   }
   if (/global account/i.test(text)) fail(`"global account" in ${f} (r2: say "operating account")`);
-  // r2 copy style: no em dashes in copy. Comment lines are exempt.
+  // r2/r3 copy style: no em dashes, no "corridor". Comment lines are exempt.
   const copyLines = text
     .split("\n")
     .filter((l) => !/^\s*(\/\/|\*|\/\*)/.test(l));
   const dashLine = copyLines.find((l) => /—|&mdash;/.test(l));
   if (dashLine) fail(`em dash in copy in ${f}: "${dashLine.trim().slice(0, 80)}"`);
+  // "corridor" is banned in customer copy (r3). Code identifiers (the exact
+  // tokens CORRIDOR_* and PascalCase `Corridor`) are not copy; strip them,
+  // then flag any remaining prose form (corridor, corridors, Corridors...).
+  const corridorLine = copyLines.find((l) =>
+    /corridor/i.test(l.replace(/\bCORRIDORS?\w*/g, "").replace(/\bCorridor\b/g, "")),
+  );
+  if (corridorLine) fail(`"corridor" in copy in ${f}: "${corridorLine.trim().slice(0, 80)}"`);
 }
 if (!failures) ok("banned-words + free-claim + em-dash + operating-account greps clean");
 

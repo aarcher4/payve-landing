@@ -64,3 +64,13 @@ Locked user decisions: two products only; full-site rebrand; softer fee framing 
 - did: pushed site/network-rebrand; opened draft PR #20 against site/pr16-solutions-content (https://github.com/aarcher4/payve-landing/pull/20) with full change summary, verification record, before/after screenshot pointers (.goal-loop/screens/r1→r3), and Render branch-preview note. Final GOAL box checked — ALL acceptance criteria met.
 - GATE: PASS (final run)
 - next: none — run complete
+
+# ---- r3 run: benefits-first voice, higher essence ----
+r3 run started 2026-07-13. Engine: stop-hook. Max-iters 15. Branch site/network-rebrand (continuing).
+Plan: .goal-loop/PLAN.md (r3). Prior network-rebrand + r2 journals above / in git history.
+Alex r3 notes: customers don't care about corridors; benefits language (send it and it's there; global liquidity; suppliers get capital quicker; stronger relationships); fee talk out of heros.
+
+## r3 iteration 1 — voice rules + corridor gate
+- did: docs/network-rebrand.md §0 r3 voice rules (corridor ban, benefits-first test, canonical instant/liquidity/relationships lines, fees down-page), §5 → Countries, §9 benefit-led heading note; verify-rebrand.mjs corridor check (prose only; CORRIDOR*/Corridor identifiers exempt after 2 precision fixes). NetworkCanvas aria-label audited: already corridor-free.
+- GATE: FAIL corridor-copy x2 (network page eyebrow, llms.txt) — the exact copy iteration 2 rewrites
+- next: r3 copy pass (network page hero/eyebrow/ValueList, ProductTour blurb, layout description, llms.txt)
