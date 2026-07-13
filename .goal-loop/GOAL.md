@@ -12,7 +12,7 @@ On branch `site/network-rebrand`, per `.goal-loop/PLAN.md`: the site's copy spea
 - [x] `app/layout.tsx` site description → benefits voice
 - [x] `public/llms.txt` → no "corridor", benefits framing, country list kept
 - [x] Grep-audit: zero "corridor" hits in app/ copy + llms.txt; solutions/customers/company stragglers fixed
-- [ ] Review loop: screenshot pass (network page + homepage minimum, full site on final round) + in-context copy read appended to `.goal-loop/REVIEW.md` as round 5+; iterate fix→review until a POST-CHANGE round has zero must-fix critiques and carries `VERDICT: HIGHER ESSENCE — SHIP`
+- [x] Review loop: screenshot pass (network page + homepage minimum, full site on final round) + in-context copy read appended to `.goal-loop/REVIEW.md` as round 5+; iterate fix→review until a POST-CHANGE round has zero must-fix critiques and carries `VERDICT: HIGHER ESSENCE — SHIP`
 - [ ] Pushed to origin; Render preview deploy live (service srv-d96hquv7f7vs73dm7930, auto-deploys on push; confirm via API); smoke-check new copy on payve-site-preview.onrender.com
 
 ## Verify gate (objective definition of done)

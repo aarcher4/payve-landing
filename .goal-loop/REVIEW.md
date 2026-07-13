@@ -108,3 +108,28 @@ gate-enforced); nav/rail → Network / Intelligence; "operating account" replace
 - Gate: PASS with new em-dash + operating-account checks live.
 
 VERDICT: EXTRAORDINARY — SHIP (r2)
+
+## Round 5 — 2026-07-13 (r3 benefits-voice pass; screenshots .goal-loop/screens/r5-*)
+
+In-context copy read against docs/network-rebrand.md §0 r3 voice rules:
+
+- Network hero: "Payments sent on the network arrive instantly: any supplier, any country, paid in
+  their own currency. Every member is connected to global liquidity, so your suppliers can take the
+  capital they need the moment they need it. Funded suppliers stay close, ship first, and grow with
+  you." Benefits only; zero mechanics, zero fee talk, zero jargon. ✔
+- Canvas band: "SEND IT. IT'S THERE." over the animated map; heading and visual now say the same
+  thing. ✔
+- Home tour (Network): send-and-it's-there + suppliers connected to capital. Rail reads Network /
+  Intelligence. ✔
+- Voice test applied line-by-line to every headline/eyebrow/blurb changed in r3: all answer
+  "what do I get" in customer words. "Corridor" gone from copy site-wide (gate-enforced). Fee facts
+  survive only in detail lists. Countries and currencies stay concrete (canvas chips, tour rail
+  line, HowItWorks descriptor).
+- Full-site assurance this round: gate walk CLEAN across all 18 routes at 1440/390 with zero console
+  errors; copy rules enforced by grep site-wide; pages untouched by r3 carry their round-3/4
+  verdicts unchanged.
+
+Zero must-fix critiques. This pass postdates the last code change (r5 screenshots taken after
+iter-2 commit; no code changed during this round).
+
+VERDICT: HIGHER ESSENCE — SHIP
