@@ -221,3 +221,11 @@ final verdict.
 - MX chip clipped at the right viewport edge → chip x clamped to [46, W-46] (component + proto);
   labels stay fully readable, desktop unaffected. ✔
 - Reduced-motion: static painted frame confirmed. Frame times with 9 arcs: p50/p95 = 16.7ms. ✔
+
+### Round 7 — FINAL (post chip-clamp shot r5final-390)
+MX chip fully on-screen; all five countries in frame with live traffic. Desktop verified r5c-1440.
+The scene now reads as a proper interconnected network: nine bidirectional routes, everyone paying
+Europe, countries paying each other, no moment without visible movement, static earth holding one
+composed frame. Zero must-fix critiques; this pass postdates the last code change.
+
+VERDICT: ALIVE — SHIP

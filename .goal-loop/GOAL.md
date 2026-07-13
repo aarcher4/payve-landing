@@ -8,7 +8,7 @@ On branch `site/network-rebrand`, per `.goal-loop/PLAN.md`: the "Send it. It's t
 - [x] Rotating-vs-static decision made from evidence: two-moment screenshots (e.g. +3s, +12s) of the dense mesh on the rotating globe; if quiet windows or clutter remain, switch to static earth (rotation off, fixed flattering composition) with pulses running — decision + rationale logged in REVIEW.md round 7
 - [x] No-dead-air proven: two-moment screenshots at 1440 + 390 each show multiple pulses in frame; no blank phase; EU chip-hit doesn't strobe (debounce lengthened if it does); arc clutter tuned if needed (static arc alpha)
 - [x] Frame-time re-sample still ~16.7ms p95; reduced-motion static frame unaffected; zero pageerrors
-- [ ] REVIEW.md round 7: zero must-fixes on a POST-CHANGE pass carrying `VERDICT: ALIVE — SHIP`
+- [x] REVIEW.md round 7: zero must-fixes on a POST-CHANGE pass carrying `VERDICT: ALIVE — SHIP`
 - [ ] Gate green; pushed; Render preview deploy live; smoke-checked
 
 ## Verify gate (objective definition of done)
