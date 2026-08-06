@@ -95,9 +95,15 @@ It chains four stages:
 - Never commit a Bridge API key; never prefix it `NEXT_PUBLIC_`.
 - Footnote wording and the per-corridor default table are copied EXACTLY from the plan —
   those numbers are researched and legally load-bearing.
-- Live-rate verification requires a production Bridge key (sandbox 503s on
-  `/v0/exchange_rates`). If no key is available locally, verify the degraded path thoroughly
-  and report the live check as BLOCKED — do not fake it.
+- Live-rate verification requires a PRODUCTION Bridge key.
+  CORRECTED 2026-08-06 (the original note here was wrong): Bridge's sandbox does NOT 503
+  across the board on `/v0/exchange_rates`. Probed with a real sandbox key it returns 200 for
+  MXN/EUR/BRL/GBP (503 only for COP) — but with FROZEN FIXTURES months old (USD/MXN 20.00025
+  stamped 2026-04-24) and a flat synthetic 50 bps spread instead of the real per-corridor
+  contract spread. Sandbox rates are therefore never publishable, which is why the route
+  refuses to serve unless BRIDGE_ENVIRONMENT=production AND the upstream `updated_at` is
+  fresh. VERIFIED against production Bridge on 2026-08-06: all five rows live, MXN 30 bps and
+  COP 70 bps matching BRIDGE_CONTRACT_SPREAD_BPS exactly.
 
 ## Completion
 
