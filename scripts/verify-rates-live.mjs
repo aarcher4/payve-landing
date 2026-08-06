@@ -43,6 +43,7 @@ function assert(ok, label, detail = "") {
  * Fixture rates. Chosen so each corridor has a DIFFERENT implied Bridge spread, which means
  * a hardcoded expected output cannot accidentally satisfy all five.
  */
+const fresh = () => new Date().toISOString();
 const FIXTURE = {
   mxn: { midmarket_rate: "18.4210", sell_rate: "18.4026", buy_rate: "18.4394" }, // ~10 bps
   eur: { midmarket_rate: "0.9231", sell_rate: "0.9217", buy_rate: "0.9245" }, // ~15 bps
@@ -51,7 +52,16 @@ const FIXTURE = {
   gbp: { midmarket_rate: "0.7844", sell_rate: "0.7825", buy_rate: "0.7863" }, // ~24 bps
 };
 
+/**
+ * Stale variant, modelled on what Bridge's SANDBOX actually returns: a well-formed 200 whose
+ * `updated_at` is months old. Probing sandbox with a real key showed USD/MXN at 20.00025
+ * stamped 2026-04-24. Publishing that as "live" is the exact failure this page must not have,
+ * so the second pass below asserts every such row degrades to unavailable.
+ */
+const STALE_UPDATED_AT = "2026-04-24T23:24:05.421Z";
+
 let sawApiKeyHeader = false;
+let serveStale = false;
 const stub = createServer((req, res) => {
   const url = new URL(req.url, `http://localhost:${STUB_PORT}`);
   if (!url.pathname.startsWith("/v0/exchange_rates")) {
@@ -65,7 +75,8 @@ const stub = createServer((req, res) => {
     res.writeHead(400).end("{}");
     return;
   }
-  res.writeHead(200, { "Content-Type": "application/json" }).end(JSON.stringify(body));
+  const payload = { ...body, updated_at: serveStale ? STALE_UPDATED_AT : fresh() };
+  res.writeHead(200, { "Content-Type": "application/json" }).end(JSON.stringify(payload));
 });
 await new Promise((r) => stub.listen(STUB_PORT, r));
 console.log(`\n[verify-rates-live] Bridge stub on :${STUB_PORT}`);
@@ -89,6 +100,9 @@ const childEnv = {
   NODE_ENV: "production",
   BRIDGE_API_KEY: "stub-key-not-a-real-credential",
   BRIDGE_BASE_URL: `http://localhost:${STUB_PORT}`,
+  // The route only publishes in production — sandbox serves frozen fixtures. The stub is
+  // standing in for production Bridge, so it must present as such.
+  BRIDGE_ENVIRONMENT: "production",
   PAYVE_PUBLIC_SPREAD_BPS: String(SPREAD_BPS),
 };
 const server = spawn("npx", ["next", "start", "-p", String(PORT)], {
@@ -185,6 +199,31 @@ try {
   assert(
     rows.every((r) => r.mid != null && r.payveRate != null && r.allInBps != null),
     "live rows carry all three figures",
+  );
+
+  // ---------------------------------------------------------------- stale guard
+  // Flip the stub to Bridge-sandbox behaviour: a well-formed 200 with a months-old
+  // `updated_at`. Every row must degrade to unavailable rather than render as "live".
+  console.log("\nStale upstream (sandbox-shaped 200 with an old updated_at)");
+  serveStale = true;
+  // Wait out the route's 30s cache so this is a fresh upstream read, not a replay.
+  await new Promise((r) => setTimeout(r, 31_000));
+  const staleRes = await fetch(`${BASE}/api/rates`);
+  const staleText = await staleRes.text();
+  const staleRows = JSON.parse(staleText).rates ?? [];
+  assert(staleRes.ok, "GET /api/rates still 2xx with a stale upstream");
+  assert(
+    staleRows.length === 5 && staleRows.every((r) => r.live === false),
+    "every stale row degrades to live:false",
+    JSON.stringify(staleRows.map((r) => `${r.code}:${r.live}`)),
+  );
+  assert(
+    staleRows.every((r) => r.mid == null && r.payveRate == null),
+    "no stale rate values are emitted",
+  );
+  assert(
+    !staleText.includes("20.00025") && !staleText.includes("18.4210"),
+    "stale fixture values never reach the client",
   );
 } catch (err) {
   console.error(`\n[verify-rates-live] threw: ${err && err.message}`);

@@ -50,6 +50,34 @@ function spreadBps(): number {
   return Number.isFinite(raw) && raw >= 0 ? raw : 20;
 }
 
+/**
+ * A 200 from Bridge is NOT sufficient to publish a rate. Two guards, both learned the hard
+ * way from probing the sandbox with a real key:
+ *
+ *  1. Bridge's SANDBOX serves frozen fixtures — USD/MXN at 20.00025 with an `updated_at` of
+ *     2026-04-24, and a flat synthetic 50 bps spread on every pair instead of the real
+ *     per-corridor contract spread. Without a guard, a marketing page pointed at sandbox
+ *     renders "Live · read at 00:41" above a months-old invented number. Only production
+ *     rates are ever publishable.
+ *  2. Even in production, a frozen upstream must not be presented as live. Bridge refreshes
+ *     roughly every 30s, so anything older than MAX_RATE_AGE_MS is treated as no rate at all.
+ *
+ * Both failures degrade to `live: false`. Showing nothing is always better than showing a
+ * number a customer could price a shipment against.
+ */
+const MAX_RATE_AGE_MS = 10 * 60_000;
+
+function isPublishableEnvironment(): boolean {
+  return process.env.BRIDGE_ENVIRONMENT === "production";
+}
+
+function isFresh(updatedAt: unknown): boolean {
+  if (updatedAt == null) return true; // field absent — fall back to the environment guard alone
+  const t = Date.parse(String(updatedAt));
+  if (!Number.isFinite(t)) return false;
+  return Date.now() - t <= MAX_RATE_AGE_MS;
+}
+
 function bridgeBaseUrl(): string {
   return (
     process.env.BRIDGE_BASE_URL ??
@@ -101,6 +129,8 @@ async function fetchRate(code: CurrencyCode, apiKey: string): Promise<PublicRate
     // Both are required: without mid we cannot state the all-in cost honestly, and
     // without sell we have no rate to publish. Partial data is treated as unavailable.
     if (mid == null || sell == null) return unavailable(code);
+    // A stale upstream must never be dressed up as "live" — see MAX_RATE_AGE_MS.
+    if (!isFresh(body.updated_at)) return unavailable(code);
 
     const payveRate = sell * (1 - spreadBps() / 10_000);
     const rate: PublicRate = {
@@ -123,9 +153,11 @@ export async function GET() {
   const apiKey = process.env.BRIDGE_API_KEY;
 
   // No key configured (local dev, preview, misconfigured deploy) → every row unavailable.
-  // This is the correct visible state, not an error.
-  const rates: PublicRate[] = apiKey
-    ? await Promise.all(CURRENCIES.map((c) => fetchRate(c, apiKey)))
+  // Not production → also every row unavailable, because sandbox serves frozen fixtures that
+  // must never be published. Both are correct visible states, not errors.
+  const publishable = Boolean(apiKey) && isPublishableEnvironment();
+  const rates: PublicRate[] = publishable
+    ? await Promise.all(CURRENCIES.map((c) => fetchRate(c, apiKey as string)))
     : CURRENCIES.map(unavailable);
 
   return Response.json(

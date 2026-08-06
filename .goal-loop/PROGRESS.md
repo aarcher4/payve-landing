@@ -83,3 +83,22 @@ Real-Bridge live verification was never run: it needs a PRODUCTION Bridge key (s
 /v0/exchange_rates) and none is available locally. The live branch is covered against a
 contract-accurate stub, not against Bridge itself. Before publishing, set the key on Render and
 confirm the five rows show real rates.
+
+## iteration 7 — staleness + environment guard (defect found via real Bridge keys)
+- did: probed Bridge with a real SANDBOX key and found my earlier research was WRONG. Sandbox
+  does not 503 across the board — it returned 200 for MXN/EUR/BRL/GBP (503 only for COP) with
+  FROZEN FIXTURES: USD/MXN 20.00025 stamped 2026-04-24, and a flat synthetic 50 bps spread on
+  every pair instead of the real per-corridor contract spread. My route trusted any 200, so a
+  deploy pointed at sandbox would have rendered "Live · read at HH:MM" above a four-month-old
+  invented rate — precisely the failure this page exists to prevent.
+  Fixed with two guards in app/api/rates/route.ts: (1) only BRIDGE_ENVIRONMENT=production
+  publishes at all; (2) any rate whose upstream `updated_at` is older than 10 minutes degrades
+  to unavailable. Added a second pass to verify-rates-live.mjs that flips the stub to
+  sandbox-shaped stale responses and asserts every row degrades and no fixture value leaks.
+  Then verified against PRODUCTION Bridge with a real key: all five rows live, real rates,
+  and the all-in bps independently confirm the contract spreads — MXN 30 bps (10+20) and COP
+  70 bps (50+20) match BRIDGE_CONTRACT_SPREAD_BPS in payve-fintech exactly. EUR/BRL/GBP
+  contract spreads measured for the first time at ~20 / ~30 / ~19 bps.
+  No key was written to any file or commit; both were passed as shell env vars only.
+- GATE: PASS — 37/37 degraded + 31/31 live = 68 checks
+- next: hosting decision for prospects.getpayve.com (static site, cannot hold a secret).
