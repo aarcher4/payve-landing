@@ -57,3 +57,29 @@ Started 2026-08-06.
 - GATE: PASS 33/33
 - next: A8 — register /rates in nav/footer/sitemap, AND extend the gate to assert A8. The gate
   is green but A8 is still unchecked, so this run is NOT complete.
+
+## iteration 5 — nav / footer / sitemap registration (A8)
+- did: registered /rates in navGroups (Products) + footerColumns + sitemap.ts; confirmed no
+  X-Robots-Tag (this page is meant to be indexed, unlike the hidden value-model slug). Added
+  A8 assertions to the gate — it was previously unprovable. First run failed "header links to
+  /rates" because the Products dropdown mounts its items only on click; fixed the assertion to
+  drive the real interaction rather than asserting against a closed menu.
+- GATE: PASS 37/37
+- next: the live branch had still never executed — cover it.
+
+## iteration 6 — live-path verification without a Bridge key
+- did: `scripts/verify-rates-live.mjs`. Stands up a local stub speaking Bridge's
+  /v0/exchange_rates contract (decimal strings, sell below mid, a DIFFERENT implied spread per
+  corridor so a hardcoded expectation can't satisfy all five), points BRIDGE_BASE_URL at it and
+  asserts the live branch: per-corridor rate math, Api-Key sent upstream, sell_rate/buy_rate
+  never reaching the client, Payve Rate always below mid. Chained into `verify:rates` so it is
+  permanent. Also rendered the table in its live state for the first time — MXN 30 bps
+  (Bridge 10 + Payve 20), COP 70 bps (50 + 20), matching the plan's predicted all-in figures.
+- GATE: PASS — 37/37 degraded + 27/27 live = 64 checks
+- next: none. All 13 acceptance criteria checked and the gate is green.
+
+## Outstanding for a human (recorded, NOT faked)
+Real-Bridge live verification was never run: it needs a PRODUCTION Bridge key (sandbox 503s on
+/v0/exchange_rates) and none is available locally. The live branch is covered against a
+contract-accurate stub, not against Bridge itself. Before publishing, set the key on Render and
+confirm the five rows show real rates.

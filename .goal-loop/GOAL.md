@@ -64,10 +64,18 @@ built here.
 
 `npm run verify:rates` — must exit 0. Run it every iteration.
 
-It chains: `tsc --noEmit` → `next build` → `node scripts/verify-rates.mjs`, where the script
-boots the built server with `BRIDGE_API_KEY` unset and asserts A9, A10, A11 and A12 against
-the real DOM via Playwright, plus asserts the substantiation doc covers every published
-figure (A7).
+It chains four stages:
+
+1. `tsc --noEmit`
+2. `next build`
+3. `node scripts/verify-rates.mjs` — boots the built server with `BRIDGE_API_KEY` UNSET and
+   asserts A8, A9, A10, A11, A12 against the real DOM via Playwright, plus A7 (substantiation
+   coverage of every claimed figure).
+4. `node scripts/verify-rates-live.mjs` — boots the build against a LOCAL STUB that speaks
+   Bridge's `/v0/exchange_rates` contract, and asserts the live branch: the rate math per
+   corridor (A2), that Bridge's `sell_rate`/`buy_rate` never reach the client (A1), and that
+   the Payve Rate always sits below mid. Real Bridge is never contacted — this exists so the
+   live branch does not ship having never executed.
 
 ## Guardrails
 
