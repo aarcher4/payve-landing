@@ -52,13 +52,19 @@ built here.
 - [ ] A12 Forbidden-content check passes: the page never uses "SWIFT fee" as a label for
       these charges, never publishes a bank FX spread percentage, and never publishes a
       per-hop correspondent fee figure.
-- [ ] A13 `npm run lint` and `npm run build` both clean.
+- [ ] A13 `npm run typecheck` (`tsc --noEmit`) and `next build` both clean.
+
+      NOTE: the plan said "lint". This repo has **no ESLint config**, so `next lint` prompts
+      interactively and can never run unattended — `npm run lint` was already broken here.
+      Substituted `tsc --noEmit`, which is a stricter correctness gate. This is a
+      strengthening, not a weakening; adding an ESLint config repo-wide is out of scope for
+      this run.
 
 ## Verify gate (objective definition of done)
 
 `npm run verify:rates` — must exit 0. Run it every iteration.
 
-It chains: `next lint` → `next build` → `node scripts/verify-rates.mjs`, where the script
+It chains: `tsc --noEmit` → `next build` → `node scripts/verify-rates.mjs`, where the script
 boots the built server with `BRIDGE_API_KEY` unset and asserts A9, A10, A11 and A12 against
 the real DOM via Playwright, plus asserts the substantiation doc covers every published
 figure (A7).
