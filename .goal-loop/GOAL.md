@@ -30,26 +30,26 @@ built here.
       `sell_rate` or `buy_rate` to the browser.
 - [x] A2 `payveRate = sell_rate × (1 − PAYVE_PUBLIC_SPREAD_BPS/10_000)`, default 20 bps —
       mirrors `effectiveRate()` in payve-fintech `developerFees.ts`.
-- [ ] A3 `app/rates/page.tsx` composes ONLY existing primitives from
+- [x] A3 `app/rates/page.tsx` composes ONLY existing primitives from
       `app/components/site/ProductPage.tsx` (PageHero, SplitSection, FeatureGrid,
       ProductCtaBand) plus ValueList/StatStrip. No new design tokens.
-- [ ] A4 `app/rates/RateTable.tsx` — client component, 30s poll, three states:
+- [x] A4 `app/rates/RateTable.tsx` — client component, 30s poll, three states:
       live / stale (>2 min, dimmed + labelled) / unavailable. Figures in `font-mono`.
-- [ ] A5 `app/rates/WireSavings.tsx` — wire-fee-only calculator. Per-corridor defaults
+- [x] A5 `app/rates/WireSavings.tsx` — wire-fee-only calculator. Per-corridor defaults
       exactly per the plan table. Both fee fields editable. Optional average-payment-size
       input showing fee as % of payment.
-- [ ] A6 The calculator footnote is reproduced VERBATIM from the plan.
+- [x] A6 The calculator footnote is reproduced VERBATIM from the plan.
 - [ ] A7 `docs/rates-page-substantiation.md` exists and every number published on the page
       traces to a row in it with source URL + schedule effective date.
 - [ ] A8 `/rates` registered in `app/components/site/config.ts` (navGroups + footerColumns)
       and `app/sitemap.ts`. NO `X-Robots-Tag` entry in `next.config.ts` — this page IS indexed.
-- [ ] A9 Degraded path: with `BRIDGE_API_KEY` unset, every row reads "unavailable" and the
+- [x] A9 Degraded path: with `BRIDGE_API_KEY` unset, every row reads "unavailable" and the
       strings `18.0` / `4000` never appear as a rate anywhere in the served HTML or JSON.
-- [ ] A10 Calculator arithmetic: Mexico 10 wires → $350 buyer, $350 supplier, $700 combined,
+- [x] A10 Calculator arithmetic: Mexico 10 wires → $350 buyer, $350 supplier, $700 combined,
       $8,400/yr. Eurozone 10 wires → $350 buyer, $0 supplier. At $500 average payment the
       fee reads 14%.
-- [ ] A11 Renders without layout overflow at 390 / 768 / 1440.
-- [ ] A12 Forbidden-content check passes: the page never uses "SWIFT fee" as a label for
+- [x] A11 Renders without layout overflow at 390 / 768 / 1440.
+- [x] A12 Forbidden-content check passes: the page never uses "SWIFT fee" as a label for
       these charges, never publishes a bank FX spread percentage, and never publishes a
       per-hop correspondent fee figure.
 - [ ] A13 `npm run typecheck` (`tsc --noEmit`) and `next build` both clean.

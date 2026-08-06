@@ -252,15 +252,31 @@ try {
   }
   if (doc) {
     assert(/https?:\/\//.test(doc), "substantiation doc cites source URLs");
-    // Every dollar figure printed in the calculator's assumptions must be documented.
-    const pageDollars = [...bodyText.matchAll(/\$(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)/g)]
-      .map((m) => m[1])
-      .filter((v) => !/,/.test(v))
-      .filter((v) => Number(v) > 0 && Number(v) < 1000);
-    const undocumented = [...new Set(pageDollars)].filter((v) => !doc.includes(`$${v}`));
+
+    /**
+     * Scope: the [data-substantiated] region — the corridor assumptions and the footnote.
+     * Those are the CLAIMED figures, and each must trace to the doc.
+     *
+     * Deliberately NOT the whole body: the results panel prints computed outputs ($350,
+     * $8,400, …) that change with user input. Requiring those in a sourcing document would
+     * be meaningless and would pressure someone into padding the doc with arithmetic.
+     * A7's intent is "every published claim is sourced", not "every rendered number".
+     */
+    const region = page.locator("[data-substantiated]");
+    assert((await region.count()) > 0, "[data-substantiated] region exists");
+    const claimText = (await region.count()) ? await region.innerText() : "";
+    const claimed = [
+      ...new Set(
+        [...claimText.matchAll(/\$(\d{1,3}(?:\.\d{2})?)\b/g)]
+          .map((m) => m[1])
+          .filter((v) => Number(v) > 0),
+      ),
+    ];
+    assert(claimed.length > 0, "substantiated region actually states dollar figures");
+    const undocumented = claimed.filter((v) => !doc.includes(`$${v}`));
     assert(
       undocumented.length === 0,
-      "every dollar figure on the page appears in the substantiation doc",
+      "every claimed dollar figure appears in the substantiation doc",
       undocumented.join(", "),
     );
   }

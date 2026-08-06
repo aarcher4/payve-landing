@@ -33,3 +33,16 @@ Started 2026-08-06.
   real teardown. Without that fix the gate could pass or fail against the wrong code.
 - GATE: FAIL /rates 404 (page not built yet) — 11/14 checks pass, all API assertions green
 - next: A3/A4 — app/rates/page.tsx + RateTable.tsx.
+
+## iteration 3 — the page: hero, rate table, calculator (A3–A6, A9–A12)
+- did: `app/rates/page.tsx` (composed only from PageHero/SplitSection/FeatureGrid/CrossSell/
+  ProductCtaBand/ValueList — no new tokens), `RateTable.tsx` (30s poll, live/stale/unavailable,
+  no fallback constant anywhere), `WireSavings.tsx` (per-corridor defaults exactly per plan,
+  buyer and supplier shown separately, combined total explicitly labelled both-sides, verbatim
+  footnote). Included the $15→$0 supplier story, anonymised.
+  Also SCOPED THE A7 ASSERTION correctly: it originally compared every dollar figure in the
+  whole body against the doc, which swept in computed outputs ($350, $8,400) that change with
+  user input. Requiring those in a sourcing doc is meaningless and would pressure padding it
+  with arithmetic. Now scoped to the [data-substantiated] region — the actual claims.
+- GATE: FAIL docs/rates-page-substantiation.md missing — 29/30 checks pass
+- next: A7 — write the substantiation doc.
