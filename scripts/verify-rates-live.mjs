@@ -165,6 +165,9 @@ try {
     !/sell_?[Rr]ate|buy_?[Rr]ate/.test(text),
     "Bridge sell_rate/buy_rate never reach the client",
   );
+  // Margin non-disclosure: mid and the all-in spread gate freshness/sanity server-side but
+  // must never be published — together they reveal Payve's per-corridor margin.
+  assert(!/"mid"|midmarket|allInBps/.test(text), "mid-market and all-in bps never published");
   assert(body.spreadBps === SPREAD_BPS, "published spread echoes PAYVE_PUBLIC_SPREAD_BPS", String(body.spreadBps));
 
   // The core money math, checked per corridor against independently-computed expectations.
@@ -178,27 +181,20 @@ try {
     const mid = Number.parseFloat(fx.midmarket_rate);
     const sell = Number.parseFloat(fx.sell_rate);
     const expectedPayve = sell * (1 - SPREAD_BPS / 10_000);
-    const expectedBps = (1 - expectedPayve / mid) * 10_000;
 
-    assert(Math.abs(row.mid - mid) < 1e-9, `${up} mid passed through unchanged`, String(row.mid));
     assert(
       Math.abs(row.payveRate - expectedPayve) < 1e-9,
       `${up} payveRate = sell × (1 − ${SPREAD_BPS}bps)`,
       `${row.payveRate} vs ${expectedPayve}`,
     );
-    assert(
-      Math.abs(row.allInBps - expectedBps) < 1e-6,
-      `${up} allInBps = Bridge spread + Payve spread`,
-      `${row.allInBps} vs ${expectedBps}`,
-    );
-    // Sanity: the supplier must never be quoted a rate better than mid.
-    assert(row.payveRate < mid, `${up} Payve Rate sits below mid-market`);
+    // The published rate must still sit below mid — the guard is server-side, so this
+    // asserts the guard let through only a correctly-below-mid rate.
+    assert(row.payveRate < mid, `${up} published rate sits below mid-market`);
   }
 
-  // A partial upstream payload must degrade, not half-render.
   assert(
-    rows.every((r) => r.mid != null && r.payveRate != null && r.allInBps != null),
-    "live rows carry all three figures",
+    rows.every((r) => r.payveRate != null),
+    "every live row carries a rate",
   );
 
   // ---------------------------------------------------------------- stale guard
@@ -218,7 +214,7 @@ try {
     JSON.stringify(staleRows.map((r) => `${r.code}:${r.live}`)),
   );
   assert(
-    staleRows.every((r) => r.mid == null && r.payveRate == null),
+    staleRows.every((r) => r.payveRate == null),
     "no stale rate values are emitted",
   );
   assert(

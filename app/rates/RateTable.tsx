@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { bookDemoLabel, bookDemoUrl } from "../components/site/config";
 
 /**
  * Live Payve Rate table. Polls /api/rates every 30s — the same cadence Bridge refreshes
@@ -24,9 +25,7 @@ const POLL_MS = 30_000;
 
 interface ApiRate {
   code: string;
-  mid: number | null;
   payveRate: number | null;
-  allInBps: number | null;
   asOf: string;
   live: boolean;
 }
@@ -76,15 +75,7 @@ export default function RateTable() {
   }, [load]);
 
   const ordered = ORDER.map(
-    (code) =>
-      rates?.find((r) => r.code === code) ?? {
-        code,
-        mid: null,
-        payveRate: null,
-        allInBps: null,
-        asOf: "",
-        live: false,
-      },
+    (code) => rates?.find((r) => r.code === code) ?? { code, payveRate: null, asOf: "", live: false },
   );
 
   const isStale = lastGoodAt != null && now - lastGoodAt > STALE_AFTER_MS;
@@ -96,23 +87,15 @@ export default function RateTable() {
   return (
     <div>
       <div className="overflow-x-auto rounded-xl border border-hairline bg-paper-elev shadow-elev-2">
-        <table className="w-full min-w-[540px] border-collapse text-left">
-          <caption className="sr-only">
-            Live mid-market rate and the Payve Rate, per US dollar
-          </caption>
+        <table className="w-full min-w-[420px] border-collapse text-left">
+          <caption className="sr-only">The Payve Rate, per US dollar</caption>
           <thead>
             <tr className="border-b border-hairline">
               <th scope="col" className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-ink-3">
                 Currency
               </th>
               <th scope="col" className="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wider text-ink-3">
-                Mid-market
-              </th>
-              <th scope="col" className="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wider text-ink-3">
                 The Payve Rate
-              </th>
-              <th scope="col" className="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wider text-ink-3">
-                All-in cost
               </th>
             </tr>
           </thead>
@@ -137,21 +120,13 @@ export default function RateTable() {
                   </th>
 
                   {state === "unavailable" ? (
-                    <td colSpan={3} className="px-5 py-4 text-right text-sm text-ink-3">
+                    <td className="px-5 py-4 text-right text-sm text-ink-3">
                       Rate temporarily unavailable
                     </td>
                   ) : (
-                    <>
-                      <td className={`px-5 py-4 text-right font-mono text-sm text-ink-2 ${dim}`}>
-                        {fmt(r.mid as number, meta?.dp ?? 4)}
-                      </td>
-                      <td className={`px-5 py-4 text-right font-mono text-sm font-semibold text-ink-1 ${dim}`}>
-                        {fmt(r.payveRate as number, meta?.dp ?? 4)}
-                      </td>
-                      <td className={`px-5 py-4 text-right font-mono text-sm text-ink-2 ${dim}`}>
-                        {Math.round(r.allInBps as number)} bps
-                      </td>
-                    </>
+                    <td className={`px-5 py-4 text-right font-mono text-base font-semibold text-ink-1 ${dim}`}>
+                      {fmt(r.payveRate as number, meta?.dp ?? 4)}
+                    </td>
                   )}
                 </tr>
               );
@@ -166,9 +141,19 @@ export default function RateTable() {
         {!asOfLabel && <>Rates are read live from our payments provider. </>}
         Rates shown per 1 US dollar and refresh every 30 seconds. They are an estimate, not a
         quote: no rate lock exists, and the rate applied when a payment settles may differ.
-        &ldquo;All-in cost&rdquo; is the total difference between the mid-market rate and the
-        Payve Rate, in basis points.
       </p>
+
+      <div className="mt-6 flex flex-wrap items-center gap-4">
+        <a
+          href={bookDemoUrl}
+          className="inline-flex rounded-md bg-sage-700 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-sage-800"
+        >
+          {bookDemoLabel}
+        </a>
+        <span className="text-xs text-ink-3">
+          Moving more than $25M a year? Ask us about volume pricing.
+        </span>
+      </div>
     </div>
   );
 }
