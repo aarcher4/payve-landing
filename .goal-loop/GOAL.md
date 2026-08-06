@@ -39,7 +39,7 @@ built here.
       exactly per the plan table. Both fee fields editable. Optional average-payment-size
       input showing fee as % of payment.
 - [x] A6 The calculator footnote is reproduced VERBATIM from the plan.
-- [ ] A7 `docs/rates-page-substantiation.md` exists and every number published on the page
+- [x] A7 `docs/rates-page-substantiation.md` exists and every number published on the page
       traces to a row in it with source URL + schedule effective date.
 - [ ] A8 `/rates` registered in `app/components/site/config.ts` (navGroups + footerColumns)
       and `app/sitemap.ts`. NO `X-Robots-Tag` entry in `next.config.ts` — this page IS indexed.
@@ -52,7 +52,7 @@ built here.
 - [x] A12 Forbidden-content check passes: the page never uses "SWIFT fee" as a label for
       these charges, never publishes a bank FX spread percentage, and never publishes a
       per-hop correspondent fee figure.
-- [ ] A13 `npm run typecheck` (`tsc --noEmit`) and `next build` both clean.
+- [x] A13 `npm run typecheck` (`tsc --noEmit`) and `next build` both clean.
 
       NOTE: the plan said "lint". This repo has **no ESLint config**, so `next lint` prompts
       interactively and can never run unattended — `npm run lint` was already broken here.

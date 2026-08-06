@@ -46,3 +46,14 @@ Started 2026-08-06.
   with arithmetic. Now scoped to the [data-substantiated] region — the actual claims.
 - GATE: FAIL docs/rates-page-substantiation.md missing — 29/30 checks pass
 - next: A7 — write the substantiation doc.
+
+## iteration 4 — substantiation doc (A7, A13)
+- did: `docs/rates-page-substantiation.md` — every published figure with source URL + schedule
+  effective date, the deliberately-excluded list (bank FX spreads, per-hop fees, "SWIFT fee"),
+  the ASA/FTC basis for the footnote wording, and a re-verify warning (U.S. Bank reprices
+  10 Aug 2026). The gate immediately caught an unsourced "$85" in the footnote's branch-wire
+  range — added the full branch-initiated table rather than dropping the claim. That is the
+  A7 assertion doing exactly what it exists for.
+- GATE: PASS 33/33
+- next: A8 — register /rates in nav/footer/sitemap, AND extend the gate to assert A8. The gate
+  is green but A8 is still unchecked, so this run is NOT complete.
