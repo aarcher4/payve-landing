@@ -40,6 +40,11 @@ export const navGroups: NavGroup[] = [
         href: "/products/agentic-intelligence",
         description: "Agents that answer, reconcile, and run the back office on network data.",
       },
+      {
+        label: "The Payve Rate",
+        href: "/rates",
+        description: "Live exchange rates, and what a wire actually costs you and your supplier.",
+      },
     ],
   },
   {
@@ -89,6 +94,7 @@ export const footerColumns: { heading: string; links: NavLink[] }[] = [
     links: [
       { label: "Network", href: "/products/network" },
       { label: "Intelligence", href: "/products/agentic-intelligence" },
+      { label: "The Payve Rate", href: "/rates" },
     ],
   },
   {
