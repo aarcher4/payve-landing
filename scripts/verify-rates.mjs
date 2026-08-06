@@ -242,8 +242,36 @@ try {
     assert(overflow <= 1, `no horizontal overflow at ${width}px`, `overflow ${overflow}px`);
   }
 
+  // -------------------------------------------------- A8: registration
+  console.log("\nA8 — nav / footer / sitemap registration");
+  await page.setViewportSize({ width: 1440, height: 960 });
+  await page.goto(`${BASE}/`, { waitUntil: "networkidle" });
+
+  // The Products dropdown mounts its items only once opened (click-toggle, not CSS hover),
+  // so drive the real interaction rather than asserting against a closed menu.
+  await page.locator("header button", { hasText: "Products" }).first().click();
+  await page.waitForTimeout(150);
+  const headerLinks = await page.locator("header a[href='/rates']").count();
+  assert(headerLinks > 0, "site header nav links to /rates (Products menu)");
+  const footerLinks = await page.locator("footer a[href='/rates']").count();
+  assert(footerLinks > 0, "site footer links to /rates");
+
+  const sitemapRes = await fetch(`${BASE}/sitemap.xml`);
+  const sitemapXml = await sitemapRes.text();
+  assert(sitemapXml.includes("/rates"), "sitemap.xml includes /rates");
+
+  // The page must be indexable — unlike the hidden value-model slug, /rates is meant to rank.
+  const ratesHead = await fetch(`${BASE}/rates`);
+  const robotsTag = ratesHead.headers.get("x-robots-tag");
+  assert(
+    !robotsTag || !/noindex/i.test(robotsTag),
+    "/rates carries no noindex X-Robots-Tag",
+    String(robotsTag),
+  );
+
   // ------------------------------------------- A7: substantiation coverage
   console.log("\nA7 — substantiation");
+  await page.goto(`${BASE}/rates`, { waitUntil: "networkidle" });
   let doc = "";
   try {
     doc = readFileSync("docs/rates-page-substantiation.md", "utf8");

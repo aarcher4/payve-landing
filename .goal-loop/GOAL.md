@@ -41,7 +41,7 @@ built here.
 - [x] A6 The calculator footnote is reproduced VERBATIM from the plan.
 - [x] A7 `docs/rates-page-substantiation.md` exists and every number published on the page
       traces to a row in it with source URL + schedule effective date.
-- [ ] A8 `/rates` registered in `app/components/site/config.ts` (navGroups + footerColumns)
+- [x] A8 `/rates` registered in `app/components/site/config.ts` (navGroups + footerColumns)
       and `app/sitemap.ts`. NO `X-Robots-Tag` entry in `next.config.ts` — this page IS indexed.
 - [x] A9 Degraded path: with `BRIDGE_API_KEY` unset, every row reads "unavailable" and the
       strings `18.0` / `4000` never appear as a rate anywhere in the served HTML or JSON.

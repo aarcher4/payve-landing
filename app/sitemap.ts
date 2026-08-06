@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/products/network",
     "/products/agentic-intelligence",
+    "/rates",
     "/solutions/fresh-produce",
     "/solutions/seafood",
     "/solutions/packaging",
