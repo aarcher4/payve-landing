@@ -64,9 +64,9 @@ export default function RatesPage() {
           Today&rsquo;s rate
         </h2>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-2 sm:text-base">
-          The mid-market rate is the one you find on Google or XE — the midpoint of the market,
-          before anyone adds anything. The Payve Rate is what your supplier is actually paid at.
-          The gap between them, in basis points, is the entire cost of the payment.
+          This is the rate your supplier is actually paid at — not a headline number with
+          charges added later. There is no per-payment fee on top of it, no minimum, and
+          nothing deducted from the amount in transit.
         </p>
         <div className="mt-8">
           <RateTable />

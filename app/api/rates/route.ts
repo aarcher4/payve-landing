@@ -33,12 +33,16 @@ type CurrencyCode = (typeof CURRENCIES)[number];
 
 export interface PublicRate {
   code: CurrencyCode;
-  /** Unspread mid-market rate (1 USD → destination units). Null when unavailable. */
-  mid: number | null;
-  /** All-in rate a supplier receives = Bridge sell rate haircut by the Payve spread. */
+  /**
+   * The rate a supplier is paid at = Bridge's sell rate haircut by the Payve spread.
+   * Null when unavailable.
+   *
+   * This is the ONLY rate that crosses the wire. The mid-market rate and the all-in spread
+   * in bps are computed server-side (they gate freshness and sanity below) but are
+   * deliberately NOT returned: together they disclose Payve's per-corridor margin, and the
+   * page no longer displays them.
+   */
   payveRate: number | null;
-  /** Total cost vs mid-market in basis points (Bridge's contract spread + Payve's). */
-  allInBps: number | null;
   /** ISO timestamp the rate was fetched. Not a quote lock. */
   asOf: string;
   live: boolean;
@@ -100,7 +104,7 @@ interface CacheEntry {
 const cache = new Map<CurrencyCode, CacheEntry>();
 
 function unavailable(code: CurrencyCode): PublicRate {
-  return { code, mid: null, payveRate: null, allInBps: null, asOf: new Date().toISOString(), live: false };
+  return { code, payveRate: null, asOf: new Date().toISOString(), live: false };
 }
 
 /** Bridge returns decimal STRINGS. A rate is a multiplier, not money, so parseFloat is correct. */
@@ -126,18 +130,20 @@ async function fetchRate(code: CurrencyCode, apiKey: string): Promise<PublicRate
     const body = (await res.json()) as Record<string, unknown>;
     const mid = parseRate(body.midmarket_rate);
     const sell = parseRate(body.sell_rate);
-    // Both are required: without mid we cannot state the all-in cost honestly, and
-    // without sell we have no rate to publish. Partial data is treated as unavailable.
+    // Both are required even though only the derived Payve Rate is published: `sell` is the
+    // rate itself, and `mid` is the sanity reference below. Partial data → unavailable.
     if (mid == null || sell == null) return unavailable(code);
     // A stale upstream must never be dressed up as "live" — see MAX_RATE_AGE_MS.
     if (!isFresh(body.updated_at)) return unavailable(code);
 
     const payveRate = sell * (1 - spreadBps() / 10_000);
+    // Sanity gate, computed but never published: a supplier can never be quoted a rate at or
+    // above mid-market. If that inverts, the upstream is wrong and we show nothing.
+    if (!(payveRate < mid)) return unavailable(code);
+
     const rate: PublicRate = {
       code,
-      mid,
       payveRate,
-      allInBps: (1 - payveRate / mid) * 10_000,
       asOf: new Date(now).toISOString(),
       live: true,
     };

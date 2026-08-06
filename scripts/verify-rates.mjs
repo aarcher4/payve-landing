@@ -143,13 +143,20 @@ try {
       "every row is live:false with no key",
     );
     assert(
-      rows.every((r) => r.mid == null && r.payveRate == null),
+      rows.every((r) => r.payveRate == null),
       "no rate values are emitted when unavailable",
     );
     // A1: Bridge's own rates must never cross the wire.
     assert(
       !/sell_?[Rr]ate|buy_?[Rr]ate/.test(apiText),
       "API never exposes Bridge sell_rate/buy_rate",
+    );
+    // Margin non-disclosure: mid-market and the all-in spread are computed server-side for
+    // the freshness/sanity guards but must never be published — together they reveal Payve's
+    // per-corridor margin, and the page no longer shows them.
+    assert(
+      !/"mid"|midmarket|allInBps/.test(apiText),
+      "API never exposes mid-market or all-in bps",
     );
     // A9: the synthetic fallback constants must never appear as a rate.
     assert(
@@ -176,6 +183,16 @@ try {
   const bodyText = await page.locator("body").innerText();
   assert(!/\b18\.0{2,}\b/.test(bodyText), "no synthetic 18.0x rate rendered");
   assert(!/\b4[,.]?000\.0{2,}\b/.test(bodyText), "no synthetic 4000.0x rate rendered");
+
+  // The rate table shows the Payve Rate only — no mid-market column, no bps.
+  assert(!/mid-?market/i.test(bodyText), "page never shows a mid-market rate");
+  assert(!/\bbps\b|basis points?/i.test(bodyText), "page never shows a spread in bps");
+  const headerCells = await page.locator("thead th").allInnerTexts();
+  assert(
+    headerCells.length === 2,
+    "rate table has exactly two columns (currency, Payve Rate)",
+    JSON.stringify(headerCells),
+  );
 
   // ---------------------------------------------------------- A12: forbidden copy
   console.log("\nA12 — forbidden content");
