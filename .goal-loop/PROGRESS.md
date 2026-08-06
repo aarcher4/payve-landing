@@ -22,3 +22,14 @@ Started 2026-08-06.
   Baseline typecheck was already clean, so it is a real signal not a rubber stamp.
 - GATE: FAIL /api/rates 404 + /rates 404 (nothing built yet) — 5/10 checks pass
 - next: A1 — app/api/rates/route.ts, the server-side Bridge proxy.
+
+## iteration 2 — Bridge proxy route (A1, A2)
+- did: `app/api/rates/route.ts`. Server-side only, 30s module cache, returns
+  {code, mid, payveRate, allInBps, asOf, live}; never emits sell_rate/buy_rate. No fallback
+  constant anywhere — failure degrades to live:false with null rates.
+  Also HARDENED THE GATE: a stale `next start` from iteration 1 was still bound to :3177 and
+  answering from the OLD build, which is why /api/rates "404'd" despite being in the build
+  manifest. verify-rates.mjs now refuses to run if the port is already serving, and awaits a
+  real teardown. Without that fix the gate could pass or fail against the wrong code.
+- GATE: FAIL /rates 404 (page not built yet) — 11/14 checks pass, all API assertions green
+- next: A3/A4 — app/rates/page.tsx + RateTable.tsx.

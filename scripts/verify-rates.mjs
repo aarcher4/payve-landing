@@ -37,6 +37,28 @@ function assert(ok, label, detail = "") {
 }
 
 // ---------------------------------------------------------------- boot server
+/**
+ * Refuse to run against a port that is already serving. A leftover `next start` from an
+ * earlier run will happily answer every request from a STALE build, which silently turns
+ * this gate into a test of the wrong code (it reported a phantom /api/rates 404 exactly
+ * once already). Fail loudly instead.
+ */
+async function portIsBusy() {
+  try {
+    await fetch(BASE, { method: "HEAD", signal: AbortSignal.timeout(1500) });
+    return true;
+  } catch {
+    return false;
+  }
+}
+if (await portIsBusy()) {
+  console.error(
+    `[verify-rates] port ${PORT} is already serving — a stale server would make this gate ` +
+      `test the wrong build. Kill it and re-run.`,
+  );
+  process.exit(1);
+}
+
 // BRIDGE_API_KEY is stripped from the child env on purpose (A9).
 const childEnv = { ...process.env, PORT: String(PORT), NODE_ENV: "production" };
 delete childEnv.BRIDGE_API_KEY;
@@ -65,23 +87,34 @@ async function waitForServer(timeoutMs = 90_000) {
   return false;
 }
 
-function shutdown() {
+/**
+ * Tear the server down and WAIT for the port to actually free. `next start` spawns a child
+ * of its own, so killing the npx wrapper alone leaves the listener bound — which is what
+ * stranded a stale server on this port before.
+ */
+async function shutdown() {
   try {
     if (process.platform === "win32") {
-      spawn("taskkill", ["/pid", String(server.pid), "/f", "/t"], { stdio: "ignore" });
+      const kill = spawn("taskkill", ["/pid", String(server.pid), "/f", "/t"], { stdio: "ignore" });
+      await new Promise((r) => kill.on("exit", r));
     } else {
       server.kill("SIGTERM");
     }
   } catch {
     /* already gone */
   }
+  for (let i = 0; i < 20; i++) {
+    if (!(await portIsBusy())) return;
+    await new Promise((r) => setTimeout(r, 250));
+  }
+  console.warn(`[verify-rates] warning: port ${PORT} still bound after teardown`);
 }
 
 let browser;
 try {
   if (!(await waitForServer())) {
     console.error("[verify-rates] server did not come up:\n" + serverLog.slice(-2000));
-    shutdown();
+    await shutdown();
     process.exit(1);
   }
 
@@ -236,7 +269,7 @@ try {
   failures.push(`exception: ${err && err.message}`);
 } finally {
   if (browser) await browser.close().catch(() => {});
-  if (process.argv.indexOf("--keep") < 0) shutdown();
+  if (process.argv.indexOf("--keep") < 0) await shutdown();
 }
 
 console.log(`\n[verify-rates] ${checks.filter((c) => c.ok).length}/${checks.length} checks passed`);

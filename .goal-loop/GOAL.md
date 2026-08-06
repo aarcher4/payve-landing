@@ -24,11 +24,11 @@ built here.
 
 ## Acceptance criteria
 
-- [ ] A1 `app/api/rates/route.ts` proxies Bridge server-side. Holds `BRIDGE_API_KEY` (never
+- [x] A1 `app/api/rates/route.ts` proxies Bridge server-side. Holds `BRIDGE_API_KEY` (never
       `NEXT_PUBLIC_`), native `fetch`, module-scope 30s cache. Returns per currency:
       `{code, mid, payveRate, allInBps, asOf, live}`. **Never** returns Bridge's
       `sell_rate` or `buy_rate` to the browser.
-- [ ] A2 `payveRate = sell_rate × (1 − PAYVE_PUBLIC_SPREAD_BPS/10_000)`, default 20 bps —
+- [x] A2 `payveRate = sell_rate × (1 − PAYVE_PUBLIC_SPREAD_BPS/10_000)`, default 20 bps —
       mirrors `effectiveRate()` in payve-fintech `developerFees.ts`.
 - [ ] A3 `app/rates/page.tsx` composes ONLY existing primitives from
       `app/components/site/ProductPage.tsx` (PageHero, SplitSection, FeatureGrid,
