@@ -207,6 +207,27 @@ try {
     "page publishes no per-hop correspondent fee figure",
   );
 
+  // -------------------------------------- sticky header over the dark band
+  /**
+   * The header is sticky and the market band is dark. If the header has no opaque
+   * background, dark-ink nav text sits on a dark-green band and becomes illegible.
+   * That is exactly what shipped once: `bg-paper/90` compiled to NO rule, because the
+   * design tokens are plain `var(--paper)` strings and Tailwind cannot alpha-modify them.
+   * Assert a real, opaque background so it cannot regress.
+   */
+  console.log("\nSticky header contrast");
+  const headerBg = await page
+    .locator("header")
+    .first()
+    .evaluate((el) => getComputedStyle(el).backgroundColor);
+  const alpha = (() => {
+    const m = /rgba?\(([^)]+)\)/.exec(headerBg || "");
+    if (!m) return 0;
+    const parts = m[1].split(",").map((s) => Number(s.trim()));
+    return parts.length < 4 ? 1 : parts[3];
+  })();
+  assert(alpha >= 0.95, "sticky header has an opaque background", `${headerBg} (alpha ${alpha})`);
+
   // ------------------------------------------------- worked example ($10,000)
   console.log("\nWorked example — fee drag in bps");
   assert((await page.locator("[data-example]").count()) > 0, "worked example renders");

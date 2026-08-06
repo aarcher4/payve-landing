@@ -34,7 +34,13 @@ export default function SiteHeader() {
   return (
     <header
       ref={headerRef}
-      className="sticky top-0 z-50 border-b border-hairline bg-paper/90 backdrop-blur"
+      /* `bg-paper` opaque, NOT `bg-paper/90`. The tokens are plain `var(--paper)` strings,
+         which Tailwind cannot apply an alpha modifier to — `bg-paper/90` compiled to no rule
+         at all, leaving the sticky header with no background on every page. Invisible while
+         every page was light behind it; illegible the moment a dark section scrolled under
+         (the /rates market band). Restoring alpha would mean redefining the tokens as
+         channel triplets with <alpha-value>, which is a design-system change, not this fix. */
+      className="sticky top-0 z-50 border-b border-hairline bg-paper"
     >
       <nav
         className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6"
