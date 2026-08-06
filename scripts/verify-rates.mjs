@@ -184,14 +184,15 @@ try {
   assert(!/\b18\.0{2,}\b/.test(bodyText), "no synthetic 18.0x rate rendered");
   assert(!/\b4[,.]?000\.0{2,}\b/.test(bodyText), "no synthetic 4000.0x rate rendered");
 
-  // The rate table shows the Payve Rate only — no mid-market column, no bps.
+  // No mid-market anywhere: the board publishes the Payve Rate only, and the worked example
+  // measures fee drag against that rate, never against a benchmark we don't publish.
   assert(!/mid-?market/i.test(bodyText), "page never shows a mid-market rate");
-  assert(!/\bbps\b|basis points?/i.test(bodyText), "page never shows a spread in bps");
-  const headerCells = await page.locator("thead th").allInnerTexts();
+  // bps is used ONLY for the worked example's fee drag — never as a per-pair spread column.
+  const boardHeaders = await page.locator("thead th").allInnerTexts();
   assert(
-    headerCells.length === 2,
-    "rate table has exactly two columns (currency, Payve Rate)",
-    JSON.stringify(headerCells),
+    boardHeaders.length === 3 && !/bps/i.test(boardHeaders.join(" ")),
+    "rate board is pair/rate/change with no bps column",
+    JSON.stringify(boardHeaders),
   );
 
   // ---------------------------------------------------------- A12: forbidden copy
@@ -206,47 +207,40 @@ try {
     "page publishes no per-hop correspondent fee figure",
   );
 
-  // ----------------------------------------------------------- A10: calculator
-  console.log("\nA10 — calculator arithmetic");
-  async function calc({ corridor, wires, avg }) {
-    await page.selectOption("[data-calc-corridor]", corridor);
-    await page.fill("[data-calc-wires]", String(wires));
-    if (avg != null) await page.fill("[data-calc-avg]", String(avg));
-    await page.waitForTimeout(120);
-    const read = async (sel) => (await page.locator(sel).innerText()).trim();
-    return {
-      buyer: await read("[data-calc-buyer]"),
-      supplier: await read("[data-calc-supplier]"),
-      total: await read("[data-calc-total]"),
-      annual: await read("[data-calc-annual]"),
-      pct: (await page.locator("[data-calc-pct]").count()) ? await read("[data-calc-pct]") : "",
-    };
-  }
+  // ------------------------------------------------- worked example ($10,000)
+  console.log("\nWorked example — fee drag in bps");
+  assert((await page.locator("[data-example]").count()) > 0, "worked example renders");
+  assert(
+    (await page.locator("[data-example-card='wire']").count()) === 1 &&
+      (await page.locator("[data-example-card='payve']").count()) === 1,
+    "both comparison cards render",
+  );
 
-  const mx = await calc({ corridor: "MX", wires: 10 });
-  assert(/\$350\b/.test(mx.buyer), "MX 10 wires → buyer $350", mx.buyer);
-  assert(/\$350\b/.test(mx.supplier), "MX 10 wires → supplier $350", mx.supplier);
-  assert(/\$700\b/.test(mx.total), "MX 10 wires → combined $700", mx.total);
-  assert(/\$8,400\b/.test(mx.annual), "MX 10 wires → $8,400/yr", mx.annual);
+  /**
+   * The arithmetic, independently recomputed here rather than trusted from the component:
+   * buyer outlays 10,000 + 35 = 10,035; supplier is credited 10,000 − 35 = 9,965.
+   * drag = (1 − 9965/10035) × 10,000 = 69.75 bps → 70 rounded.
+   * This is rate-independent, so it holds even with the upstream unavailable.
+   */
+  const expectedDrag = Math.round((1 - 9965 / 10035) * 10_000);
+  assert(expectedDrag === 70, "expected fee drag is 70 bps", String(expectedDrag));
 
-  const eu = await calc({ corridor: "EU", wires: 10 });
-  assert(/\$350\b/.test(eu.buyer), "EU 10 wires → buyer $350", eu.buyer);
-  assert(/\$0\b/.test(eu.supplier), "EU 10 wires → supplier $0", eu.supplier);
+  const wireBps = (await page.locator("[data-example-bps='wire']").innerText()).trim();
+  const payveBps = (await page.locator("[data-example-bps='payve']").innerText()).trim();
+  assert(new RegExp(`\\b${expectedDrag}\\b`).test(wireBps), `wire card shows ${expectedDrag} bps`, wireBps);
+  assert(/\b0\b/.test(payveBps), "Payve card shows 0 bps", payveBps);
+  assert(/bps/i.test(wireBps) && /bps/i.test(payveBps), "fee drag is expressed in bps");
 
-  const pctCase = await calc({ corridor: "MX", wires: 10, avg: 500 });
-  assert(/\b14(\.0)?%/.test(pctCase.pct), "MX at $500 avg payment → fee reads 14%", pctCase.pct);
+  assert(bodyText.includes("$10,035"), "wire path shows buyer paying $10,035");
+  assert(bodyText.includes("$9,965"), "wire path shows $9,965 reaching the supplier");
+  assert(bodyText.includes("$10,000"), "Payve path shows $10,000 both sides");
+  assert(/Illustrative/i.test(bodyText), "example is labelled illustrative");
 
-  // A6 — footnote must be present and match the plan's wording.
-  const FOOTNOTE_ANCHORS = [
-    "Potential saving vs. bank average",
-    "median $42.50",
-    "not independently validated",
-    "Illustrative of savings that could be achieved; not guaranteed",
-    "borne by different parties",
-  ];
-  for (const anchor of FOOTNOTE_ANCHORS) {
-    assert(bodyText.includes(anchor), `footnote contains: "${anchor}"`);
-  }
+  // The calculator was deliberately removed — its controls must be gone, not orphaned.
+  assert(
+    (await page.locator("[data-calc-corridor], [data-calc-wires]").count()) === 0,
+    "the old wire-fee calculator is fully removed",
+  );
 
   // ---------------------------------------------------------- A11: responsive
   console.log("\nA11 — responsive");
@@ -286,9 +280,8 @@ try {
     String(robotsTag),
   );
 
-  // ------------------------------------------- A7: substantiation coverage
-  console.log("\nA7 — substantiation");
-  await page.goto(`${BASE}/rates`, { waitUntil: "networkidle" });
+  // ------------------------------------------- substantiation coverage
+  console.log("\nSubstantiation");
   let doc = "";
   try {
     doc = readFileSync("docs/rates-page-substantiation.md", "utf8");
@@ -297,34 +290,19 @@ try {
   }
   if (doc) {
     assert(/https?:\/\//.test(doc), "substantiation doc cites source URLs");
-
-    /**
-     * Scope: the [data-substantiated] region — the corridor assumptions and the footnote.
-     * Those are the CLAIMED figures, and each must trace to the doc.
-     *
-     * Deliberately NOT the whole body: the results panel prints computed outputs ($350,
-     * $8,400, …) that change with user input. Requiring those in a sourcing document would
-     * be meaningless and would pressure someone into padding the doc with arithmetic.
-     * A7's intent is "every published claim is sourced", not "every rendered number".
-     */
-    const region = page.locator("[data-substantiated]");
-    assert((await region.count()) > 0, "[data-substantiated] region exists");
-    const claimText = (await region.count()) ? await region.innerText() : "";
-    const claimed = [
-      ...new Set(
-        [...claimText.matchAll(/\$(\d{1,3}(?:\.\d{2})?)\b/g)]
-          .map((m) => m[1])
-          .filter((v) => Number(v) > 0),
-      ),
-    ];
-    assert(claimed.length > 0, "substantiated region actually states dollar figures");
-    const undocumented = claimed.filter((v) => !doc.includes(`$${v}`));
+    // The only externally-sourced figures now on the page are the two $35 wire fees in the
+    // worked example. Both must trace to the doc.
+    assert(doc.includes("$35"), "the $35 wire-fee assumption is documented");
     assert(
-      undocumented.length === 0,
-      "every claimed dollar figure appears in the substantiation doc",
-      undocumented.join(", "),
+      /median \$42\.50/i.test(doc),
+      "the outgoing-fee range and median are documented",
+    );
+    assert(
+      /HSBC M.xico|17\.00|USD 17/.test(doc),
+      "the receiving-side basis is documented",
     );
   }
+
 } catch (err) {
   console.error(`\n[verify-rates] threw: ${err && err.message}`);
   failures.push(`exception: ${err && err.message}`);
