@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "visual-diff": "node scripts/visual-diff.mjs"
+    "visual-diff": "node scripts/visual-diff.mjs",
+    "typecheck": "tsc --noEmit",
+    "verify:rates": "npm run typecheck && next build && node scripts/verify-rates.mjs && node scripts/verify-rates-live.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

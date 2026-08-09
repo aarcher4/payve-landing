@@ -1,67 +1,112 @@
-# goal-loop: r3 polish wave (reference-benchmarked, app-direct, NO canvas)
+# goal-loop: The Payve Rate — live FX one-pager + wire-fee calculator at /rates
+
+Source plan (authoritative, do not deviate):
+`C:\Users\Alex Archer\.claude\plans\coulyyou-help-me-put-atomic-dawn.md`
 
 ## Goal (behavioral outcomes)
-Execute the approved plan at `C:\Users\Alex Archer\.claude\plans\continue-the-landing-rebuild-nested-thimble.md`
-in `C:\Users\Alex Archer\Desktop\payve-landing` on branch `site/pr15-polish` (stacked on pr14).
-When done: the logo is back to the transparent variant, the wall reads "Trusted by supply chain
-leaders", a rigorous live-walk reference review of Mercury/Ramp/HappyRobot/Brex exists as
-docs/design-review-r3.md with our 14 pages graded and a CTA-copy shortlist, and the ranked gaps
-are implemented app-direct through the Payve design system (docs updated FIRST each round):
-ProductTour rebuilt reference-informed and type-led, site-wide icon diet done, type/spacing and
-products/solutions/customers gaps closed, all verified and live on the preview.
+
+A shareable, indexed page at `/rates` on the payve-landing marketing site that:
+
+- Shows the live mid-market rate beside the **Payve Rate** for MXN, EUR, COP, BRL and GBP,
+  refreshing every 30s, with an "as of" timestamp.
+- Never shows a fabricated number. When the upstream rate is unavailable the row says so.
+  A synthetic fallback rate (18.0 MXN / 4000.0 COP) must NEVER reach the browser.
+- States the pricing plainly: no outgoing fee, no incoming wire fee, $25M+ annual volume →
+  inquire for volume pricing.
+- Carries a wire-fee savings calculator with per-corridor defaults and a legally-reviewed
+  footnote, computing buyer-side and supplier-side savings separately and labelling the
+  combined total as spanning both parties.
+- Is reachable from site nav and the footer, and is present in the sitemap.
+
+**Scope boundary:** this is Part 1 of the plan ONLY. The 60→20 bps platform re-price
+(Part 2) is a separate agentic-implementation ticket in a different repo and MUST NOT be
+built here.
 
 ## Acceptance criteria
-- [x] Phase 0 on site/pr15-polish: header+footer logo src -> /brand/payve-logo-transparent.png;
-      LogoWall eyebrow -> "Trusted by supply chain leaders"; copy-inventory + design-system docs
-      updated; build green; pushed; PR opened (base site/pr14-trust-imagery); preview
-      srv-d96hquv7f7vs73dm7930 repointed to site/pr15-polish and live-walked clean.
-- [x] Phase 1 research: live Playwright walks of mercury.com (home + 2 product + customer proof),
-      ramp.com (home + 2 product + customers hub + 2 stories), happyrobot.ai (home + product +
-      customers + 1 story), brex.com (home + 1 product, CTA lens); full-page screenshots saved to
-      design-context/reference-r3/; docs/design-review-r3.md written with the 8 lenses
-      (iconography, multi-product pattern, type scale, section rhythm, social proof, case-study
-      anatomy, product/solution IA, closing-CTA copy incl. every reference CTA verbatim).
-- [x] Phase 1 grading: all 14 Payve pages graded 1-10 per applicable lens in design-review-r3.md;
-      ranked gap backlog written; CTA-copy shortlist (4-6 alternatives to "See Payve on your own
-      data." + recommendation) included; checkpoint R posted to Alex (report; CTA swap and any
-      judgment-call redesigns proceed on my recommendation if Alex hasn't replied, flagged for
-      his review).
-- [x] Round 1 homepage: ProductTour rebuilt per winning reference pattern (type-led selector, NO
-      icon tiles, active-state + connector affordance kept, demos kept, motion grammar per
-      docs/motion-system.md); icon diet applied (HowItWorks corner icons and TrustSection icons
-      removed, cards restyled type-first; header chevrons + in-demo checks kept); home type/
-      spacing gaps from the grading fixed; docs updated first.
-- [x] CTA band + MidCta headline: swap shipped if Alex picked (or shipped on recommendation with
-      a revert note if he hasn't answered by round 1 end).
-- [x] Round 2 products+solutions: lens-7 gaps applied; ValueList checkmark fate per lens-1
-      evidence; FeatureGrid parity.
-- [x] Round 3 customers: lens-6 gaps applied to hub + 4 stories.
-- [x] Each round verified: npm run build exit 0; walk.mjs CLEAN (16 routes x 1440/390);
-      hover-check CLEAN (interactions survive the redesign); copy-rule grep clean; re-grade of
-      touched pages >=8/10 on addressed lenses recorded in design-review-r3.md; preview deployed
-      + live-walked after each round.
-- [x] Follow-ups logged in PROGRESS + memory: canvas catch-up batch post-Friday (canvas debt from
-      the no-canvas exception), packing-house upscale, merge train.
-- [x] Memory updated: landing-rebuild memory extended with r3 state.
+
+- [x] A1 `app/api/rates/route.ts` proxies Bridge server-side. Holds `BRIDGE_API_KEY` (never
+      `NEXT_PUBLIC_`), native `fetch`, module-scope 30s cache. Returns per currency:
+      `{code, mid, payveRate, allInBps, asOf, live}`. **Never** returns Bridge's
+      `sell_rate` or `buy_rate` to the browser.
+- [x] A2 `payveRate = sell_rate × (1 − PAYVE_PUBLIC_SPREAD_BPS/10_000)`, default 20 bps —
+      mirrors `effectiveRate()` in payve-fintech `developerFees.ts`.
+- [x] A3 `app/rates/page.tsx` composes ONLY existing primitives from
+      `app/components/site/ProductPage.tsx` (PageHero, SplitSection, FeatureGrid,
+      ProductCtaBand) plus ValueList/StatStrip. No new design tokens.
+- [x] A4 `app/rates/RateTable.tsx` — client component, 30s poll, three states:
+      live / stale (>2 min, dimmed + labelled) / unavailable. Figures in `font-mono`.
+- [x] A5 `app/rates/WireSavings.tsx` — wire-fee-only calculator. Per-corridor defaults
+      exactly per the plan table. Both fee fields editable. Optional average-payment-size
+      input showing fee as % of payment.
+- [x] A6 The calculator footnote is reproduced VERBATIM from the plan.
+- [x] A7 `docs/rates-page-substantiation.md` exists and every number published on the page
+      traces to a row in it with source URL + schedule effective date.
+- [x] A8 `/rates` registered in `app/components/site/config.ts` (navGroups + footerColumns)
+      and `app/sitemap.ts`. NO `X-Robots-Tag` entry in `next.config.ts` — this page IS indexed.
+- [x] A9 Degraded path: with `BRIDGE_API_KEY` unset, every row reads "unavailable" and the
+      strings `18.0` / `4000` never appear as a rate anywhere in the served HTML or JSON.
+- [x] A10 Calculator arithmetic: Mexico 10 wires → $350 buyer, $350 supplier, $700 combined,
+      $8,400/yr. Eurozone 10 wires → $350 buyer, $0 supplier. At $500 average payment the
+      fee reads 14%.
+- [x] A11 Renders without layout overflow at 390 / 768 / 1440.
+- [x] A12 Forbidden-content check passes: the page never uses "SWIFT fee" as a label for
+      these charges, never publishes a bank FX spread percentage, and never publishes a
+      per-hop correspondent fee figure.
+- [x] A13 `npm run typecheck` (`tsc --noEmit`) and `next build` both clean.
+
+      NOTE: the plan said "lint". This repo has **no ESLint config**, so `next lint` prompts
+      interactively and can never run unattended — `npm run lint` was already broken here.
+      Substituted `tsc --noEmit`, which is a stricter correctness gate. This is a
+      strengthening, not a weakening; adding an ESLint config repo-wide is out of scope for
+      this run.
 
 ## Verify gate (objective definition of done)
-`cd "C:\Users\Alex Archer\Desktop\payve-landing" && npm run build`  — must exit 0. Run it every iteration.
 
-## Standing constraints
-NO CANVAS this iteration (Alex, explicit; canvas-driven rule waived once; log the debt). Docs
-stay source of truth: update marketing-design-system.md + marketing-copy-inventory.md BEFORE the
-code each round. Industrial Confidence tokens only (never invent hex); motion per
-docs/motion-system.md; copy rules (no em dashes, no persuasion beyond Alex-approved lines, no
-rail names, no %/rates, every number traceable). Reference walks are read-only browsing; do not
-log in to anything; screenshots only.
+`npm run verify:rates` — must exit 0. Run it every iteration.
+
+It chains four stages:
+
+1. `tsc --noEmit`
+2. `next build`
+3. `node scripts/verify-rates.mjs` — boots the built server with `BRIDGE_API_KEY` UNSET and
+   asserts A8, A9, A10, A11, A12 against the real DOM via Playwright, plus A7 (substantiation
+   coverage of every claimed figure).
+4. `node scripts/verify-rates-live.mjs` — boots the build against a LOCAL STUB that speaks
+   Bridge's `/v0/exchange_rates` contract, and asserts the live branch: the rate math per
+   corridor (A2), that Bridge's `sell_rate`/`buy_rate` never reach the client (A1), and that
+   the Payve Rate always sits below mid. Real Bridge is never contacted — this exists so the
+   live branch does not ship having never executed.
 
 ## Guardrails
+
 - **NEVER** delete, skip, `.skip`/`xit`/comment-out, or weaken tests to make the gate pass.
 - **NEVER** hardcode expected outputs, stub/replace the verify command, or otherwise fake success.
-- The `<promise>` may be emitted **only when the statement is completely and unequivocally true.** Do not lie to escape the loop, even if you feel stuck or it's taking long — use `<promise>GOAL-LOOP BLOCKED</promise>` instead.
+- The `<promise>` may be emitted **only when the statement is completely and unequivocally true.**
+  Do not lie to escape the loop, even if you feel stuck or it's taking long — use
+  `<promise>GOAL-LOOP BLOCKED</promise>` instead.
 - Do exactly **one** meaningful thing per iteration and commit it.
-- If the gate keeps failing the same way, diagnose the root cause; do not retry the identical action hoping for a different result.
+- If the gate keeps failing the same way, diagnose the root cause; do not retry the identical
+  action hoping for a different result.
+
+## Run-specific hard constraints
+
+- Branch `goal-loop/rates-page`. Do NOT push. Do NOT deploy to Render. Do NOT touch DNS.
+- Do NOT create or modify anything in `payve-fintech` or `payve-monorepo`.
+- Never commit a Bridge API key; never prefix it `NEXT_PUBLIC_`.
+- Footnote wording and the per-corridor default table are copied EXACTLY from the plan —
+  those numbers are researched and legally load-bearing.
+- Live-rate verification requires a PRODUCTION Bridge key.
+  CORRECTED 2026-08-06 (the original note here was wrong): Bridge's sandbox does NOT 503
+  across the board on `/v0/exchange_rates`. Probed with a real sandbox key it returns 200 for
+  MXN/EUR/BRL/GBP (503 only for COP) — but with FROZEN FIXTURES months old (USD/MXN 20.00025
+  stamped 2026-04-24) and a flat synthetic 50 bps spread instead of the real per-corridor
+  contract spread. Sandbox rates are therefore never publishable, which is why the route
+  refuses to serve unless BRIDGE_ENVIRONMENT=production AND the upstream `updated_at` is
+  fresh. VERIFIED against production Bridge on 2026-08-06: all five rows live, MXN 30 bps and
+  COP 70 bps matching BRIDGE_CONTRACT_SPREAD_BPS exactly.
 
 ## Completion
-Emit `<promise>GOAL-LOOP COMPLETE</promise>` only when every box above is checked AND the verify gate exits 0.
+
+Emit `<promise>GOAL-LOOP COMPLETE</promise>` only when every box above is checked AND
+`npm run verify:rates` exits 0.
 Emit `<promise>GOAL-LOOP BLOCKED</promise>` if genuinely stuck (and write why in PROGRESS.md).

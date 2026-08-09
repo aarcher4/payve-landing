@@ -1,6 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    // Network rebrand: the old three-product IA folds into two products.
+    return [
+      { source: "/products/payments", destination: "/products/network", permanent: true },
+      { source: "/products/early-pay", destination: "/products/network", permanent: true },
+      { source: "/products/agents", destination: "/products/agentic-intelligence", permanent: true },
+    ];
+  },
   async rewrites() {
     return [
       // Hidden, qualified-prospect-only value calculator. Unguessable slug; not linked anywhere.

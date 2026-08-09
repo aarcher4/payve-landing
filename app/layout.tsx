@@ -19,25 +19,25 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.getpayve.com"),
   title: {
-    default: "Payve. Payments, early pay, and agents for supply chains.",
+    default: "Payve. The payment network for supply chain trade.",
     template: "%s · Payve",
   },
   description:
-    "Payve runs the money and the busywork for supply chain trade. Buyers pay every supplier from one place, suppliers can get paid early, and Payve agents automate back office workflows.",
+    "Payve is the payment network for supply chain trade. Send a payment and it's there: any supplier in the US, Mexico, Colombia, Brazil, or the EU, paid instantly in their own currency. Members connect their suppliers to global liquidity, and agentic intelligence runs the back office.",
   keywords: [
-    "B2B payments",
+    "B2B payment network",
     "supplier payments",
-    "supplier financing",
+    "working capital network",
     "early payment",
     "accounts payable",
     "cross-border payments",
     "supply chain operations",
-    "agentic automation",
+    "agentic intelligence",
   ],
   openGraph: {
     title: "Payve",
     description:
-      "Payments, early pay, and agents for supply chain trade. Pay every supplier from one place, let suppliers get paid early, and automate back office workflows.",
+      "The payment network for supply chain trade. Send a payment and it's there. Connect your suppliers to the capital they need, and put agentic intelligence on the back office.",
     type: "website",
     url: "https://www.getpayve.com",
     images: [{ url: "/images/og-default.jpg", width: 1200, height: 673 }],
