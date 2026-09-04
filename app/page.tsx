@@ -13,31 +13,6 @@ export default function Home() {
           Orchestrated precision for supply chains that{" "}
           <span className="font-serif italic">feed the world</span>.
         </h1>
-
-        {/* What Payve does (plain-language purpose) */}
-        <p className="mt-8 max-w-2xl text-center font-light text-lg md:text-xl leading-relaxed text-slate-500">
-          Payve runs the money and the busywork for food supply chains. Finance
-          teams pay every supplier from one place and suppliers can get paid
-          early. Payve agents bring organizational intelligence and automate
-          back office workflows like orders, invoices, quality holds, and
-          reconciliation.
-        </p>
-      </div>
-
-      {/* Legal links - bottom left */}
-      <div className="absolute bottom-6 left-6 pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] md:bottom-8 md:left-8 z-10 flex gap-5 text-sm text-slate-500">
-        <a
-          href="/privacy"
-          className="py-1 hover:text-slate-700 motion-safe:transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
-        >
-          Privacy
-        </a>
-        <a
-          href="/terms"
-          className="py-1 hover:text-slate-700 motion-safe:transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
-        >
-          Terms
-        </a>
       </div>
 
       {/* Contact info - bottom right with safe area */}
