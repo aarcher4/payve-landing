@@ -63,6 +63,12 @@ const config: Config = {
         sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
         display: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
+        // One-pager headline. Deliberately the bare generic `serif` keyword:
+        // the original site declared Playfair/Cormorant but its Google Fonts
+        // @import was emitted after the Tailwind rules, so browsers ignored it
+        // and fell through to generic serif (Times New Roman / Times). Listing
+        // Georgia or ui-serif ahead of it would NOT reproduce that.
+        serif: ["serif"],
       },
       boxShadow: {
         "elev-1": "var(--shadow-1)",
