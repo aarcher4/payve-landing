@@ -9,7 +9,7 @@ export default function Home() {
 
       {/* Centered content */}
       <div className="relative z-10 flex min-h-dvh flex-col items-center justify-center px-6 py-24">
-        <h1 className="max-w-5xl text-center text-balance font-serif-display font-medium text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-slate-600 leading-tight tracking-[-0.02em]">
+        <h1 className="max-w-5xl text-center text-balance font-serif font-medium text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-slate-600 leading-tight tracking-[-0.02em]">
           Orchestrated precision for supply chains that{" "}
           <span className="font-serif italic">feed the world</span>.
         </h1>
