@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  Playfair_Display,
+  Cormorant_Garamond,
+} from "next/font/google";
 import "./globals.css";
-import SiteHeader from "./components/site/SiteHeader";
-import SiteFooter from "./components/site/SiteFooter";
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -16,31 +19,39 @@ const geistMono = Geist_Mono({
   weight: ["400", "500", "600"],
 });
 
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  weight: ["400", "500", "600", "700"],
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  variable: "--font-cormorant",
+  style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.getpayve.com"),
-  title: {
-    default: "Payve. The payment network for supply chain trade.",
-    template: "%s · Payve",
-  },
+  title: "Payve",
   description:
-    "Payve is the payment network for supply chain trade. Send a payment and it's there: any supplier in the US, Mexico, Colombia, Brazil, or the EU, paid instantly in their own currency. Members connect their suppliers to global liquidity, and agentic intelligence runs the back office.",
+    "Payve is a B2B payments and operations platform for food supply chains. Finance teams pay suppliers across the US, Mexico, and Colombia from one place, suppliers can get paid early, and Payve agents automate back office workflows.",
   keywords: [
-    "B2B payment network",
+    "B2B payments",
     "supplier payments",
-    "working capital network",
-    "early payment",
+    "supplier financing",
     "accounts payable",
-    "cross-border payments",
+    "get paid early",
     "supply chain operations",
-    "agentic intelligence",
+    "agentic automation",
   ],
   openGraph: {
     title: "Payve",
     description:
-      "The payment network for supply chain trade. Send a payment and it's there. Connect your suppliers to the capital they need, and put agentic intelligence on the back office.",
+      "Pay suppliers from one place, let them get paid early, and automate back office workflows with Payve agents. Built for food supply chains across the US, Mexico, and Colombia.",
     type: "website",
     url: "https://www.getpayve.com",
-    images: [{ url: "/images/og-default.jpg", width: 1200, height: 673 }],
   },
 };
 
@@ -53,13 +64,9 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${cormorant.variable}`}
     >
-      <body className="bg-paper text-ink-1 antialiased">
-        <SiteHeader />
-        <div className="min-h-dvh">{children}</div>
-        <SiteFooter />
-      </body>
+      <body className="bg-white text-slate-600 antialiased">{children}</body>
     </html>
   );
 }

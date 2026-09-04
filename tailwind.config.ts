@@ -63,6 +63,9 @@ const config: Config = {
         sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
         display: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
+        // One-pager typography (Playfair headline, Cormorant italic accent)
+        "serif-display": ["var(--font-playfair)", "ui-serif", "Georgia", "serif"],
+        serif: ["var(--font-cormorant)", "ui-serif", "Georgia", "serif"],
       },
       boxShadow: {
         "elev-1": "var(--shadow-1)",
