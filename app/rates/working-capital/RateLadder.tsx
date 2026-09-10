@@ -16,6 +16,12 @@ import { useRef, useState } from "react";
  * directly, which is more honest than a footnote and easier to check.
  *
  * The three tiers are the partner's credit tiers, not a menu — a buyer does not choose one.
+ *
+ * WHOSE COST THIS IS. The supplier's, and the card has to say so in its heading rather than
+ * leave it to a sentence further down. The engine nets the fee out of the early payment
+ * (`principal = invoice − fee`, oatfiInvoiceMath.ts) and the buyer repays `total = invoice`,
+ * the face value they already owed. A card headed "What it costs" on a buyer-facing page reads
+ * as the buyer's cost, which is the opposite of the truth.
  */
 
 const TIERS = [
@@ -38,12 +44,20 @@ export function RateLadder() {
   const [days, setDays] = useState(30);
 
   return (
-    <div ref={ref} data-rate-ladder className="rounded-r-md border border-r-border bg-r-card p-6">
+    <div
+      ref={ref}
+      data-rate-ladder
+      className="rounded-r-md border border-r-border bg-r-card p-5 sm:p-6"
+    >
       <p className="text-xs font-semibold uppercase tracking-[0.04em] text-r-muted-fg">
-        What it costs
+        What your supplier pays
       </p>
 
-      <p className="r-num mt-3 flex items-baseline gap-2" data-early-pay-headline>
+      {/* flex-wrap, so the suffix drops to its own line on a phone instead of crowding. */}
+      <p
+        className="r-num mt-3 flex flex-wrap items-baseline gap-x-2"
+        data-early-pay-headline
+      >
         <span
           className="text-r-fg"
           style={{
@@ -62,6 +76,26 @@ export function RateLadder() {
         Priced per day, not per month. A shorter invoice costs proportionally less, so the
         number above is a starting point rather than a flat fee.
       </p>
+
+      {/*
+        The single most misread thing on this page, so it gets its own panel rather than a
+        clause. The supplier takes the fee out of their own early payment; the buyer repays the
+        invoice face and nothing else, and earns a share back for paying on time.
+      */}
+      <div
+        className="mt-5 rounded-r-sm border border-r-border bg-r-bg p-4"
+        data-who-pays
+      >
+        <p className="text-sm leading-relaxed text-r-fg">
+          <span className="font-semibold">Your supplier pays this rate, not you.</span> The fee
+          comes out of the payment they choose to take early. You repay the invoice face on your
+          original date, which is exactly what you already owed.
+        </p>
+        <p className="mt-2 text-sm leading-relaxed text-r-muted-fg">
+          It costs you nothing to offer, and you earn income on it. Pay on time and you receive a
+          share of the rate back on every invoice your suppliers take early.
+        </p>
+      </div>
 
       {/* The linearity, shown rather than footnoted. */}
       <div className="mt-6">
@@ -116,8 +150,8 @@ export function RateLadder() {
       </ul>
 
       <p className="mt-5 text-xs leading-relaxed text-r-subtle">
-        Tiers are set by the capital partner against approved credit. Your exact cost is shown in
-        dollars before you accept anything, and the binding figures live in your agreement.
+        Tiers are set by the capital partner against approved credit. The supplier sees the exact
+        dollars before they accept anything, and the binding figures live in the agreement.
       </p>
     </div>
   );

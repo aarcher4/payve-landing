@@ -128,8 +128,21 @@ try {
    */
   const dayOf = (v) =>
     page.locator(`[data-timeline="${v}"] [data-marker="moving"]`).getAttribute("data-marker-day");
-  const boxOf = (v) =>
-    page.locator(`[data-timeline="${v}"] [data-marker="moving"]`).boundingBox();
+  /**
+   * Measure the DOT, and only after scrolling its section into view.
+   *
+   * Two lessons, both paid for. The marker column is a 1px rail so that the label can anchor to
+   * an edge without dragging the dot off the date it names, and `boundingBox()` on an element
+   * that thin, sitting below the fold, came back as the viewport centre for BOTH timelines: a
+   * clean 720-vs-720 that read exactly like a layout collapse and was a measurement artifact.
+   * The dot is a real 10px box, it IS the thing whose position has to be right, and scrolling
+   * first is also the only condition under which the component is meant to be seen (the loop is
+   * `useInView`-gated, so an unscrolled section is never in its end state anyway).
+   */
+  const boxOf = async (v) => {
+    await page.locator(`[data-timeline="${v}"]`).scrollIntoViewIfNeeded();
+    return page.locator(`[data-timeline="${v}"] [data-marker="moving"] [data-dot]`).boundingBox();
+  };
 
   const earlyDay = await dayOf("early-pay");
   const laterDay = await dayOf("pay-later");
@@ -170,8 +183,9 @@ try {
   }
   // Early Pay moves LEFT of the due date, Pay Later moves RIGHT. Opposite directions is the
   // whole argument, so assert the direction rather than just the difference.
+  await page.locator('[data-timeline="early-pay"]').scrollIntoViewIfNeeded();
   const pinnedBox = await page
-    .locator('[data-timeline="early-pay"] [data-marker="pinned"]')
+    .locator('[data-timeline="early-pay"] [data-marker="pinned"] [data-dot]')
     .boundingBox();
   assert(earlyBox.x < pinnedBox.x, "Early Pay moves earlier than the due date");
   assert(laterBox.x > pinnedBox.x, "Pay Later moves later than the due date");
@@ -190,6 +204,34 @@ try {
   // Never an annualized figure: that belongs in the binding agreement, not a marketing page.
   assert(!/\bAPR\b/i.test(body), "no APR anywhere on the page");
   assert(!/annualized/i.test(body), "no annualized figure anywhere on the page");
+
+  /**
+   * WHO BEARS THE EARLY PAY FEE. The most misreadable claim on the page, and the one with the
+   * most riding on it: the engine nets the fee out of the supplier's early payment
+   * (`principal = invoice - fee`) and the buyer repays `total = invoice`. A card of percentages
+   * on a buyer-facing page reads as the buyer's cost unless the page says otherwise, so the
+   * attribution is asserted as content, not left to survive the next copy edit.
+   */
+  const whoPays = await page.locator("[data-product='early-pay'] [data-who-pays]").count();
+  assert(whoPays === 1, "Early Pay carries the who-pays panel", String(whoPays));
+  const whoPaysText = await page
+    .locator("[data-product='early-pay'] [data-who-pays]")
+    .innerText();
+  assert(
+    /pays this rate, not you/i.test(whoPaysText),
+    "the page says the supplier pays the rate, not the buyer",
+  );
+  assert(
+    /invoice face/i.test(whoPaysText),
+    "the page says the buyer repays only the invoice face",
+  );
+  // The buyer reward is real (a slice of Payve's share, rebated on timely repayment) but it is
+  // CONDITIONAL. A bare "you earn" without the condition would be the misleading form.
+  assert(/earn income/i.test(whoPaysText), "the page states the buyer earns on Early Pay");
+  assert(
+    /on time/i.test(whoPaysText),
+    "the buyer reward is stated as conditional on paying on time",
+  );
 
   console.log("\nThe rate ladder shows the linearity");
   const tiers = await page.locator("[data-tier]").count();
