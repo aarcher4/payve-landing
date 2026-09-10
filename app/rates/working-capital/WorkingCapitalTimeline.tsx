@@ -123,25 +123,52 @@ export function WorkingCapitalTimeline({ variant }: { variant: TimelineVariant }
   // --m-scene, the section-scale curve. Slow and certain: this is a payment date moving.
   const move = reduced ? { duration: 0 } : { duration: 0.9, ease: [0.76, 0, 0.24, 1] as const };
 
+  /**
+   * A label centred on a marker near either end of the track overhangs it.
+   *
+   * "Supplier paid" on day 1 hung off the left and, on a 360px phone, ran under the card's own
+   * padding; "Your cash leaves" on day 60 does the same on the right at every width. Centring is
+   * right in the middle of the track and wrong at the ends, so the label anchors to whichever
+   * edge it is approaching instead.
+   *
+   * ONLY THE LABEL MOVES, NEVER THE DOT. Anchoring the whole marker stack was the obvious first
+   * try and it was wrong: shifting the container slides the dot off the date it is naming, so
+   * the page would draw "Supplier paid, day 1" against a dot sitting somewhere else. The date is
+   * the one thing on this page that has to be exact. So the marker column is a 1px rail centred
+   * on the date, and the shift below applies to the two text spans alone.
+   */
+  function labelShift(dayValue: number) {
+    const p = pct(dayValue);
+    if (p < 15) return "translate-x-1/2"; // left edge of the label sits on the date
+    if (p > 85) return "-translate-x-1/2"; // right edge of the label sits on the date
+    return "translate-x-0";
+  }
+  const movingShift = labelShift(day);
+  const pinnedShift = labelShift(spec.pinnedDay);
+
   return (
     <div ref={ref} data-timeline={variant} className="w-full">
       {/* Inset track, so the day-0 and day-60 labels cannot clip the container edge. */}
-      <div className="relative mx-auto h-[188px] w-[calc(100%-3rem)] sm:w-[calc(100%-5rem)]">
+      <div className="relative mx-auto h-[212px] w-[calc(100%-2.5rem)] sm:h-[188px] sm:w-[calc(100%-5rem)]">
         {/* Pinned party, above the axis. */}
         <div
-          className="absolute top-0 flex -translate-x-1/2 flex-col items-center"
+          className="absolute top-0 flex w-px flex-col items-center"
           style={{ left: `${pct(spec.pinnedDay)}%` }}
           data-marker="pinned"
           data-marker-day={spec.pinnedDay}
         >
-          <span className="whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.04em] text-r-muted-fg">
+          <span
+            className={`whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.04em] text-r-muted-fg ${pinnedShift}`}
+          >
             {spec.pinnedLabel}
           </span>
-          <span className="r-num mt-0.5 whitespace-nowrap text-sm font-semibold text-r-fg">
+          <span
+            className={`r-num mt-0.5 whitespace-nowrap text-sm font-semibold text-r-fg ${pinnedShift}`}
+          >
             Day {spec.pinnedDay}
           </span>
           <span className="mt-1.5 h-6 w-px bg-r-muted-fg" aria-hidden />
-          <span className="h-2.5 w-2.5 rounded-[2px] bg-r-muted-fg" aria-hidden />
+          <span className="h-2.5 w-2.5 rounded-[2px] bg-r-muted-fg" data-dot aria-hidden />
         </div>
 
         {/* The axis. */}
@@ -169,13 +196,15 @@ export function WorkingCapitalTimeline({ variant }: { variant: TimelineVariant }
             aria-hidden
           >
             <span className="h-2 w-px bg-r-border" />
-            <span className="r-num mt-1 whitespace-nowrap text-[11px] text-r-subtle">Day {t}</span>
+            <span className="r-num mt-1 hidden whitespace-nowrap text-[11px] text-r-subtle sm:inline">
+              Day {t}
+            </span>
           </div>
         ))}
 
         {/* Moving party, below the axis. */}
         <motion.div
-          className="absolute top-[124px] flex -translate-x-1/2 flex-col items-center"
+          className="absolute top-[124px] flex w-px flex-col items-center"
           data-marker="moving"
           data-marker-day={day}
           /**
@@ -191,12 +220,16 @@ export function WorkingCapitalTimeline({ variant }: { variant: TimelineVariant }
           animate={{ left: `${pct(day)}%` }}
           transition={move}
         >
-          <span className="h-2.5 w-2.5 rounded-full bg-r-primary" aria-hidden />
+          <span className="h-2.5 w-2.5 rounded-full bg-r-primary" data-dot aria-hidden />
           <span className="mt-1 h-5 w-px bg-r-primary" aria-hidden />
-          <span className="r-num mt-1 whitespace-nowrap text-sm font-semibold text-r-fg">
+          <span
+            className={`r-num mt-1 whitespace-nowrap text-sm font-semibold text-r-fg ${movingShift}`}
+          >
             Day {day}
           </span>
-          <span className="whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.04em] text-r-primary">
+          <span
+            className={`whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.04em] text-r-primary ${movingShift}`}
+          >
             {spec.movingLabel}
           </span>
         </motion.div>

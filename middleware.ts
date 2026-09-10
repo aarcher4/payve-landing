@@ -31,11 +31,28 @@ const RATES_HOSTS = SURFACE_HOSTS;
 const PASSTHROUGH = new Set(["/value-model-9f3ac21b", "/roger-value-prop-bbc01d16"]);
 
 /** Short paths that exist on the rates host, mapped to where they really live. */
+/**
+ * Short URLs on the liquidity host, and what they really serve.
+ *
+ * `/` is WORKING CAPITAL, not the rate board. The host is called liquidity: a visitor arriving
+ * with no path is asking about working capital, and the FX board is the supporting detail
+ * rather than the headline. The board keeps a short URL of its own at `/rates`, which is also
+ * the app path, so it needs no alias entry.
+ */
 const RATES_HOST_ALIASES: Record<string, string> = {
-  "/": "/rates",
+  "/": "/rates/working-capital",
   "/settings": "/rates/settings",
-  "/working-capital": "/rates/working-capital",
   "/login": "/rates/login",
+};
+
+/**
+ * Short URLs that are no longer canonical and permanently hand over.
+ *
+ * `/working-capital` was the home of this page before it moved to `/`. Rewriting both would
+ * serve one page at two URLs and split it against itself, so the old one redirects.
+ */
+const RATES_HOST_REDIRECTS: Record<string, string> = {
+  "/working-capital": "/",
 };
 
 function isSettings(pathname: string): boolean {
@@ -64,6 +81,14 @@ export async function middleware(request: NextRequest) {
 
   // Resolve the short alias FIRST, so the gate below sees the real destination. Guarding the
   // pre-alias path instead would leave /settings on the rates host ungated.
+  // A retired short URL hands over before anything else looks at it.
+  const movedTo = onRatesHost ? RATES_HOST_REDIRECTS[pathname] : undefined;
+  if (movedTo) {
+    const url = request.nextUrl.clone();
+    url.pathname = movedTo;
+    return NextResponse.redirect(url, 308);
+  }
+
   const target = (onRatesHost && RATES_HOST_ALIASES[pathname]) || pathname;
 
   /**

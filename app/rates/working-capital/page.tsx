@@ -12,7 +12,9 @@ export const metadata: Metadata = {
     "Two ways to move a payment date without moving the other side's. Early Pay releases cash to your suppliers sooner. Pay Later keeps your vendor network paid on time while your own cash leaves later.",
   // rates.getpayve.com is the canonical home. Without this the page self-canonicalises onto
   // www via the root metadataBase and competes with itself, the same trap /rates has.
-  alternates: { canonical: canonical("/working-capital") },
+  // Working capital is the landing page on the liquidity host, so its canonical is the
+  // host root. /working-capital 308s here, and /rates/working-capital serves it on www.
+  alternates: { canonical: canonical("/") },
 };
 
 const SUPPLIER_GETS = [
@@ -48,7 +50,7 @@ const COMPARISON = [
     name: "Early Pay",
     moves: "Moves your supplier's money earlier",
     them: "Your growers reach liquidity without waiting out your terms.",
-    you: "Your payment date is unchanged.",
+    you: "Your payment date is unchanged, and you earn on invoices taken early.",
     pick: "Pick this when a supplier needs cash sooner than your terms allow.",
   },
   {
@@ -109,7 +111,7 @@ export default function WorkingCapitalPage() {
         id="early-pay"
         data-product="early-pay"
       >
-        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
           <Reveal>
             <p className="text-xs font-semibold uppercase tracking-[0.04em] text-r-primary">
               Early Pay
@@ -128,7 +130,9 @@ export default function WorkingCapitalPage() {
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-r-muted-fg">
               A supplier who is waiting on a 30 day invoice can take the money on day 1 instead.
               They choose, invoice by invoice, and they see the exact dollars before they decide.
-              Nothing about your own payment date changes.
+              The rate is theirs to pay, out of the payment they take early. Your own date does
+              not change, you repay the invoice face, and you earn a share of the rate for paying
+              on time.
             </p>
           </Reveal>
 
@@ -150,7 +154,7 @@ export default function WorkingCapitalPage() {
             </Reveal>
 
             <Reveal delayIndex={3}>
-              <div className="flex h-full flex-col gap-4 rounded-r-md border border-r-border bg-r-bg p-6">
+              <div className="flex h-full flex-col gap-4 rounded-r-md border border-r-border bg-r-bg p-5 sm:p-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.04em] text-r-muted-fg">
                   What your supplier gets
                 </p>
@@ -170,7 +174,7 @@ export default function WorkingCapitalPage() {
 
       {/* ---------------------------------------------------------- Pay Later */}
       <section className="border-t border-r-border" id="pay-later" data-product="pay-later">
-        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
           <Reveal>
             <p className="text-xs font-semibold uppercase tracking-[0.04em] text-r-primary">
               Pay Later
@@ -206,11 +210,11 @@ export default function WorkingCapitalPage() {
 
           <div className="mt-10 grid gap-6 lg:grid-cols-2">
             <Reveal delayIndex={2}>
-              <div className="rounded-r-md border border-r-border bg-r-card p-6">
+              <div className="rounded-r-md border border-r-border bg-r-card p-5 sm:p-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.04em] text-r-muted-fg">
-                  What it costs
+                  What you pay
                 </p>
-                <p className="r-num mt-3 flex items-baseline gap-2" data-pay-later-headline>
+                <p className="r-num mt-3 flex flex-wrap items-baseline gap-x-2" data-pay-later-headline>
                   <span
                     className="text-r-fg"
                     style={{
@@ -247,7 +251,7 @@ export default function WorkingCapitalPage() {
             </Reveal>
 
             <Reveal delayIndex={3}>
-              <div className="flex h-full flex-col gap-4 rounded-r-md border border-r-border bg-r-card p-6">
+              <div className="flex h-full flex-col gap-4 rounded-r-md border border-r-border bg-r-card p-5 sm:p-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.04em] text-r-muted-fg">
                   What your network gets
                 </p>
@@ -260,7 +264,7 @@ export default function WorkingCapitalPage() {
 
       {/* ------------------------------------------------------- the difference */}
       <section className="border-t border-r-border bg-r-card" data-comparison>
-        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
           <Reveal>
             <h2
               className="max-w-2xl text-r-fg"
@@ -279,7 +283,7 @@ export default function WorkingCapitalPage() {
             {COMPARISON.map((c, i) => (
               <Reveal key={c.k} delayIndex={i + 1}>
                 <div
-                  className="flex h-full flex-col gap-3 rounded-r-md border border-r-border bg-r-bg p-6"
+                  className="flex h-full flex-col gap-3 rounded-r-md border border-r-border bg-r-bg p-5 sm:p-6"
                   data-compare={c.k}
                 >
                   <p className="text-xs font-semibold uppercase tracking-[0.04em] text-r-primary">
