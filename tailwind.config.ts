@@ -13,6 +13,8 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      height: { control: "var(--r-control)" },
+      minHeight: { control: "var(--r-control)" },
       colors: {
         paper: {
           DEFAULT: "var(--paper)",
@@ -96,6 +98,11 @@ const config: Config = {
         sm: "var(--radius-sm)",
         md: "var(--radius-md)",
         lg: "var(--radius-lg)",
+        // Rates surface: the design system's radii are much softer than the marketing
+        // site's (18px base against 6px), so they are namespaced rather than swapped in.
+        "r-sm": "var(--r-radius-sm)",
+        "r-md": "var(--r-radius-md)",
+        "r-lg": "var(--r-radius-lg)",
       },
       letterSpacing: {
         display: "-0.03em",

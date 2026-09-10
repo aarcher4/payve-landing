@@ -69,6 +69,28 @@ async function seed() {
   // database - which is what the docker one-liner in the header creates.
   await client.query("delete from fx_rate_snapshot");
 
+  /**
+   * Reset the spread config too, to the values migration 002 seeds.
+   *
+   * The settings section at the end of this script re-prices MXN to 26 bps and deliberately
+   * leaves it there, because the point is that a re-price PERSISTS. Without this reset the
+   * script was not idempotent: a second run found 26 and failed the "renders at the seeded 16
+   * bps" assertion 300 lines earlier. Exactly the residue problem that made the empty-corridor
+   * check pass against leftover BRL rows, so the fix is the same - the fixture owns the whole
+   * state it asserts on.
+   *
+   * Deleting from an append-only table is correct HERE and only here: this is a throwaway test
+   * database, and the alternative (appending a "reset" version each run) would grow the change
+   * log the settings assertions read from.
+   */
+  await client.query("delete from fx_spread_config");
+  await client.query(
+    `insert into fx_spread_config (currency_pair, payve_spread_bps, reason, actor)
+     select v.pair, v.bps, 'Test fixture reset to the migration 002 seed values.', 'verify-rates-history'
+       from (values ('usd_to_mxn', 16), ('usd_to_eur', 20), ('usd_to_cop', 20),
+                    ('usd_to_brl', 20), ('usd_to_gbp', 20)) as v(pair, bps)`,
+  );
+
   const dailyValues = [];
   for (let i = DAILY_DAYS; i >= 0; i--) {
     const at = new Date(Date.now() - i * 86_400_000);
@@ -219,6 +241,10 @@ try {
       // Banrep APIs on its first tick - polluting the fixture and making this gate depend on
       // the internet. It is why the empty-corridor check once passed against residue.
       RATES_CAPTURE_DISABLED: "1",
+      // Settings credentials, so the gate can exercise the auth boundary end to end rather
+      // than leaving it to a manual check.
+      RATES_ADMIN_PASSWORD: "gate-password-not-a-real-credential",
+      RATES_SESSION_SECRET: "gate-session-secret-at-least-16-chars",
     },
     stdio: ["ignore", "pipe", "pipe"],
     shell: process.platform === "win32",
@@ -421,7 +447,7 @@ try {
   // because it is the other corridor with a publishable series: COP is deliberately refused and
   // the rest are deliberately empty.
   const beforePair = await pathFor();
-  await page.selectOption("[data-pair-select]", { label: "USDc/BRL" });
+  await page.selectOption("[data-pair-select]", { label: "USD/BRL" });
   await page.waitForTimeout(1200);
   const afterPair = await pathFor();
   assert(beforePair !== afterPair, "switching corridor redraws the chart");
@@ -430,7 +456,7 @@ try {
 
   // And a corridor whose anchor is refused must render the honest empty state, not a chart that
   // contradicts the headline above it.
-  await page.selectOption("[data-pair-select]", { label: "USDc/COP" });
+  await page.selectOption("[data-pair-select]", { label: "USD/COP" });
   await page.waitForTimeout(1200);
   const copPaths = await page.locator("[data-rate-chart] path[stroke]").count();
   assert(copPaths === 0, "a refused corridor draws no line at all", String(copPaths));
@@ -438,6 +464,110 @@ try {
   assert(/No rate history/i.test(copBody), "a refused corridor shows the empty state", copBody.slice(0, 80));
 
   assert(consoleErrors.length === 0, "no console errors while driving the dashboard", consoleErrors.slice(0, 3).join(" | "));
+
+  // ------------------------------------------------------- the settings boundary
+  /**
+   * The gate that stops the public internet re-pricing the board. Asserted over HTTP rather
+   * than through the UI: the redirect, the 401s and the validation are the security surface,
+   * and they must hold for a client that never renders a page.
+   */
+  console.log("\nSettings — the auth boundary");
+  const noRedirect = await fetch(`${BASE}/rates/settings`, { redirect: "manual" });
+  assert(
+    noRedirect.status === 307 || noRedirect.status === 308,
+    "logged out, /rates/settings redirects",
+    String(noRedirect.status),
+  );
+  assert(
+    (noRedirect.headers.get("location") ?? "").includes("/rates/login"),
+    "the redirect lands on the login page",
+    String(noRedirect.headers.get("location")),
+  );
+  assert(
+    (await fetch(`${BASE}/api/rates/spread`)).status === 401,
+    "reading spreads without a session is 401",
+  );
+  assert(
+    (
+      await fetch(`${BASE}/api/rates/spread`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pair: "usd_to_mxn", bps: 99, reason: "no session at all here" }),
+      })
+    ).status === 401,
+    "writing a spread without a session is 401",
+  );
+
+  const badLogin = await fetch(`${BASE}/api/rates/session`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ password: "wrong" }),
+  });
+  assert(badLogin.status === 401, "a wrong password is rejected", String(badLogin.status));
+  // A rejected login must not hand out a cookie, or the rejection is cosmetic.
+  assert(!badLogin.headers.get("set-cookie"), "a rejected login sets no cookie");
+
+  const goodLogin = await fetch(`${BASE}/api/rates/session`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ password: "gate-password-not-a-real-credential" }),
+  });
+  assert(goodLogin.status === 200, "the right password is accepted", String(goodLogin.status));
+  const setCookie = goodLogin.headers.get("set-cookie") ?? "";
+  assert(/HttpOnly/i.test(setCookie), "the session cookie is httpOnly", setCookie.slice(0, 80));
+  assert(/SameSite=Lax/i.test(setCookie), "the session cookie is sameSite=lax");
+  const cookie = setCookie.split(";")[0];
+
+  // A forged cookie must not open the door. This is the assertion that proves the signature is
+  // actually checked rather than the cookie's mere presence.
+  const forged = await fetch(`${BASE}/api/rates/spread`, {
+    headers: { cookie: `${cookie.split("=")[0]}=eyJleHAiOjk5OTk5OTk5OTk5OTl9.notarealsignature` },
+  });
+  assert(forged.status === 401, "a forged session cookie is rejected", String(forged.status));
+
+  console.log("\nSettings — validation and the money path");
+  const authed = { "Content-Type": "application/json", cookie };
+  const noReason = await fetch(`${BASE}/api/rates/spread`, {
+    method: "POST",
+    headers: authed,
+    body: JSON.stringify({ pair: "usd_to_mxn", bps: 21, reason: "short" }),
+  });
+  assert(noReason.status === 400, "a re-price without a real reason is rejected", String(noReason.status));
+  const badBps = await fetch(`${BASE}/api/rates/spread`, {
+    method: "POST",
+    headers: authed,
+    body: JSON.stringify({ pair: "usd_to_mxn", bps: 12.5, reason: "a fractional spread cannot be stored" }),
+  });
+  assert(badBps.status === 400, "a fractional spread is rejected", String(badBps.status));
+
+  const beforeRe = (await (await fetch(`${BASE}/api/rates`)).json()).rates.find((r) => r.code === "MXN");
+  const applied = await fetch(`${BASE}/api/rates/spread`, {
+    method: "POST",
+    headers: authed,
+    body: JSON.stringify({ pair: "usd_to_mxn", bps: 26, reason: "Gate check: a re-price must reach the board" }),
+  });
+  assert(applied.status === 200, "a valid re-price is accepted", String(applied.status));
+  const afterRe = (await (await fetch(`${BASE}/api/rates`)).json()).rates.find((r) => r.code === "MXN");
+
+  // The whole point of the screen: the number typed here changes the number published there.
+  // Recomputed independently from the pre-change rate rather than trusting the response.
+  const expectedSell = (beforeRe.sell / (1 - beforeRe.spreadBps / 10_000)) * (1 - 26 / 10_000);
+  assert(afterRe.spreadBps === 26, "the board reports the new spread", String(afterRe.spreadBps));
+  assert(
+    Math.abs(afterRe.sell - expectedSell) < 1e-9,
+    "the published sell rate moves by exactly the change",
+    `${afterRe.sell} vs ${expectedSell}`,
+  );
+
+  // `log` is already the server's stdout buffer in this file - name it for what it is.
+  const logRow = (await (await fetch(`${BASE}/api/rates/spread`, { headers: { cookie } })).json())
+    .history[0];
+  assert(logRow.payve_spread_bps === 26, "the change log records the new value");
+  assert(/Gate check/.test(logRow.reason), "the change log records the reason", logRow.reason);
+  assert(
+    Boolean(logRow.actor) && Boolean(logRow.effective_from),
+    "the change log records actor and timestamp",
+  );
 } catch (err) {
   console.error(`\n[verify-rates-history] threw: ${err && err.message}`);
   failures.push(`exception: ${err && err.message}`);

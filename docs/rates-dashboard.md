@@ -96,9 +96,15 @@ is the point a reader actually cross-checks against the headline.
 
 The API reports `anchorRatio` so the UI can say the history is indexed rather than implying
 five years of our own quotes. Intraday windows are never anchored — they are already Bridge's
-own observations. A ratio outside `0.8 .. 1.2` is refused and the series is served unanchored:
-that far off is a bug, not a source disagreement, and a 23%-rescaled history would be worse
-than an unadjusted one.
+own observations — but every window does get the live quote appended, so the chart's last
+point always equals the headline number above it.
+
+A ratio outside `0.8 .. 1.2` is **refused, and refusing withholds the series entirely**
+(`anchorRefused: true`, `available: false`). That far off is a bug, not a source disagreement.
+Serving it unanchored was the first implementation and it was wrong on screen: COP rendered a
+flat line at ~3,972 directly beneath a headline of 3,100.72, a 22% contradiction with nothing
+to explain it. The payload looked fine; only the rendered page showed it. An empty chart with
+its honest empty state is the correct output.
 
 ### Backfill
 
@@ -162,3 +168,51 @@ npm run verify:rates
 
 Never pipe it through `tail` — you get tail's exit code, and a red gate reads as green. Read
 the printed `N/N checks passed` totals, not just the exit status.
+
+## Settings
+
+`rates.getpayve.com/settings`, gated by a single shared password.
+
+| Variable | Purpose |
+|---|---|
+| `RATES_ADMIN_PASSWORD` | The shared operator password. |
+| `RATES_SESSION_SECRET` | HMAC key for the session cookie. **Minimum 16 characters** — a shorter one is refused rather than used. |
+
+Both missing means the page is **locked**, not open: a misconfigured deploy must never be the
+thing that exposes the spread editor. `verifySession` returns false with no secret configured,
+and the login route answers 503.
+
+The session is a signed, httpOnly, `SameSite=Lax` cookie, 12 hours, `Secure` in production. It
+carries only an expiry — there is no identity to carry, and putting anything else in it would
+invite treating an unauthenticated string as data. Signing uses **Web Crypto, not
+`node:crypto`**, because middleware runs on the Edge runtime where `createHmac` does not exist.
+Password comparison stays in the Node-only API route, where a constant-time compare is
+available.
+
+Login attempts are throttled to 8 per minute per address. That turns online guessing into an
+impractical attack; it is not a substitute for a strong password.
+
+### What the screen does
+
+Each corridor shows the arithmetic while you type, because "16 bps" alone is ambiguous:
+
+```
+Bridge contract spread   10 bps      (their fee, already inside the rate we receive)
+Payve markup             16 bps  ←   you edit this
+─────────────────────────────────────
+All-in vs mid-market     26 bps
+Publishes as    Sell 16.9569 · Buy 17.0453 MXN
+```
+
+A save requires a reason of at least 10 characters, enforced in the API *and* by a CHECK
+constraint, so a direct `psql` edit cannot skip it. Saving appends a new `fx_spread_config`
+row; nothing is ever updated in place. The change log below the editor is therefore the
+record, not a copy of it — actor, exact timestamp, before and after, and the reason.
+
+### Verified end to end
+
+`scripts/verify-rates-history.mjs` covers the boundary over HTTP: logged-out redirect, 401 on
+read and write, wrong password rejected **with no cookie issued**, a forged cookie rejected
+(which is what proves the signature is checked rather than the cookie's presence), a reason
+shorter than 10 characters rejected, a fractional bps rejected, and finally that a valid
+re-price moves the published rate by exactly the amount changed and lands in the log.
