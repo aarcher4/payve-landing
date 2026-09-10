@@ -1,5 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
+import { COOKIE_NAME, verifySession } from "@/lib/session";
+
 /**
  * Host routing for rates.getpayve.com.
  *
@@ -26,9 +28,31 @@ const RATES_HOSTS = new Set(["rates.getpayve.com"]);
 /** Hidden, unguessable slugs served as static HTML via next.config.ts rewrites. */
 const PASSTHROUGH = new Set(["/value-model-9f3ac21b", "/roger-value-prop-bbc01d16"]);
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const host = request.headers.get("host")?.split(":")[0]?.toLowerCase() ?? "";
   const { pathname } = request.nextUrl;
+
+  /**
+   * The settings gate, checked on EVERY host rather than only the rates host — the page is
+   * reachable at getpayve.com/rates/settings too, and a guard that depends on which name you
+   * used to arrive is not a guard.
+   *
+   * Verification uses Web Crypto (see lib/session.ts): `node:crypto` does not exist here.
+   * `verifySession` returns false when no secret is configured, so a misconfigured deploy
+   * locks the page rather than opening it.
+   */
+  if (pathname === "/rates/settings" || pathname.startsWith("/rates/settings/")) {
+    const ok = await verifySession(request.cookies.get(COOKIE_NAME)?.value);
+    if (!ok) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/rates/login";
+      url.search = "";
+      return NextResponse.redirect(url);
+    }
+    const res = NextResponse.next();
+    res.headers.set("X-Robots-Tag", "noindex, nofollow");
+    return res;
+  }
 
   if (!RATES_HOSTS.has(host)) return NextResponse.next();
   if (PASSTHROUGH.has(pathname) || PASSTHROUGH.has(pathname.replace(/\.html$/, ""))) {

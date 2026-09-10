@@ -117,8 +117,8 @@ export default function RateHero() {
         {/* ---- quote + controls: one row on desktop, stacked on mobile ---- */}
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:gap-10">
-            <Quote label={`Buy 1 USDc`} value={live?.buy ?? null} code={active.code} live={hasQuote} />
-            <Quote label={`Sell 1 USDc`} value={live?.sell ?? null} code={active.code} live={hasQuote} />
+            <Quote label="Buy 1 USD" value={live?.buy ?? null} code={active.code} live={hasQuote} />
+            <Quote label="Sell 1 USD" value={live?.sell ?? null} code={active.code} live={hasQuote} />
 
             {change && (
               <p className="r-num flex items-center gap-2 whitespace-nowrap pb-1 text-sm" data-change>
@@ -147,11 +147,11 @@ export default function RateHero() {
                 value={pairIdx}
                 onChange={(e) => setPairIdx(Number(e.target.value))}
                 data-pair-select
-                className="rounded-md border border-r-border bg-r-card px-2.5 py-1.5 text-sm font-medium text-r-fg outline-none focus-visible:ring-2 focus-visible:ring-r-ring"
+                className="h-control rounded-r-sm border border-r-border bg-r-card px-3 text-sm font-medium text-r-fg outline-none focus-visible:ring-2 focus-visible:ring-r-ring"
               >
                 {PAIRS.map((p, i) => (
                   <option key={p.pair} value={i}>
-                    USDc/{p.code}
+                    USD/{p.code}
                   </option>
                 ))}
               </select>
@@ -167,7 +167,7 @@ export default function RateHero() {
                   aria-pressed={w === win}
                   data-window={w}
                   onClick={() => setWin(w)}
-                  className={`r-num rounded-full px-3 py-1.5 text-sm transition-colors ${
+                  className={`r-num min-h-control rounded-full px-3.5 text-sm transition-colors ${
                     w === win
                       ? "bg-r-primary text-r-primary-fg"
                       : "text-r-muted-fg hover:bg-r-muted hover:text-r-fg"
@@ -216,7 +216,15 @@ function Quote({
       <p className="text-xs font-semibold uppercase tracking-[0.04em] text-r-muted-fg">{label}</p>
       {live && value != null ? (
         <p className="r-num mt-1 flex items-baseline gap-2">
-          <span className="text-4xl font-medium leading-none tracking-[-0.03em] text-r-fg sm:text-5xl">
+          <span
+            className="text-r-fg"
+            style={{
+              fontSize: "clamp(2.5rem, 5.5vw, 4rem)",
+              fontWeight: 500,
+              lineHeight: 0.95,
+              letterSpacing: "-0.045em",
+            }}
+          >
             {formatRate(value, code)}
           </span>
           {/* Currency is explicit because several can appear on this surface. */}
@@ -224,7 +232,10 @@ function Quote({
         </p>
       ) : (
         // Never a placeholder number. An unavailable rate says so.
-        <p className="mt-1 text-2xl font-medium leading-none text-r-muted-fg sm:text-3xl">
+        <p
+          className="mt-1 text-r-muted-fg"
+          style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 500, lineHeight: 1.05 }}
+        >
           Unavailable
         </p>
       )}

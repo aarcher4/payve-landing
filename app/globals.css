@@ -229,3 +229,23 @@ body {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
 }
+
+/* Design-system radii and control heights for the rates surface.
+
+   The system's radii are considerably softer than Tailwind's defaults (18px base against 8px),
+   and its controls have fixed heights per context: 2.5rem on desktop, 2.75rem on touch. Both
+   are named roles rather than raw values, so they belong in tokens and not in class soup. */
+:root {
+  --r-radius-sm: 0.5625rem;
+  --r-radius-md: 1.125rem;
+  --r-radius-lg: 1.5rem;
+  --r-control: 2.5rem;
+  --r-control-touch: 2.75rem;
+}
+
+/* Touch targets must reach 44px on a phone regardless of the desktop density. */
+@media (pointer: coarse) {
+  :root {
+    --r-control: var(--r-control-touch);
+  }
+}
