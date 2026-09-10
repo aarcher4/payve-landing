@@ -61,6 +61,53 @@ freshness and sanity server-side. Together they would disclose Payve's per-corri
 The gate asserts both the field names *and* the mid-market values are absent from the payload,
 so a leak that renames the field rather than removing it still fails.
 
+## The chart, and why history is anchored
+
+`1D` and `1W` are drawn from rates we recorded ourselves, every 5 minutes, from Bridge.
+`1M` through `5Y` are drawn from official daily closes: ECB reference rates via Frankfurter
+for MXN/EUR/GBP/BRL, and Banco de la República's TRM for COP, which the ECB does not publish.
+
+Only the **sell** series is published. A reconstructed point derives both sides from the same
+mid, so publishing both would let anyone recover mid — and from mid, the all-in spread. The
+live hero can show both sides because those come from Bridge's two genuinely different sides,
+which do not straddle mid symmetrically.
+
+### The seam, and the fix
+
+The public sources and Bridge disagree about the **level** of the market, by more than the
+chart's entire y-range. Measured 10 Sep 2026:
+
+| Corridor | ECB / Banrep mid | Bridge live mid | Gap |
+|---|---|---|---|
+| MXN | 16.9025 | 17.0011 | +0.58% |
+| COP | 3099.48 | 3122.54 | +0.74% |
+| BRL | 5.0889 | 5.1491 | +1.18% |
+
+The ECB fixes once a day as a EUR-based cross, Banrep's TRM is a previous-day average, and
+Bridge is live spot — three measurements of three different moments. A day of real movement is
+around 0.5%, so an unadjusted 1M chart would **end at 16.85 while the hero above it read
+16.95**: a step larger than any real move on the chart, reading as a crash that never happened.
+
+So a reconstructed series is **anchored**: multiplied by `liveSell / lastPointSell`, with the
+live quote appended as its final point. Scaling is multiplicative, so every percentage move is
+preserved exactly — only the level moves. The error is pushed into the distant past, where
+0.5% is invisible against years of movement, and driven to zero at the right-hand edge, which
+is the point a reader actually cross-checks against the headline.
+
+The API reports `anchorRatio` so the UI can say the history is indexed rather than implying
+five years of our own quotes. Intraday windows are never anchored — they are already Bridge's
+own observations. A ratio outside `0.8 .. 1.2` is refused and the series is served unanchored:
+that far off is a bug, not a source disagreement, and a 23%-rescaled history would be worse
+than an unadjusted one.
+
+### Backfill
+
+```bash
+DATABASE_URL=... npm run backfill:history          # 5 years, ~9,100 rows, safe to re-run
+```
+
+Both sources were verified reachable on 10 Sep 2026 and loaded ~1,825 points per corridor.
+
 ## The database is optional
 
 With `DATABASE_URL` unset the whole surface behaves exactly as it did before one existed:

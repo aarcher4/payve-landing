@@ -9,7 +9,8 @@
     "lint": "next lint",
     "visual-diff": "node scripts/visual-diff.mjs",
     "typecheck": "tsc --noEmit",
-    "verify:rates": "npm run typecheck && next build && node scripts/verify-rates.mjs && node scripts/verify-rates-live.mjs"
+    "verify:rates": "npm run typecheck && next build && node scripts/verify-rates.mjs && node scripts/verify-rates-live.mjs && node scripts/verify-rates-history.mjs",
+    "backfill:history": "node scripts/backfill-history.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

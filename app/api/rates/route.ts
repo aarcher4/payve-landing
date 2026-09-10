@@ -28,13 +28,12 @@
  * Bridge offers NO quote and NO rate lock; these are estimates, and the page says so.
  */
 
+import { cachedBridgeTriple, isPublishableEnvironment } from "@/lib/bridge";
 import {
   CURRENCIES,
   isPublishable,
   pairFor,
-  parseRate,
   publishedPair,
-  type BridgeTriple,
   type CurrencyCode,
 } from "@/lib/rates-math";
 import { defaultSpreadBps, resolveSpreads } from "@/lib/spread";
@@ -56,7 +55,8 @@ export interface PublicRate {
 
 /**
  * A 200 from Bridge is NOT sufficient to publish a rate. Two guards, both learned the hard way
- * from probing the sandbox with a real key:
+ * from probing the sandbox with a real key, and both now living in `lib/bridge.ts` so the
+ * snapshot capture shares them:
  *
  *  1. Bridge's SANDBOX serves frozen fixtures — USD/MXN at 20.00025 with an `updated_at` of
  *     2026-04-24, and a flat synthetic 50 bps spread on every pair instead of the real
@@ -69,43 +69,13 @@ export interface PublicRate {
  * Both failures degrade to `live: false`. Showing nothing is always better than showing a
  * number a customer could price a shipment against.
  */
-const MAX_RATE_AGE_MS = 10 * 60_000;
-
-function isPublishableEnvironment(): boolean {
-  return process.env.BRIDGE_ENVIRONMENT === "production";
-}
-
-function isFresh(updatedAt: unknown): boolean {
-  if (updatedAt == null) return true; // field absent — fall back to the environment guard alone
-  const t = Date.parse(String(updatedAt));
-  if (!Number.isFinite(t)) return false;
-  return Date.now() - t <= MAX_RATE_AGE_MS;
-}
-
-function bridgeBaseUrl(): string {
-  return (
-    process.env.BRIDGE_BASE_URL ??
-    (process.env.BRIDGE_ENVIRONMENT === "production"
-      ? "https://api.bridge.xyz"
-      : "https://api.sandbox.bridge.xyz")
-  );
-}
 
 /**
- * Module-scope cache, 30s TTL — matches Bridge's ~30s refresh. This also bounds upstream load:
- * however much public traffic the page takes, Bridge sees at most ~2 calls/min/currency.
- *
- * The cache holds Bridge's RAW TRIPLE, not the derived published rates. Caching the derived
- * numbers would mean a spread change in settings took up to 30 seconds to appear, and worse,
- * that two corridors could briefly publish under different spreads. The triple is upstream
- * data with an upstream refresh cadence; the spread is ours and applies immediately.
+ * The 30s Bridge cache now lives in `lib/bridge.ts`, shared with the history endpoint so the
+ * chart and the hero can never disagree about what "now" is. It holds Bridge's RAW TRIPLE, not
+ * the derived rates: caching derived numbers would mean a spread change took up to 30 seconds
+ * to appear, and worse, that two corridors could briefly publish under different spreads.
  */
-const CACHE_TTL_MS = 30_000;
-interface CacheEntry {
-  triple: BridgeTriple;
-  fetchedAt: number;
-}
-const cache = new Map<CurrencyCode, CacheEntry>();
 
 function unavailable(code: CurrencyCode, spreadBps: number | null): PublicRate {
   return {
@@ -117,40 +87,6 @@ function unavailable(code: CurrencyCode, spreadBps: number | null): PublicRate {
     asOf: new Date().toISOString(),
     live: false,
   };
-}
-
-/** Fetch Bridge's raw triple for one corridor, or null on any failure. */
-async function fetchTriple(code: CurrencyCode, apiKey: string): Promise<BridgeTriple | null> {
-  const now = Date.now();
-  const hit = cache.get(code);
-  if (hit && now - hit.fetchedAt < CACHE_TTL_MS) return hit.triple;
-
-  const url = `${bridgeBaseUrl()}/v0/exchange_rates?from=usd&to=${code.toLowerCase()}`;
-  try {
-    const res = await fetch(url, {
-      headers: { "Api-Key": apiKey, Accept: "application/json" },
-      signal: AbortSignal.timeout(8_000),
-      cache: "no-store",
-    });
-    if (!res.ok) return null;
-
-    const body = (await res.json()) as Record<string, unknown>;
-    const mid = parseRate(body.midmarket_rate);
-    const sell = parseRate(body.sell_rate);
-    const buy = parseRate(body.buy_rate);
-    // All three are required. `mid` is the sanity reference and the orientation reference;
-    // partial data is not a rate.
-    if (mid == null || sell == null || buy == null) return null;
-    // A stale upstream must never be dressed up as "live" — see MAX_RATE_AGE_MS.
-    if (!isFresh(body.updated_at)) return null;
-
-    const triple: BridgeTriple = { mid, buy, sell };
-    cache.set(code, { triple, fetchedAt: now });
-    return triple;
-  } catch {
-    // Network error, timeout, malformed JSON — all degrade to unavailable. Never a constant.
-    return null;
-  }
 }
 
 export async function GET() {
@@ -171,7 +107,7 @@ export async function GET() {
       const spreadBps = spreads[pairFor(code)]?.bps ?? null;
       if (!publishable || spreadBps == null) return unavailable(code, spreadBps);
 
-      const triple = await fetchTriple(code, apiKey as string);
+      const triple = await cachedBridgeTriple(code, apiKey as string);
       if (!triple) return unavailable(code, spreadBps);
 
       const published = publishedPair(triple, spreadBps);
