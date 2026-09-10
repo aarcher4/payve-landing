@@ -31,7 +31,7 @@ export default function FortuneGrowersStory() {
           },
         ]}
       />
-      <StoryBody currentSlug="fortune-growers" runsOn={["Payments", "Early pay", "Payve Agents"]}>
+      <StoryBody currentSlug="fortune-growers" runsOn={["The Payve Network", "Agentic Intelligence"]}>
         <p>
           Fortune Growers is a grower-shipper with two decades in fresh
           produce, operations in the Midwest, California, and South Texas,

@@ -31,19 +31,19 @@ export const navGroups: NavGroup[] = [
     label: "Products",
     items: [
       {
-        label: "Payments",
-        href: "/products/payments",
-        description: "Pay every supplier from one place, domestic and international.",
+        label: "Network",
+        href: "/products/network",
+        description: "Instant payments and liquidity for your whole supplier base.",
       },
       {
-        label: "Early pay",
-        href: "/products/early-pay",
-        description: "Suppliers get paid early on open invoices. Buyers earn on every election.",
+        label: "Intelligence",
+        href: "/products/agentic-intelligence",
+        description: "Agents that answer, reconcile, and run the back office on network data.",
       },
       {
-        label: "Payve Agents",
-        href: "/products/agents",
-        description: "Organizational intelligence and automated back office workflows.",
+        label: "The Payve Rate",
+        href: "/rates",
+        description: "Live exchange rates, and what a wire actually costs you and your supplier.",
       },
     ],
   },
@@ -92,9 +92,9 @@ export const footerColumns: { heading: string; links: NavLink[] }[] = [
   {
     heading: "Products",
     links: [
-      { label: "Payments", href: "/products/payments" },
-      { label: "Early pay", href: "/products/early-pay" },
-      { label: "Payve Agents", href: "/products/agents" },
+      { label: "Network", href: "/products/network" },
+      { label: "Intelligence", href: "/products/agentic-intelligence" },
+      { label: "The Payve Rate", href: "/rates" },
     ],
   },
   {

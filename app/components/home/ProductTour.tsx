@@ -4,44 +4,39 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
 import Reveal from "./Reveal";
-import { AgentsDemo, EarlyPayDemo, PaymentsDemo } from "./demos";
+import { AgentsDemo } from "./demos";
+import { CascadeFlow } from "../site/network";
 
 /**
  * r3 product tour: Mercury grammar on Payve tokens (docs/design-review-r3.md
  * lens 2). Full-bleed sage-900 chapter band; left rail of hairline text rows
  * (no icons, no boxes; active row = sage dot + description expansion); right
  * demo panel crossfades per selection; one quiet text link follows the
- * active product.
+ * active product. Network rebrand: two products (docs/network-rebrand.md §1).
  */
 const modules = [
   {
-    key: "payments",
-    title: "Payments",
-    href: "/products/payments",
+    key: "network",
+    title: "Network",
+    href: "/products/network",
+    linkLabel: "Explore the network",
     blurb:
-      "Every supplier in one payment run: bank transfers at home, local currency in Mexico and Colombia, no wire fees.",
-    Demo: PaymentsDemo,
+      "Send a payment and it's there: any supplier, paid instantly in their own currency. Enrolling connects your suppliers to capital, so they can grow with you.",
+    Demo: CascadeFlow,
   },
   {
-    key: "early-pay",
-    title: "Early pay",
-    href: "/products/early-pay",
+    key: "intelligence",
+    title: "Intelligence",
+    href: "/products/agentic-intelligence",
+    linkLabel: "Explore intelligence",
     blurb:
-      "Suppliers choose to be paid early on approved invoices and see the exact dollars and the fee before deciding.",
-    Demo: EarlyPayDemo,
-  },
-  {
-    key: "agents",
-    title: "Payve Agents",
-    href: "/products/agents",
-    blurb:
-      "Organizational intelligence and automated back office workflows, with a person approving every write.",
+      "Agents that answer questions, reconcile documents, and run the back office on your network's connected data, with a person approving every write.",
     Demo: AgentsDemo,
   },
 ] as const;
 
 export default function ProductTour() {
-  const [active, setActive] = useState<(typeof modules)[number]["key"]>("payments");
+  const [active, setActive] = useState<(typeof modules)[number]["key"]>("network");
   const reduced = useReducedMotion() ?? false;
   const current = modules.find((m) => m.key === active) ?? modules[0];
   const Demo = current.Demo;
@@ -50,9 +45,9 @@ export default function ProductTour() {
     <section className="bg-sage-900">
       <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6">
         <Reveal>
-          <span className="t-eyebrow !text-sage-300">One platform</span>
+          <span className="t-eyebrow !text-sage-300">One network</span>
           <h2 className="mt-3 max-w-3xl font-display text-3xl font-extrabold tracking-display text-white sm:text-4xl">
-            The same platform moves the money{" "}
+            The network moves the money{" "}
             <span className="text-white/50">and runs the back office.</span>
           </h2>
         </Reveal>
@@ -112,8 +107,11 @@ export default function ProductTour() {
               href={current.href}
               className="mt-6 inline-block text-sm font-semibold text-sage-300 underline underline-offset-4 transition-colors hover:text-sage-200"
             >
-              Explore {current.title === "Payve Agents" ? "Payve Agents" : current.title.toLowerCase()}
+              {current.linkLabel}
             </Link>
+            <p className="mt-10 font-mono text-xs tracking-wide text-white/40">
+              United States · Mexico · Colombia · Brazil · European Union
+            </p>
           </div>
 
           {/* Demo panel, desktop */}

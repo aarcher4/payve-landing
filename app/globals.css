@@ -123,6 +123,12 @@ body {
   transform: translateY(0);
 }
 
+/* NetworkCanvas corridor-chip arrival flash (docs/network-rebrand.md §9) */
+.chip-hit .chip-dot {
+  background-color: var(--sage-600);
+  box-shadow: 0 0 0 3px rgba(111, 141, 124, 0.25);
+}
+
 .stagger-1 { transition-delay: 0.08s; }
 .stagger-2 { transition-delay: 0.16s; }
 .stagger-3 { transition-delay: 0.24s; }
@@ -165,4 +171,81 @@ body {
 .legal-content li {
   color: var(--ink-2);
   line-height: 1.6;
+}
+
+/* ==========================================================================
+   Rates surface tokens (canonical Payve Design System v1)
+
+   Scoped with an --r- prefix so nothing here collides with the marketing
+   site's existing --sage-* / --ink-* / --paper-* palette, which is untouched.
+
+   VALUES ARE SPACE-SEPARATED OKLCH CHANNELS, NOT COMPLETE COLOURS. Tailwind
+   cannot apply an alpha modifier to an opaque colour behind a var(): the
+   marketing header already shipped a bug where `bg-paper/90` compiled to no
+   rule at all, because the tokens are plain hex strings. Channels plus
+   `oklch(var(--r-x) / <alpha-value>)` in the Tailwind config keeps `/60`
+   working. Never write a whole `oklch(...)` into one of these.
+
+   Dark is a media query rather than a `dark:` variant: the site defines no
+   darkMode strategy and carries zero dark: utilities, so the tokens swap
+   themselves and every consumer follows without opting in.
+   ========================================================================== */
+:root {
+  --r-background: 0.979 0.002 247.839;
+  --r-foreground: 0.159 0.011 267.979;
+  --r-card: 1 0 0;
+  --r-muted: 0.954 0.003 247.859;
+  --r-muted-foreground: 0.508 0.018 257.239;
+  --r-subtle-foreground: 0.53 0.017 260.717;
+  --r-border: 0.918 0.006 255.477;
+  --r-primary: 0.422 0.036 163.609;
+  --r-primary-foreground: 1 0 0;
+  --r-accent: 0.959 0.007 151.888;
+  --r-success: 0.475 0.083 155.972;
+  --r-destructive: 0.463 0.13 29.006;
+  --r-ring: 0.615 0.043 160.016;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --r-background: 0.17 0.008 247.839;
+    --r-foreground: 0.96 0.004 267.979;
+    --r-card: 0.22 0.008 247.859;
+    --r-muted: 0.25 0.008 247.859;
+    --r-muted-foreground: 0.72 0.012 257.239;
+    --r-subtle-foreground: 0.68 0.012 260.717;
+    --r-border: 0.3 0.008 255.477;
+    --r-primary: 0.72 0.05 163.609;
+    --r-primary-foreground: 0.17 0.02 169.226;
+    --r-accent: 0.26 0.02 151.888;
+    --r-success: 0.72 0.08 155.972;
+    --r-destructive: 0.7 0.14 29.006;
+    --r-ring: 0.72 0.05 160.016;
+  }
+}
+
+/* Rates are operational values, so they wear tabular figures everywhere. */
+.r-num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Design-system radii and control heights for the rates surface.
+
+   The system's radii are considerably softer than Tailwind's defaults (18px base against 8px),
+   and its controls have fixed heights per context: 2.5rem on desktop, 2.75rem on touch. Both
+   are named roles rather than raw values, so they belong in tokens and not in class soup. */
+:root {
+  --r-radius-sm: 0.5625rem;
+  --r-radius-md: 1.125rem;
+  --r-radius-lg: 1.5rem;
+  --r-control: 2.5rem;
+  --r-control-touch: 2.75rem;
+}
+
+/* Touch targets must reach 44px on a phone regardless of the desktop density. */
+@media (pointer: coarse) {
+  :root {
+    --r-control: var(--r-control-touch);
+  }
 }

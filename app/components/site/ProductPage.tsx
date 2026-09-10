@@ -213,7 +213,7 @@ export function CrossSell({
   return (
     <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
       <Reveal>
-        <span className="t-eyebrow text-sage-600">One platform</span>
+        <span className="t-eyebrow text-sage-600">One network</span>
         <div className="mt-4 flex flex-wrap gap-x-10 gap-y-3">
           {links.map((l) => (
             <Link

@@ -12,11 +12,16 @@ const CTA_LABEL = "Schedule time with us";
 const CTA_HREF = "https://zcal.co/payve";
 
 const ROUTES = [
-  "/", "/products/payments", "/products/early-pay", "/products/agents",
+  "/", "/products/network", "/products/agentic-intelligence",
+  // Old product routes stay listed: they must keep resolving (via redirect).
+  "/products/payments", "/products/early-pay", "/products/agents",
   "/solutions/fresh-produce", "/solutions/seafood", "/solutions/packaging",
   "/customers", "/customers/fortune-growers", "/customers/sl-produce",
   "/customers/dal-campo", "/customers/producer-pro",
   "/security", "/company", "/privacy", "/terms",
+  // The live rate board. It polls /api/rates on an interval, so a console error here is
+  // usually a real fetch or render fault rather than a static-markup problem.
+  "/rates",
 ];
 const VIEWPORTS = [
   { width: 1440, height: 960 },

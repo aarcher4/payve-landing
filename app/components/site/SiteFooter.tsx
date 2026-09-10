@@ -16,7 +16,7 @@ export default function SiteFooter() {
               className="h-8 w-auto"
             />
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-ink-3">
-              Payments, early pay, and agents for supply chain trade.
+              The payment network for supply chain trade.
             </p>
           </div>
           {footerColumns.map((col) => (
