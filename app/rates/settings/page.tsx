@@ -14,7 +14,7 @@ export default function RateSettingsPage() {
     <main className="min-h-screen bg-r-bg text-r-fg">
       <header className="border-b border-r-border bg-r-card">
         <div className="mx-auto flex max-w-4xl items-baseline justify-between gap-4 px-4 py-5 sm:px-6">
-          <a href="/rates" aria-label="The Payve Rate">
+          <a href="/" aria-label="The Payve Rate">
             <Wordmark height={22} />
           </a>
           <p className="text-xs font-semibold uppercase tracking-[0.04em] text-r-muted-fg">

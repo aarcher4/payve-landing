@@ -56,7 +56,8 @@ export default function SpreadEditor() {
         fetch("/api/rates", { cache: "no-store" }),
       ]);
       if (s.status === 401) {
-        window.location.href = "/rates/login";
+        window.location.href =
+          window.location.pathname === "/settings" ? "/login" : "/rates/login";
         return;
       }
       const body = await s.json();

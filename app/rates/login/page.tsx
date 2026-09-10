@@ -25,7 +25,10 @@ export default function RateLoginPage() {
         body: JSON.stringify({ password }),
       });
       if (res.ok) {
-        window.location.href = "/rates/settings";
+        // Stay on whichever host the visitor arrived on: rates.getpayve.com aliases
+        // /settings, everywhere else it is /rates/settings.
+        window.location.href =
+          window.location.pathname === "/login" ? "/settings" : "/rates/settings";
         return;
       }
       const body = await res.json().catch(() => ({}));
