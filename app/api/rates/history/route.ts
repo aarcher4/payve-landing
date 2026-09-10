@@ -80,6 +80,9 @@ export async function GET(request: Request) {
         spreadBps,
         reconstructedBefore: null,
         anchorRatio: 1,
+        // Distinguishes "we have no rows" from "we have rows but refused to publish them
+        // because they contradict the live rate" - a different thing for the UI to say.
+        anchorRefused: series?.anchorRefused ?? false,
         changeAbs: null,
         changePct: null,
       },
@@ -103,6 +106,7 @@ export async function GET(request: Request) {
       points: series.points,
       reconstructedBefore: series.reconstructedBefore,
       anchorRatio: series.anchorRatio,
+      anchorRefused: series.anchorRefused,
       changeAbs: comparable ? changeAbs : null,
       changePct: comparable ? (changeAbs / first.sell) * 100 : null,
     },

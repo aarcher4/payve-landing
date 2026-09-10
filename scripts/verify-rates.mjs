@@ -314,9 +314,46 @@ try {
     "the old wire-fee calculator is fully removed",
   );
 
+  // ------------------------------------------------- dashboard, degraded path
+  /**
+   * Structure only. With no key there is no quote to render, which is exactly what must be
+   * asserted: the hero says so rather than showing a placeholder number. Interactive behaviour
+   * (does clicking a timeframe actually redraw the chart) needs both a database and a rate, so
+   * it lives in verify-rates-history.mjs, the one stage that has both.
+   */
+  console.log("\nDashboard — structure and degraded quote");
+  const quotes = await page.locator("[data-quote]").count();
+  assert(quotes === 2, "the hero renders a two-sided quote", `got ${quotes}`);
+
+  const windowLabels = await page.locator("[data-window]").allInnerTexts();
+  assert(
+    JSON.stringify(windowLabels.map((s) => s.trim())) ===
+      JSON.stringify(["1D", "1W", "1M", "6M", "1Y", "5Y"]),
+    "all six timeframes render, in order",
+    JSON.stringify(windowLabels),
+  );
+  const pressed = await page.locator('[data-window][aria-pressed="true"]').count();
+  assert(pressed === 1, "exactly one timeframe is selected", `got ${pressed}`);
+
+  assert((await page.locator("[data-pair-select]").count()) === 1, "the pair selector renders");
+  assert((await page.locator("[data-rate-chart]").count()) === 1, "the chart region renders");
+
+  // The whole point of the degraded path: no invented rate anywhere in the hero.
+  const quoteText = (await page.locator("[data-quote]").allInnerTexts()).join(" ");
+  assert(
+    /Unavailable/i.test(quoteText) && !/\d/.test(quoteText.replace(/USDc|1/g, "")),
+    "an unavailable quote says so rather than showing a number",
+    quoteText.replace(/\s+/g, " ").slice(0, 120),
+  );
+
+  // A change figure with no history would render a confident "unchanged" under a dead quote.
+  assert((await page.locator("[data-change]").count()) === 0, "no change figure without history");
+
   // ---------------------------------------------------------- A11: responsive
   console.log("\nA11 — responsive");
-  for (const width of [390, 768, 1440]) {
+  // 320px is the design system's floor: page-level horizontal overflow must not occur at 320
+  // or wider. A dense dashboard is the most likely thing to break it.
+  for (const width of [320, 390, 768, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     await page.waitForTimeout(200);
     const overflow = await page.evaluate(

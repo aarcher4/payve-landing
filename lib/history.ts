@@ -131,6 +131,20 @@ export interface HistorySeries {
   reconstructedBefore: number | null;
   /** Multiplier applied to level-match a reconstructed series to the live rate. 1 = untouched. */
   anchorRatio: number;
+  /** True when the anchor was out of band and the series was withheld rather than published. */
+  anchorRefused: boolean;
+}
+
+/**
+ * Put the live quote on the end of a series that needs no rescaling.
+ *
+ * An intraday capture is at most 5 minutes old, so without this the chart's last point trails
+ * the headline number by a tick — small, but it is the exact comparison a reader makes first,
+ * and "the big number does not match the end of the line" reads as a broken page.
+ */
+export function appendLive(points: HistoryPoint[], liveSell: number): HistoryPoint[] {
+  if (!Number.isFinite(liveSell) || liveSell <= 0) return points;
+  return [...points, { t: Date.now(), sell: liveSell, source: "bridge" }];
 }
 
 /**
@@ -159,23 +173,32 @@ export interface HistorySeries {
 export function anchorToLive(points: HistoryPoint[], liveSell: number): {
   points: HistoryPoint[];
   anchorRatio: number;
+  refused: boolean;
 } {
   if (points.length === 0 || !Number.isFinite(liveSell) || liveSell <= 0) {
-    return { points, anchorRatio: 1 };
+    return { points, anchorRatio: 1, refused: false };
   }
   const last = points[points.length - 1];
-  if (!(last.sell > 0)) return { points, anchorRatio: 1 };
+  if (!(last.sell > 0)) return { points, anchorRatio: 1, refused: false };
   const anchorRatio = liveSell / last.sell;
-  // A ratio this far from 1 is not a source disagreement, it is a bug or a broken upstream.
-  // Publishing a 20%-rescaled history would be worse than publishing an unadjusted one.
+  /**
+   * A ratio this far from 1 is not a source disagreement, it is a bug or a broken upstream.
+   *
+   * REFUSING MEANS PUBLISHING NOTHING, not publishing the series unadjusted. Serving it
+   * unanchored looks reasonable in isolation and is badly wrong in place: the headline is the
+   * live rate, so a chart 20% away from it sits directly under a number it contradicts, with
+   * nothing on screen to explain the gap. That is exactly the "a customer could price a
+   * shipment against this" failure the whole surface is built to avoid. An empty chart with
+   * its honest empty state is the correct output.
+   */
   if (!Number.isFinite(anchorRatio) || anchorRatio <= 0.8 || anchorRatio >= 1.2) {
-    return { points, anchorRatio: 1 };
+    return { points: [], anchorRatio: 1, refused: true };
   }
   const scaled = points.map((p) => ({ ...p, sell: p.sell * anchorRatio }));
   // The live quote is a real observation, so it joins the series as one — and it is what makes
   // the chart's last point equal the headline rate.
   scaled.push({ t: Date.now(), sell: liveSell, source: "bridge" });
-  return { points: scaled, anchorRatio };
+  return { points: scaled, anchorRatio, refused: false };
 }
 
 export async function readSeries(
@@ -198,7 +221,9 @@ export async function readSeries(
         order by bucket_at asc`,
       [pair, spec.granularity, since],
     );
-    if (rows.length === 0) return { points: [], reconstructedBefore: null, anchorRatio: 1 };
+    if (rows.length === 0) {
+      return { points: [], reconstructedBefore: null, anchorRatio: 1, anchorRefused: false };
+    }
 
     const points: HistoryPoint[] = rows.map((r) => ({
       t: new Date(r.bucket_at).getTime(),
@@ -228,14 +253,23 @@ export async function readSeries(
     const reconstructedBefore = lastReconstructed ? lastReconstructed.t : null;
 
     const down = downsample(points);
-    // Only a reconstructed series needs anchoring. An intraday window is already Bridge's own
-    // quotes, so scaling it would move real observations to match a different real observation.
-    const needsAnchor = liveSell != null && lastReconstructed != null;
-    const { points: finalPoints, anchorRatio } = needsAnchor
-      ? anchorToLive(down, liveSell)
-      : { points: down, anchorRatio: 1 };
 
-    return { points: finalPoints, reconstructedBefore, anchorRatio };
+    // Every window ends at the live rate, so the chart's last point always equals the headline
+    // number above it. Only a RECONSTRUCTED series is additionally scaled: an intraday window
+    // is already Bridge's own quotes, and rescaling real observations to match a different real
+    // observation would be inventing data rather than splicing a source.
+    let finalPoints = down;
+    let anchorRatio = 1;
+    let anchorRefused = false;
+    if (liveSell != null) {
+      if (lastReconstructed != null) {
+        ({ points: finalPoints, anchorRatio, refused: anchorRefused } = anchorToLive(down, liveSell));
+      } else {
+        finalPoints = appendLive(down, liveSell);
+      }
+    }
+
+    return { points: finalPoints, reconstructedBefore, anchorRatio, anchorRefused };
   } catch (err) {
     console.error("[history] read failed:", err instanceof Error ? err.message : String(err));
     return null;
