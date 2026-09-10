@@ -195,6 +195,25 @@ the system that charges it, and the page states the mechanism, not just the numb
 | "Terms available today are 30 and 60 days" | The selector renders whatever pricing plans the buyer's issued product carries. Two exist today. |
 | "Suppliers enroll at no cost" | Locked commercial position: the invited party never pays to join. |
 
+### Who bears the Early Pay rate
+
+Added Sep 2026, because a card of percentages on a buyer-facing page reads as the buyer's cost
+unless the page says otherwise, and here it is the opposite.
+
+| Claim on the page | Basis |
+|---|---|
+| "Your supplier pays this rate, not you" | `oatfiInvoiceMath.ts` in the payments app: `principal = invoice - fee`. The fee is netted out of the early payment the supplier elects to take, so it is deducted from their proceeds. |
+| "You repay the invoice face on your original date, which is exactly what you already owed" | Same file: `total = invoice`, documented as "what the buyer repays at term". The buyer's obligation is unchanged in both amount and date. |
+| "It costs you nothing to offer" | Follows from the two rows above. Note this is the softer "no cost" framing, not an absolute free claim, which `verify-rebrand.mjs` bans. |
+| "you earn income on it ... Pay on time and you receive a share of the rate back" | `services/ledger/revenueShare.ts`: the buyer reward `R` is a slice of Payve's revenue share `M`, expressed in bps per 30 days of invoice face, clamped to `M`. Worked example in that file: tier 1 on a $1,000 30 day invoice yields `R` = $1.00 against a base fee of $18.50. |
+| The reward stated as conditional | `computeRevenueShareCents` takes a `timely` flag and returns `buyerRewardCents: 0` when it is false. The reward is forfeited on late repayment, so the page says "pay on time" rather than promising it unconditionally. |
+
+**No buyer-reward percentage is published, deliberately.** The rate comes from `split_config`
+(party type `buyer`) and resolves per tier and per org, with an org override outranking a tier
+match (`services/ledger/splitConfig.ts`). There is no single platform default that would stay
+true for every reader, so the page describes the mechanism and omits the number. Four gate
+assertions in `verify-working-capital.mjs` hold the attribution and the condition in place.
+
 ### Why no APR appears
 
 The page states period cost and the mechanism, never an annualized figure. That mirrors the
@@ -205,7 +224,10 @@ absence (`no APR anywhere on the page`, `no annualized figure anywhere on the pa
 ### Still open
 
 This section has **not** had legal review, the same caveat that stands on the calculator
-footnote in section 6. Publishing financing rates is a higher bar than publishing an FX rate:
+footnote in section 6. The buyer-reward claim added in Sep 2026 raises the bar again: telling a
+buyer they will earn income is a revenue claim, even hedged by the timeliness condition, and the
+reward rate itself is configurable per org rather than fixed.
+Publishing financing rates is a higher bar than publishing an FX rate:
 California's SB 362 and New York's Commercial Finance Disclosure Law both govern APR disclosure
 on commercial financing **offers**. General advertising is not usually an offer, so this is
 very likely fine, but it should get one pass by whoever reviews the footnote before the page is
