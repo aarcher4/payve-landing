@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from "react";
  * Early Pay and Pay Later are the same mechanism pointed in opposite directions, so they share
  * a timeline and the contrast carries itself rather than needing a paragraph:
  *
- *   Early Pay   the SUPPLIER's marker slides LEFT, to day 2. Your payment date does not move.
+ *   Early Pay   the SUPPLIER's marker slides LEFT, to day 1. Your payment date does not move.
  *   Pay Later   the VENDOR's marker is PINNED to the due date. YOUR cash marker slides RIGHT.
  *
  * Movement communicates causality (docs/motion-system.md rule 7): the marker travels along the
@@ -45,11 +45,11 @@ interface Spec {
 const SPEC: Record<TimelineVariant, Spec> = {
   "early-pay": {
     from: 30,
-    to: 2,
+    to: 1,
     movingLabel: "Supplier paid",
     pinnedLabel: "You pay",
     pinnedDay: 30,
-    caption: "Your supplier reaches the cash on day 2. Your own payment date does not move.",
+    caption: "Your supplier reaches the cash on day 1. Your own payment date does not move.",
   },
   "pay-later": {
     from: 30,
@@ -71,9 +71,25 @@ const SPEC: Record<TimelineVariant, Spec> = {
  */
 function useLoopStep(active: boolean) {
   const reduced = useReducedMotion() ?? false;
-  const [moved, setMoved] = useState(reduced);
+  /**
+   * Seeded false, NOT from `reduced`.
+   *
+   * `useReducedMotion()` is null on the server and true on a reduced-motion client, so seeding
+   * state from it made the server render "Day 30" and the client "Day 1" — React error #418, a
+   * hydration mismatch, for every visitor with the setting enabled. Both renders now agree on
+   * the origin, and the effect below moves to the destination on the first client tick.
+   *
+   * The same latent bug lives in `useLoopStep` in app/components/home/demos.tsx
+   * (`useState(reduced ? stepCount : 0)`); it is masked there because those demos are gated on
+   * `useInView` and rarely mount above the fold.
+   */
+  const [moved, setMoved] = useState(false);
   useEffect(() => {
-    if (reduced || !active) return;
+    if (reduced) {
+      setMoved(true);
+      return;
+    }
+    if (!active) return;
     let cancelled = false;
     let timer: ReturnType<typeof setTimeout>;
     const cycle = (next: boolean) => {
@@ -162,10 +178,18 @@ export function WorkingCapitalTimeline({ variant }: { variant: TimelineVariant }
           className="absolute top-[124px] flex -translate-x-1/2 flex-col items-center"
           data-marker="moving"
           data-marker-day={day}
-          initial={false}
+          /**
+           * `initial` owns the origin, NOT a `style` prop.
+           *
+           * Passing style={{ left }} alongside animate={{ left }} looked equivalent and was not:
+           * React re-applies the inline style on every re-render, clobbering the value framer is
+           * animating. The label read "Day 1" while the marker still sat on day 30 — the text
+           * and the position disagreed, which on this page is the one thing that must never
+           * happen. Caught by asserting the bounding box, not just the attribute.
+           */
+          initial={{ left: `${pct(spec.from)}%` }}
           animate={{ left: `${pct(day)}%` }}
           transition={move}
-          style={{ left: `${pct(spec.from)}%` }}
         >
           <span className="h-2.5 w-2.5 rounded-full bg-r-primary" aria-hidden />
           <span className="mt-1 h-5 w-px bg-r-primary" aria-hidden />

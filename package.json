@@ -9,7 +9,7 @@
     "lint": "next lint",
     "visual-diff": "node scripts/visual-diff.mjs",
     "typecheck": "tsc --noEmit",
-    "verify:rates": "npm run typecheck && node scripts/verify-rebrand.mjs --grep-only && next build && node scripts/verify-rates.mjs && node scripts/verify-rates-live.mjs && node scripts/verify-rates-history.mjs",
+    "verify:rates": "npm run typecheck && node scripts/verify-rebrand.mjs --grep-only && next build && node scripts/verify-rates.mjs && node scripts/verify-rates-live.mjs && node scripts/verify-rates-history.mjs && node scripts/verify-working-capital.mjs",
     "backfill:history": "node scripts/backfill-history.mjs",
     "verify:copy": "node scripts/verify-rebrand.mjs"
   },

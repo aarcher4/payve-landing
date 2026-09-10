@@ -176,3 +176,37 @@ banks, the amount basis, the channel and the retrieval date (OFX).
   transferring for personal, family or household purposes. A US **business** sending the identical
   wire gets no mandated disclosure of the exchange rate, third-party fees, or the amount that will
   actually land.
+
+---
+
+## 8. Working capital rates (/rates/working-capital)
+
+Added 10 Sep 2026. Same standard as the wire-fee claims above: every published figure traces to
+the system that charges it, and the page states the mechanism, not just the number.
+
+| Claim on page | Basis |
+|---|---|
+| Early Pay "From 1.85% for a 30 day invoice" | Tier 1 of the capital partner's fee schedule. Stored as an annualized figure (2220 bps) in `services/oatfi/config.ts` in the payments app; 1.85% is that rate over 30 days. Tiers 2 and 3 are 2.25% and 2.50%. |
+| Early Pay "Priced per day, not per month" | `oatfiInvoiceMath.ts`: `fee = invoice x annual_rate_bps x duration_days / (10_000 x 360)`. Linear in day count, so a 20 day invoice costs about 1.23% and a 45 day one about 2.78%. The slider on the page is this formula, which is why it is a control and not an illustration. |
+| Pay Later "From 1.77% for a 30 day term" | The lowest rate observed on a real batch: Fortune Growers, 31 Aug 2026, $250,197.20 of payables at 1.77% (`payLaterFeeInvoice.ts`). Marked "from" because it is a floor, not a quote. |
+| Pay Later "The rate is set by the capital partner, and Payve adds nothing on top of it" | `payLaterPricing.ts`: `retail = wholesale`, `spread = 0`. A previously configured Payve rate was deleted by migration `20260828_205_paylater_rates_are_partner_rates.sql`. |
+| Pay Later "a 60 day term is not double a 30 day one" | The fee is a flat percentage of face for the whole term (`pctOfCentsHalfUp`), not a periodic rate. Each term is priced independently by the partner. |
+| Pay Later "can move between batches" | Observed: 1.77% on 31 Aug and 2.30% on 3 Sep 2026, eleven days apart, same product. |
+| "Terms available today are 30 and 60 days" | The selector renders whatever pricing plans the buyer's issued product carries. Two exist today. |
+| "Suppliers enroll at no cost" | Locked commercial position: the invited party never pays to join. |
+
+### Why no APR appears
+
+The page states period cost and the mechanism, never an annualized figure. That mirrors the
+product's own locked rule: an APR belongs in the binding agreement, where CA SB 362 may
+require it on commercial financing, and not in a marketing surface. The gate asserts the
+absence (`no APR anywhere on the page`, `no annualized figure anywhere on the page`).
+
+### Still open
+
+This section has **not** had legal review, the same caveat that stands on the calculator
+footnote in section 6. Publishing financing rates is a higher bar than publishing an FX rate:
+California's SB 362 and New York's Commercial Finance Disclosure Law both govern APR disclosure
+on commercial financing **offers**. General advertising is not usually an offer, so this is
+very likely fine, but it should get one pass by whoever reviews the footnote before the page is
+promoted anywhere.
