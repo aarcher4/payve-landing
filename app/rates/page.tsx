@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { FeatureGrid, ProductCtaBand, CrossSell } from "../components/site/ProductPage";
+import { canonical } from "@/lib/site";
 import { RatesChrome } from "./RatesChrome";
 import MarketSection from "./MarketSection";
 import RateHero from "./RateHero";
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
     "Live rates for supplier payments to Mexico, Colombia, Brazil, the Eurozone and the UK. No wire fee to send, nothing deducted on the way in. One rate, published.",
   // rates.getpayve.com is the canonical home of this page. Without this it would
   // self-canonicalise onto www.getpayve.com via the root metadataBase and compete with itself.
-  alternates: { canonical: "https://rates.getpayve.com/" },
+  alternates: { canonical: canonical("/") },
 };
 
 const PRICING = [

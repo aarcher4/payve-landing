@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import { COOKIE_NAME, verifySession } from "@/lib/session";
+import { LEGACY_HOST, primaryHost, redirectLegacyHost, SURFACE_HOSTS } from "@/lib/site";
 
 /**
  * Host routing for rates.getpayve.com, and the gate on the settings page.
@@ -23,7 +24,8 @@ import { COOKIE_NAME, verifySession } from "@/lib/session";
  * handler, so a new asset route cannot silently fall into the rewrite.
  */
 
-const RATES_HOSTS = new Set(["rates.getpayve.com"]);
+/** rates.getpayve.com and liquidity.getpayve.com both serve this surface. See lib/site.ts. */
+const RATES_HOSTS = SURFACE_HOSTS;
 
 /** Hidden, unguessable slugs served as static HTML via next.config.ts rewrites. */
 const PASSTHROUGH = new Set(["/value-model-9f3ac21b", "/roger-value-prop-bbc01d16"]);
@@ -47,6 +49,17 @@ export async function middleware(request: NextRequest) {
 
   if (PASSTHROUGH.has(pathname) || PASSTHROUGH.has(pathname.replace(/\.html$/, ""))) {
     return NextResponse.next();
+  }
+
+  // Once the new hostname is live and someone opts in, the old one hands visitors over
+  // permanently. Off by default: redirecting to a host that does not resolve yet would take
+  // the surface down rather than rename it.
+  if (host === LEGACY_HOST && redirectLegacyHost()) {
+    const url = request.nextUrl.clone();
+    url.host = primaryHost();
+    url.protocol = "https";
+    url.port = "";
+    return NextResponse.redirect(url, 308);
   }
 
   // Resolve the short alias FIRST, so the gate below sees the real destination. Guarding the

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Reveal from "../../components/home/Reveal";
 import { ProductCtaBand } from "../../components/site/ProductPage";
+import { canonical } from "@/lib/site";
 import { RatesChrome } from "../RatesChrome";
 import { RateLadder } from "./RateLadder";
 import { TimelineCaption, WorkingCapitalTimeline } from "./WorkingCapitalTimeline";
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
     "Two ways to move a payment date without moving the other side's. Early Pay releases cash to your suppliers sooner. Pay Later keeps your vendor network paid on time while your own cash leaves later.",
   // rates.getpayve.com is the canonical home. Without this the page self-canonicalises onto
   // www via the root metadataBase and competes with itself, the same trap /rates has.
-  alternates: { canonical: "https://rates.getpayve.com/working-capital" },
+  alternates: { canonical: canonical("/working-capital") },
 };
 
 const SUPPLIER_GETS = [
