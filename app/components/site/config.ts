@@ -95,6 +95,7 @@ export const footerColumns: { heading: string; links: NavLink[] }[] = [
       { label: "Network", href: "/products/network" },
       { label: "Intelligence", href: "/products/agentic-intelligence" },
       { label: "The Payve Rate", href: "/rates" },
+      { label: "Working capital", href: "/rates/working-capital" },
     ],
   },
   {

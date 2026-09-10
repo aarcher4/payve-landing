@@ -12,7 +12,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-interface Corridor {
+interface PairSpread {
   pair: string;
   payveSpreadBps: number | null;
   bridgeContractBps: number;
@@ -43,7 +43,7 @@ const CODE: Record<string, string> = {
 };
 
 export default function SpreadEditor() {
-  const [corridors, setCorridors] = useState<Corridor[] | null>(null);
+  const [pairs, setPairs] = useState<PairSpread[] | null>(null);
   const [history, setHistory] = useState<HistoryRow[]>([]);
   const [live, setLive] = useState<LiveRow[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -64,9 +64,9 @@ export default function SpreadEditor() {
       const body = await s.json();
       if (!s.ok) {
         setError(body.detail ?? body.error ?? "Could not load spreads.");
-        setCorridors(null);
+        setPairs(null);
       } else {
-        setCorridors(body.corridors);
+        setPairs(body.pairs);
         setHistory(body.history ?? []);
         setError(null);
       }
@@ -96,10 +96,10 @@ export default function SpreadEditor() {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-5">
-        {corridors?.map((c) => (
-          <CorridorRow
+        {pairs?.map((c) => (
+          <PairRow
             key={c.pair}
-            corridor={c}
+            spread={c}
             live={live.find((l) => l.code === CODE[c.pair]) ?? null}
             onSaved={load}
           />
@@ -123,7 +123,7 @@ export default function SpreadEditor() {
                     When
                   </th>
                   <th className="px-4 py-2 text-xs font-semibold uppercase tracking-[0.04em] text-r-muted-fg">
-                    Corridor
+                    PairSpread
                   </th>
                   <th className="px-4 py-2 text-right text-xs font-semibold uppercase tracking-[0.04em] text-r-muted-fg">
                     Markup
@@ -167,17 +167,17 @@ export default function SpreadEditor() {
   );
 }
 
-function CorridorRow({
-  corridor,
+function PairRow({
+  spread,
   live,
   onSaved,
 }: {
-  corridor: Corridor;
+  spread: PairSpread;
   live: LiveRow | null;
   onSaved: () => void;
 }) {
-  const code = CODE[corridor.pair]!;
-  const [bps, setBps] = useState(String(corridor.payveSpreadBps ?? ""));
+  const code = CODE[spread.pair]!;
+  const [bps, setBps] = useState(String(spread.payveSpreadBps ?? ""));
   const [reason, setReason] = useState("");
   const [saving, setSaving] = useState(false);
   const [err, setErr] = useState<string | null>(null);
@@ -185,13 +185,13 @@ function CorridorRow({
 
   const typed = Number(bps);
   const valid = /^\d{1,5}$/.test(bps) && Number.isInteger(typed) && typed >= 0 && typed <= 10_000;
-  const changed = valid && typed !== corridor.payveSpreadBps;
+  const changed = valid && typed !== spread.payveSpreadBps;
   const reasonOk = reason.trim().length >= 10;
 
   // Preview from the CURRENT published rate, walked back through the current spread to recover
   // the underlying quote, then forward through the typed one. Shows the real consequence
   // rather than a percentage of a percentage.
-  const currentBps = corridor.payveSpreadBps;
+  const currentBps = spread.payveSpreadBps;
   const preview =
     valid && live?.sell != null && live?.buy != null && currentBps != null
       ? {
@@ -212,7 +212,7 @@ function CorridorRow({
       const res = await fetch("/api/rates/spread", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ pair: corridor.pair, bps: typed, reason: reason.trim() }),
+        body: JSON.stringify({ pair: spread.pair, bps: typed, reason: reason.trim() }),
       });
       const body = await res.json();
       if (!res.ok) {
@@ -230,13 +230,13 @@ function CorridorRow({
   }
 
   return (
-    <div className="rounded-r-md border border-r-border bg-r-card p-5" data-corridor={corridor.pair}>
+    <div className="rounded-r-md border border-r-border bg-r-card p-5" data-pair={spread.pair}>
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h2 className="r-num text-base font-semibold text-r-fg">USD/{code}</h2>
         <p className="r-num text-xs text-r-muted-fg">
           Currently published:{" "}
           <span className="text-r-fg" data-current-bps>
-            {corridor.payveSpreadBps ?? "—"} bps
+            {spread.payveSpreadBps ?? "not set"} bps
           </span>
         </p>
       </div>
@@ -261,14 +261,14 @@ function CorridorRow({
         {/* The arithmetic, on screen while they type. This is what makes "16" unambiguous. */}
         <dl className="r-num grid content-end gap-1 text-sm" data-arithmetic>
           <Row
-            k={corridor.bridgeContractMeasured ? "Rail spread (measured)" : "Rail spread (estimate)"}
-            v={`${corridor.bridgeContractBps.toFixed(1)} bps`}
+            k={spread.bridgeContractMeasured ? "Rail spread (measured)" : "Rail spread (estimate)"}
+            v={`${spread.bridgeContractBps.toFixed(1)} bps`}
             sub
           />
-          <Row k="Payve markup" v={valid ? `${typed} bps` : "—"} />
+          <Row k="Payve markup" v={valid ? `${typed} bps` : "not set"} />
           <Row
             k="All-in vs mid-market"
-            v={valid ? `${(corridor.bridgeContractBps + typed).toFixed(1)} bps` : "—"}
+            v={valid ? `${(spread.bridgeContractBps + typed).toFixed(1)} bps` : "not set"}
             strong
           />
           {preview && (
@@ -288,7 +288,7 @@ function CorridorRow({
           value={reason}
           data-reason-input
           onChange={(e) => setReason(e.target.value)}
-          placeholder="Why this corridor is being re-priced"
+          placeholder="Why this spread is being re-priced"
           className="mt-1.5 h-control w-full rounded-r-sm border border-r-border bg-r-bg px-3 text-sm text-r-fg outline-none focus-visible:ring-2 focus-visible:ring-r-ring"
         />
       </div>
@@ -302,7 +302,7 @@ function CorridorRow({
           className="h-control rounded-r-sm bg-r-primary px-4 text-sm font-semibold text-r-primary-fg transition-opacity disabled:opacity-40"
         >
           {/* Money-moving buttons name the consequence. */}
-          {saving ? "Publishing…" : `Publish ${valid ? typed : "—"} bps for USD/${code}`}
+          {saving ? "Publishing…" : `Publish ${valid ? typed : "–"} bps for USD/${code}`}
         </button>
         {!changed && valid && <span className="text-xs text-r-subtle">No change to publish.</span>}
         {changed && !reasonOk && <span className="text-xs text-r-subtle">A reason is required.</span>}

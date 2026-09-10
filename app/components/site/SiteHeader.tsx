@@ -35,7 +35,7 @@ export default function SiteHeader() {
     <header
       ref={headerRef}
       /* `bg-paper` opaque, NOT `bg-paper/90`. The tokens are plain `var(--paper)` strings,
-         which Tailwind cannot apply an alpha modifier to — `bg-paper/90` compiled to no rule
+         which Tailwind cannot apply an alpha modifier to. `bg-paper/90` compiled to no rule
          at all, leaving the sticky header with no background on every page. Invisible while
          every page was light behind it; illegible the moment a dark section scrolled under
          (the /rates market band). Restoring alpha would mean redefining the tokens as

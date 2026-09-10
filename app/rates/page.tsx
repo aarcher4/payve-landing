@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { FeatureGrid, ProductCtaBand, CrossSell } from "../components/site/ProductPage";
-import { Wordmark } from "../components/Wordmark";
+import { RatesChrome } from "./RatesChrome";
 import MarketSection from "./MarketSection";
 import RateHero from "./RateHero";
 
@@ -31,25 +31,7 @@ const PRICING = [
 export default function RatesPage() {
   return (
     <main className="bg-r-bg">
-      {/*
-        Minimal chrome, not the marketing nav. At rates.getpayve.com this page IS the site, so
-        it carries a wordmark and the rate and nothing else above the fold. A tall marketing
-        hero here would push the quote and the chart below the fold, which is the one thing a
-        rate page must never do.
-
-        The wordmark is the sanctioned asset from the design system, sized by height only so
-        it cannot be stretched.
-      */}
-      <header className="border-b border-r-border bg-r-card">
-        <div className="mx-auto flex max-w-6xl items-baseline justify-between gap-4 px-4 py-5 sm:px-6">
-          <a href="/" aria-label="Payve home">
-            <Wordmark height={22} />
-          </a>
-          <p className="text-xs font-semibold uppercase tracking-[0.04em] text-r-muted-fg">
-            The Payve Rate
-          </p>
-        </div>
-      </header>
+      <RatesChrome />
 
       <RateHero />
 

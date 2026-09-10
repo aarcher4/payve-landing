@@ -22,6 +22,7 @@ const ROUTES = [
   // The live rate board. It polls /api/rates on an interval, so a console error here is
   // usually a real fetch or render fault rather than a static-markup problem.
   "/rates",
+  "/rates/working-capital",
 ];
 const VIEWPORTS = [
   { width: 1440, height: 960 },

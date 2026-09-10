@@ -7,6 +7,13 @@
  *   4. banned-words grep over app/ + public/llms.txt
  *   5. absolute-free-claim grep (softer fee framing is a locked decision)
  * Run: node scripts/verify-rebrand.mjs   [--skip-build to iterate on checks only]
+ *                                        [--grep-only for the copy checks alone]
+ *
+ * --grep-only exists so `verify:rates` can run checks 4+5 on every pass without paying for a
+ * second `next build`. Those greps are exactly the part that rotted: em dashes and "corridor"
+ * sat in shipped copy because nothing cheap enough to run routinely was checking them. The
+ * full gate is NOT in that chain, because its walk asserts a booking CTA on every route and
+ * /privacy and /terms legitimately have none.
  */
 import { spawn, spawnSync } from "node:child_process";
 import { readdirSync, readFileSync, statSync } from "node:fs";
@@ -17,6 +24,7 @@ const ROOT = join(fileURLToPath(import.meta.url), "..", "..");
 const PORT = 3100;
 const BASE = `http://localhost:${PORT}`;
 const SKIP_BUILD = process.argv.includes("--skip-build");
+const GREP_ONLY = process.argv.includes("--grep-only");
 let failures = 0;
 const fail = (msg) => { failures++; console.log(`GATE FAIL: ${msg}`); };
 const ok = (msg) => console.log(`gate ok: ${msg}`);
@@ -63,6 +71,11 @@ for (const f of copyFiles) {
   if (corridorLine) fail(`"corridor" in copy in ${f}: "${corridorLine.trim().slice(0, 80)}"`);
 }
 if (!failures) ok("banned-words + free-claim + em-dash + operating-account greps clean");
+
+if (GREP_ONLY) {
+  console.log(`GATE RESULT: ${failures ? `FAIL (${failures})` : "PASS (copy greps only)"}`);
+  process.exit(failures ? 1 : 0);
+}
 
 // ---------- 1. build ----------
 if (!SKIP_BUILD) {

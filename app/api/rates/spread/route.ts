@@ -61,7 +61,7 @@ export async function GET(request: Request) {
     const measured = await measureContractBps();
     return Response.json(
       {
-        corridors: CURRENCY_PAIRS.map((pair) => ({
+        pairs: CURRENCY_PAIRS.map((pair) => ({
           pair,
           payveSpreadBps: byPair.get(pair) ?? null,
           // Shown beside the editable number so the operator can see what their markup sits on

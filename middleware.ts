@@ -32,6 +32,7 @@ const PASSTHROUGH = new Set(["/value-model-9f3ac21b", "/roger-value-prop-bbc01d1
 const RATES_HOST_ALIASES: Record<string, string> = {
   "/": "/rates",
   "/settings": "/rates/settings",
+  "/working-capital": "/rates/working-capital",
   "/login": "/rates/login",
 };
 

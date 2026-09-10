@@ -189,7 +189,7 @@ export default function MarketSection() {
 
         <p className="mt-4 max-w-3xl text-xs leading-relaxed text-sage-300">
           {usd(WIRE_OUT)} charged to send, {usd(WIRE_IN)} taken off the other end before it lands.
-          On {usd(EXAMPLE_USD)} the two together cost {Math.round(dragBps)} basis points — on top of
+          On {usd(EXAMPLE_USD)} the two together cost {Math.round(dragBps)} basis points, on top of
           whatever exchange rate you were given. Payve adds nothing on top of the rate below.
           Fee assumptions and sources: see the pricing notes.
         </p>
@@ -263,7 +263,7 @@ export default function MarketSection() {
                         </td>
                         <td className="px-5 py-3 text-right text-xs tabular-nums">
                           {delta == null || delta === 0 ? (
-                            <span className="text-sage-500">—</span>
+                            <span className="text-sage-500">not available</span>
                           ) : (
                             <span className={delta > 0 ? "text-sage-200" : "text-sage-400"}>
                               {delta > 0 ? "▲" : "▼"} {fmt(Math.abs(delta), m?.dp ?? 4)}
@@ -281,7 +281,7 @@ export default function MarketSection() {
 
         <p className="mt-3 text-xs text-sage-400">
           Per 1 US dollar, refreshed every 30 seconds. Change is measured from the first rate seen
-          since you opened this page. An estimate, not a quote — no rate lock exists.
+          since you opened this page. An estimate, not a quote. No rate lock exists.
         </p>
 
         <div className="mt-8 flex flex-wrap items-center gap-4">
