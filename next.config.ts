@@ -1,6 +1,17 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  /**
+   * `pg` is Node-only (it reaches for `fs`, `dns` and `net`), so keep it out of the server
+   * bundle and let Node require it directly.
+   *
+   * To be clear about what this does NOT do: it does not apply to the Edge compilation, and it
+   * was not what fixed the "Can't resolve 'fs'" build failure that appeared when middleware.ts
+   * introduced an Edge runtime. That fix is the positive-guard shape in `instrumentation.ts` —
+   * see the comment there before changing either file.
+   */
+  serverExternalPackages: ["pg"],
+
   async redirects() {
     // Network rebrand: the old three-product IA folds into two products.
     return [

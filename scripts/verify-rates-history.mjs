@@ -17,6 +17,7 @@
  * window boundary or a downsample that drops the last point is visible as a wrong number
  * rather than as a plausible-looking chart.
  */
+import { chromium } from "playwright";
 import { spawn } from "node:child_process";
 import { createServer } from "node:http";
 import pg from "pg";
@@ -98,6 +99,21 @@ async function seed() {
     );
   }
 
+  // BRL: a daily ramp sitting CLOSE to what the stub quotes, so its anchor lands in band and it
+  // has a real chart. Needed because the corridor-switch check must switch to something that
+  // actually draws: COP is deliberately refused and every other corridor is deliberately empty.
+  for (let i = 400; i >= 0; i--) {
+    const at = new Date(Date.now() - i * 86_400_000);
+    const bucket = new Date(Date.UTC(at.getUTCFullYear(), at.getUTCMonth(), at.getUTCDate()));
+    const mid = 5.3 + ((400 - i) / 400) * 0.12;
+    await client.query(
+      `insert into fx_rate_snapshot (currency_pair, bucket_at, granularity, mid_rate, source)
+       values ('usd_to_brl', $1, 'daily', $2, 'ecb')
+       on conflict (currency_pair, bucket_at, granularity) do update set mid_rate = excluded.mid_rate`,
+      [bucket, mid],
+    );
+  }
+
   let intraday = 0;
   const now = Date.now();
   const first = now - INTRADAY_DAYS * 86_400_000;
@@ -151,6 +167,7 @@ async function portIsBusy() {
 }
 
 let server;
+let browser;
 async function shutdown() {
   try {
     if (process.platform === "win32") {
@@ -315,22 +332,31 @@ try {
   // source disagreement, it is a bug, and a 23%-rescaled history would be worse than an
   // unadjusted one.
   const copY = await (await fetch(`${BASE}/api/rates/history?pair=usd_to_cop&window=1Y`)).json();
-  assert(copY.available === true, "COP has a series to test the guard against");
-  assert(copY.anchorRatio === 1, "an out-of-band anchor ratio is refused", String(copY.anchorRatio));
+  assert(copY.anchorRefused === true, "an out-of-band anchor ratio is refused");
 
-  // The published rate must sit below the mid it came from. Asserted on COP, the one series
-  // whose anchor is refused and which is therefore unanchored - on an anchored series the
-  // points are indexed to a live quote from a DIFFERENT source, so comparing them to the
-  // stored daily mid compares two measurements and proves nothing.
+  /**
+   * Refusing must WITHHOLD the series, not serve it unadjusted.
+   *
+   * This is the assertion that caught the real bug. Serving it unanchored looked reasonable in
+   * the payload and was badly wrong on screen: COP rendered a flat chart at ~3,972 directly
+   * beneath a headline reading 3,100.72, a 22% contradiction with nothing to explain it. The
+   * empty state is the honest output.
+   */
+  assert(copY.available === false, "a refused anchor withholds the series entirely");
+  assert(copY.points.length === 0, "a refused anchor publishes no points", String(copY.points.length));
+  assert(copY.changeAbs === null, "a refused anchor reports no change");
+
+  // The published rate must sit below the mid it came from. Read straight from the resolver
+  // rather than from a served payload, since the served one is now (correctly) empty.
   const { rows: copMid } = await client.query(
     `select mid_rate::float8 as mid from fx_rate_snapshot
       where currency_pair='usd_to_cop' and granularity='daily' order by bucket_at desc limit 1`,
   );
-  const copLast = copY.points[copY.points.length - 1];
+  const copLive = live.rates.find((r) => r.code === "COP");
   assert(
-    copLast.sell < copMid[0].mid,
-    "an unanchored reconstructed point sits below the mid it came from",
-    `${copLast.sell} vs ${copMid[0].mid}`,
+    copLive.sell < copMid[0].mid,
+    "the live COP rate sits below the mid the fixture stores",
+    `${copLive.sell} vs ${copMid[0].mid}`,
   );
 
   console.log("\nEmpty corridor");
@@ -339,10 +365,84 @@ try {
   const gbp = await (await fetch(`${BASE}/api/rates/history?pair=usd_to_gbp&window=1Y`)).json();
   assert(gbp.available === false && gbp.points.length === 0, "a corridor with no rows reports empty");
   assert(gbp.changeAbs === null, "an empty corridor reports no change rather than zero");
+
+  // ------------------------------------------------- the dashboard, interactively
+  /**
+   * This is the only stage with BOTH a database and a live rate, so it is the only place the
+   * chart can actually be driven. A structural check ("six pills render") passes just as
+   * happily when every pill draws the same picture, which is the failure worth catching: the
+   * tabs are the feature.
+   *
+   * Asserted on the path `d` attribute rather than on text. A heading renders before its rows,
+   * so waiting on text reports a working page as an empty one.
+   */
+  console.log("\nDashboard — driven");
+  browser = await chromium.launch();
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 960 }, reducedMotion: "reduce" });
+  const page = await ctx.newPage();
+  const consoleErrors = [];
+  page.on("console", (m) => m.type() === "error" && consoleErrors.push(m.text()));
+  page.on("pageerror", (e) => consoleErrors.push(`pageerror: ${e.message}`));
+  await page.goto(`${BASE}/rates`, { waitUntil: "networkidle" });
+
+  const quoteText = (await page.locator("[data-quote]").allInnerTexts()).join(" ");
+  assert(/\d/.test(quoteText) && /MXN/.test(quoteText), "the hero renders live MXN rates", quoteText.replace(/\s+/g, " ").slice(0, 100));
+  assert((await page.locator("[data-change]").count()) === 1, "a change figure renders when history exists");
+
+  const pathFor = async () => {
+    await page.waitForFunction(
+      () => document.querySelector("[data-rate-chart] path[stroke]")?.getAttribute("d")?.length > 20,
+      { timeout: 15_000 },
+    );
+    return page.locator("[data-rate-chart] path[stroke]").first().getAttribute("d");
+  };
+
+  const shapes = {};
+  for (const w of ["1D", "1W", "1M", "6M", "1Y", "5Y"]) {
+    await page.locator(`[data-window="${w}"]`).click();
+    await page.waitForTimeout(700);
+    shapes[w] = await pathFor();
+    assert(
+      typeof shapes[w] === "string" && shapes[w].length > 20,
+      `${w} draws a chart path`,
+      String(shapes[w]).slice(0, 40),
+    );
+    const sel = await page.locator(`[data-window="${w}"]`).getAttribute("aria-pressed");
+    assert(sel === "true", `${w} is marked selected after clicking it`);
+  }
+  const distinct = new Set(Object.values(shapes));
+  assert(
+    distinct.size === 6,
+    "each timeframe draws a DIFFERENT curve",
+    `${distinct.size} distinct shapes across 6 windows`,
+  );
+
+  // Switching corridor must actually change the picture, not just the label. BRL is the target
+  // because it is the other corridor with a publishable series: COP is deliberately refused and
+  // the rest are deliberately empty.
+  const beforePair = await pathFor();
+  await page.selectOption("[data-pair-select]", { label: "USDc/BRL" });
+  await page.waitForTimeout(1200);
+  const afterPair = await pathFor();
+  assert(beforePair !== afterPair, "switching corridor redraws the chart");
+  const brlQuote = (await page.locator("[data-quote]").allInnerTexts()).join(" ");
+  assert(/BRL/.test(brlQuote), "the hero follows the selected corridor", brlQuote.replace(/\s+/g, " ").slice(0, 80));
+
+  // And a corridor whose anchor is refused must render the honest empty state, not a chart that
+  // contradicts the headline above it.
+  await page.selectOption("[data-pair-select]", { label: "USDc/COP" });
+  await page.waitForTimeout(1200);
+  const copPaths = await page.locator("[data-rate-chart] path[stroke]").count();
+  assert(copPaths === 0, "a refused corridor draws no line at all", String(copPaths));
+  const copBody = await page.locator("[data-rate-chart]").innerText();
+  assert(/No rate history/i.test(copBody), "a refused corridor shows the empty state", copBody.slice(0, 80));
+
+  assert(consoleErrors.length === 0, "no console errors while driving the dashboard", consoleErrors.slice(0, 3).join(" | "));
 } catch (err) {
   console.error(`\n[verify-rates-history] threw: ${err && err.message}`);
   failures.push(`exception: ${err && err.message}`);
 } finally {
+  if (browser) await browser.close().catch(() => {});
   if (server) await shutdown();
   stub.close();
   await client.end().catch(() => {});
