@@ -167,6 +167,35 @@ try {
     );
   }
 
+  // ------------------------------------------------- history API, no database
+  /**
+   * With no DATABASE_URL there is no series, and that is a legitimate visible state rather
+   * than an error — a corridor whose capture has not started yet has no 1D points either.
+   * The endpoint must therefore answer 200 with a well-formed empty series, and must still
+   * reject nonsense parameters. A 500 here would take the whole dashboard down with it.
+   */
+  console.log("\nHistory API — no database configured");
+  for (const w of ["1D", "1W", "1M", "6M", "1Y", "5Y"]) {
+    const r = await fetch(`${BASE}/api/rates/history?pair=usd_to_mxn&window=${w}`);
+    const j = await r.json().catch(() => null);
+    assert(
+      r.ok && j && j.available === false && Array.isArray(j.points) && j.points.length === 0,
+      `history ${w} returns a well-formed empty series`,
+      `status ${r.status} ${JSON.stringify(j)?.slice(0, 120)}`,
+    );
+  }
+  const badPair = await fetch(`${BASE}/api/rates/history?pair=usd_to_jpy&window=1D`);
+  assert(badPair.status === 400, "history rejects an unknown pair", String(badPair.status));
+  const badWindow = await fetch(`${BASE}/api/rates/history?pair=usd_to_mxn&window=10Y`);
+  assert(badWindow.status === 400, "history rejects an unknown window", String(badWindow.status));
+  // A change figure with no data would render a confident "unchanged" on an empty chart.
+  const emptyBody = await (await fetch(`${BASE}/api/rates/history?pair=usd_to_cop&window=1M`)).json();
+  assert(
+    emptyBody.changeAbs === null && emptyBody.changePct === null,
+    "an empty series reports no change rather than zero",
+    JSON.stringify({ abs: emptyBody.changeAbs, pct: emptyBody.changePct }),
+  );
+
   // ------------------------------------------------------------ page assertions
   browser = await chromium.launch();
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 960 }, reducedMotion: "reduce" });
