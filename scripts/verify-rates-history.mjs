@@ -86,9 +86,9 @@ async function seed() {
   await client.query("delete from fx_spread_config");
   await client.query(
     `insert into fx_spread_config (currency_pair, payve_spread_bps, reason, actor)
-     select v.pair, v.bps, 'Test fixture reset to the migration 002 seed values.', 'verify-rates-history'
-       from (values ('usd_to_mxn', 16), ('usd_to_eur', 20), ('usd_to_cop', 20),
-                    ('usd_to_brl', 20), ('usd_to_gbp', 20)) as v(pair, bps)`,
+     select v.pair, v.bps, 'Test fixture reset to the shipped spread values.', 'verify-rates-history'
+       from (values ('usd_to_mxn', 16), ('usd_to_eur', 16), ('usd_to_cop', 16),
+                    ('usd_to_brl', 16), ('usd_to_gbp', 16)) as v(pair, bps)`,
   );
 
   const dailyValues = [];

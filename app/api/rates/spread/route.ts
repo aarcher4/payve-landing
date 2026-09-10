@@ -9,7 +9,8 @@
  * information, and the public board already publishes everything a customer needs.
  */
 import { getPool, hasDatabase } from "@/lib/db";
-import { CURRENCY_PAIRS, BRIDGE_CONTRACT_SPREAD_BPS, type CurrencyPair } from "@/lib/rates-math";
+import { measureContractBps } from "@/lib/history";
+import { CURRENCY_PAIRS, FALLBACK_CONTRACT_SPREAD_BPS, type CurrencyPair } from "@/lib/rates-math";
 import { COOKIE_NAME, verifySession } from "@/lib/session";
 import { __resetSpreadCache } from "@/lib/spread";
 
@@ -55,6 +56,9 @@ export async function GET(request: Request) {
     );
 
     const byPair = new Map(current.rows.map((r) => [r.currency_pair, Number(r.payve_spread_bps)]));
+    // Measured from our own snapshots, so the all-in figure an operator reads is the rail's
+    // real spread rather than a constant someone has to remember to update.
+    const measured = await measureContractBps();
     return Response.json(
       {
         corridors: CURRENCY_PAIRS.map((pair) => ({
@@ -62,7 +66,10 @@ export async function GET(request: Request) {
           payveSpreadBps: byPair.get(pair) ?? null,
           // Shown beside the editable number so the operator can see what their markup sits on
           // top of, and what the all-in figure comes to. Reference only, never a pricing input.
-          bridgeContractBps: BRIDGE_CONTRACT_SPREAD_BPS[pair],
+          bridgeContractBps: measured[pair] ?? FALLBACK_CONTRACT_SPREAD_BPS[pair],
+          // Whether that figure was observed or is a fallback. The screen says which, because
+          // "26 bps all-in" carries different weight depending on the answer.
+          bridgeContractMeasured: measured[pair] != null,
         })),
         history: history.rows,
       },

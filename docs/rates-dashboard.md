@@ -14,22 +14,37 @@ UPDATEd. The live value is the newest row with `effective_from <= now()`. This i
 the change log trustworthy: the history *is* the data, not a log written alongside it and hoped
 to agree. Same doctrine as `bridge_fee_config` in the payments app.
 
-Seeded values (migration `002`):
+Current values (seeded by `002`, made uniform by `004`): **16 bps on every corridor.**
 
-| Corridor | Payve markup | Bridge contract spread | All-in vs mid |
+| Corridor | Payve markup | Rail spread (measured) | All-in vs mid |
 |---|---|---|---|
-| `usd_to_mxn` | **16 bps** | 10 bps | ~26 bps |
-| `usd_to_eur` | 20 bps | 15 bps | ~35 bps |
-| `usd_to_cop` | 20 bps | 50 bps | ~70 bps |
-| `usd_to_brl` | 20 bps | 50 bps | ~70 bps |
-| `usd_to_gbp` | 20 bps | 24 bps | ~44 bps |
+| `usd_to_mxn` | 16 bps | ~10 bps | ~26 bps |
+| `usd_to_eur` | 16 bps | ~20 bps | ~36 bps |
+| `usd_to_cop` | 16 bps | ~50 bps | ~66 bps |
+| `usd_to_brl` | 16 bps | ~30 bps | ~46 bps |
+| `usd_to_gbp` | 16 bps | ~19 bps | ~35 bps |
 
-MXN publishes at 16. The other four carry over the 20 bps that has been serving in production,
-unchanged — introducing a table must not silently re-price four corridors as a side effect.
+### The rail spread is MEASURED, not a constant
 
-Bridge's contract spread is a **reference only**, never a pricing input. It exists so the
-settings screen can show an operator what their markup sits on top of, and what the all-in
-figure comes to, while they type.
+Every intraday snapshot stores both the mid and the rail's sell side, so the spread the rail
+actually charged is `(1 - sell / mid) * 10_000`. The settings screen reads that, and labels it
+**measured** or **estimate** so the operator knows which they are looking at — "66 bps all-in"
+carries different weight depending on the answer.
+
+This replaced a hardcoded table, because that table was wrong. Cross-checking the two written
+sources on 10 Sep 2026:
+
+- the payments app's own `BRIDGE_CONTRACT_SPREAD_BPS` covers only the off-ramp currencies —
+  MXN 10, COP 50, BRL 50 — and has no EUR or GBP at all;
+- the all-in figures this repo's deploy runbook measured on 6 Aug 2026 (at the then-20bps
+  markup) imply MXN 10, EUR 20, COP 50, BRL **30**, GBP 19.
+
+MXN and COP agree. BRL does not. EUR and GBP exist in one source only. Three of five were a
+guess, which is why the number a customer is quoted against should come from observation.
+`FALLBACK_CONTRACT_SPREAD_BPS` is used only for a corridor we have not observed yet.
+
+The rail spread is a **reference only**, never a pricing input — it exists so an operator can
+see what their markup sits on top of.
 
 > **Still open:** this site publishes 16 bps for MXN while the payments app's
 > `bridge_fee_config` platform default charges **60 bps**. A customer who prices from this page

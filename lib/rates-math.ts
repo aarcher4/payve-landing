@@ -46,17 +46,31 @@ export function codeFor(pair: CurrencyPair): CurrencyCode {
 }
 
 /**
- * Bridge's contractual spread per corridor, in bps, as a REFERENCE ONLY. It is never a
- * pricing input — it is shown on the settings screen so an operator can see what the Payve
- * markup sits on top of, and read the all-in figure. Mirrors BRIDGE_CONTRACT_SPREAD_BPS in
- * the payments app.
+ * FALLBACK values for the rail's own contractual spread, in bps. Reference only, never a
+ * pricing input.
+ *
+ * PREFER THE MEASURED VALUE. `measureContractBps()` derives this from our own stored snapshots
+ * — `(1 - bridge_sell / mid) * 10_000` on the newest observation — which is authoritative and
+ * self-correcting. These constants are only used for a corridor we have not observed yet.
+ *
+ * They are labelled fallback because they were demonstrably unreliable. Cross-checking two
+ * sources on 10 Sep 2026:
+ *
+ *   - The payments app's own BRIDGE_CONTRACT_SPREAD_BPS covers only the off-ramp currencies:
+ *     MXN 10, COP 50, BRL 50. It has no EUR or GBP, because those are not corridors there.
+ *   - The all-in figures this repo's deploy runbook measured on 6 Aug 2026 (at the then-20bps
+ *     Payve markup) imply MXN 10, EUR 20, COP 50, BRL 30, GBP 19.
+ *
+ * MXN and COP agree. BRL does NOT (50 against 30), and EUR/GBP exist in only one source. So
+ * three of five were a guess, which is exactly why the displayed all-in figure should come from
+ * measurement rather than from a table someone has to remember to update.
  */
-export const BRIDGE_CONTRACT_SPREAD_BPS: Record<CurrencyPair, number> = {
+export const FALLBACK_CONTRACT_SPREAD_BPS: Record<CurrencyPair, number> = {
   usd_to_mxn: 10,
-  usd_to_eur: 15,
+  usd_to_eur: 20,
   usd_to_cop: 50,
-  usd_to_brl: 50,
-  usd_to_gbp: 24,
+  usd_to_brl: 30,
+  usd_to_gbp: 19,
 };
 
 export interface BridgeTriple {
@@ -104,9 +118,9 @@ export function isPublishable(t: BridgeTriple, p: PublishedPair): boolean {
   );
 }
 
-/** Total cost against mid-market: Bridge's contract spread plus the Payve markup. */
-export function allInBps(pair: CurrencyPair, payveSpreadBps: number): number {
-  return BRIDGE_CONTRACT_SPREAD_BPS[pair] + payveSpreadBps;
+/** Total cost against mid-market: the rail's contract spread plus the Payve markup. */
+export function allInBps(pair: CurrencyPair, payveSpreadBps: number, contractBps?: number): number {
+  return (contractBps ?? FALLBACK_CONTRACT_SPREAD_BPS[pair]) + payveSpreadBps;
 }
 
 /** Bridge returns decimal STRINGS. Non-finite or non-positive is not a rate. */

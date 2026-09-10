@@ -26,7 +26,7 @@
  */
 import { getPool } from "./db";
 import {
-  BRIDGE_CONTRACT_SPREAD_BPS,
+  FALLBACK_CONTRACT_SPREAD_BPS,
   CURRENCY_PAIRS,
   codeFor,
   type CurrencyPair,
@@ -101,13 +101,18 @@ export function bucketFor(at: Date, granularity: "intraday" | "daily"): Date {
  * whatever spread applied that day, would make the chart move when we re-price rather than
  * when the market does.
  */
-export function sellFor(row: SnapshotRow, payveSpreadBps: number): number {
+export function sellFor(
+  row: SnapshotRow,
+  payveSpreadBps: number,
+  /** Measured contract spread for this corridor, when we have observed one. */
+  contractBps?: number,
+): number {
   if (row.source === "bridge" && row.bridge_sell_rate != null && row.bridge_buy_rate != null) {
     const below = Math.min(row.bridge_sell_rate, row.bridge_buy_rate);
     return below * (1 - payveSpreadBps / 10_000);
   }
-  const allIn = BRIDGE_CONTRACT_SPREAD_BPS[row.currency_pair] + payveSpreadBps;
-  return row.mid_rate * (1 - allIn / 10_000);
+  const contract = contractBps ?? FALLBACK_CONTRACT_SPREAD_BPS[row.currency_pair];
+  return row.mid_rate * (1 - (contract + payveSpreadBps) / 10_000);
 }
 
 /**
@@ -273,6 +278,50 @@ export async function readSeries(
   } catch (err) {
     console.error("[history] read failed:", err instanceof Error ? err.message : String(err));
     return null;
+  }
+}
+
+/**
+ * Measure the rail's own contract spread per corridor, from our own observations.
+ *
+ * Every intraday snapshot stores both the mid and the rail's sell side, so the spread the rail
+ * actually charged is `(1 - sell / mid) * 10_000`. That is authoritative and self-correcting,
+ * where a hardcoded table is neither: cross-checking the two written sources for these numbers
+ * found them disagreeing on BRL and silent on EUR and GBP.
+ *
+ * Read from the newest observation rather than an average: this is a contractual rate, not a
+ * market rate, so it steps when the contract changes and averaging would smear the step across
+ * however long the window is.
+ */
+const CONTRACT_CACHE_TTL_MS = 5 * 60_000;
+let contractCache: { at: number; value: Partial<Record<CurrencyPair, number>> } | null = null;
+
+export async function measureContractBps(): Promise<Partial<Record<CurrencyPair, number>>> {
+  const now = Date.now();
+  if (contractCache && now - contractCache.at < CONTRACT_CACHE_TTL_MS) return contractCache.value;
+
+  const pool = getPool();
+  if (!pool) return {};
+  try {
+    const { rows } = await pool.query<{ currency_pair: CurrencyPair; bps: string }>(
+      `select distinct on (currency_pair) currency_pair,
+              ((1 - bridge_sell_rate / mid_rate) * 10000)::text as bps
+         from fx_rate_snapshot
+        where granularity = 'intraday' and source = 'bridge'
+          and bridge_sell_rate is not null and mid_rate > 0
+        order by currency_pair, bucket_at desc`,
+    );
+    const out: Partial<Record<CurrencyPair, number>> = {};
+    for (const r of rows) {
+      const bps = Number(r.bps);
+      // A negative or absurd figure is not a contract spread; ignore it and fall back.
+      if (Number.isFinite(bps) && bps >= 0 && bps < 1000) out[r.currency_pair] = bps;
+    }
+    contractCache = { at: now, value: out };
+    return out;
+  } catch (err) {
+    console.error("[history] contract measure failed:", err instanceof Error ? err.message : String(err));
+    return {};
   }
 }
 

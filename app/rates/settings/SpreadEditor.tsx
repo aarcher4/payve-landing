@@ -16,6 +16,7 @@ interface Corridor {
   pair: string;
   payveSpreadBps: number | null;
   bridgeContractBps: number;
+  bridgeContractMeasured: boolean;
 }
 
 interface HistoryRow {
@@ -259,11 +260,15 @@ function CorridorRow({
 
         {/* The arithmetic, on screen while they type. This is what makes "16" unambiguous. */}
         <dl className="r-num grid content-end gap-1 text-sm" data-arithmetic>
-          <Row k="Bridge contract spread" v={`${corridor.bridgeContractBps} bps`} sub />
+          <Row
+            k={corridor.bridgeContractMeasured ? "Rail spread (measured)" : "Rail spread (estimate)"}
+            v={`${corridor.bridgeContractBps.toFixed(1)} bps`}
+            sub
+          />
           <Row k="Payve markup" v={valid ? `${typed} bps` : "—"} />
           <Row
             k="All-in vs mid-market"
-            v={valid ? `${corridor.bridgeContractBps + typed} bps` : "—"}
+            v={valid ? `${(corridor.bridgeContractBps + typed).toFixed(1)} bps` : "—"}
             strong
           />
           {preview && (

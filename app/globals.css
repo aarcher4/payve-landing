@@ -206,22 +206,13 @@ body {
   --r-ring: 0.615 0.043 160.016;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --r-background: 0.17 0.008 247.839;
-    --r-foreground: 0.96 0.004 267.979;
-    --r-card: 0.22 0.008 247.859;
-    --r-muted: 0.25 0.008 247.859;
-    --r-muted-foreground: 0.72 0.012 257.239;
-    --r-subtle-foreground: 0.68 0.012 260.717;
-    --r-border: 0.3 0.008 255.477;
-    --r-primary: 0.72 0.05 163.609;
-    --r-primary-foreground: 0.17 0.02 169.226;
-    --r-accent: 0.26 0.02 151.888;
-    --r-success: 0.72 0.08 155.972;
-    --r-destructive: 0.7 0.14 29.006;
-    --r-ring: 0.72 0.05 160.016;
-  }
+/* The rates surface is LIGHT ONLY, deliberately.
+   A dark token swap used to live here, but this page is a published price: it gets screenshotted,
+   printed, and pasted into decks, and it should look the same everywhere it lands. `color-scheme:
+   light` also stops the browser darkening the native <select> and form controls, which was the
+   one place a system dark preference still leaked through. */
+:root {
+  color-scheme: light;
 }
 
 /* Rates are operational values, so they wear tabular figures everywhere. */
