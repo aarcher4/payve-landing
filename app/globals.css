@@ -240,3 +240,20 @@ body {
     --r-control: var(--r-control-touch);
   }
 }
+
+/* Scroll reveals must not print blank.
+
+   Reveal.tsx animates in on IntersectionObserver, so framer holds `opacity: 0` as an INLINE
+   style until a section is scrolled past. Printing does not scroll, and neither does a
+   full-page screenshot: every section the reader never reached comes out empty. That matters
+   most on the rates surface, which is light-only precisely because it gets printed and pasted
+   into decks.
+
+   Targets the component's own marker rather than a fragile [style*="opacity"] match, and needs
+   !important only because the value it overrides is inline. */
+@media print {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

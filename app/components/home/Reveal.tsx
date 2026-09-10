@@ -24,6 +24,7 @@ export default function Reveal({
     // motion users got permanently blank customers/company pages.
     return (
       <motion.div
+        data-reveal
         className={className}
         initial={false}
         animate={{ opacity: 1, y: 0 }}
@@ -35,6 +36,7 @@ export default function Reveal({
   }
   return (
     <motion.div
+      data-reveal
       className={className}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
