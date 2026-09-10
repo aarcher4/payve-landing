@@ -96,6 +96,14 @@ state, not a failure.
 npm run verify:rates
 ```
 
-Four stages, 68 assertions: `tsc --noEmit` → `next build` → degraded-path DOM assertions with
-the key stripped (37) → live-path assertions against a local Bridge stub, including the
-stale-upstream guard (31). Real Bridge is never contacted, so this is safe to run in CI.
+Four stages, 61 assertions: `tsc --noEmit` → `next build` → degraded-path DOM assertions with
+the key stripped (39) → live-path assertions against a local Bridge stub, including the
+stale-upstream guard (22). Real Bridge is never contacted, so this is safe to run in CI.
+
+> Counts verified 10 Sep 2026. They had drifted (the doc claimed 37/31), and for a while the
+> real number was **17**: `verify-rates.mjs` asserted a sticky `<header>` that commit `cf8c527`
+> stopped mounting, so the locator threw on a 30s timeout and aborted the run before the
+> worked-example, responsive, discoverability and substantiation blocks — and the `&&` chain
+> meant the live stage never started at all. Nothing runs this gate automatically, so it stayed
+> hidden. If you change these scripts, read the printed `N/N checks passed` totals, not the
+> exit code alone, and never pipe the gate through `tail` (you get tail's exit code).

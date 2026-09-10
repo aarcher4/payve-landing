@@ -19,6 +19,9 @@ const ROUTES = [
   "/customers", "/customers/fortune-growers", "/customers/sl-produce",
   "/customers/dal-campo", "/customers/producer-pro",
   "/security", "/company", "/privacy", "/terms",
+  // The live rate board. It polls /api/rates on an interval, so a console error here is
+  // usually a real fetch or render fault rather than a static-markup problem.
+  "/rates",
 ];
 const VIEWPORTS = [
   { width: 1440, height: 960 },

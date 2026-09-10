@@ -4,12 +4,14 @@
  *
  * Boots the PRODUCTION build with BRIDGE_API_KEY deliberately UNSET, so the whole
  * run exercises the degraded path — the state that must never leak a fabricated
- * rate. Live-rate correctness is NOT asserted here: Bridge's sandbox 503s on
- * /v0/exchange_rates, so a truthful live check needs a production key and is a
- * human step (see .goal-loop/GOAL.md).
+ * rate. Live-rate correctness is asserted by its sibling, scripts/verify-rates-live.mjs,
+ * which drives a local Bridge stub; real Bridge is never contacted by either script.
  *
- * Exits non-zero on the first failed assertion. Never soften an assertion to get
- * a green — fix the page.
+ * Assertions ACCUMULATE — the run reports every failure, then exits non-zero at the end.
+ * Only a thrown error short-circuits, which is why locator assertions must check presence
+ * before evaluating (a bare .evaluate() on an absent element burns a 30s timeout, throws,
+ * and silently skips every assertion below it). Never soften an assertion to get a green —
+ * fix the page.
  *
  *   node scripts/verify-rates.mjs [--port 3177] [--keep]
  */
@@ -207,26 +209,46 @@ try {
     "page publishes no per-hop correspondent fee figure",
   );
 
-  // -------------------------------------- sticky header over the dark band
+  // -------------------------------------- floating chrome over the dark band
   /**
-   * The header is sticky and the market band is dark. If the header has no opaque
-   * background, dark-ink nav text sits on a dark-green band and becomes illegible.
-   * That is exactly what shipped once: `bg-paper/90` compiled to NO rule, because the
-   * design tokens are plain `var(--paper)` strings and Tailwind cannot alpha-modify them.
-   * Assert a real, opaque background so it cannot regress.
+   * The market band is dark. Anything sticky or fixed floating over it must be opaque:
+   * translucent chrome puts dark ink on a dark-green band and becomes illegible. That is
+   * exactly what shipped once — `bg-paper/90` compiled to NO rule at all, because the design
+   * tokens are plain `var(--paper)` strings and Tailwind cannot alpha-modify them.
+   *
+   * The guard is written against the CONDITION, not against a specific element. Commit
+   * cf8c527 reverted the site to a one-pager and stopped mounting SiteHeader/SiteFooter, so
+   * /rates currently carries no floating chrome at all and the failure cannot occur. Asserting
+   * `locator("header")` unconditionally made this block THROW on a 30s timeout, which aborted
+   * the run and silently skipped every assertion below it — the gate reported 17 checks
+   * instead of 37 and never reached the live-path stage. Enumerate what actually floats, and
+   * assert each one is opaque. Zero floating elements passes vacuously and correctly; the
+   * moment chrome returns, every piece of it is checked.
    */
-  console.log("\nSticky header contrast");
-  const headerBg = await page
-    .locator("header")
-    .first()
-    .evaluate((el) => getComputedStyle(el).backgroundColor);
-  const alpha = (() => {
-    const m = /rgba?\(([^)]+)\)/.exec(headerBg || "");
+  console.log("\nFloating chrome contrast");
+  const floating = await page.evaluate(() =>
+    [...document.querySelectorAll("body *")]
+      .filter((el) => {
+        const p = getComputedStyle(el).position;
+        return p === "sticky" || p === "fixed";
+      })
+      .map((el) => ({
+        tag: el.tagName.toLowerCase(),
+        bg: getComputedStyle(el).backgroundColor,
+      })),
+  );
+  const alphaOf = (color) => {
+    const m = /rgba?\(([^)]+)\)/.exec(color || "");
     if (!m) return 0;
     const parts = m[1].split(",").map((s) => Number(s.trim()));
     return parts.length < 4 ? 1 : parts[3];
-  })();
-  assert(alpha >= 0.95, "sticky header has an opaque background", `${headerBg} (alpha ${alpha})`);
+  };
+  const translucent = floating.filter((f) => alphaOf(f.bg) < 0.95);
+  assert(
+    translucent.length === 0,
+    `floating chrome over the dark band is opaque (${floating.length} sticky/fixed element(s))`,
+    translucent.map((f) => `${f.tag} ${f.bg}`).join(", "),
+  );
 
   // ------------------------------------------------- worked example ($10,000)
   console.log("\nWorked example — fee drag in bps");
@@ -274,19 +296,24 @@ try {
     assert(overflow <= 1, `no horizontal overflow at ${width}px`, `overflow ${overflow}px`);
   }
 
-  // -------------------------------------------------- A8: registration
-  console.log("\nA8 — nav / footer / sitemap registration");
+  // -------------------------------------------------- A8: discoverability
+  /**
+   * This block used to drive the marketing header's Products dropdown and assert a
+   * footer link. Commit cf8c527 reverted the site to a one-pager and stopped mounting
+   * SiteHeader/SiteFooter, so there is no nav or footer DOM on any route to assert
+   * against — those assertions could only ever fail from that commit onward.
+   *
+   * The INTENT is unchanged and still enforced: /rates must be discoverable and
+   * indexable. With chrome unmounted, that rests on three things, all asserted here —
+   * the nav config that will drive chrome whenever it is remounted, the sitemap, and
+   * the absence of a noindex header. If SiteHeader returns, the config assertion is
+   * what keeps its /rates entry from being dropped.
+   */
+  console.log("\nA8 — discoverability");
   await page.setViewportSize({ width: 1440, height: 960 });
-  await page.goto(`${BASE}/`, { waitUntil: "networkidle" });
 
-  // The Products dropdown mounts its items only once opened (click-toggle, not CSS hover),
-  // so drive the real interaction rather than asserting against a closed menu.
-  await page.locator("header button", { hasText: "Products" }).first().click();
-  await page.waitForTimeout(150);
-  const headerLinks = await page.locator("header a[href='/rates']").count();
-  assert(headerLinks > 0, "site header nav links to /rates (Products menu)");
-  const footerLinks = await page.locator("footer a[href='/rates']").count();
-  assert(footerLinks > 0, "site footer links to /rates");
+  const navConfig = readFileSync("app/components/site/config.ts", "utf8");
+  assert(/["']\/rates["']/.test(navConfig), "nav config still registers /rates");
 
   const sitemapRes = await fetch(`${BASE}/sitemap.xml`);
   const sitemapXml = await sitemapRes.text();
