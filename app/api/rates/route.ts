@@ -1,68 +1,68 @@
 /**
  * Public FX rate feed for /rates — the ONLY server-side surface that talks to Bridge.
  *
- * Why a route handler and not a client fetch: a Bridge API key grants full account
- * access. It stays server-side, is never NEXT_PUBLIC_-prefixed, and never reaches the
- * browser.
+ * Why a route handler and not a client fetch: a Bridge API key grants full account access. It
+ * stays server-side, is never NEXT_PUBLIC_-prefixed, and never reaches the browser.
  *
  * What crosses the wire to the browser is deliberately narrow:
- *   { code, mid, payveRate, allInBps, asOf, live }
- * Bridge's own `sell_rate` / `buy_rate` are NEVER returned — publishing them beside ours
- * would disclose Payve's cost basis and per-corridor margin.
+ *   { code, buy, sell, payveRate, spreadBps, asOf, live }
+ * Bridge's own `sell_rate` / `buy_rate` and the mid-market rate are NEVER returned. They are
+ * computed here to gate freshness and sanity, but publishing them beside ours would disclose
+ * Payve's cost basis and per-corridor margin. The rate math lives in `lib/rates-math.ts`; the
+ * two-sided orientation is DERIVED from mid rather than assumed, so no live probe is needed
+ * to get the buy side right.
  *
- * The rate math mirrors `effectiveRate()` in payve-fintech
- * (server/src/services/bridge/developerFees.ts):
+ * `payveRate` is retained as an alias of `sell` so the existing rate board keeps rendering
+ * while the dashboard is built. It is the same number, not a second opinion.
  *
- *   payveRate = sell_rate × (1 − spreadBps / 10_000)
+ * The spread is now DATA, per corridor, read from `fx_spread_config` (see `lib/spread.ts`).
+ * With no `DATABASE_URL` configured it comes from `PAYVE_PUBLIC_SPREAD_BPS`, exactly as
+ * before — so local dev, previews, and the currently-deployed service are unaffected.
  *
- * `sell_rate` already contains Bridge's own contract spread, so the all-in cost a supplier
- * sees vs mid-market is Bridge's spread PLUS ours — which is what `allInBps` reports.
- *
- * Degraded behaviour is load-bearing: on any failure a row comes back `live: false` with
- * NULL rates. There is deliberately no fallback constant here. payve-fintech carries
- * synthetic constants (MXN 18.0 / COP 4000.0) so that a real withdrawal degrades to a sane
- * estimate rather than failing — but a marketing page showing a made-up rate as if it were
- * live is a different and unacceptable thing.
+ * Degraded behaviour is load-bearing: on any failure a row comes back `live: false` with NULL
+ * rates. There is deliberately no fallback constant here. The payments app carries synthetic
+ * constants (MXN 18.0 / COP 4000.0) so a real withdrawal degrades to a sane estimate rather
+ * than failing, but a public page showing a made-up rate as if it were live is a different
+ * and unacceptable thing.
  *
  * Bridge offers NO quote and NO rate lock; these are estimates, and the page says so.
  */
 
-/** Bridge's exchange-rate currency enum. USD is the anchor; USDB is 1:1 USD-pegged and not in the enum. */
-const CURRENCIES = ["MXN", "EUR", "COP", "BRL", "GBP"] as const;
-type CurrencyCode = (typeof CURRENCIES)[number];
+import {
+  CURRENCIES,
+  isPublishable,
+  pairFor,
+  parseRate,
+  publishedPair,
+  type BridgeTriple,
+  type CurrencyCode,
+} from "@/lib/rates-math";
+import { defaultSpreadBps, resolveSpreads } from "@/lib/spread";
 
 export interface PublicRate {
   code: CurrencyCode;
-  /**
-   * The rate a supplier is paid at = Bridge's sell rate haircut by the Payve spread.
-   * Null when unavailable.
-   *
-   * This is the ONLY rate that crosses the wire. The mid-market rate and the all-in spread
-   * in bps are computed server-side (they gate freshness and sanity below) but are
-   * deliberately NOT returned: together they disclose Payve's per-corridor margin, and the
-   * page no longer displays them.
-   */
+  /** What a customer pays per 1 USDc to buy USDc. Null when unavailable. */
+  buy: number | null;
+  /** What a customer receives per 1 USDc when selling USDc. Null when unavailable. */
+  sell: number | null;
+  /** Alias of `sell`, kept so the existing board renders unchanged. Same number. */
   payveRate: number | null;
+  /** The Payve markup actually applied to this corridor, in bps. */
+  spreadBps: number | null;
   /** ISO timestamp the rate was fetched. Not a quote lock. */
   asOf: string;
   live: boolean;
 }
 
-/** Payve's published spread over Bridge's sell rate, in bps. */
-function spreadBps(): number {
-  const raw = Number(process.env.PAYVE_PUBLIC_SPREAD_BPS);
-  return Number.isFinite(raw) && raw >= 0 ? raw : 20;
-}
-
 /**
- * A 200 from Bridge is NOT sufficient to publish a rate. Two guards, both learned the hard
- * way from probing the sandbox with a real key:
+ * A 200 from Bridge is NOT sufficient to publish a rate. Two guards, both learned the hard way
+ * from probing the sandbox with a real key:
  *
  *  1. Bridge's SANDBOX serves frozen fixtures — USD/MXN at 20.00025 with an `updated_at` of
  *     2026-04-24, and a flat synthetic 50 bps spread on every pair instead of the real
- *     per-corridor contract spread. Without a guard, a marketing page pointed at sandbox
- *     renders "Live · read at 00:41" above a months-old invented number. Only production
- *     rates are ever publishable.
+ *     per-corridor contract spread. Without a guard, a public page pointed at sandbox renders
+ *     "Live · read at 00:41" above a months-old invented number. Only production rates are
+ *     ever publishable.
  *  2. Even in production, a frozen upstream must not be presented as live. Bridge refreshes
  *     roughly every 30s, so anything older than MAX_RATE_AGE_MS is treated as no rate at all.
  *
@@ -92,31 +92,38 @@ function bridgeBaseUrl(): string {
 }
 
 /**
- * Module-scope cache, 30s TTL — matches both Bridge's ~30s refresh cadence and
- * RATE_CACHE_TTL_MS in payve-fintech's feeConfig.ts. This also bounds upstream load:
+ * Module-scope cache, 30s TTL — matches Bridge's ~30s refresh. This also bounds upstream load:
  * however much public traffic the page takes, Bridge sees at most ~2 calls/min/currency.
+ *
+ * The cache holds Bridge's RAW TRIPLE, not the derived published rates. Caching the derived
+ * numbers would mean a spread change in settings took up to 30 seconds to appear, and worse,
+ * that two corridors could briefly publish under different spreads. The triple is upstream
+ * data with an upstream refresh cadence; the spread is ours and applies immediately.
  */
 const CACHE_TTL_MS = 30_000;
 interface CacheEntry {
-  rate: PublicRate;
+  triple: BridgeTriple;
   fetchedAt: number;
 }
 const cache = new Map<CurrencyCode, CacheEntry>();
 
-function unavailable(code: CurrencyCode): PublicRate {
-  return { code, payveRate: null, asOf: new Date().toISOString(), live: false };
+function unavailable(code: CurrencyCode, spreadBps: number | null): PublicRate {
+  return {
+    code,
+    buy: null,
+    sell: null,
+    payveRate: null,
+    spreadBps,
+    asOf: new Date().toISOString(),
+    live: false,
+  };
 }
 
-/** Bridge returns decimal STRINGS. A rate is a multiplier, not money, so parseFloat is correct. */
-function parseRate(raw: unknown): number | null {
-  const n = Number.parseFloat(String(raw ?? ""));
-  return Number.isFinite(n) && n > 0 ? n : null;
-}
-
-async function fetchRate(code: CurrencyCode, apiKey: string): Promise<PublicRate> {
+/** Fetch Bridge's raw triple for one corridor, or null on any failure. */
+async function fetchTriple(code: CurrencyCode, apiKey: string): Promise<BridgeTriple | null> {
   const now = Date.now();
   const hit = cache.get(code);
-  if (hit && now - hit.fetchedAt < CACHE_TTL_MS) return hit.rate;
+  if (hit && now - hit.fetchedAt < CACHE_TTL_MS) return hit.triple;
 
   const url = `${bridgeBaseUrl()}/v0/exchange_rates?from=usd&to=${code.toLowerCase()}`;
   try {
@@ -125,49 +132,73 @@ async function fetchRate(code: CurrencyCode, apiKey: string): Promise<PublicRate
       signal: AbortSignal.timeout(8_000),
       cache: "no-store",
     });
-    if (!res.ok) return unavailable(code);
+    if (!res.ok) return null;
 
     const body = (await res.json()) as Record<string, unknown>;
     const mid = parseRate(body.midmarket_rate);
     const sell = parseRate(body.sell_rate);
-    // Both are required even though only the derived Payve Rate is published: `sell` is the
-    // rate itself, and `mid` is the sanity reference below. Partial data → unavailable.
-    if (mid == null || sell == null) return unavailable(code);
+    const buy = parseRate(body.buy_rate);
+    // All three are required. `mid` is the sanity reference and the orientation reference;
+    // partial data is not a rate.
+    if (mid == null || sell == null || buy == null) return null;
     // A stale upstream must never be dressed up as "live" — see MAX_RATE_AGE_MS.
-    if (!isFresh(body.updated_at)) return unavailable(code);
+    if (!isFresh(body.updated_at)) return null;
 
-    const payveRate = sell * (1 - spreadBps() / 10_000);
-    // Sanity gate, computed but never published: a supplier can never be quoted a rate at or
-    // above mid-market. If that inverts, the upstream is wrong and we show nothing.
-    if (!(payveRate < mid)) return unavailable(code);
-
-    const rate: PublicRate = {
-      code,
-      payveRate,
-      asOf: new Date(now).toISOString(),
-      live: true,
-    };
-    cache.set(code, { rate, fetchedAt: now });
-    return rate;
+    const triple: BridgeTriple = { mid, buy, sell };
+    cache.set(code, { triple, fetchedAt: now });
+    return triple;
   } catch {
     // Network error, timeout, malformed JSON — all degrade to unavailable. Never a constant.
-    return unavailable(code);
+    return null;
   }
 }
 
 export async function GET() {
   const apiKey = process.env.BRIDGE_API_KEY;
 
+  // Spreads first: a corridor whose spread we cannot establish must publish nothing, whether
+  // or not Bridge answers. See lib/spread.ts for why an unreachable database does NOT silently
+  // fall back to the env var.
+  const spreads = await resolveSpreads();
+
   // No key configured (local dev, preview, misconfigured deploy) → every row unavailable.
   // Not production → also every row unavailable, because sandbox serves frozen fixtures that
   // must never be published. Both are correct visible states, not errors.
   const publishable = Boolean(apiKey) && isPublishableEnvironment();
-  const rates: PublicRate[] = publishable
-    ? await Promise.all(CURRENCIES.map((c) => fetchRate(c, apiKey as string)))
-    : CURRENCIES.map(unavailable);
+
+  const rates: PublicRate[] = await Promise.all(
+    CURRENCIES.map(async (code) => {
+      const spreadBps = spreads[pairFor(code)]?.bps ?? null;
+      if (!publishable || spreadBps == null) return unavailable(code, spreadBps);
+
+      const triple = await fetchTriple(code, apiKey as string);
+      if (!triple) return unavailable(code, spreadBps);
+
+      const published = publishedPair(triple, spreadBps);
+      // Sanity gate, computed but never published: sell must sit below mid and buy above it.
+      // If that inverts, the upstream is wrong and we show nothing.
+      if (!isPublishable(triple, published)) return unavailable(code, spreadBps);
+
+      return {
+        code,
+        buy: published.buy,
+        sell: published.sell,
+        payveRate: published.sell,
+        spreadBps,
+        asOf: new Date().toISOString(),
+        live: true,
+      };
+    }),
+  );
 
   return Response.json(
-    { rates, spreadBps: spreadBps(), asOf: new Date().toISOString() },
+    {
+      rates,
+      // Retained for the existing board. It is the DEFAULT markup, not necessarily the one
+      // applied to any given corridor — read `spreadBps` on each row for that.
+      spreadBps: defaultSpreadBps(),
+      asOf: new Date().toISOString(),
+    },
     { headers: { "Cache-Control": "public, max-age=15, stale-while-revalidate=30" } },
   );
 }
