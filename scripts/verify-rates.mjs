@@ -167,6 +167,35 @@ try {
     );
   }
 
+  // ------------------------------------------------- history API, no database
+  /**
+   * With no DATABASE_URL there is no series, and that is a legitimate visible state rather
+   * than an error — a corridor whose capture has not started yet has no 1D points either.
+   * The endpoint must therefore answer 200 with a well-formed empty series, and must still
+   * reject nonsense parameters. A 500 here would take the whole dashboard down with it.
+   */
+  console.log("\nHistory API — no database configured");
+  for (const w of ["1D", "1W", "1M", "6M", "1Y", "5Y"]) {
+    const r = await fetch(`${BASE}/api/rates/history?pair=usd_to_mxn&window=${w}`);
+    const j = await r.json().catch(() => null);
+    assert(
+      r.ok && j && j.available === false && Array.isArray(j.points) && j.points.length === 0,
+      `history ${w} returns a well-formed empty series`,
+      `status ${r.status} ${JSON.stringify(j)?.slice(0, 120)}`,
+    );
+  }
+  const badPair = await fetch(`${BASE}/api/rates/history?pair=usd_to_jpy&window=1D`);
+  assert(badPair.status === 400, "history rejects an unknown pair", String(badPair.status));
+  const badWindow = await fetch(`${BASE}/api/rates/history?pair=usd_to_mxn&window=10Y`);
+  assert(badWindow.status === 400, "history rejects an unknown window", String(badWindow.status));
+  // A change figure with no data would render a confident "unchanged" on an empty chart.
+  const emptyBody = await (await fetch(`${BASE}/api/rates/history?pair=usd_to_cop&window=1M`)).json();
+  assert(
+    emptyBody.changeAbs === null && emptyBody.changePct === null,
+    "an empty series reports no change rather than zero",
+    JSON.stringify({ abs: emptyBody.changeAbs, pct: emptyBody.changePct }),
+  );
+
   // ------------------------------------------------------------ page assertions
   browser = await chromium.launch();
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 960 }, reducedMotion: "reduce" });
@@ -285,9 +314,46 @@ try {
     "the old wire-fee calculator is fully removed",
   );
 
+  // ------------------------------------------------- dashboard, degraded path
+  /**
+   * Structure only. With no key there is no quote to render, which is exactly what must be
+   * asserted: the hero says so rather than showing a placeholder number. Interactive behaviour
+   * (does clicking a timeframe actually redraw the chart) needs both a database and a rate, so
+   * it lives in verify-rates-history.mjs, the one stage that has both.
+   */
+  console.log("\nDashboard — structure and degraded quote");
+  const quotes = await page.locator("[data-quote]").count();
+  assert(quotes === 2, "the hero renders a two-sided quote", `got ${quotes}`);
+
+  const windowLabels = await page.locator("[data-window]").allInnerTexts();
+  assert(
+    JSON.stringify(windowLabels.map((s) => s.trim())) ===
+      JSON.stringify(["1D", "1W", "1M", "6M", "1Y", "5Y"]),
+    "all six timeframes render, in order",
+    JSON.stringify(windowLabels),
+  );
+  const pressed = await page.locator('[data-window][aria-pressed="true"]').count();
+  assert(pressed === 1, "exactly one timeframe is selected", `got ${pressed}`);
+
+  assert((await page.locator("[data-pair-select]").count()) === 1, "the pair selector renders");
+  assert((await page.locator("[data-rate-chart]").count()) === 1, "the chart region renders");
+
+  // The whole point of the degraded path: no invented rate anywhere in the hero.
+  const quoteText = (await page.locator("[data-quote]").allInnerTexts()).join(" ");
+  assert(
+    /Unavailable/i.test(quoteText) && !/\d/.test(quoteText.replace(/USDc|1/g, "")),
+    "an unavailable quote says so rather than showing a number",
+    quoteText.replace(/\s+/g, " ").slice(0, 120),
+  );
+
+  // A change figure with no history would render a confident "unchanged" under a dead quote.
+  assert((await page.locator("[data-change]").count()) === 0, "no change figure without history");
+
   // ---------------------------------------------------------- A11: responsive
   console.log("\nA11 — responsive");
-  for (const width of [390, 768, 1440]) {
+  // 320px is the design system's floor: page-level horizontal overflow must not occur at 320
+  // or wider. A dense dashboard is the most likely thing to break it.
+  for (const width of [320, 390, 768, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     await page.waitForTimeout(200);
     const overflow = await page.evaluate(

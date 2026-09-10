@@ -60,8 +60,24 @@ const FIXTURE = {
  */
 const STALE_UPDATED_AT = "2026-04-24T23:24:05.421Z";
 
+/**
+ * Inverted variant: a fresh, well-formed 200 whose quote is nonsense — both sides sit ABOVE
+ * mid, so no honest two-sided quote can be derived from it. This is the only thing that
+ * exercises the sanity gate (`isPublishable`), the guard standing between a broken upstream
+ * and a fabricated rate on a public page. Without this pass the guard would ship having never
+ * once executed.
+ */
+const INVERTED = {
+  mxn: { midmarket_rate: "18.4210", sell_rate: "18.9000", buy_rate: "19.1000" },
+  eur: { midmarket_rate: "0.9231", sell_rate: "0.9500", buy_rate: "0.9600" },
+  cop: { midmarket_rate: "4021.55", sell_rate: "4200.00", buy_rate: "4300.00" },
+  brl: { midmarket_rate: "5.4120", sell_rate: "5.6000", buy_rate: "5.7000" },
+  gbp: { midmarket_rate: "0.7844", sell_rate: "0.8000", buy_rate: "0.8100" },
+};
+
 let sawApiKeyHeader = false;
 let serveStale = false;
+let serveInverted = false;
 const stub = createServer((req, res) => {
   const url = new URL(req.url, `http://localhost:${STUB_PORT}`);
   if (!url.pathname.startsWith("/v0/exchange_rates")) {
@@ -70,7 +86,7 @@ const stub = createServer((req, res) => {
   }
   if (req.headers["api-key"]) sawApiKeyHeader = true;
   const to = (url.searchParams.get("to") || "").toLowerCase();
-  const body = FIXTURE[to];
+  const body = serveInverted ? INVERTED[to] : FIXTURE[to];
   if (!body) {
     res.writeHead(400).end("{}");
     return;
@@ -168,6 +184,17 @@ try {
   // Margin non-disclosure: mid and the all-in spread gate freshness/sanity server-side but
   // must never be published — together they reveal Payve's per-corridor margin.
   assert(!/"mid"|midmarket|allInBps/.test(text), "mid-market and all-in bps never published");
+  // The two-sided payload adds `buy`/`sell` keys, which the sell_rate/buy_rate ban above does
+  // not cover. Assert the Bridge-side field names and any bridge_-prefixed mirror stay out.
+  assert(!/bridge_?[SsBb](ell|uy)/.test(text), "no bridge_sell / bridge_buy mirror is published");
+  // The mid-market VALUES themselves must not appear, under any key name. This catches a leak
+  // that renames the field rather than removing it.
+  const midValues = Object.values(FIXTURE).map((f) => f.midmarket_rate);
+  assert(
+    midValues.every((v) => !text.includes(v)),
+    "no mid-market value appears in the payload under any key",
+    midValues.filter((v) => text.includes(v)).join(", "),
+  );
   assert(body.spreadBps === SPREAD_BPS, "published spread echoes PAYVE_PUBLIC_SPREAD_BPS", String(body.spreadBps));
 
   // The core money math, checked per corridor against independently-computed expectations.
@@ -179,17 +206,43 @@ try {
       continue;
     }
     const mid = Number.parseFloat(fx.midmarket_rate);
-    const sell = Number.parseFloat(fx.sell_rate);
-    const expectedPayve = sell * (1 - SPREAD_BPS / 10_000);
+    // Orientation is DERIVED, not assumed: the side below mid is the sell side, the side
+    // above it is the buy side. Recompute that here independently of the app rather than
+    // reading fx.sell_rate/fx.buy_rate by name, so the test proves the derivation instead
+    // of sharing the app's assumption about which field is which.
+    const below = Math.min(Number.parseFloat(fx.sell_rate), Number.parseFloat(fx.buy_rate));
+    const above = Math.max(Number.parseFloat(fx.sell_rate), Number.parseFloat(fx.buy_rate));
+    const expectedSell = below * (1 - SPREAD_BPS / 10_000);
+    const expectedBuy = above * (1 + SPREAD_BPS / 10_000);
 
     assert(
-      Math.abs(row.payveRate - expectedPayve) < 1e-9,
+      Math.abs(row.payveRate - expectedSell) < 1e-9,
       `${up} payveRate = sell × (1 − ${SPREAD_BPS}bps)`,
-      `${row.payveRate} vs ${expectedPayve}`,
+      `${row.payveRate} vs ${expectedSell}`,
     );
-    // The published rate must still sit below mid — the guard is server-side, so this
-    // asserts the guard let through only a correctly-below-mid rate.
-    assert(row.payveRate < mid, `${up} published rate sits below mid-market`);
+    assert(
+      Math.abs(row.sell - expectedSell) < 1e-9,
+      `${up} sell = below-mid side × (1 − ${SPREAD_BPS}bps)`,
+      `${row.sell} vs ${expectedSell}`,
+    );
+    assert(
+      Math.abs(row.buy - expectedBuy) < 1e-9,
+      `${up} buy = above-mid side × (1 + ${SPREAD_BPS}bps)`,
+      `${row.buy} vs ${expectedBuy}`,
+    );
+    // payveRate is an ALIAS of sell, not a second opinion. If these ever diverge the board
+    // and the hero would show two different numbers for the same thing.
+    assert(row.payveRate === row.sell, `${up} payveRate is exactly the sell side`);
+    // The two-sided sanity gate, asserted from outside: sell below mid, buy above it.
+    assert(row.sell < mid, `${up} sell sits below mid-market`);
+    assert(row.buy > mid, `${up} buy sits above mid-market`);
+    // Per-corridor spread is published so the page can label the quote. With no database
+    // configured every corridor resolves to PAYVE_PUBLIC_SPREAD_BPS.
+    assert(
+      row.spreadBps === SPREAD_BPS,
+      `${up} row carries the applied spread`,
+      String(row.spreadBps),
+    );
   }
 
   assert(
@@ -220,6 +273,38 @@ try {
   assert(
     !staleText.includes("20.00025") && !staleText.includes("18.4210"),
     "stale fixture values never reach the client",
+  );
+
+  // ------------------------------------------------------------- sanity gate
+  // A FRESH, well-formed 200 carrying a nonsense quote: both sides above mid, so no honest
+  // two-sided quote exists. This is the only pass that exercises isPublishable() — the guard
+  // between a broken upstream and a fabricated rate on a public page.
+  console.log("\nInverted upstream (fresh 200, both sides above mid)");
+  serveStale = false;
+  serveInverted = true;
+  await new Promise((r) => setTimeout(r, 31_000));
+  const invRes = await fetch(`${BASE}/api/rates`);
+  const invText = await invRes.text();
+  const invRows = JSON.parse(invText).rates ?? [];
+  assert(invRes.ok, "GET /api/rates still 2xx with an inverted upstream");
+  assert(
+    invRows.length === 5 && invRows.every((r) => r.live === false),
+    "every corridor with an unpublishable quote degrades to live:false",
+    JSON.stringify(invRows.map((r) => `${r.code}:${r.live}`)),
+  );
+  assert(
+    invRows.every((r) => r.buy == null && r.sell == null && r.payveRate == null),
+    "no rate values are emitted from an inverted quote",
+  );
+  assert(
+    Object.values(INVERTED).every((f) => !invText.includes(f.sell_rate)),
+    "inverted fixture values never reach the client",
+  );
+  // The spread is still known even when the rate is not — the corridor is unavailable because
+  // the UPSTREAM is wrong, not because the configuration is missing.
+  assert(
+    invRows.every((r) => r.spreadBps === SPREAD_BPS),
+    "an unavailable corridor still reports its configured spread",
   );
 } catch (err) {
   console.error(`\n[verify-rates-live] threw: ${err && err.message}`);

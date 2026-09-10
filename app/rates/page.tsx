@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
-import { PageHero, FeatureGrid, ProductCtaBand, CrossSell } from "../components/site/ProductPage";
+import { FeatureGrid, ProductCtaBand, CrossSell } from "../components/site/ProductPage";
+import { Wordmark } from "../components/Wordmark";
 import MarketSection from "./MarketSection";
+import RateHero from "./RateHero";
 
 export const metadata: Metadata = {
   title: "The Payve Rate",
   description:
     "Live rates for supplier payments to Mexico, Colombia, Brazil, the Eurozone and the UK. No wire fee to send, nothing deducted on the way in. One rate, published.",
+  // rates.getpayve.com is the canonical home of this page. Without this it would
+  // self-canonicalise onto www.getpayve.com via the root metadataBase and compete with itself.
+  alternates: { canonical: "https://rates.getpayve.com/" },
 };
 
 const PRICING = [
@@ -25,13 +30,30 @@ const PRICING = [
 
 export default function RatesPage() {
   return (
-    <main>
-      <PageHero
-        eyebrow="Pricing"
-        title="The Payve Rate."
-        sub="The rate we pay your suppliers at, published live. No fee to send, nothing taken off the other end."
-      />
+    <main className="bg-r-bg">
+      {/*
+        Minimal chrome, not the marketing nav. At rates.getpayve.com this page IS the site, so
+        it carries a wordmark and the rate and nothing else above the fold. A tall marketing
+        hero here would push the quote and the chart below the fold, which is the one thing a
+        rate page must never do.
 
+        The wordmark is the sanctioned asset from the design system, sized by height only so
+        it cannot be stretched.
+      */}
+      <header className="border-b border-r-border bg-r-card">
+        <div className="mx-auto flex max-w-6xl items-baseline justify-between gap-4 px-4 py-5 sm:px-6">
+          <a href="/" aria-label="Payve home">
+            <Wordmark height={22} />
+          </a>
+          <p className="text-xs font-semibold uppercase tracking-[0.04em] text-r-muted-fg">
+            The Payve Rate
+          </p>
+        </div>
+      </header>
+
+      <RateHero />
+
+      {/* Below the fold: what the rate means and what it replaces. */}
       <MarketSection />
 
       <FeatureGrid items={PRICING} />
