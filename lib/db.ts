@@ -12,6 +12,31 @@
  */
 import { Pool } from "pg";
 
+/**
+ * TLS is ON for every host except an explicitly local one.
+ *
+ * Opting IN on `sslmode=require` was the first implementation and it was wrong: Render's
+ * external connection string does not carry that parameter, yet the server demands TLS, so the
+ * connection died with ECONNRESET - a failure that reads like a network problem rather than a
+ * missing option. Defaulting to TLS and opting OUT for localhost is both safer and correct for
+ * every managed provider.
+ *
+ * `rejectUnauthorized: false` because managed providers present chains Node ships no root for.
+ * That is the standard configuration for them, and the connection string itself is the secret.
+ */
+function sslFor(url: string): { rejectUnauthorized: boolean } | undefined {
+  if (/sslmode=disable/.test(url)) return undefined;
+  const host = (() => {
+    try {
+      return new URL(url).hostname;
+    } catch {
+      return "";
+    }
+  })();
+  const local = host === "localhost" || host === "127.0.0.1" || host === "::1" || host === "";
+  return local ? undefined : { rejectUnauthorized: false };
+}
+
 let pool: Pool | null = null;
 
 export function hasDatabase(): boolean {
@@ -30,9 +55,7 @@ export function getPool(): Pool | null {
       idleTimeoutMillis: 30_000,
       // Never let a slow database hold a page render. The callers all degrade gracefully.
       connectionTimeoutMillis: 5_000,
-      // Render's external connection strings require TLS but present a certificate chain
-      // Node does not ship a root for. Internal (in-region) URLs need no TLS at all.
-      ssl: /sslmode=require/.test(url) ? { rejectUnauthorized: false } : undefined,
+      ssl: sslFor(url),
     });
     pool.on("error", (err) => {
       // An idle client erroring must never take the process down.

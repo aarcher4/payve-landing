@@ -44,10 +44,25 @@ try {
   process.exit(0);
 }
 
-const client = new pg.Client({
-  connectionString: url,
-  ssl: /sslmode=require/.test(url) ? { rejectUnauthorized: false } : undefined,
-});
+/**
+ * TLS for every host except an explicitly local one. Opting in on `sslmode=require` misses
+ * Render's external connection string, which omits the parameter but still demands TLS - the
+ * connection then dies with ECONNRESET, which reads like a network fault. Mirrors sslFor() in
+ * lib/db.ts.
+ */
+function sslFor(url) {
+  if (/sslmode=disable/.test(url)) return undefined;
+  let host = "";
+  try {
+    host = new URL(url).hostname;
+  } catch {
+    host = "";
+  }
+  const local = host === "localhost" || host === "127.0.0.1" || host === "::1" || host === "";
+  return local ? undefined : { rejectUnauthorized: false };
+}
+
+const client = new pg.Client({ connectionString: url, ssl: sslFor(url) });
 
 let applied = 0;
 try {

@@ -106,13 +106,27 @@ flat line at ~3,972 directly beneath a headline of 3,100.72, a 22% contradiction
 to explain it. The payload looked fine; only the rendered page showed it. An empty chart with
 its honest empty state is the correct output.
 
-### Backfill
+### Backfill happens by itself
 
-```bash
-DATABASE_URL=... npm run backfill:history          # 5 years, ~9,100 rows, safe to re-run
-```
+On its first tick, capture counts the daily rows per corridor and, for any corridor below a
+year's worth, loads **five years** in yearly chunks. So a fresh deployment, a restored
+database, or a corridor added later all populate themselves with no human step.
 
-Both sources were verified reachable on 10 Sep 2026 and loaded ~1,825 points per corridor.
+That is not just convenience. Render keeps a managed Postgres **internal-only by default**
+(`ipAllowList: []`), so a laptop cannot reach it at all without first opening the database to
+the public internet. Backfilling from inside the service needs no such hole. This was found the
+hard way: the manual step this section used to document could not actually be run.
+
+`scripts/backfill-history.mjs` (`npm run backfill:history`) is kept for a database you *can*
+reach — a local one, or a provider whose allowlist you have opened deliberately.
+
+Both sources were verified reachable on 10 Sep 2026 and load ~1,825 points per corridor.
+
+> **TLS is on by default for any non-local host.** Opting in on `sslmode=require` was the first
+> implementation and it was wrong: Render's external connection string omits that parameter but
+> the server still demands TLS, so the connection died with `ECONNRESET` — a failure that reads
+> like a network fault rather than a missing option. `sslmode=disable` or a localhost host name
+> turns it off.
 
 ## The database is optional
 
@@ -135,17 +149,30 @@ If you point it at an unmigrated or unreachable database, the board goes dark ra
 publishing the env default. That is the intended safety property, but it does mean provisioning
 is a step to take deliberately, not casually.
 
-## Provisioning (human step — not done by this PR)
+## Provisioning
 
-1. Render dashboard → **New → Postgres**, name `payve-rates-db`.
-   **Use a paid plan.** Free-tier Postgres expires after 30 days and would take the rate
-   history with it.
-2. Link it to the `payve-site-preview` service so `DATABASE_URL` is injected. Prefer the
-   internal connection string (same region, no TLS round trip).
-3. Redeploy. `npm start` runs `scripts/migrate.mjs` before `next start`, so the schema applies
-   itself on boot.
-4. Verify: `curl -s https://rates.getpayve.com/api/rates | jq '.rates[] | {code, spreadBps}'`
-   should show MXN at 16 and the rest at 20.
+Done for production on 10 Sep 2026: `payve-rates-db`, Postgres 16, `basic_256mb`, Oregon,
+linked to `payve-site-preview` as `DATABASE_URL` (internal connection string).
+
+To stand up another environment:
+
+1. Render → **New → Postgres**. **Use a paid plan.** Free-tier Postgres expires after 30 days
+   and would take the rate history with it.
+2. Link it to the service so `DATABASE_URL` is injected. Prefer the **internal** connection
+   string: same region, no TLS round trip, and it works with the allowlist closed.
+3. Set `RATES_ADMIN_PASSWORD` and `RATES_SESSION_SECRET`.
+4. Redeploy. `npm start` runs `scripts/migrate.mjs` before `next start`, so the schema applies
+   itself, and capture backfills five years of history on its first tick.
+5. Verify:
+   ```bash
+   curl -s https://rates.getpayve.com/api/rates | jq '.rates[] | {code, spreadBps}'
+   curl -s "https://rates.getpayve.com/api/rates/history?pair=usd_to_mxn&window=5Y" | jq '.available, (.points|length)'
+   ```
+   MXN should read 16 bps and the rest 20, and 5Y should report ~300 points once the backfill
+   has run.
+
+Leave the database's IP allowlist **empty**. Nothing outside Render needs to reach it: the
+schema applies on boot and the history loads from inside the service.
 
 ## Migrations
 

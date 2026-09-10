@@ -19,7 +19,7 @@
  * interval that re-fetches a small overlapping window is self-healing instead.
  */
 import { fetchBridgeTriple, isPublishableEnvironment } from "./bridge";
-import { hasDatabase } from "./db";
+import { getPool, hasDatabase } from "./db";
 import {
   CURRENCY_PAIRS,
   bucketFor,
@@ -130,12 +130,71 @@ export async function syncDailyOnce(
   return writeSnapshots(rows);
 }
 
+/**
+ * Load five years of daily closes the first time a corridor has none.
+ *
+ * This replaces what was going to be a human step ("run npm run backfill:history against the
+ * database"), and it exists because that step is not actually runnable in the normal case:
+ * Render keeps a managed Postgres internal-only by default (`ipAllowList: []`), so a laptop
+ * cannot reach it without opening the database to the public internet first. Doing the backfill
+ * from inside the service needs no such hole, and it means any fresh deployment — a new
+ * environment, a restored database, a corridor added later — populates itself.
+ *
+ * Idempotent and cheap to re-enter: it only fires for corridors below the threshold, and every
+ * write is an upsert on its bucket. The threshold is well under five years' worth so a few
+ * missing days never trigger a full reload; that is what the 6-hourly sync is for.
+ */
+const BACKFILL_YEARS = 5;
+const BACKFILL_MIN_DAILY_ROWS = 365;
+let backfillChecked = false;
+
+export async function ensureHistoryBackfilled(): Promise<number> {
+  if (backfillChecked) return 0;
+  backfillChecked = true;
+
+  const pool = getPool();
+  if (!pool) return 0;
+
+  let missing: CurrencyPair[] = [];
+  try {
+    const { rows } = await pool.query<{ currency_pair: CurrencyPair; n: string }>(
+      `select currency_pair, count(*)::text as n
+         from fx_rate_snapshot where granularity = 'daily'
+        group by currency_pair`,
+    );
+    const counts = new Map(rows.map((r) => [r.currency_pair, Number(r.n)]));
+    missing = CURRENCY_PAIRS.filter((p) => (counts.get(p) ?? 0) < BACKFILL_MIN_DAILY_ROWS);
+  } catch (err) {
+    // Let the next boot try again rather than treating a transient read as "nothing to do".
+    backfillChecked = false;
+    console.error("[capture] backfill check failed:", err instanceof Error ? err.message : String(err));
+    return 0;
+  }
+
+  if (missing.length === 0) return 0;
+  console.log(`[capture] backfilling ${BACKFILL_YEARS}y of daily history for: ${missing.join(", ")}`);
+
+  let written = 0;
+  // Yearly chunks: a single five-year request to Frankfurter is a large, slow response, and a
+  // failure part-way through then costs the whole load rather than one year of it.
+  for (let y = BACKFILL_YEARS; y >= 1; y--) {
+    const start = day(-365 * y);
+    const end = y === 1 ? day(0) : day(-365 * (y - 1));
+    written += await syncDailyOnce(start, end);
+  }
+  console.log(`[capture] backfill wrote ${written} row(s)`);
+  return written;
+}
+
 async function tick(): Promise<void> {
   if (inFlight) return;
   inFlight = true;
   try {
     const n = await captureIntradayOnce();
     if (n > 0) console.log(`[capture] intraday: ${n} corridor(s) recorded`);
+
+    // Before the routine 7-day sync, make sure the long windows have something to draw.
+    await ensureHistoryBackfilled();
 
     const now = Date.now();
     if (now - lastDailySync >= DAILY_SYNC_INTERVAL_MS) {
