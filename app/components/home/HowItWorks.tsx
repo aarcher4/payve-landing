@@ -8,10 +8,10 @@ import Reveal from "./Reveal";
 const steps = [
   {
     n: "01",
-    title: "Connect",
+    title: "Enroll",
     body: (
       <>
-        We securely link your ERP and bank data.{" "}
+        Enroll your company and securely link your ERP and bank data.{" "}
         <span className="font-semibold text-sage-700">No rip and replace</span>
         , nothing to install.
       </>
@@ -52,9 +52,9 @@ const steps = [
     proof:
       "Suppliers in Mexico and Colombia receive local currency at a competitive exchange rate, and any supplier can choose early payment on an approved invoice. Suppliers with liquidity on open invoices stay closer to the buyers who offer it.",
     logo: null,
-    company: "Across the platform",
-    descriptor: "Suppliers in the US, Mexico & Colombia",
-    link: { href: "/products/early-pay", label: "Explore early pay" },
+    company: "Across the network",
+    descriptor: "Suppliers in the US, Mexico, Colombia, Brazil & the EU",
+    link: { href: "/products/network", label: "Explore the Payve Network" },
   },
 ] as const;
 

@@ -18,10 +18,25 @@ export default function Reveal({
 }) {
   const reduced = useReducedMotion();
   if (reduced) {
-    return <div className={className}>{children}</div>;
+    // Keep the SAME element type as the animated branch and drive it to the
+    // final state. Returning a plain <div> here leaves framer's SSR inline
+    // style (opacity:0) on pages with no other client re-render — reduced
+    // motion users got permanently blank customers/company pages.
+    return (
+      <motion.div
+        data-reveal
+        className={className}
+        initial={false}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0 }}
+      >
+        {children}
+      </motion.div>
+    );
   }
   return (
     <motion.div
+      data-reveal
       className={className}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}

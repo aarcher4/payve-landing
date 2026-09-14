@@ -8,7 +8,7 @@ import { LogoRow } from "../components/home/LogoWall";
 export const metadata: Metadata = {
   title: "Customers",
   description:
-    "Supply chain businesses run on Payve: growers, shippers, distributors, and packhouses across the US, Mexico, and Colombia.",
+    "Supply chain businesses run on the Payve Network: growers, shippers, distributors, and packhouses across the US, Mexico, and Colombia.",
 };
 
 export default function CustomersPage() {
@@ -23,8 +23,9 @@ export default function CustomersPage() {
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-ink-2 sm:text-lg">
               Growers, shippers, distributors, and packhouses across the US,
-              Mexico, and Colombia use Payve to pay suppliers, offer early
-              pay, and put agents on their back office.
+              Mexico, and Colombia pay their suppliers across the network,
+              unlock early payment for them, and put agentic intelligence on
+              the back office.
             </p>
           </Reveal>
           <div className="mt-12">

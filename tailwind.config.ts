@@ -13,6 +13,8 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      height: { control: "var(--r-control)" },
+      minHeight: { control: "var(--r-control)" },
       colors: {
         paper: {
           DEFAULT: "var(--paper)",
@@ -29,6 +31,21 @@ const config: Config = {
         hairline: {
           DEFAULT: "var(--hairline)",
           2: "var(--hairline-2)",
+        },
+        r: {
+          bg: "oklch(var(--r-background) / <alpha-value>)",
+          fg: "oklch(var(--r-foreground) / <alpha-value>)",
+          card: "oklch(var(--r-card) / <alpha-value>)",
+          muted: "oklch(var(--r-muted) / <alpha-value>)",
+          "muted-fg": "oklch(var(--r-muted-foreground) / <alpha-value>)",
+          subtle: "oklch(var(--r-subtle-foreground) / <alpha-value>)",
+          border: "oklch(var(--r-border) / <alpha-value>)",
+          primary: "oklch(var(--r-primary) / <alpha-value>)",
+          "primary-fg": "oklch(var(--r-primary-foreground) / <alpha-value>)",
+          accent: "oklch(var(--r-accent) / <alpha-value>)",
+          success: "oklch(var(--r-success) / <alpha-value>)",
+          destructive: "oklch(var(--r-destructive) / <alpha-value>)",
+          ring: "oklch(var(--r-ring) / <alpha-value>)",
         },
         sage: {
           50: "var(--sage-50)",
@@ -63,6 +80,12 @@ const config: Config = {
         sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
         display: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
+        // One-pager headline. Deliberately the bare generic `serif` keyword:
+        // the original site declared Playfair/Cormorant but its Google Fonts
+        // @import was emitted after the Tailwind rules, so browsers ignored it
+        // and fell through to generic serif (Times New Roman / Times). Listing
+        // Georgia or ui-serif ahead of it would NOT reproduce that.
+        serif: ["serif"],
       },
       boxShadow: {
         "elev-1": "var(--shadow-1)",
@@ -75,6 +98,11 @@ const config: Config = {
         sm: "var(--radius-sm)",
         md: "var(--radius-md)",
         lg: "var(--radius-lg)",
+        // Rates surface: the design system's radii are much softer than the marketing
+        // site's (18px base against 6px), so they are namespaced rather than swapped in.
+        "r-sm": "var(--r-radius-sm)",
+        "r-md": "var(--r-radius-md)",
+        "r-lg": "var(--r-radius-lg)",
       },
       letterSpacing: {
         display: "-0.03em",

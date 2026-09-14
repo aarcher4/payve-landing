@@ -1,48 +1,104 @@
 # goal-loop progress journal
 
-r3 run started 2026-07-08. Engine: stop-hook. Max-iters 50. Branch site/pr15-polish.
-Plan: C:\Users\Alex Archer\.claude\plans\continue-the-landing-rebuild-nested-thimble.md
-NO CANVAS this run (Alex). r2 journal preserved in git history of .goal-loop/PROGRESS.md.
+Run: The Payve Rate one-pager (`/rates`). Branch `goal-loop/rates-page`.
+Engine: stop-hook. max-iters 40, deadline 240 min.
+Started 2026-08-06.
 
-## iteration 1 — Phase 0: logo revert + wall copy + PR #18
-- did: header+footer logo src -> payve-logo-transparent.png; LogoWall eyebrow -> "Trusted by supply chain leaders"; copy-inventory (replace_all) + design-system r3 note (no-canvas exception, icon-diet scope, logo, wall copy); PR #18 opened base pr14. Preview repoint to pr15 BLOCKED by deploy classifier (needs fresh per-branch user confirm); deferred to wave end as a single confirm+deploy of the finished state.
-- GATE: PASS (npm run build exit 0)
-- next: Phase 1 reference walks (mercury.com first: home + 2 product pages + customer proof; screenshots to design-context/reference-r3/)
+## iteration 0 — setup
+- did: archived the completed network-rebrand run to `.goal-loop/archive/network-rebrand/`,
+  created branch `goal-loop/rates-page` off `site/network-rebrand` @184fb08, wrote GOAL.md +
+  loop-prompt.md.
+- GATE: not yet runnable (`verify:rates` does not exist — building it is A13/gate scaffolding)
+- next: A1 — the Bridge proxy route handler, plus the `verify:rates` gate script so every later
+  iteration has an objective pass/fail.
 
-## iteration 2 — Phase 1a: reference walks captured
-- did: scripts/reference-walk.mjs (scroll-step viewport frames, IntersectionObserver-safe, + facts JSON per page: headings/CTAs/eyebrows/icon census). 11 pages captured: mercury home/banking/treasury, ramp home/ap/expense/customers/story-hingham, happyrobot home/customers, brex home. 117 frames + 11 facts files in design-context/reference-r3/ (jpgs gitignored, facts committed). Note: mercury-banking only h=1943 (likely thin/redirect page; treasury is the deep product-page sample).
-- GATE: PASS (build unchanged since iter 1; no app code touched)
-- next: Phase 1b analysis: read facts + key frames, write docs/design-review-r3.md (8 lenses + our 14-page grading + CTA shortlist)
+## iteration 1 — objective verify gate
+- did: added `scripts/verify-rates.mjs` (boots the prod build with BRIDGE_API_KEY stripped,
+  asserts A7/A9/A10/A11/A12 + the footnote anchors against the real DOM via Playwright) and
+  wired `npm run verify:rates`.
+  GATE SUBSTITUTION, recorded honestly: the plan said `npm run lint`, but this repo has NO
+  ESLint config so `next lint` prompts interactively and can never run unattended — that
+  script was already broken here. Replaced with `tsc --noEmit` (stricter, non-interactive).
+  Baseline typecheck was already clean, so it is a real signal not a rubber stamp.
+- GATE: FAIL /api/rates 404 + /rates 404 (nothing built yet) — 5/10 checks pass
+- next: A1 — app/api/rates/route.ts, the server-side Bridge proxy.
 
-## iteration 3 — Phase 1b: design-review-r3.md written (evidence + grading + backlog + CTA shortlist)
-- did: evidence agent read 50 frames across 10 valid reference pages (mercury-banking was a 404); docs/design-review-r3.md written: 6 headline findings (zero icon-on-card anywhere; multi-product = text-rail+media or bento, never tabs/icon-tiles; dark chapter bands; two-tone H2s; CTA ring composition; Ramp story grammar w/ hero stat band + sticky fact sidebar), 14-page grading (home weakest at 5.5 driven by icons 4/10 + multi-product 5/10), ranked backlog P1(6)/P2(4)/P3(3), CTA shortlist A-E with A = "The money and the busywork, handled." (ring composition) recommended. Self frames confirmed Alex's complaints concretely (floaty tour column, dead demo-panel space, 11 decorative icons, orphan H2 wraps, over-wide proof panel).
-- GATE: PASS (build exit 0; docs only)
-- next: checkpoint R post to Alex (grading + CTA pick), then Round 1 homepage implementation (tour rebuild on sage-900 text-rail, icon diet, two-tone H2s, proof panel fix)
+## iteration 2 — Bridge proxy route (A1, A2)
+- did: `app/api/rates/route.ts`. Server-side only, 30s module cache, returns
+  {code, mid, payveRate, allInBps, asOf, live}; never emits sell_rate/buy_rate. No fallback
+  constant anywhere — failure degrades to live:false with null rates.
+  Also HARDENED THE GATE: a stale `next start` from iteration 1 was still bound to :3177 and
+  answering from the OLD build, which is why /api/rates "404'd" despite being in the build
+  manifest. verify-rates.mjs now refuses to run if the port is already serving, and awaits a
+  real teardown. Without that fix the gate could pass or fail against the wrong code.
+- GATE: FAIL /rates 404 (page not built yet) — 11/14 checks pass, all API assertions green
+- next: A3/A4 — app/rates/page.tsx + RateTable.tsx.
 
-## iteration 4 — Round 1a: ProductTour rebuilt (Mercury grammar, dark band)
-- did: docs first (design-system r3 locked-decisions block: tour grammar, icon-diet targets, two-tone device, CTA pick "The money and the busywork, handled." per Alex); ProductTour.tsx rewritten: sage-900 full-bleed band, hairline white/10 text rail (no icons/boxes), active = sage-400 dot + white title + blurb expansion (reduced-motion safe), inactive white/50, one underlined sage-300 "Explore <product>" link following selection, demo crossfade right (self-framed light cards), mobile inline demo; copy inventory tour block updated (3 new short blurbs + 3 Explore link strings). Screenshot verified: reads like the reference dark chapter.
-- GATE: PASS (build exit 0)
-- next: Round 1b icon diet (HowItWorks + TrustSection), two-tone H2s, proof panel width, H2 orphan fixes, CtaBand headline swap
+## iteration 3 — the page: hero, rate table, calculator (A3–A6, A9–A12)
+- did: `app/rates/page.tsx` (composed only from PageHero/SplitSection/FeatureGrid/CrossSell/
+  ProductCtaBand/ValueList — no new tokens), `RateTable.tsx` (30s poll, live/stale/unavailable,
+  no fallback constant anywhere), `WireSavings.tsx` (per-corridor defaults exactly per plan,
+  buyer and supplier shown separately, combined total explicitly labelled both-sides, verbatim
+  footnote). Included the $15→$0 supplier story, anonymised.
+  Also SCOPED THE A7 ASSERTION correctly: it originally compared every dollar figure in the
+  whole body against the doc, which swept in computed outputs ($350, $8,400) that change with
+  user input. Requiring those in a sourcing doc is meaningless and would pressure padding it
+  with arithmetic. Now scoped to the [data-substantiated] region — the actual claims.
+- GATE: FAIL docs/rates-page-substantiation.md missing — 29/30 checks pass
+- next: A7 — write the substantiation doc.
 
-## iteration 5 — Round 1b: icon diet + two-tone H2s + CTA ring composition
-- did: HowItWorks corner icons removed (mono 01-04 carry the cards) + two-tone H2 + proof panel max-w-4xl/min-h-96; TrustSection icons removed, tiles restyled type-first with border-t-2 sage-600 rules + two-tone H2; Proof H2 two-tone; CtaBand H2 -> "The money and the busywork, handled." (ring composition, Alex pick; shared component so all pages' closing bands swap; inventory sed x15); hover-check tour assertions updated to click-activation (Mercury grammar). Homepage decorative icon count: 11 -> 0.
-- verification: build PASS; walk CLEAN (16x2); hover-check CLEAN (proof hover x4, tour click x3, keyboard); screenshots confirm type-led trust tiles + ring close. Round 1 (P1 items 1-6) DONE.
-- GATE: PASS
-- next: Round 2 products/solutions (ValueList -> hairline text rail w/o checkmarks; quote band on product pages; cross-sell row; FeatureGrid hairline restyle)
+## iteration 4 — substantiation doc (A7, A13)
+- did: `docs/rates-page-substantiation.md` — every published figure with source URL + schedule
+  effective date, the deliberately-excluded list (bank FX spreads, per-hop fees, "SWIFT fee"),
+  the ASA/FTC basis for the footnote wording, and a re-verify warning (U.S. Bank reprices
+  10 Aug 2026). The gate immediately caught an unsourced "$85" in the footnote's branch-wire
+  range — added the full branch-initiated table rather than dropping the claim. That is the
+  A7 assertion doing exactly what it exists for.
+- GATE: PASS 33/33
+- next: A8 — register /rates in nav/footer/sitemap, AND extend the gate to assert A8. The gate
+  is green but A8 is still unchecked, so this run is NOT complete.
 
-## iteration 6 — Round 2: product/solutions grammar
-- did: ValueList -> hairline text rail (checkmarks removed, sage dot active, ink-3 inactive); FeatureGrid -> border-t-2 sage rule cells (boxes removed; solutions+security inherit); NEW QuoteBand (short Geoff pull, sage-50 band) on payments+agents; NEW CrossSell text row (eyebrow One platform + underlined display links to the other two products) on all 3 product pages; docs (design-system round-2 block + inventory r3 changelog) first.
-- verification: build PASS; walk CLEAN 16x2; screenshots confirm rail/quote/cross-sell/ring-close stack on payments.
-- GATE: PASS
-- next: Round 3 customers (story kickers, sticky fact sidebar absorbing runs-on chips, hub tag pair styling)
+## iteration 5 — nav / footer / sitemap registration (A8)
+- did: registered /rates in navGroups (Products) + footerColumns + sitemap.ts; confirmed no
+  X-Robots-Tag (this page is meant to be indexed, unlike the hidden value-model slug). Added
+  A8 assertions to the gate — it was previously unprovable. First run failed "header links to
+  /rates" because the Products dropdown mounts its items only on click; fixed the assertion to
+  drive the real interaction rather than asserting against a closed menu.
+- GATE: PASS 37/37
+- next: the live branch had still never executed — cover it.
 
-## iteration 7 — Round 3: customers story grammar
-- did: StoryBody -> two-column with STICKY FACT SIDEBAR (Company/Industry/What they run/About from customers-data; old runs-on chip card absorbed); Kicker component + kickers inserted in all 4 stories (The problem/The solution/How it started/What Payve runs/The result); hub industry tags -> small caps tracked; docs round-3 block first.
-- verification: build PASS; walk CLEAN 16x2; hover-check CLEAN; FG story screenshot matches Ramp grammar (dark hero + stat band + ruled quote + kicker + sidebar).
-- GATE: PASS
-- next: re-grade touched pages in design-review-r3.md, final copy-rule grep, memory update, deploy ask (per-branch confirm), final report
+## iteration 6 — live-path verification without a Bridge key
+- did: `scripts/verify-rates-live.mjs`. Stands up a local stub speaking Bridge's
+  /v0/exchange_rates contract (decimal strings, sell below mid, a DIFFERENT implied spread per
+  corridor so a hardcoded expectation can't satisfy all five), points BRIDGE_BASE_URL at it and
+  asserts the live branch: per-corridor rate math, Api-Key sent upstream, sell_rate/buy_rate
+  never reaching the client, Payve Rate always below mid. Chained into `verify:rates` so it is
+  permanent. Also rendered the table in its live state for the first time — MXN 30 bps
+  (Bridge 10 + Payve 20), COP 70 bps (50 + 20), matching the plan's predicted all-in figures.
+- GATE: PASS — 37/37 degraded + 27/27 live = 64 checks
+- next: none. All 13 acceptance criteria checked and the gate is green.
 
-## iteration 8 — close-out: re-grade, sweep, deploy, memory
-- did: design-review-r3.md post-implementation re-grade appended (home 5.5 -> 8; all round-target lenses >=8; r4 candidates logged); copy-rule sweep CLEAN (no em dashes/rails/stale labels; lucide only in demos + SiteHeader = functional); Alex confirmed per-branch deploy -> preview repointed to site/pr15-polish, dep-d973jtss728c738kj1q0 LIVE, full live walk CLEAN. Follow-ups standing: canvas catch-up post-Friday (export r2 now stale for home/products/customers/solutions sections), packing-house upscale, merge train #4-#18, SVG logos, sign-offs.
-- GATE: PASS (build exit 0)
-- run complete
+## Outstanding for a human (recorded, NOT faked)
+Real-Bridge live verification was never run: it needs a PRODUCTION Bridge key (sandbox 503s on
+/v0/exchange_rates) and none is available locally. The live branch is covered against a
+contract-accurate stub, not against Bridge itself. Before publishing, set the key on Render and
+confirm the five rows show real rates.
+
+## iteration 7 — staleness + environment guard (defect found via real Bridge keys)
+- did: probed Bridge with a real SANDBOX key and found my earlier research was WRONG. Sandbox
+  does not 503 across the board — it returned 200 for MXN/EUR/BRL/GBP (503 only for COP) with
+  FROZEN FIXTURES: USD/MXN 20.00025 stamped 2026-04-24, and a flat synthetic 50 bps spread on
+  every pair instead of the real per-corridor contract spread. My route trusted any 200, so a
+  deploy pointed at sandbox would have rendered "Live · read at HH:MM" above a four-month-old
+  invented rate — precisely the failure this page exists to prevent.
+  Fixed with two guards in app/api/rates/route.ts: (1) only BRIDGE_ENVIRONMENT=production
+  publishes at all; (2) any rate whose upstream `updated_at` is older than 10 minutes degrades
+  to unavailable. Added a second pass to verify-rates-live.mjs that flips the stub to
+  sandbox-shaped stale responses and asserts every row degrades and no fixture value leaks.
+  Then verified against PRODUCTION Bridge with a real key: all five rows live, real rates,
+  and the all-in bps independently confirm the contract spreads — MXN 30 bps (10+20) and COP
+  70 bps (50+20) match BRIDGE_CONTRACT_SPREAD_BPS in payve-fintech exactly. EUR/BRL/GBP
+  contract spreads measured for the first time at ~20 / ~30 / ~19 bps.
+  No key was written to any file or commit; both were passed as shell env vars only.
+- GATE: PASS — 37/37 degraded + 31/31 live = 68 checks
+- next: hosting decision for prospects.getpayve.com (static site, cannot hold a secret).

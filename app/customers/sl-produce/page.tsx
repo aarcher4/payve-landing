@@ -33,7 +33,7 @@ export default function SlProduceStory() {
           },
         ]}
       />
-      <StoryBody currentSlug="sl-produce" runsOn={["Payments", "Payve Agents"]}>
+      <StoryBody currentSlug="sl-produce" runsOn={["The Payve Network", "Agentic Intelligence"]}>
         <p>
           SL Produce is the US arm of the Selman family growing operation
           based in Guasave, Sinaloa, moving green beans, cucumbers, and
