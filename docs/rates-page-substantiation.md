@@ -192,7 +192,10 @@ the system that charges it, and the page states the mechanism, not just the numb
 | Pay Later "The rate is set by the capital partner, and Payve adds nothing on top of it" | `payLaterPricing.ts`: `retail = wholesale`, `spread = 0`. A previously configured Payve rate was deleted by migration `20260828_205_paylater_rates_are_partner_rates.sql`. |
 | Pay Later "a 60 day term is not double a 30 day one" | The fee is a flat percentage of face for the whole term (`pctOfCentsHalfUp`), not a periodic rate. Each term is priced independently by the partner. |
 | Pay Later "can move between batches" | Observed: 1.77% on 31 Aug and 2.30% on 3 Sep 2026, eleven days apart, same product. |
-| "Terms available today are 30 and 60 days" | The selector renders whatever pricing plans the buyer's issued product carries. Two exist today. |
+| Pay Later "30, 45 or 60 days" | The selector renders whatever pricing plans the buyer's issued product carries (`payLaterPricing.ts`, no allowlist). 30 and 60 are live plans; 45 is the plan requested from the partner and prices with zero code change the day it lands. The page's fine print therefore attributes terms to the partner rather than listing which exist today. |
+| Pay Later "Charged on a 100% advance" / "80 to 90%" | `advanceRatePercentage` on the partner's plan is 100: the vendor receives the full invoice and the funding gap the reserve covers is the wholesale fee alone (`payLaterPricing.ts` header). 80 to 90% is the customary advance on invoice-backed working capital products, stated as a range with no provider named. |
+| Pay Later "pays your vendor on the invoice due date" / "your repayment lands 30, 45 or 60 days after that" | `payment_date = financed_on + repaymentDurationDays` (`payLaterPricing.ts`): the term counts from the day Payve pays the vendor, not from the invoice date, which is why the page's Pay Later axis starts at the due date rather than at day 0. |
+| Pay Later "a credit line", "approved for a limit", "the room comes back as you repay" | The buyer's issued product is a line with `available_limit_cents` ("Available for taking terms" in the app); each financed invoice draws against it and repayment releases the room. |
 | "Suppliers enroll at no cost" | Locked commercial position: the invited party never pays to join. |
 
 ### Who bears the Early Pay rate

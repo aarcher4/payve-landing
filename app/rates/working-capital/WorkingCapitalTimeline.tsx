@@ -9,21 +9,28 @@ import { useEffect, useRef, useState } from "react";
  * Early Pay and Pay Later are the same mechanism pointed in opposite directions, so they share
  * a timeline and the contrast carries itself rather than needing a paragraph:
  *
+ *   Pay Later   the VENDOR's marker is PINNED to the invoice due date. YOUR repayment marker
+ *               slides RIGHT to the term you pick: 30, 45 or 60 days after the vendor is paid.
  *   Early Pay   the SUPPLIER's marker slides LEFT, to day 1. Your payment date does not move.
- *   Pay Later   the VENDOR's marker is PINNED to the due date. YOUR cash marker slides RIGHT.
  *
  * Movement communicates causality (docs/motion-system.md rule 7): the marker travels along the
  * axis to the date it lands on, and nothing bounces.
  *
- * LAYOUT NOTE, learned from the first render. Both markers begin on day 30, because that is the
- * true starting position for both products: without Early Pay the supplier also waits until day
- * 30. That overlap is the point being made, but stacked on one line it just looked like two
- * labels colliding. So the pinned party lives ABOVE the axis and the moving party BELOW it, and
- * a dashed trail shows the distance travelled. The movement is then legible even in a still
- * screenshot, which is what the gate and any shared image actually capture.
+ * TWO AXES, ON PURPOSE. Early Pay counts from the invoice date (day 0 → due on day 30), because
+ * the story is "the supplier does not have to wait out your terms". Pay Later counts from the
+ * DUE DATE, because Payve pays the vendor on whatever day the invoice is due, not on "day 30",
+ * and the term starts that day (`payment_date = financed_on + term_days` in the payments app).
+ * Drawing Pay Later on the absolute axis would have implied every invoice is net 30.
  *
- * REDUCED MOTION RENDERS THE END STATE. `useLoopStep` seeds from `useReducedMotion`, exactly as
- * the home-page demos do, so with motion off the marker sits at its destination. Both verify
+ * LAYOUT NOTE, learned from the first render. Both markers begin on the same day, because that
+ * is the true starting position for both products. That overlap is the point being made, but
+ * stacked on one line it just looked like two labels colliding. So the pinned party lives ABOVE
+ * the axis and the moving party BELOW it, and a dashed trail shows the distance travelled. The
+ * movement is then legible even in a still screenshot, which is what the gate and any shared
+ * image actually capture.
+ *
+ * REDUCED MOTION RENDERS THE END STATE. With motion off, Early Pay sits at its destination and
+ * Pay Later sits at the selected term with the chips still working, instantly. Both verify
  * scripts run with `reducedMotion: "reduce"`, so anything whose meaning depended on being
  * mid-animation would be invisible to the gate.
  */
@@ -35,11 +42,16 @@ export type TimelineVariant = "early-pay" | "pay-later";
 
 interface Spec {
   from: number;
-  to: number;
+  /** A single destination (Early Pay) or a selectable set of terms (Pay Later). */
+  to: number | readonly number[];
   movingLabel: string;
   pinnedLabel: string;
   pinnedDay: number;
   caption: string;
+  /** Axis tick text: absolute ("Day 30") or relative to the due date ("+30 days"). */
+  tickLabel: (d: number) => string;
+  /** The moving marker's own day text. */
+  dayLabel: (d: number) => string;
 }
 
 const SPEC: Record<TimelineVariant, Spec> = {
@@ -50,21 +62,25 @@ const SPEC: Record<TimelineVariant, Spec> = {
     pinnedLabel: "You pay",
     pinnedDay: 30,
     caption: "Your supplier reaches the cash on day 1. Your own payment date does not move.",
+    tickLabel: (d) => `Day ${d}`,
+    dayLabel: (d) => `Day ${d}`,
   },
   "pay-later": {
-    from: 30,
-    to: 60,
-    movingLabel: "Your cash leaves",
+    from: 0,
+    to: [30, 45, 60],
+    movingLabel: "You repay",
     pinnedLabel: "Vendor paid",
-    pinnedDay: 30,
-    caption: "Your vendor is paid on the date you promised. Your own cash leaves later.",
+    pinnedDay: 0,
+    caption:
+      "Payve pays your vendor the full invoice on its due date, whatever day that is. Your repayment lands 30, 45 or 60 days after that, on the term you pick.",
+    tickLabel: (d) => (d === 0 ? "Invoice due" : `+${d} days`),
+    dayLabel: (d) => (d === 0 ? "Due date" : `+${d} days`),
   },
 };
 
 /**
- * In-view loop driver. Mirrors `useLoopStep` in app/components/home/demos.tsx: seeded from
- * reduced motion so the completed frame renders statically, and it never starts a timer for a
- * section nobody is looking at.
+ * In-view loop driver for the single-destination variant. Mirrors `useLoopStep` in
+ * app/components/home/demos.tsx: it never starts a timer for a section nobody is looking at.
  *
  * The hold is asymmetric on purpose. The moved state is the state worth reading, so it holds
  * roughly twice as long as the origin.
@@ -106,14 +122,113 @@ function useLoopStep(active: boolean) {
   return moved;
 }
 
+/**
+ * The term-picker driver. Behaves like a buy-now-pay-later checkout: left alone and in view it
+ * walks the terms (30 → 45 → 60 → 30) so a visitor sees the marker travel; the first click on
+ * a chip hands control to the visitor for good. Seeded to the first term for the same
+ * hydration reason as above, and with motion off it simply sits on the selection.
+ */
+function useTermStep(terms: readonly number[], active: boolean) {
+  const reduced = useReducedMotion() ?? false;
+  const [index, setIndex] = useState(0);
+  const [touched, setTouched] = useState(false);
+  useEffect(() => {
+    if (reduced || touched || !active) return;
+    let cancelled = false;
+    let timer: ReturnType<typeof setTimeout>;
+    const cycle = (next: number) => {
+      if (cancelled) return;
+      setIndex(next);
+      timer = setTimeout(() => cycle((next + 1) % terms.length), 2400);
+    };
+    timer = setTimeout(() => cycle(1 % terms.length), 900);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [active, reduced, touched, terms.length]);
+  const select = (i: number) => {
+    setTouched(true);
+    setIndex(i);
+  };
+  return { term: terms[index] ?? terms[0], index, select };
+}
+
+function TermPicker({
+  terms,
+  index,
+  onSelect,
+}: {
+  terms: readonly number[];
+  index: number;
+  onSelect: (i: number) => void;
+}) {
+  // Arrow keys move between chips, so role="radiogroup" is a promise the widget keeps
+  // (the same handler shape as the app's TermLadder).
+  function onKeyDown(e: React.KeyboardEvent) {
+    const delta =
+      e.key === "ArrowRight" || e.key === "ArrowDown"
+        ? 1
+        : e.key === "ArrowLeft" || e.key === "ArrowUp"
+          ? -1
+          : 0;
+    if (delta === 0) return;
+    e.preventDefault();
+    onSelect((index + delta + terms.length) % terms.length);
+  }
+  return (
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-2" data-term-picker>
+      <p
+        className="text-[11px] font-semibold uppercase tracking-[0.04em] text-r-muted-fg"
+        id="pay-later-term-label"
+      >
+        Choose when to repay
+      </p>
+      <div
+        role="radiogroup"
+        aria-labelledby="pay-later-term-label"
+        onKeyDown={onKeyDown}
+        className="flex flex-wrap gap-1.5"
+        data-term-selected={terms[index]}
+      >
+        {terms.map((t, i) => {
+          const active = i === index;
+          return (
+            <button
+              key={t}
+              type="button"
+              role="radio"
+              aria-checked={active}
+              tabIndex={active ? 0 : -1}
+              onClick={() => onSelect(i)}
+              data-term={t}
+              className={`r-num h-8 rounded-r-sm border px-3 text-xs font-semibold transition-colors ${
+                active
+                  ? "border-r-primary bg-r-primary text-r-primary-fg"
+                  : "border-r-border bg-transparent text-r-muted-fg hover:text-r-fg"
+              }`}
+            >
+              {t} days
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export function WorkingCapitalTimeline({ variant }: { variant: TimelineVariant }) {
   const spec = SPEC[variant];
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.4 });
   const reduced = useReducedMotion() ?? false;
-  const moved = useLoopStep(inView);
 
-  const day = moved ? spec.to : spec.from;
+  // Both hooks run unconditionally (rules of hooks); each variant reads the one it owns.
+  const terms: readonly number[] = Array.isArray(spec.to) ? spec.to : [];
+  const moved = useLoopStep(inView && terms.length === 0);
+  const picker = useTermStep(terms.length ? terms : [0], inView && terms.length > 0);
+
+  const day = terms.length ? picker.term : moved ? (spec.to as number) : spec.from;
   const pct = (d: number) => (d / DAY_SPAN) * 100;
 
   // The dashed trail spans origin -> current, whichever direction that is.
@@ -148,6 +263,12 @@ export function WorkingCapitalTimeline({ variant }: { variant: TimelineVariant }
 
   return (
     <div ref={ref} data-timeline={variant} className="w-full">
+      {terms.length > 0 && (
+        <div className="mb-6">
+          <TermPicker terms={terms} index={picker.index} onSelect={picker.select} />
+        </div>
+      )}
+
       {/* Inset track, so the day-0 and day-60 labels cannot clip the container edge. */}
       <div className="relative mx-auto h-[212px] w-[calc(100%-2.5rem)] sm:h-[188px] sm:w-[calc(100%-5rem)]">
         {/* Pinned party, above the axis. */}
@@ -165,7 +286,7 @@ export function WorkingCapitalTimeline({ variant }: { variant: TimelineVariant }
           <span
             className={`r-num mt-0.5 whitespace-nowrap text-sm font-semibold text-r-fg ${pinnedShift}`}
           >
-            Day {spec.pinnedDay}
+            {spec.dayLabel(spec.pinnedDay)}
           </span>
           <span className="mt-1.5 h-6 w-px bg-r-muted-fg" aria-hidden />
           <span className="h-2.5 w-2.5 rounded-[2px] bg-r-muted-fg" data-dot aria-hidden />
@@ -197,7 +318,7 @@ export function WorkingCapitalTimeline({ variant }: { variant: TimelineVariant }
           >
             <span className="h-2 w-px bg-r-border" />
             <span className="r-num mt-1 hidden whitespace-nowrap text-[11px] text-r-subtle sm:inline">
-              Day {t}
+              {spec.tickLabel(t)}
             </span>
           </div>
         ))}
@@ -225,7 +346,7 @@ export function WorkingCapitalTimeline({ variant }: { variant: TimelineVariant }
           <span
             className={`r-num mt-1 whitespace-nowrap text-sm font-semibold text-r-fg ${movingShift}`}
           >
-            Day {day}
+            {spec.dayLabel(day)}
           </span>
           <span
             className={`whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.04em] text-r-primary ${movingShift}`}

@@ -119,6 +119,55 @@ try {
     );
   }
 
+  // Pay Later leads: it is the product being framed as a credit line, and the hero says so.
+  const laterFirst = await page.evaluate(() => {
+    const a = document.querySelector('[data-product="pay-later"]');
+    const b = document.querySelector('[data-product="early-pay"]');
+    return !!(a && b && a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
+  });
+  assert(laterFirst, "Pay Later section precedes Early Pay");
+
+  console.log("\nThe Pay Later term picker");
+  /**
+   * The BNPL-style control: three terms, the marker follows the selection, and the vendor is
+   * pinned to the INVOICE DUE DATE (day 0 of a relative axis), not to "day 30". Under reduced
+   * motion the picker does not auto-cycle, so the default selection is deterministic.
+   */
+  assert((await page.locator("[data-term]").count()) === 3, "three terms render");
+  for (const t of ["30", "45", "60"]) {
+    assert((await page.locator(`[data-term="${t}"]`).count()) === 1, `a ${t} day term renders`);
+  }
+  const selectedAtRest = await page.locator("[data-term-selected]").getAttribute("data-term-selected");
+  assert(selectedAtRest === "30", "the picker rests on 30 days", String(selectedAtRest));
+  const pinnedLaterLabel = await page
+    .locator('[data-timeline="pay-later"] [data-marker="pinned"]')
+    .innerText();
+  assert(/vendor paid/i.test(pinnedLaterLabel), "the vendor is the pinned party");
+  assert(/due date/i.test(pinnedLaterLabel), "the vendor is pinned to the due date, not a day number");
+  const laterTicks = await page.locator('[data-timeline="pay-later"]').innerText();
+  assert(/Invoice due/.test(laterTicks), "the Pay Later axis starts at the invoice due date");
+  assert(/\+60 days/.test(laterTicks), "the Pay Later axis counts days after the due date");
+
+  const movingLeft = (v) =>
+    page.evaluate(
+      (sel) => document.querySelector(`[data-timeline="${sel}"] [data-marker="moving"]`)?.style.left ?? "",
+      v,
+    );
+  await page.locator('[data-timeline="pay-later"]').scrollIntoViewIfNeeded();
+  for (const [t, left] of [["45", "75%"], ["60", "100%"]]) {
+    await page.locator(`[data-term="${t}"]`).click();
+    await page.waitForFunction(
+      (want) =>
+        (document.querySelector('[data-timeline="pay-later"] [data-marker="moving"]')?.style.left ?? "") === want,
+      left,
+      { timeout: 15_000 },
+    );
+    const d = await page
+      .locator('[data-timeline="pay-later"] [data-marker="moving"]')
+      .getAttribute("data-marker-day");
+    assert(d === t, `picking ${t} days moves the repayment marker to +${t}`, `${d} at ${await movingLeft("pay-later")}`);
+  }
+
   console.log("\nThe two timelines tell DIFFERENT stories");
   /**
    * The assertion that would actually catch a defect. A structural "two timelines render" check
@@ -147,7 +196,8 @@ try {
   const earlyDay = await dayOf("early-pay");
   const laterDay = await dayOf("pay-later");
   assert(earlyDay === "1", "Early Pay lands the supplier on day 1", String(earlyDay));
-  assert(laterDay === "60", "Pay Later pushes the buyer to day 60", String(laterDay));
+  // 60 was selected above; the marker must still be there.
+  assert(laterDay === "60", "Pay Later pushes the buyer to 60 days after the due date", String(laterDay));
 
   /**
    * Wait for the POSITION, not just the attribute.
@@ -174,12 +224,13 @@ try {
     "the two moving markers sit far apart on screen",
     `${Math.round(earlyBox.x)} vs ${Math.round(laterBox.x)}`,
   );
-  // Both pinned markers stay on the due date: that is the promise each product keeps.
-  for (const v of ["early-pay", "pay-later"]) {
+  // Both pinned markers stay on the due date: that is the promise each product keeps. Early
+  // Pay's axis is absolute (due on day 30); Pay Later's is relative (the due date IS day 0).
+  for (const [v, want] of [["early-pay", "30"], ["pay-later", "0"]]) {
     const pinned = await page
       .locator(`[data-timeline="${v}"] [data-marker="pinned"]`)
       .getAttribute("data-marker-day");
-    assert(pinned === "30", `${v} keeps its pinned party on day 30`, String(pinned));
+    assert(pinned === want, `${v} keeps its pinned party on the due date`, String(pinned));
   }
   // Early Pay moves LEFT of the due date, Pay Later moves RIGHT. Opposite directions is the
   // whole argument, so assert the direction rather than just the difference.
@@ -232,6 +283,23 @@ try {
     /on time/i.test(whoPaysText),
     "the buyer reward is stated as conditional on paying on time",
   );
+
+  /**
+   * PAY LATER IS A CREDIT LINE ON A 100% ADVANCE. The percentage is only comparable once the
+   * advance rate is stated: the same fee on an 80% advance is a different product. The plan's
+   * advanceRatePercentage is 100 and the vendor gets the whole invoice, so the page says so in
+   * its own panel and the framing ("credit line", the due date, the three terms) is asserted.
+   */
+  const laterText = await page.locator("[data-product='pay-later']").innerText();
+  assert(/credit line/i.test(laterText), "Pay Later is framed as a credit line");
+  assert(/30, 45 or 60 days/.test(laterText), "Pay Later names its three terms");
+  assert(/on (its|the) due date/i.test(laterText), "Pay Later pays the vendor on the due date");
+  const advance = page.locator("[data-product='pay-later'] [data-advance]");
+  assert((await advance.count()) === 1, "Pay Later carries the advance-rate panel");
+  const advanceText = await advance.innerText();
+  assert(/100% advance/i.test(advanceText), "the fee is stated as charged on a 100% advance");
+  assert(/80 to 90%/.test(advanceText), "the page names the usual 80 to 90% advance for contrast");
+  assert(!/available today are 30 and 60/i.test(body), "the stale two-term fine print is gone");
 
   console.log("\nThe rate ladder shows the linearity");
   const tiers = await page.locator("[data-tier]").count();

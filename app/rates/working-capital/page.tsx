@@ -9,7 +9,7 @@ import { TimelineCaption, WorkingCapitalTimeline } from "./WorkingCapitalTimelin
 export const metadata: Metadata = {
   title: "Working capital",
   description:
-    "Two ways to move a payment date without moving the other side's. Early Pay releases cash to your suppliers sooner. Pay Later keeps your vendor network paid on time while your own cash leaves later.",
+    "A credit line for paying vendors, and an early-pay option for your suppliers. Pay Later pays your vendor the full invoice on its due date and you repay 30, 45 or 60 days later. Early Pay releases cash to your suppliers sooner on the terms you already agreed.",
   // rates.getpayve.com is the canonical home. Without this the page self-canonicalises onto
   // www via the root metadataBase and competes with itself, the same trap /rates has.
   // Working capital is the landing page on the liquidity host, so its canonical is the
@@ -31,8 +31,8 @@ const SUPPLIER_GETS = [
 
 const NETWORK_GETS = [
   {
-    h: "Paid on the promised date",
-    b: "Not early, not late. The date on the invoice is the date the money lands.",
+    h: "Paid in full on the promised date",
+    b: "100% of the invoice, on the date it is due. Not early, not late, not an advance with a holdback.",
   },
   {
     h: "Nothing to sign up for",
@@ -46,20 +46,20 @@ const NETWORK_GETS = [
 
 const COMPARISON = [
   {
+    k: "pay-later",
+    name: "Pay Later",
+    moves: "Moves your own money later, on a line",
+    them: "Your vendor is paid the full invoice on the due date, every time.",
+    you: "Your cash leaves 30, 45 or 60 days after that, on the term you pick.",
+    pick: "Pick this when you want to be reliable to your network and still hold cash.",
+  },
+  {
     k: "early-pay",
     name: "Early Pay",
     moves: "Moves your supplier's money earlier",
     them: "Your growers reach liquidity without waiting out your terms.",
     you: "Your payment date is unchanged, and you earn on invoices taken early.",
     pick: "Pick this when a supplier needs cash sooner than your terms allow.",
-  },
-  {
-    k: "pay-later",
-    name: "Pay Later",
-    moves: "Moves your own money later",
-    them: "Your vendor is paid on the promised date, every time.",
-    you: "Your cash leaves on a term you pick.",
-    pick: "Pick this when you want to be reliable to your network and still hold cash.",
   },
 ];
 
@@ -98,82 +98,20 @@ export default function WorkingCapitalPage() {
             Move one payment date without moving the other.
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-r-muted-fg">
-            Early Pay releases cash to your suppliers sooner, on the terms you already agreed.
-            Pay Later keeps your vendor network paid on the date you promised while your own
-            cash leaves later. Same network, opposite directions.
+            Pay Later is a credit line you pay vendors from: they get the full invoice on its
+            due date, you repay 30, 45 or 60 days later. Early Pay releases cash to your
+            suppliers sooner, on the terms you already agreed. Same network, opposite
+            directions.
           </p>
         </Reveal>
       </section>
 
-      {/* ---------------------------------------------------------- Early Pay */}
+      {/* ---------------------------------------------------------- Pay Later */}
       <section
         className="border-t border-r-border bg-r-card"
-        id="early-pay"
-        data-product="early-pay"
+        id="pay-later"
+        data-product="pay-later"
       >
-        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
-          <Reveal>
-            <p className="text-xs font-semibold uppercase tracking-[0.04em] text-r-primary">
-              Early Pay
-            </p>
-            <h2
-              className="mt-3 max-w-2xl text-r-fg"
-              style={{
-                fontSize: "clamp(1.6rem, 3vw, 2.25rem)",
-                fontWeight: 500,
-                lineHeight: 1.05,
-                letterSpacing: "-0.035em",
-              }}
-            >
-              Your growers reach the cash sooner. You still pay on your terms.
-            </h2>
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-r-muted-fg">
-              A supplier who is waiting on a 30 day invoice can take the money on day 1 instead.
-              They choose, invoice by invoice, and they see the exact dollars before they decide.
-              The rate is theirs to pay, out of the payment they take early. Your own date does
-              not change, you repay the invoice face, and you earn a share of the rate for paying
-              on time.
-            </p>
-          </Reveal>
-
-          <Reveal delayIndex={1}>
-            <div className="mt-10">
-              <div className="rounded-r-md border border-r-border bg-r-bg px-4 py-6 sm:px-8">
-                <WorkingCapitalTimeline variant="early-pay" />
-              </div>
-              {/* Caption OUTSIDE the frame: inside it collided with the marker labels. */}
-              <div className="mt-4 max-w-2xl">
-                <TimelineCaption variant="early-pay" />
-              </div>
-            </div>
-          </Reveal>
-
-          <div className="mt-10 grid gap-6 lg:grid-cols-2">
-            <Reveal delayIndex={2}>
-              <RateLadder />
-            </Reveal>
-
-            <Reveal delayIndex={3}>
-              <div className="flex h-full flex-col gap-4 rounded-r-md border border-r-border bg-r-bg p-5 sm:p-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.04em] text-r-muted-fg">
-                  What your supplier gets
-                </p>
-                {/*
-                  The locked three-layer ladder, in order: paid faster, then certainty and
-                  visibility, then the relationship. Stated as the supplier would say it.
-                */}
-                <BenefitList items={SUPPLIER_GETS} />
-                <p className="mt-auto pt-2 text-xs text-r-subtle">
-                  Suppliers enroll at no cost. The invited party never pays to join.
-                </p>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* ---------------------------------------------------------- Pay Later */}
-      <section className="border-t border-r-border" id="pay-later" data-product="pay-later">
         <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
           <Reveal>
             <p className="text-xs font-semibold uppercase tracking-[0.04em] text-r-primary">
@@ -188,20 +126,31 @@ export default function WorkingCapitalPage() {
                 letterSpacing: "-0.035em",
               }}
             >
-              Your vendors are paid on time. Every time.
+              A credit line for paying your vendors. They get the full invoice on the day it is
+              due.
             </h2>
+            {/*
+              Stated as a credit line, because that is what it is: the buyer holds a limit, each
+              invoice put on it is its own draw with its own fixed fee, and the room comes back
+              as they repay. The clock starts the day the vendor is paid, NOT on "day 30" of the
+              invoice (payLaterPricing.ts: payment_date = financed_on + term_days).
+            */}
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-r-muted-fg">
-              Your network is paid on the date you promised, whatever your own cash position
-              looks like that week. You settle later, on a term you pick. The vendor never sees
-              the difference, which is the entire point of being reliable to them.
+              You are approved for a limit. When an invoice comes due you put it on the line
+              instead of your bank account: Payve pays your vendor 100% of the invoice on the
+              due date, and you pick a term, 30, 45 or 60 days, to repay. Each invoice is its own
+              draw with its own fixed fee, and the room comes back on the line as you repay. The
+              vendor never sees the difference, which is the entire point of being reliable to
+              them.
             </p>
           </Reveal>
 
           <Reveal delayIndex={1}>
             <div className="mt-10">
-              <div className="rounded-r-md border border-r-border bg-r-card px-4 py-6 sm:px-8">
+              <div className="rounded-r-md border border-r-border bg-r-bg px-4 py-6 sm:px-8">
                 <WorkingCapitalTimeline variant="pay-later" />
               </div>
+              {/* Caption OUTSIDE the frame: inside it collided with the marker labels. */}
               <div className="mt-4 max-w-2xl">
                 <TimelineCaption variant="pay-later" />
               </div>
@@ -210,7 +159,7 @@ export default function WorkingCapitalPage() {
 
           <div className="mt-10 grid gap-6 lg:grid-cols-2">
             <Reveal delayIndex={2}>
-              <div className="rounded-r-md border border-r-border bg-r-card p-5 sm:p-6">
+              <div className="rounded-r-md border border-r-border bg-r-bg p-5 sm:p-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.04em] text-r-muted-fg">
                   What you pay
                 </p>
@@ -238,24 +187,104 @@ export default function WorkingCapitalPage() {
                   term is not double a 30 day one. The rate is set by the capital partner, and
                   Payve adds nothing on top of it.
                 </p>
+
+                {/*
+                  The advance rate is the number that makes the fee comparable. A percentage on
+                  an 80% advance is not the same product as the same percentage on 100%: the
+                  vendor gets the whole invoice here (advanceRatePercentage on the plan), and
+                  nothing is held back until the buyer repays.
+                */}
+                <div
+                  className="mt-5 rounded-r-sm border border-r-border bg-r-card p-4"
+                  data-advance
+                >
+                  <p className="text-sm leading-relaxed text-r-fg">
+                    <span className="font-semibold">Charged on a 100% advance.</span> Most working
+                    capital products advance 80 to 90% of an invoice and hold the rest back until
+                    you repay. Payve pays your vendor the whole invoice on the due date, and the
+                    fee is on that full amount, with nothing held back.
+                  </p>
+                </div>
+
                 <p className="mt-4 text-sm leading-relaxed text-r-muted-fg">
                   Your rate is fixed the moment you take a term, and it is the same number
                   written in your agreement.
                 </p>
                 <p className="mt-5 text-xs leading-relaxed text-r-subtle">
-                  Terms available today are 30 and 60 days. Your own rate depends on the capital
-                  partner and can move between batches, so treat this as a floor rather than a
-                  quote.
+                  Terms and rates are set by the capital partner against your approved limit and
+                  can move between batches, so treat this as a floor rather than a quote.
                 </p>
               </div>
             </Reveal>
 
             <Reveal delayIndex={3}>
-              <div className="flex h-full flex-col gap-4 rounded-r-md border border-r-border bg-r-card p-5 sm:p-6">
+              <div className="flex h-full flex-col gap-4 rounded-r-md border border-r-border bg-r-bg p-5 sm:p-6">
                 <p className="text-xs font-semibold uppercase tracking-[0.04em] text-r-muted-fg">
                   What your network gets
                 </p>
                 <BenefitList items={NETWORK_GETS} />
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------------------------------------------------- Early Pay */}
+      <section className="border-t border-r-border" id="early-pay" data-product="early-pay">
+        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+          <Reveal>
+            <p className="text-xs font-semibold uppercase tracking-[0.04em] text-r-primary">
+              Early Pay
+            </p>
+            <h2
+              className="mt-3 max-w-2xl text-r-fg"
+              style={{
+                fontSize: "clamp(1.6rem, 3vw, 2.25rem)",
+                fontWeight: 500,
+                lineHeight: 1.05,
+                letterSpacing: "-0.035em",
+              }}
+            >
+              Your growers reach the cash sooner. You still pay on your terms.
+            </h2>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-r-muted-fg">
+              A supplier who is waiting on a 30 day invoice can take the money on day 1 instead.
+              They choose, invoice by invoice, and they see the exact dollars before they decide.
+              The rate is theirs to pay, out of the payment they take early. Your own date does
+              not change, you repay the invoice face, and you earn a share of the rate for paying
+              on time.
+            </p>
+          </Reveal>
+
+          <Reveal delayIndex={1}>
+            <div className="mt-10">
+              <div className="rounded-r-md border border-r-border bg-r-card px-4 py-6 sm:px-8">
+                <WorkingCapitalTimeline variant="early-pay" />
+              </div>
+              <div className="mt-4 max-w-2xl">
+                <TimelineCaption variant="early-pay" />
+              </div>
+            </div>
+          </Reveal>
+
+          <div className="mt-10 grid gap-6 lg:grid-cols-2">
+            <Reveal delayIndex={2}>
+              <RateLadder />
+            </Reveal>
+
+            <Reveal delayIndex={3}>
+              <div className="flex h-full flex-col gap-4 rounded-r-md border border-r-border bg-r-card p-5 sm:p-6">
+                <p className="text-xs font-semibold uppercase tracking-[0.04em] text-r-muted-fg">
+                  What your supplier gets
+                </p>
+                {/*
+                  The locked three-layer ladder, in order: paid faster, then certainty and
+                  visibility, then the relationship. Stated as the supplier would say it.
+                */}
+                <BenefitList items={SUPPLIER_GETS} />
+                <p className="mt-auto pt-2 text-xs text-r-subtle">
+                  Suppliers enroll at no cost. The invited party never pays to join.
+                </p>
               </div>
             </Reveal>
           </div>
